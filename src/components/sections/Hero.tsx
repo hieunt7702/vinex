@@ -49,7 +49,7 @@ export const Hero = () => {
   ];
 
   return (
-    <section ref={container} className="relative min-h-screen w-full overflow-hidden flex items-center pt-24 pb-12 bg-[#051f25]">
+    <section ref={container} className="relative min-h-screen w-full overflow-hidden flex items-center pt-24 pb-12 bg-white">
       {/* Dynamic Scaling Background */}
       <div 
         ref={bgRef}
@@ -61,7 +61,7 @@ export const Hero = () => {
         {particles.map((p) => (
           <motion.div
             key={p.id}
-            className="absolute rounded-full bg-vinex-yellow/40"
+            className="absolute rounded-full bg-vinex-yellow/50"
             style={{ width: p.size, height: p.size, top: p.top, left: p.left }}
             animate={{
               y: [0, -80, 0],
@@ -82,14 +82,14 @@ export const Hero = () => {
         
         {/* Content */}
         <div className="flex flex-col items-start text-left max-w-4xl">
-          <span className="hero-pre text-3xl md:text-5xl font-light text-vinex-yellow mb-6 font-script tracking-wide">
+          <span className="hero-pre text-3xl md:text-5xl font-light text-vinex-yellow mb-6 font-script tracking-wide drop-shadow-sm">
             Quà Tết Vinex
           </span>
-          <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-medium text-vinex-yellow tracking-normal leading-[1.15] mb-8 font-serif whitespace-nowrap drop-shadow-md flex flex-col">
+          <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-bold text-vinex-blue tracking-tight leading-[1.15] mb-8 font-serif whitespace-nowrap drop-shadow-sm flex flex-col">
             <div className="overflow-hidden py-1"><div className="hero-line-1 origin-bottom-left">TRAO TÂM Ý</div></div>
-            <div className="overflow-hidden py-1"><div className="hero-line-2 origin-bottom-left text-white">GẮN KẾT GIÁ TRỊ</div></div>
+            <div className="overflow-hidden py-1"><div className="hero-line-2 origin-bottom-left text-vinex-blue">GẮN KẾT GIÁ TRỊ</div></div>
           </h1>
-          <p className="hero-desc text-base md:text-lg text-white/90 max-w-2xl mb-10 leading-relaxed font-light drop-shadow-sm">
+          <p className="hero-desc text-base md:text-lg text-vinex-blue/90 max-w-2xl mb-10 leading-relaxed font-normal drop-shadow-sm">
             Bộ sưu tập quà Tết cao cấp dành cho doanh nghiệp, đối tác và những người trân quý.
           </p>
 
@@ -97,9 +97,9 @@ export const Hero = () => {
             <motion.button 
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className="hero-btn group relative flex items-center justify-center gap-3 px-8 py-4 text-xs font-bold tracking-widest uppercase text-vinex-blue bg-vinex-yellow hover:bg-vinex-yellow/90 transition-all rounded-sm w-full sm:w-auto shadow-[0_4px_20px_rgba(255,199,3,0.3)] hover:shadow-[0_8px_30px_rgba(255,199,3,0.4)] overflow-hidden"
+              className="hero-btn group relative flex items-center justify-center gap-3 px-8 py-4 text-xs font-bold tracking-widest uppercase text-white bg-vinex-blue hover:bg-vinex-blue/95 transition-all rounded-sm w-full sm:w-auto shadow-[0_4px_20px_rgba(17,76,90,0.25)] hover:shadow-[0_8px_30px_rgba(17,76,90,0.35)] overflow-hidden"
             >
-              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-sweep"></div>
+              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-sweep"></div>
               <span>KHÁM PHÁ BỘ SƯU TẬP</span>
               <motion.div transition={{ type: "spring", stiffness: 400, damping: 25 }} whileHover={{ x: 4 }}>
                 <ArrowRight className="w-4 h-4" />
@@ -107,15 +107,15 @@ export const Hero = () => {
             </motion.button>
             
             <motion.button 
-              whileHover={{ scale: 1.02, y: -2, backgroundColor: "rgba(255,255,255,0.15)" }}
+              whileHover={{ scale: 1.02, y: -2, backgroundColor: "rgba(17,76,90,0.05)" }}
               whileTap={{ scale: 0.98 }}
-              className="hero-btn group relative flex items-center justify-center px-8 py-4 text-xs font-bold tracking-widest uppercase text-white bg-transparent border border-white/50 transition-all rounded-sm w-full sm:w-auto backdrop-blur-sm shadow-[0_4px_14px_rgba(0,0,0,0.1)] hover:border-white"
+              className="hero-btn group relative flex items-center justify-center px-8 py-4 text-xs font-bold tracking-widest uppercase text-vinex-blue bg-white/80 border border-vinex-blue/30 transition-all rounded-sm w-full sm:w-auto backdrop-blur-sm shadow-[0_4px_14px_rgba(0,0,0,0.05)] hover:border-vinex-blue"
             >
               <span>YÊU CẦU BÁO GIÁ</span>
             </motion.button>
           </div>
 
-          <div className="hero-foot flex items-center gap-4 text-sm font-semibold tracking-wider text-white/80 uppercase drop-shadow-sm">
+          <div className="hero-foot flex items-center gap-4 text-sm font-semibold tracking-wider text-vinex-blue/80 uppercase drop-shadow-sm">
             <motion.span 
               initial={{ scaleX: 0 }} 
               animate={{ scaleX: 1 }} 
