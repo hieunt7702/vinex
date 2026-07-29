@@ -56,9 +56,6 @@ export const Hero = () => {
         className="absolute -inset-10 z-0 bg-[url('/images/hero-box.png')] bg-cover bg-center bg-no-repeat will-change-transform"
       ></div>
 
-      {/* Dark overlay for luxury contrast */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/60 via-black/20 to-transparent pointer-events-none"></div>
-
       {/* Floating Particles */}
       <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
         {particles.map((p) => (
