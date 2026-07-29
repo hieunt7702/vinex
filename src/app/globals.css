@@ -1,26 +1,47 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-vinex-white: #ffffff;
+  --color-vinex-yellow: #ffc703;
+  --color-vinex-blue: #114c5a;
+  --color-vinex-red: #fc0106;
+  --color-vinex-indigo: #001571;
+  --color-vinex-orange: #ff913e;
+  --color-vinex-black: #0c0900;
+
+  --font-sans: var(--font-sans), sans-serif;
+  --font-serif: var(--font-serif), serif;
+  --font-script: var(--font-script), cursive;
+
+  --spacing-clear-space: var(--vinex-star-height, 24px);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --vinex-star-height: 24px;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @font-face {
+    font-family: 'TG PRAKTIKAL VARIABLE';
+    src: url('/tg-praktikal-font/TGPraktikalTrials-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'TG PRAKTIKAL VARIABLE';
+    src: url('/tg-praktikal-font/TGPraktikalTrials-UltraLight.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  body {
+    background-color: var(--color-vinex-white);
+    color: var(--color-vinex-black);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
