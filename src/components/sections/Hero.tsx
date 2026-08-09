@@ -117,7 +117,6 @@ export const Hero = () => {
             <span>Nhà máy bóc tách điều thô</span>
           </div>
         </div>
-      </div>
     </section>
   );
 };
