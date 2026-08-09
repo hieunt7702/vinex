@@ -4,21 +4,22 @@ import Link from 'next/link';
 interface LogoProps {
   className?: string;
   lang?: 'en' | 'vi';
+  variant?: 'default' | 'small';
 }
 
-export const Logo: React.FC<LogoProps> = ({ className = '', lang = 'en' }) => {
+export const Logo: React.FC<LogoProps> = ({ className = '', lang = 'en', variant = 'default' }) => {
   return (
     <Link 
-      href="/" 
+      href={`/${lang}`} 
       /* Enforcing Clear Space: Margin and padding mathematically tied to the star height */
-      className={`inline-block focus:outline-none focus:ring-2 focus:ring-vinex-yellow focus:ring-offset-2 focus:ring-offset-vinex-white rounded-sm transition-all ${className}`}
+      className={`inline-block focus:outline-none outline-none transition-all ${className}`}
       aria-label="VINEX Home"
     >
-      <div className="relative flex items-center h-[60px] md:h-[90px] w-auto">
+      <div className={`relative flex items-center w-auto ${variant === 'small' ? 'h-[40px]' : 'h-[60px] md:h-[90px]'}`}>
         <img 
           src="/images/logo.png" 
           alt="VINEX Logo" 
-          className="h-full w-auto object-contain origin-left scale-[1.6] md:scale-[1.8] translate-y-[6px]"
+          className={`h-full w-auto object-contain origin-left ${variant === 'small' ? 'scale-[2.4] translate-y-0' : 'scale-[1.6] md:scale-[1.8] translate-y-[6px]'}`}
         />
       </div>
     </Link>

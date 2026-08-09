@@ -70,7 +70,7 @@ export const Process = () => {
             <span className="text-3xl md:text-4xl font-light text-vinex-yellow mb-4 block font-script tracking-wide">
               Quy trình
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-vinex-blue tracking-tight leading-tight mb-4 font-serif">
+            <h2 className="text-4xl md:text-5xl font-bold text-vinex-blue tracking-tight leading-tight mb-4">
               CÁ NHÂN HÓA QUÀ TẶNG
             </h2>
           </motion.div>

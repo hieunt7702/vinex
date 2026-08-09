@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import "../globals.css";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { Header } from "@/components/layout/Header";
-import { Montserrat, Playfair_Display, Pinyon_Script } from 'next/font/google';
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
+import { Montserrat } from 'next/font/google';
 
 const montserrat = Montserrat({
   subsets: ['latin', 'vietnamese'],
@@ -10,22 +11,13 @@ const montserrat = Montserrat({
   display: 'swap',
 });
 
-const playfair = Playfair_Display({
-  subsets: ['latin', 'vietnamese'],
-  variable: '--font-serif',
-  display: 'swap',
-});
-
-const pinyon = Pinyon_Script({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-script',
-  display: 'swap',
-});
-
 export const metadata: Metadata = {
-  title: "VINEX | Luxury Vietnamese Gift",
-  description: "Bộ sưu tập quà Tết cao cấp dành cho doanh nghiệp và đối tác chiến lược.",
+  title: "VINEX | Nhân điều trắng, nông sản và quà tặng doanh nghiệp",
+  description: "VINEX phát triển từ nhà máy bóc tách điều thô, nhân điều trắng, sản phẩm từ nông sản Việt đến bao bì và quà tặng doanh nghiệp.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function RootLayout({
@@ -38,16 +30,16 @@ export default async function RootLayout({
   const { locale } = await params;
   
   return (
-    <html lang={locale} suppressHydrationWarning className={`${montserrat.variable} ${playfair.variable} ${pinyon.variable}`}>
+    <html lang={locale} suppressHydrationWarning className={`${montserrat.variable}`}>
       <body
         suppressHydrationWarning
-        className={`min-h-screen flex flex-col bg-vinex-white text-vinex-black font-sans antialiased`}
+        className={`min-h-screen flex flex-col bg-vinex-white text-vinex-black font-sans antialiased relative`}
       >
-        <LanguageSwitcher />
         <Header />
         <main className="flex-1 flex flex-col">
           {children}
         </main>
+        <ScrollToTop />
       </body>
     </html>
   );

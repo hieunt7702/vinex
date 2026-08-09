@@ -9,11 +9,11 @@ export const Featured = () => {
   const isInView = useInView(container, { once: true, margin: "-10%" });
 
   const collections = [
-    { title: "PREMIUM", img: "/images/product/p1.png" },
-    { title: "EXECUTIVE", img: "/images/product/p2.png" },
-    { title: "BUSINESS", img: "/images/product/p3.png" },
-    { title: "FAMILY", img: "/images/product/p1.png" },
-    { title: "SPECIAL", img: "/images/product/p2.png" },
+    { title: "PREMIUM", img: "/images/product/bao_bi_qua_tang/p1.png" },
+    { title: "EXECUTIVE", img: "/images/product/bao_bi_qua_tang/p2.png" },
+    { title: "BUSINESS", img: "/images/product/bao_bi_qua_tang/p3.png" },
+    { title: "FAMILY", img: "/images/product/bao_bi_qua_tang/p4.png" },
+    { title: "SPECIAL", img: "/images/product/bao_bi_qua_tang/p5.png" },
   ];
 
   const gridVariants = {
@@ -45,13 +45,13 @@ export const Featured = () => {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <span className="text-3xl md:text-4xl font-light text-vinex-yellow mb-4 block font-script tracking-wide">
-              Bộ sưu tập
+              Giải pháp
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-vinex-blue tracking-tight leading-tight mb-4 font-serif">
-              QUÀ TẾT CAO CẤP
+            <h2 className="text-4xl md:text-5xl font-bold text-vinex-blue tracking-tight leading-tight mb-4">
+              QUÀ TẶNG DOANH NGHIỆP
             </h2>
-            <p className="text-sm text-black/60 font-light">
-              Đa dạng lựa chọn – Phù hợp mọi ngân sách và đối tượng
+            <p className="text-sm text-black/60 font-light max-w-xl">
+              Một món quà cần phù hợp với người nhận, thể hiện đúng tinh thần thương hiệu và tạo trải nghiệm khi mở hộp.
             </p>
           </motion.div>
           
@@ -61,7 +61,7 @@ export const Featured = () => {
             transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="group relative flex items-center gap-3 px-6 py-3.5 text-xs font-bold tracking-widest text-vinex-yellow bg-transparent border border-vinex-yellow transition-all rounded-sm uppercase whitespace-nowrap overflow-hidden"
+            className="group relative flex items-center gap-3 px-6 py-3.5 text-xs font-bold tracking-widest text-vinex-yellow bg-transparent border border-vinex-yellow transition-all rounded-full uppercase whitespace-nowrap overflow-hidden"
           >
             <div className="absolute inset-0 w-full h-full bg-vinex-yellow origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-0"></div>
             <span className="relative z-10 group-hover:text-white transition-colors duration-300">XEM TẤT CẢ BỘ SƯU TẬP</span>
@@ -83,7 +83,7 @@ export const Featured = () => {
               key={idx} 
               variants={cardVariants}
               whileHover="hover"
-              className="collection-card group flex flex-col bg-white border border-gray-100 rounded-2xl transition-all overflow-hidden cursor-pointer shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-vinex-yellow/30"
+              className="collection-card group flex flex-col bg-white border border-gray-100 rounded-3xl transition-all overflow-hidden cursor-pointer shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-vinex-yellow/30"
             >
               {/* Product Image Wrapper */}
               <div className="w-full aspect-[4/5] md:aspect-square overflow-hidden relative bg-black/5">
@@ -111,7 +111,7 @@ export const Featured = () => {
                   <span className="text-[10px] tracking-widest text-black/50 block font-semibold mb-0.5">BỘ SƯU TẬP</span>
                   <motion.h3 
                     variants={{ hover: { color: "#FFC703" } }}
-                    className="text-sm font-extrabold text-vinex-blue tracking-wider uppercase font-serif transition-colors duration-300"
+                    className="text-sm font-extrabold text-vinex-blue tracking-wider uppercase transition-colors duration-300"
                   >
                     {col.title}
                   </motion.h3>

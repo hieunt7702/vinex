@@ -54,7 +54,7 @@ export const CTABanner = () => {
             transition={{ duration: 1, ease: "easeOut" }}
             className="md:col-span-7 text-left"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-wide leading-tight mb-4 font-serif text-white">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-wide leading-tight mb-4 text-white">
               DOANH NGHIỆP CỦA BẠN <br />
               <span className="text-vinex-yellow font-light normal-case italic text-2xl md:text-3xl lg:text-4xl mt-2 block">xứng đáng với món quà tinh tế nhất</span>
             </h2>

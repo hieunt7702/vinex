@@ -55,7 +55,7 @@ export const WhyChooseUs = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-3xl md:text-4xl font-bold tracking-widest uppercase mb-4 font-serif text-white"
+            className="text-3xl md:text-4xl font-bold tracking-widest uppercase mb-4 text-white"
           >
             VÌ SAO CHỌN VINEX
           </motion.h2>

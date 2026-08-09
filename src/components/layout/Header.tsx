@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { Download, Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
@@ -35,12 +36,30 @@ export const Header = () => {
   }, []);
 
   const navLinks = [
-    { name: 'TRANG CHỦ', href: '#home', active: true },
-    { name: 'BỘ SƯU TẬP', href: '#collections' },
-    { name: 'QUÀ TẶNG DOANH NGHIỆP', href: '#corporate' },
-    { name: 'CÁ NHÂN HÓA', href: '#customization' },
-    { name: 'TIN TỨC', href: '#news' },
-    { name: 'LIÊN HỆ', href: '#contact' },
+    { name: 'TRANG CHỦ', href: `/${lang}` },
+    { name: 'GIỚI THIỆU', href: `/${lang}/gioi-thieu` },
+    { 
+      name: 'NĂNG LỰC', 
+      href: '#',
+      hasDropdown: true,
+      children: [
+        { name: 'Nhà máy bóc tách điều', href: `/${lang}/nha-may-boc-tach-dieu` },
+        { name: 'Nhân điều trắng', href: `/${lang}/nhan-dieu-trang` }
+      ]
+    },
+    { 
+      name: 'SẢN PHẨM', 
+      href: `/${lang}/san-pham`,
+      hasDropdown: true,
+      children: [
+        { name: 'Hạt điều tẩm vị', href: `/${lang}/san-pham#hat-dieu` },
+        { name: 'Trà & cà phê', href: `/${lang}/san-pham#tra-ca-phe` },
+        { name: 'Bánh & kẹo', href: `/${lang}/san-pham#banh-keo` },
+        { name: 'Nông sản chế biến', href: `/${lang}/san-pham#nong-san` }
+      ]
+    },
+    { name: 'QUÀ TẶNG', href: `/${lang}/qua-tang-doanh-nghiep` },
+    { name: 'LIÊN HỆ', href: `/${lang}/lien-he` },
   ];
 
   return (
@@ -58,16 +77,8 @@ export const Header = () => {
         <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between h-[80px] md:h-[90px]">
           
           <div className="flex items-center">
-            {/* Mobile Menu Toggle */}
-            <button 
-              className="lg:hidden p-2 -ml-2 mr-2 text-vinex-blue hover:bg-vinex-blue/5 rounded-md transition-colors"
-              onClick={() => setIsMobileMenuOpen(true)}
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-
             <motion.div 
-              className="flex-shrink-0 xl:-ml-[var(--spacing-clear-space,24px)] lg:mr-8 xl:mr-[100px]"
+              className="flex-shrink-0 -ml-3 md:-ml-4 xl:-ml-[var(--spacing-clear-space,24px)] lg:mr-8 xl:mr-[100px]"
               animate={{ scale: isScrolled ? 0.9 : 1 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
@@ -78,45 +89,85 @@ export const Header = () => {
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center lg:gap-5 xl:gap-8 2xl:gap-10" onMouseLeave={() => setHoveredLink(null)}>
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
+              <div 
+                key={link.name} 
+                className="relative group h-full py-6 flex items-center"
                 onMouseEnter={() => setHoveredLink(link.name)}
-                className={`text-[12px] xl:text-[13px] font-bold tracking-wider xl:tracking-widest uppercase transition-colors relative py-2 whitespace-nowrap ${
-                  link.active || hoveredLink === link.name ? 'text-vinex-blue' : 'text-vinex-black/70 hover:text-vinex-blue'
-                }`}
               >
-                {link.name}
-                {(link.active || hoveredLink === link.name) && (
-                  <motion.span 
-                    layoutId="navIndicator"
-                    className="w-full h-[2px] bg-vinex-yellow absolute bottom-0 left-0"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
+                <Link
+                  href={link.href}
+                  className={`text-[12px] xl:text-[13px] font-bold tracking-wider xl:tracking-widest uppercase transition-colors relative py-2 whitespace-nowrap ${
+                    pathname === link.href || hoveredLink === link.name ? 'text-vinex-blue' : 'text-vinex-black/70 hover:text-vinex-blue'
+                  }`}
+                >
+                  {link.name}
+                  {(pathname === link.href || hoveredLink === link.name) && (
+                    <motion.span 
+                      layoutId="navIndicator"
+                      className="w-full h-[2px] bg-vinex-yellow absolute bottom-0 left-0"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                </Link>
+
+                {link.hasDropdown && (
+                  <div className="absolute top-[80px] md:top-[90px] left-0 bg-white shadow-lg border border-gray-100 rounded-b-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[220px] py-2 flex flex-col">
+                    {link.children?.map(child => (
+                      <Link 
+                        key={child.name} 
+                        href={child.href}
+                        className="px-5 py-3 hover:bg-vinex-blue/5 text-sm font-medium text-gray-700 hover:text-vinex-blue transition-colors"
+                      >
+                        {child.name}
+                      </Link>
+                    ))}
+                  </div>
                 )}
-              </Link>
+              </div>
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
-            <motion.button 
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="group relative flex items-center gap-2 md:gap-3 px-4 md:px-7 py-2.5 md:py-3.5 text-[10px] md:text-[11px] font-extrabold tracking-widest text-white bg-vinex-blue hover:bg-vinex-blue/95 rounded-sm uppercase shadow-[0_4px_14px_0_rgba(17,76,90,0.2)] hover:shadow-[0_6px_20px_rgba(17,76,90,0.3)] transition-all duration-300 overflow-hidden whitespace-nowrap"
-            >
-              {/* Glossy sweep effect */}
-              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-sweep"></div>
-              
-              <span className="hidden sm:inline">NHẬN CATALOGUE</span>
-              <span className="sm:hidden">CATALOGUE</span>
-              <motion.div
-                initial={{ x: 0 }}
-                whileHover={{ x: 3, y: 3 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          <div className="flex items-center gap-2 md:gap-4">
+            <div className="hidden lg:block">
+              <LanguageSwitcher />
+            </div>
+            <Link href={`/${lang}/lien-he`}>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                animate={{
+                  boxShadow: [
+                    "0 0 0 0 rgba(13,89,98,0.6)",
+                    "0 0 0 12px rgba(13,89,98,0)"
+                  ]
+                }}
+                transition={{
+                  boxShadow: {
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeOut"
+                  }
+                }}
+                className="group relative flex items-center gap-2 md:gap-3 px-4 md:px-7 py-2.5 md:py-3.5 text-[10px] md:text-[11px] font-extrabold tracking-widest text-white bg-gradient-to-r from-vinex-blue to-[#2B8390] rounded-md uppercase overflow-hidden whitespace-nowrap"
               >
-                <Download className="w-3 h-3 md:w-4 md:h-4" />
-              </motion.div>
-            </motion.button>
+                {/* Continuous sweep effect */}
+                <motion.div 
+                  className="absolute inset-0 w-[150%] -left-[50%] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-20deg]"
+                  animate={{ x: ["-100%", "200%"] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+                />
+                <span className="relative z-10">NHẬN TƯ VẤN</span>
+              </motion.button>
+            </Link>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              className="lg:hidden p-2 -mr-2 ml-1 text-vinex-blue hover:bg-vinex-blue/5 rounded-md transition-colors"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
           </div>
         </div>
       </motion.header>
@@ -137,36 +188,54 @@ export const Header = () => {
             
             {/* Drawer */}
             <motion.div 
-              initial={{ x: "-100%" }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
+              exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed inset-y-0 left-0 w-[280px] sm:w-[320px] bg-white z-[70] lg:hidden flex flex-col shadow-2xl"
+              className="fixed inset-y-0 right-0 w-[280px] sm:w-[320px] bg-white z-[70] lg:hidden flex flex-col shadow-2xl"
             >
-              <div className="flex items-center justify-between p-6 border-b border-gray-100">
-                <Logo lang={lang as 'en' | 'vi'} className="text-vinex-blue h-6" />
-                <button 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 text-gray-400 hover:text-vinex-blue hover:bg-gray-50 rounded-full transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 overflow-hidden">
+                <Logo lang={lang as 'en' | 'vi'} variant="small" className="text-vinex-blue -ml-4" />
+                <div className="flex items-center gap-1">
+                  <LanguageSwitcher />
+                  <button 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 -mr-2 text-gray-400 hover:text-vinex-blue hover:bg-gray-50 rounded-full transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
 
               <nav className="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-2">
                 {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-lg text-[13px] font-bold tracking-widest uppercase transition-colors ${
-                      link.active 
-                        ? 'bg-vinex-blue/5 text-vinex-blue' 
-                        : 'text-vinex-black/70 hover:bg-gray-50 hover:text-vinex-blue'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
+                  <div key={link.name}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block px-4 py-3 rounded-lg text-[13px] font-bold tracking-widest uppercase transition-colors ${
+                        pathname === link.href
+                          ? 'bg-vinex-blue/5 text-vinex-blue' 
+                          : 'text-vinex-black/70 hover:bg-gray-50 hover:text-vinex-blue'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                    {link.hasDropdown && link.children && (
+                      <div className="pl-6 flex flex-col mt-1">
+                        {link.children.map(child => (
+                          <Link
+                            key={child.name}
+                            href={child.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block px-4 py-2 text-sm text-gray-600 hover:text-vinex-blue transition-colors"
+                          >
+                            - {child.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </nav>
 

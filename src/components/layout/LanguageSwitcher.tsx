@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import { Globe } from "lucide-react";
 
 export const LanguageSwitcher = () => {
   const router = useRouter();
@@ -23,9 +24,11 @@ export const LanguageSwitcher = () => {
   return (
     <button 
       onClick={toggleLanguage}
-      className="fixed bottom-6 right-6 z-[200] w-14 h-14 rounded-full bg-vinex-black border-2 border-vinex-yellow text-vinex-yellow font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(255,199,3,0.3)] flex items-center justify-center hover:scale-110 hover:bg-vinex-yellow hover:text-vinex-black transition-all"
+      className="flex items-center gap-1.5 px-3 py-2 text-[11px] font-bold text-vinex-black/70 hover:text-vinex-blue transition-colors uppercase tracking-widest rounded-full hover:bg-gray-50"
+      aria-label="Switch Language"
     >
-      {currentLocale === "en" ? "VI" : "EN"}
+      <Globe className="w-4 h-4" />
+      <span>{currentLocale === "en" ? "EN" : "VI"}</span>
     </button>
   );
 };

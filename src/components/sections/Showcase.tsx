@@ -58,14 +58,14 @@ export const Showcase = () => {
   };
 
   const products = [
-    { title: "Premium Coffee", subtitle: "F&B Brand Identity" },
-    { title: "Premium Tea", subtitle: "Packaging Design" },
-    { title: "Gift Box", subtitle: "Luxury Collection" },
-    { title: "Healthy Food", subtitle: "Brand Strategy" },
+    { title: "Premium Coffee", subtitle: "F&B Brand Identity", img: "/images/product/cafe_nguyen_hat_500g&1kg/cafe_nguyen_hat_honey_robussta_1kg.png" },
+    { title: "Premium Tea", subtitle: "Packaging Design", img: "/images/product/tra_premium_essiora_tea/p1.png" },
+    { title: "Gift Box", subtitle: "Luxury Collection", img: "/images/product/bao_bi_qua_tang/p10.png" },
+    { title: "Healthy Food", subtitle: "Brand Strategy", img: "/images/product/hat_orchard_nút/p1.png" },
   ];
 
   return (
-    <section ref={container} className="py-32 px-6 md:px-12 bg-vinex-black text-white relative overflow-hidden">
+    <section ref={container} className="py-16 md:py-24 px-6 md:px-12 bg-vinex-black text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-16">
           <div>
@@ -85,8 +85,10 @@ export const Showcase = () => {
               onMouseMove={(e) => handleMouseMove(e, e.currentTarget)}
               onMouseLeave={(e) => handleMouseLeave(e.currentTarget)}
             >
-              <div className="absolute inset-0 bg-[#1a1a1a] transition-transform duration-700 group-hover:scale-105 flex items-center justify-center">
-                 <span className="opacity-20  text-2xl">{prod.title} Image</span>
+              <div 
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                style={{ backgroundImage: `url(${prod.img})` }}
+              >
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
               

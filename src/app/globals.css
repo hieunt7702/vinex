@@ -2,17 +2,24 @@
 @import "lenis/dist/lenis.css";
 
 @theme {
-  --color-vinex-white: #ffffff;
-  --color-vinex-yellow: #ffc703;
-  --color-vinex-blue: #114c5a;
+  --color-vinex-teal: #0D5962;
+  --color-vinex-gold: #F2B719;
+  --color-vinex-ivory: #FAF8F2;
+  --color-vinex-charcoal: #24313A;
+  --color-vinex-sage: #5C7B6C;
+
+  /* Aliases for backward compatibility */
+  --color-vinex-white: #FAF8F2;
+  --color-vinex-yellow: #F2B719;
+  --color-vinex-blue: #0D5962;
+  --color-vinex-black: #24313A;
+
   --color-vinex-red: #fc0106;
   --color-vinex-indigo: #001571;
   --color-vinex-orange: #ff913e;
-  --color-vinex-black: #0c0900;
 
   --font-sans: var(--font-sans), sans-serif;
-  --font-serif: var(--font-serif), serif;
-  --font-script: var(--font-script), cursive;
+
 
   --spacing-clear-space: var(--vinex-star-height, 24px);
 }
@@ -22,25 +29,9 @@
     --vinex-star-height: 24px;
   }
 
-  @font-face {
-    font-family: 'TG PRAKTIKAL VARIABLE';
-    src: url('/tg-praktikal-font/TGPraktikalTrials-Bold.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'TG PRAKTIKAL VARIABLE';
-    src: url('/tg-praktikal-font/TGPraktikalTrials-UltraLight.otf') format('opentype');
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
-  }
-
   body {
-    background-color: var(--color-vinex-white);
-    color: var(--color-vinex-black);
+    background-color: var(--color-vinex-ivory);
+    color: var(--color-vinex-charcoal);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

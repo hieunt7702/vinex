@@ -32,12 +32,12 @@ export const GalleryGift = () => {
   }, []);
 
   const images = [
-    { id: 1, title: "The Art of Giving", img: "/hero1.png", aspect: "aspect-[3/4]", size: "row-span-2" },
-    { id: 2, title: "Premium Textures", img: "/hero1.png", aspect: "aspect-square", size: "row-span-1" },
-    { id: 3, title: "Golden Details", img: "/hero1.png", aspect: "aspect-[4/3]", size: "row-span-1" },
-    { id: 4, title: "Elegant Unboxing", img: "/hero1.png", aspect: "aspect-square", size: "row-span-1" },
-    { id: 5, title: "Joyful Moments", img: "/hero1.png", aspect: "aspect-[3/4]", size: "row-span-2" },
-    { id: 6, title: "Timeless Quality", img: "/hero1.png", aspect: "aspect-[4/3]", size: "row-span-1" },
+    { id: 1, title: "The Art of Giving", img: "/images/product/bao_bi_qua_tang/p11.png", aspect: "aspect-[3/4]", size: "row-span-2" },
+    { id: 2, title: "Premium Textures", img: "/images/product/bao_bi_qua_tang/p12.png", aspect: "aspect-square", size: "row-span-1" },
+    { id: 3, title: "Golden Details", img: "/images/product/bao_bi_qua_tang/p13.png", aspect: "aspect-[4/3]", size: "row-span-1" },
+    { id: 4, title: "Elegant Unboxing", img: "/images/product/bao_bi_qua_tang/p14.png", aspect: "aspect-square", size: "row-span-1" },
+    { id: 5, title: "Joyful Moments", img: "/images/product/bao_bi_qua_tang/p15.png", aspect: "aspect-[3/4]", size: "row-span-2" },
+    { id: 6, title: "Timeless Quality", img: "/images/product/bao_bi_qua_tang/p16.png", aspect: "aspect-[4/3]", size: "row-span-1" },
   ];
 
   return (
