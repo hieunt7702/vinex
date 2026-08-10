@@ -1,153 +1,104 @@
 "use client";
 
-import React, { useRef } from "react";
-import { Logo } from "@/components/Logo";
-import { MapPin, Mail, Phone } from "lucide-react";
-import { motion, useInView } from "framer-motion";
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Link from "next/link";
+import { Phone, Mail, MapPin } from 'lucide-react';
 
 export const Footer = () => {
-  const container = useRef<HTMLDivElement>(null);
-  const isInView = useInView(container, { once: true, margin: "-10%" });
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
 
-  const footerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-    }
-  };
-
-  const colVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { type: "spring" as const, stiffness: 80, damping: 20 }
-    }
-  };
-
   return (
-    <footer ref={container} className="bg-vinex-blue text-white relative pt-16 pb-6 overflow-hidden">
-      {/* Top Bar with Gold Star SVG */}
-      <div className="absolute top-0 left-0 w-full border-t border-vinex-yellow/30">
-        <div className="absolute left-1/2 -top-[7px] -translate-x-1/2 bg-vinex-blue px-4">
-          <motion.div 
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 0C7 3.86599 3.86599 7 0 7C3.86599 7 7 10.134 7 14C7 10.134 10.134 7 14 7C10.134 7 7 3.86599 7 0Z" fill="#FFC703"/>
-            </svg>
-          </motion.div>
-        </div>
-      </div>
-
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12">
-          <motion.div 
-          variants={footerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16"
-        >
+    <footer className="bg-vinex-teal text-white pt-20 pb-8 border-t border-white/10">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
           
-          {/* Column 1: Brand & Info */}
-          <motion.div variants={colVariants}>
-            <div className="mb-6 inline-block">
-              <Logo lang="vi" />
-            </div>
-            <p className="text-sm text-white/70 font-light leading-relaxed mb-6">
-              VINEX phát triển từ nhà máy bóc tách điều thô, nhân điều trắng, sản phẩm từ nông sản Việt đến bao bì và quà tặng doanh nghiệp.
+          {/* Brand Info */}
+          <div className="lg:col-span-4 pr-8">
+            <Link href={`/${lang}`} className="block mb-6">
+              <span className="text-white text-[32px] font-serif tracking-wide">VINEX</span>
+            </Link>
+            <p className="text-white/70 text-[13px] font-light leading-relaxed mb-8 max-w-sm">
+              Vietnamese craftsmanship,<br />beautifully gifted.
             </p>
-            <div className="flex items-center gap-3">
-              {/* Social Icons */}
-              <motion.a whileHover={{ y: -4, backgroundColor: "#FFC703", color: "#0A323B" }} transition={{ type: "spring", stiffness: 400, damping: 10 }} href="#" className="w-8 h-8 rounded-full border border-vinex-yellow flex items-center justify-center text-vinex-yellow transition-colors">
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
-              </motion.a>
-              <motion.a whileHover={{ y: -4, backgroundColor: "#FFC703", color: "#0A323B" }} transition={{ type: "spring", stiffness: 400, damping: 10 }} href="#" className="w-8 h-8 rounded-full border border-vinex-yellow flex items-center justify-center text-vinex-yellow transition-colors">
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M21.582 6.186a2.506 2.506 0 0 0-1.766-1.766C18.257 4 12 4 12 4s-6.257 0-7.816.42a2.506 2.506 0 0 0-1.766 1.766C2 7.743 2 12 2 12s0 4.257.418 5.814a2.506 2.506 0 0 0 1.766 1.766C5.743 20 12 20 12 20s6.257 0 7.816-.42a2.506 2.506 0 0 0 1.766-1.766C22 16.257 22 12 22 12s0-4.257-.418-5.814zM9.999 15.594v-7.189l6.502 3.595-6.502 3.594z"/></svg>
-              </motion.a>
-              <motion.a whileHover={{ y: -4, backgroundColor: "#FFC703", color: "#0A323B" }} transition={{ type: "spring", stiffness: 400, damping: 10 }} href="#" className="w-8 h-8 rounded-full border border-vinex-yellow flex items-center justify-center text-vinex-yellow transition-colors text-xs font-bold font-sans">
-                Zalo
-              </motion.a>
+            <div className="flex items-center gap-4 text-vinex-gold">
+              <a href="#" className="hover:text-white transition-colors" aria-label="Facebook">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="#" className="hover:text-white transition-colors" aria-label="Instagram">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </a>
+              <a href="#" className="hover:text-white transition-colors" aria-label="LinkedIn">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+              <a href="#" className="hover:text-white transition-colors" aria-label="YouTube">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </a>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Column 2: MENU / SẢN PHẨM */}
-          <motion.div variants={colVariants}>
-            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm font-sans">GIẢI PHÁP & SẢN PHẨM</h4>
-            <ul className="space-y-3 text-white/70 font-light text-sm">
-              <li><Link href={`/${lang}/collections`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Bộ Sưu Tập Quà Tặng</Link></li>
-              <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Quà Doanh Nghiệp</Link></li>
-              <li><Link href={`/${lang}/custom-gifts`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Quà Thiết Kế Riêng (Bespoke)</Link></li>
-              <li><Link href={`/${lang}/miss-world-2026`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Miss World 2026 Collection</Link></li>
+          {/* Links */}
+          <div className="lg:col-span-5 grid grid-cols-3 gap-8">
+            <div>
+              <h4 className="text-[10px] font-bold tracking-[0.15em] text-vinex-gold uppercase mb-6">COLLECTIONS</h4>
+              <ul className="space-y-4 text-[13px] font-light text-white/70">
+                <li><Link href={`/${lang}/collections/signature`} className="hover:text-white transition-colors">Signature</Link></li>
+                <li><Link href={`/${lang}/collections/executive`} className="hover:text-white transition-colors">Executive</Link></li>
+                <li><Link href={`/${lang}/collections/heritage`} className="hover:text-white transition-colors">Heritage</Link></li>
+                <li><Link href={`/${lang}/miss-world-2026`} className="hover:text-white transition-colors">Miss World 2026</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-[10px] font-bold tracking-[0.15em] text-vinex-gold uppercase mb-6">SOLUTIONS</h4>
+              <ul className="space-y-4 text-[13px] font-light text-white/70">
+                <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-white transition-colors">Corporate Gifts</Link></li>
+                <li><Link href={`/${lang}/custom-gifts`} className="hover:text-white transition-colors">Bespoke</Link></li>
+                <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-white transition-colors">Events</Link></li>
+                <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-white transition-colors">International</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-[10px] font-bold tracking-[0.15em] text-vinex-gold uppercase mb-6">ABOUT</h4>
+              <ul className="space-y-4 text-[13px] font-light text-white/70">
+                <li><Link href={`/${lang}/gioi-thieu`} className="hover:text-white transition-colors">Our Story</Link></li>
+                <li><Link href={`/${lang}/case-studies`} className="hover:text-white transition-colors">Projects</Link></li>
+                <li><Link href={`/${lang}/kien-thuc`} className="hover:text-white transition-colors">Journal</Link></li>
+                <li><Link href={`/${lang}/contact`} className="hover:text-white transition-colors">Contact</Link></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div className="lg:col-span-3">
+            <ul className="space-y-6 text-[13px] font-light text-white/80">
+              <li className="flex items-start gap-4">
+                <Phone className="w-4 h-4 text-vinex-gold mt-0.5 shrink-0" />
+                <span>+84 123 456 789</span>
+              </li>
+              <li className="flex items-start gap-4">
+                <Mail className="w-4 h-4 text-vinex-gold mt-0.5 shrink-0" />
+                <span>hello@vinex.vn</span>
+              </li>
+              <li className="flex items-start gap-4">
+                <MapPin className="w-4 h-4 text-vinex-gold mt-0.5 shrink-0" />
+                <span className="leading-relaxed">28 Trần Phú, P. 4, Q. 5,<br/>TP. Hồ Chí Minh</span>
+              </li>
             </ul>
-          </motion.div>
+          </div>
 
-          {/* Column 3: VỀ VINEX */}
-          <motion.div variants={colVariants}>
-            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm font-sans">VỀ VINEX</h4>
-            <ul className="space-y-3 text-white/70 font-light text-sm">
-              <li><Link href={`/${lang}/gioi-thieu`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Câu chuyện thương hiệu</Link></li>
-              <li><Link href={`/${lang}/case-studies`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Dự án thực tế</Link></li>
-              <li><Link href={`/${lang}/kien-thuc`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Tạp chí (Journal)</Link></li>
-              <li><Link href={`/${lang}/contact`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Liên hệ & Hỗ trợ</Link></li>
-            </ul>
-          </motion.div>
-
-          {/* Column 4: LIÊN HỆ */}
-          <motion.div variants={colVariants}>
-            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm font-sans">LIÊN HỆ</h4>
-            <ul className="space-y-4 text-white/70 font-light text-sm">
-              <li className="flex items-start gap-3 group">
-                <Phone size={16} className="text-vinex-yellow shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                <span className="group-hover:text-white transition-colors">+84 90 123 4567</span>
-              </li>
-              <li className="flex items-start gap-3 group">
-                <Mail size={16} className="text-vinex-yellow shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                <span className="group-hover:text-white transition-colors">hello@vinex.vn</span>
-              </li>
-              <li className="flex items-start gap-3 group">
-                <svg className="w-4 h-4 text-vinex-yellow shrink-0 mt-0.5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                </svg>
-                <span className="group-hover:text-white transition-colors">www.vinex.vn</span>
-              </li>
-              <li className="flex items-start gap-3 group">
-                <MapPin size={16} className="text-vinex-yellow shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                <span className="leading-snug group-hover:text-white transition-colors">123 Đường Nguyễn Văn Linh,<br/>Quận 7, TP. Hồ Chí Minh</span>
-              </li>
-            </ul>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Bottom Bar with Gold Star SVG */}
-      <div className="relative border-t border-vinex-yellow/30 mt-8 pt-6">
-        {/* Absolute center star */}
-        <div className="absolute left-1/2 -top-[7px] -translate-x-1/2 bg-vinex-blue px-4">
-          <motion.div 
-            animate={{ rotate: -360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 0C7 3.86599 3.86599 7 0 7C3.86599 7 7 10.134 7 14C7 10.134 10.134 7 14 7C10.134 7 7 3.86599 7 0Z" fill="#FFC703"/>
-            </svg>
-          </motion.div>
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="max-w-[90rem] mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4 text-white/50 text-[11px] font-light tracking-wide"
-        >
-          <p>© {new Date().getFullYear()} VINEX. All rights reserved.</p>
-          <p>Thiết kế và phát triển bởi VINEX Team</p>
-        </motion.div>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-light text-white/50">
+          <div className="flex items-center gap-4">
+            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <span>•</span>
+            <Link href="#" className="hover:text-white transition-colors">Terms of Use</Link>
+          </div>
+          <div>
+            &copy; {new Date().getFullYear()} VINEX. All rights reserved.
+          </div>
+        </div>
       </div>
     </footer>
   );

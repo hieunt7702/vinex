@@ -3,61 +3,79 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { Mountain, Leaf, Gem, Package, Users } from 'lucide-react'; // Placeholder icons
+
+const flowSteps = [
+  { icon: Mountain, title: 'ĐẤT ĐỎ BAZAN', desc: 'Nguồn đất màu mỡ' },
+  { icon: Leaf, title: 'NÔNG SẢN VIỆT', desc: 'Tinh hoa từ thiên nhiên' },
+  { icon: Gem, title: 'CHẾ TÁC', desc: 'Thủ công tinh xảo' },
+  { icon: Package, title: 'VINEX', desc: 'Tặng phẩm cao cấp' },
+  { icon: Users, title: 'KẾT NỐI', desc: 'Trao đi sự trân trọng' }
+];
 
 export const VietnamStory = () => {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
 
   return (
-    <section className="py-28 bg-vinex-ivory px-4 md:px-8 xl:px-12 relative overflow-hidden">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+    <section className="py-20 lg:py-28 bg-vinex-ivory">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-8">
           
+          {/* Header Content */}
           <motion.div 
-            className="flex-1 w-full"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="relative aspect-square w-full max-w-[560px] mx-auto bg-white rounded-[32px] overflow-hidden shadow-[0_20px_60px_rgba(36,49,58,0.06)] border border-vinex-charcoal/5">
-              {/* Image Placeholder */}
-              <div className="w-full h-full flex flex-col items-center justify-center text-vinex-charcoal/30 bg-vinex-sage/10">
-                <span className="text-[13px] font-bold uppercase tracking-widest mb-2">Vietnam Heritage</span>
-                <span className="text-[11px]">1:1 Aspect Ratio</span>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div 
-            className="flex-1"
-            initial={{ opacity: 0, x: 40 }}
+            className="lg:w-[380px] shrink-0"
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 1, ease: "easeOut" }}
           >
-            <span className="text-[11px] sm:text-xs tracking-[0.2em] text-vinex-gold uppercase mb-6 font-bold block">OUR STORY</span>
-            <h2 className="text-[36px] sm:text-[44px] lg:text-5xl font-bold text-vinex-charcoal mb-8 leading-[1.15]">
-              Câu chuyện từ <br/> những hạt mầm Việt Nam
+            <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-charcoal/50 uppercase mb-4 font-bold block">OUR STORY</span>
+            <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-serif text-vinex-charcoal leading-[1.1] mb-6">
+              FROM THE LAND<br />TO THE GIFT
             </h2>
-            <div className="space-y-6 text-vinex-charcoal/70 font-light mb-12 text-[15px] sm:text-[17px] leading-relaxed">
-              <p>
-                Hành trình của VINEX bắt đầu từ tình yêu sâu sắc với vùng đất đỏ bazan và những người nông dân tâm huyết. Chúng tôi tin rằng, mỗi hạt điều, mỗi sản phẩm nông sản đều mang trong mình tinh hoa của trời đất và mồ hôi của con người.
-              </p>
-              <p>
-                Từ việc kiểm soát khắt khe quy trình chế biến, đến nghệ thuật kết hợp hương vị và thiết kế bao bì tinh tế, VINEX không chỉ tạo ra những sản phẩm chất lượng, mà còn gửi gắm những câu chuyện văn hóa sâu sắc vào từng hộp quà.
-              </p>
-            </div>
-            
+            <p className="text-vinex-charcoal/70 text-[15px] mb-8 leading-relaxed max-w-sm">
+              Từ đất đỏ bazan màu mỡ, chúng tôi chọn lọc từng nông sản tinh túy, để gìn giữ và lan tỏa tinh thần Việt qua những món quà được chế tác bằng tâm huyết.
+            </p>
             <Link href={`/${lang}/gioi-thieu`}>
-              <button className="flex items-center gap-3 text-vinex-teal font-bold uppercase tracking-widest text-[13px] hover:text-vinex-gold transition-colors group">
-                <span>Khám phá hành trình</span>
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+              <button className="text-vinex-charcoal font-bold uppercase tracking-widest text-[11px] hover:text-vinex-teal transition-colors flex items-center gap-2">
+                Tìm hiểu câu chuyện VINEX <span>&rarr;</span>
               </button>
             </Link>
           </motion.div>
+
+          {/* Flow Content */}
+          <div className="lg:flex-1 w-full overflow-x-auto pb-6 scrollbar-hide">
+            <div className="flex items-start min-w-[800px] justify-between relative px-4">
+              
+              {/* Connecting Line */}
+              <div className="absolute top-[32px] left-[10%] right-[10%] h-[1px] bg-vinex-charcoal/10 -z-10" />
+
+              {flowSteps.map((step, idx) => {
+                const Icon = step.icon;
+                return (
+                  <motion.div 
+                    key={idx}
+                    className="flex flex-col items-center text-center w-[120px]"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, delay: idx * 0.15 }}
+                  >
+                    <div className="w-16 h-16 bg-vinex-ivory flex items-center justify-center mb-6">
+                      <Icon className="w-10 h-10 text-vinex-gold stroke-[1.5]" />
+                    </div>
+                    <h3 className="text-[11px] font-bold tracking-widest uppercase text-vinex-charcoal mb-2">
+                      {step.title}
+                    </h3>
+                    <p className="text-[12px] text-vinex-charcoal/50 leading-snug">
+                      {step.desc}
+                    </p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
 
         </div>
       </div>

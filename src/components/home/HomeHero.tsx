@@ -1,73 +1,73 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { getDictionary } from "@/dictionaries";
+import Link from "next/link";
 import { usePathname } from 'next/navigation';
 
 export const HomeHero = () => {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
-  const dict = getDictionary(lang as 'en' | 'vi');
 
   return (
-    <section className="relative min-h-[85vh] bg-vinex-ivory flex flex-col justify-center items-center pt-32 pb-24 text-center lg:text-left px-4 md:px-8 xl:px-12 overflow-hidden">
-      
-      {/* Background Decor: Mảng cong lớn, không texture */}
-      <div className="absolute top-0 right-0 w-[50vw] h-[100vh] bg-white rounded-bl-[120px] pointer-events-none z-0 hidden lg:block shadow-[inset_10px_-10px_30px_rgba(0,0,0,0.02)]"></div>
+    <section className="relative pt-[120px] lg:pt-[140px] pb-20 lg:pb-32 bg-vinex-ivory overflow-hidden">
+      {/* Decorative leaf branch in background (placeholder) */}
+      <div className="absolute top-0 left-10 w-64 h-64 bg-vinex-sage/10 rounded-full blur-3xl -z-10 pointer-events-none" />
+      <div className="absolute top-20 right-20 w-96 h-96 bg-vinex-teal/5 rounded-full blur-3xl -z-10 pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
-        
-        {/* Content */}
-        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <span className="text-xs sm:text-sm tracking-[0.2em] text-vinex-teal uppercase mb-6 font-bold inline-block">
-              VINEX - ENDURING EXCELLENCE
-            </span>
-            <h1 className="text-[40px] sm:text-5xl lg:text-[64px] leading-[1.1] font-bold text-vinex-charcoal max-w-2xl mb-8">
-              {dict.hero.title1} <br className="hidden md:block"/>
-              <span className="text-vinex-charcoal">{dict.hero.title2}</span>
-            </h1>
-            <p className="text-base sm:text-lg text-vinex-charcoal/80 max-w-xl mb-12 leading-relaxed font-light">
-              {dict.hero.subtitle}
-            </p>
-          </motion.div>
-
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          
+          {/* Text Content */}
           <motion.div 
-            className="flex flex-col sm:flex-row w-full sm:w-auto gap-4"
-            initial={{ opacity: 0, y: 30 }}
+            className="flex-1 w-full pt-10"
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 1, ease: "easeOut" }}
           >
-            <motion.button 
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-10 py-4 bg-vinex-teal text-white rounded-lg font-semibold text-[15px] transition-all w-full sm:w-auto"
-            >
-              {dict.hero.cta_collection}
-            </motion.button>
-          </motion.div>
-        </div>
+            <h1 className="text-[52px] sm:text-[64px] md:text-[76px] lg:text-[88px] font-serif leading-[1.1] text-vinex-teal mb-8">
+              Vietnam,<br />Beautifully Gifted.
+            </h1>
+            
+            <p className="text-vinex-charcoal/80 text-[16px] md:text-[18px] max-w-md mb-12 leading-relaxed">
+              Từ tinh hoa nông sản Việt đến những tặng phẩm được chế tác riêng cho thương hiệu của bạn.
+            </p>
 
-        {/* Image - 1:1 Aspect Ratio Box */}
-        <motion.div 
-          className="flex-1 w-full max-w-[560px] lg:max-w-none"
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-        >
-          <div className="relative w-full aspect-square bg-white rounded-[24px] overflow-hidden shadow-[0_20px_60px_rgba(36,49,58,0.05)] border border-vinex-teal/5">
-            {/* Placeholder for Premium Gift Box Image */}
-            <div className="w-full h-full flex flex-col items-center justify-center text-vinex-charcoal/30 bg-vinex-ivory/50">
-              <span className="text-sm font-semibold tracking-widest uppercase mb-2">Premium Gift Box</span>
-              <span className="text-xs">1:1 Aspect Ratio</span>
+            <div className="flex flex-col sm:flex-row gap-4 mb-16">
+              <Link href={`/${lang}/collections`}>
+                <button className="w-full sm:w-auto px-8 py-4 bg-vinex-teal text-white font-bold text-[12px] tracking-widest uppercase hover:bg-vinex-charcoal transition-colors">
+                  KHÁM PHÁ BỘ SƯU TẬP
+                </button>
+              </Link>
+              <Link href={`/${lang}/custom-gifts`}>
+                <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-vinex-teal text-vinex-teal font-bold text-[12px] tracking-widest uppercase hover:bg-vinex-teal hover:text-white transition-colors flex items-center justify-center gap-2">
+                  THIẾT KẾ QUÀ RIÊNG <span>&rarr;</span>
+                </button>
+              </Link>
             </div>
-          </div>
-        </motion.div>
 
+            <div className="flex items-center gap-3 text-[10px] md:text-[11px] font-bold tracking-[0.2em] text-vinex-charcoal uppercase">
+              <span>PREMIUM CORPORATE GIFTS</span>
+              <span className="w-1 h-1 rounded-full bg-vinex-charcoal"></span>
+              <span>MADE IN VIETNAM</span>
+            </div>
+          </motion.div>
+
+          {/* Image Content */}
+          <motion.div 
+            className="flex-1 w-full relative"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+          >
+            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-[700px] w-full bg-vinex-teal/10 shadow-2xl">
+              {/* Image Placeholder */}
+              <div className="absolute inset-0 flex items-center justify-center bg-vinex-teal/5 text-vinex-teal">
+                <span className="font-serif italic text-2xl opacity-50">VINEX Premium Gift Box</span>
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );

@@ -4,70 +4,94 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 
+const processSteps = [
+  {
+    id: '01',
+    title: 'CONCEPT',
+    desc: 'Lắng nghe và xây dựng ý tưởng phù hợp với thương hiệu.',
+    imgColor: 'bg-[#B0B0B0]'
+  },
+  {
+    id: '02',
+    title: 'MATERIAL',
+    desc: 'Lựa chọn chất liệu cao cấp, thân thiện và bền vững.',
+    imgColor: 'bg-[#8C7B65]'
+  },
+  {
+    id: '03',
+    title: 'BRANDING',
+    desc: 'Cá nhân hóa logo, màu sắc, chất liệu & tổng gói.',
+    imgColor: 'bg-[#0D5962]' // Assuming dark teal image
+  },
+  {
+    id: '04',
+    title: 'PRODUCTION',
+    desc: 'Sản xuất cẩn thận, kiểm soát chất lượng ở từng chi tiết.',
+    imgColor: 'bg-[#4A3B32]'
+  }
+];
+
 export const BespokeServiceHome = () => {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
 
   return (
-    <section className="py-32 bg-white px-4 md:px-8 xl:px-12 relative overflow-hidden">
-      {/* Background shape */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-1/3 h-[120%] bg-vinex-sage/5 rounded-l-[80px] pointer-events-none hidden lg:block" />
-
-      <div className="max-w-[1200px] mx-auto relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+    <section className="py-20 lg:py-32 bg-vinex-teal text-white overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
+        <div className="flex flex-col xl:flex-row gap-16 xl:gap-12 items-start">
           
+          {/* Left Content */}
           <motion.div 
-            className="order-2 lg:order-1 relative"
-            initial={{ opacity: 0, x: -40 }}
+            className="xl:w-[320px] shrink-0"
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <div className="relative aspect-[4/5] w-full max-w-[480px] mx-auto bg-vinex-ivory rounded-[32px] overflow-hidden shadow-[0_20px_60px_rgba(36,49,58,0.06)] border border-vinex-charcoal/5">
-              <div className="w-full h-full flex flex-col items-center justify-center text-vinex-charcoal/30 bg-white/50">
-                <span className="text-[13px] font-bold uppercase tracking-widest mb-2">Bespoke Design</span>
-                <span className="text-[11px]">4:5 Aspect Ratio</span>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div 
-            className="order-1 lg:order-2"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <span className="text-[11px] sm:text-xs tracking-[0.2em] text-vinex-teal uppercase mb-6 font-bold block">BESPOKE SERVICE</span>
-            <h2 className="text-[36px] sm:text-[44px] lg:text-5xl font-bold text-vinex-charcoal mb-8 leading-[1.15]">
-              Khả năng Thiết Kế Riêng Độc Bản
+            <h2 className="text-[32px] sm:text-[40px] font-serif leading-[1.1] mb-6">
+              MADE FOR <br />YOUR BRAND.
             </h2>
-            <div className="space-y-6 text-vinex-charcoal/70 font-light mb-12 text-[15px] sm:text-[17px] leading-relaxed">
-              <p>
-                VINEX hiểu rằng mỗi doanh nghiệp là một bản sắc duy nhất. Dịch vụ Bespoke của chúng tôi cho phép bạn tham gia vào mọi khâu sáng tạo để tạo ra món quà mang đậm dấu ấn thương hiệu.
-              </p>
-              <ul className="space-y-4 mt-6">
-                <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-vinex-teal/10 flex items-center justify-center text-vinex-teal shrink-0 mt-0.5">✓</div>
-                  <span>Tùy chọn chất liệu hộp (Gỗ, Da, Sơn mài, Giấy mỹ thuật)</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-vinex-teal/10 flex items-center justify-center text-vinex-teal shrink-0 mt-0.5">✓</div>
-                  <span>Ép kim, dập nổi, khắc laser logo doanh nghiệp chuẩn xác</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-vinex-teal/10 flex items-center justify-center text-vinex-teal shrink-0 mt-0.5">✓</div>
-                  <span>Tùy chỉnh thành phần nông sản bên trong theo ngân sách</span>
-                </li>
-              </ul>
-            </div>
-            
+            <p className="text-white/80 text-[14px] leading-relaxed mb-10">
+              Không có hai thương hiệu giống nhau.<br/>Vì vậy, không nên có hai món quà giống nhau.
+            </p>
             <Link href={`/${lang}/custom-gifts`}>
-              <button className="px-10 py-4 bg-vinex-teal text-white rounded-lg font-semibold text-[14px] hover:bg-vinex-charcoal transition-all duration-300">
-                Tìm hiểu Dịch vụ Bespoke
+              <button className="px-6 py-4 bg-vinex-gold text-vinex-charcoal font-bold text-[11px] tracking-widest uppercase hover:bg-white transition-colors flex items-center justify-center gap-2 w-full sm:w-auto">
+                KHỞI TẠO THIẾT KẾ RIÊNG <span>&rarr;</span>
               </button>
             </Link>
           </motion.div>
+
+          {/* Right Content (Cards) */}
+          <div className="xl:flex-1 w-full overflow-x-auto pb-8 -mb-8 scrollbar-hide">
+            <div className="flex gap-6 min-w-max">
+              {processSteps.map((step, idx) => (
+                <motion.div 
+                  key={step.id}
+                  className="w-[260px] md:w-[280px] shrink-0"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
+                >
+                  <div className={`w-full aspect-[4/3] ${step.imgColor} mb-6 relative overflow-hidden group shadow-lg`}>
+                     {/* Image Placeholder */}
+                     <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-transparent transition-colors duration-500">
+                       <span className="text-white/50 text-xs font-bold uppercase tracking-widest">{step.title}</span>
+                     </div>
+                  </div>
+                  <div>
+                    <div className="flex items-end gap-3 mb-3">
+                      <span className="text-vinex-gold font-bold text-[16px]">{step.id}</span>
+                      <h3 className="text-[13px] font-bold tracking-widest uppercase">{step.title}</h3>
+                    </div>
+                    <p className="text-white/60 text-[13px] font-light leading-relaxed">
+                      {step.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
 
         </div>
       </div>

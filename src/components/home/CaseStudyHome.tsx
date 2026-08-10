@@ -3,70 +3,78 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { Package, Crown, Globe } from 'lucide-react'; // Placeholder icons
 
 export const CaseStudyHome = () => {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
 
   return (
-    <section className="py-28 bg-white px-4 md:px-8 xl:px-12 border-t border-vinex-charcoal/5">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div>
-            <span className="text-[11px] sm:text-xs tracking-[0.2em] text-vinex-teal uppercase mb-4 font-bold block">FEATURED CASE STUDY</span>
-            <h2 className="text-[32px] sm:text-4xl font-bold text-vinex-charcoal">Dự án Thực Tế: Miss World 2026</h2>
-          </div>
-          <Link href={`/${lang}/case-studies`}>
-            <button className="text-vinex-charcoal font-bold uppercase tracking-widest text-[13px] hover:text-vinex-teal transition-colors border-b border-transparent hover:border-vinex-teal pb-1">
-              Xem toàn bộ dự án
-            </button>
-          </Link>
-        </div>
-
-        <motion.div 
-          className="relative bg-vinex-ivory rounded-[32px] overflow-hidden border border-vinex-charcoal/5 flex flex-col lg:flex-row"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
-          {/* Image Part */}
-          <div className="lg:w-1/2 relative min-h-[400px]">
-            <div className="absolute inset-0 bg-vinex-sage/10">
-              {/* Image Placeholder */}
-              <div className="w-full h-full flex items-center justify-center text-vinex-charcoal/30">
-                <span className="font-semibold tracking-widest uppercase text-xs">Miss World Event Photo</span>
+    <section className="py-20 lg:py-28 bg-vinex-ivory">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          
+          {/* Left: Image */}
+          <motion.div 
+            className="flex-1 w-full"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <div className="relative aspect-[4/3] w-full bg-vinex-charcoal overflow-hidden shadow-lg">
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1549451371-64aa98a6f660?q=80&w=1400&auto=format&fit=crop')] bg-cover bg-center mix-blend-luminosity opacity-70" />
+              {/* Event / Gift Box overlay placeholder */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                 <span className="font-serif italic text-white/50 text-xl">Miss World Stage Placeholder</span>
               </div>
             </div>
-          </div>
-          
-          {/* Content Part */}
-          <div className="lg:w-1/2 p-10 md:p-14 lg:p-20 flex flex-col justify-center">
-            <h3 className="text-3xl lg:text-4xl font-bold text-vinex-charcoal mb-6">The Crown Collection</h3>
-            <p className="text-vinex-charcoal/70 font-light mb-10 leading-relaxed text-[16px]">
-              Thách thức đặt ra là tạo ra một bộ quà tặng vừa thể hiện đẳng cấp của cuộc thi sắc đẹp lớn nhất thế giới, vừa truyền tải được tinh hoa nông sản Việt. VINEX đã thiết kế bộ hộp sơn mài độc bản chứa đựng hạt điều tẩm vị thượng hạng và trà sen Tây Hồ, tạo tiếng vang lớn trong đêm tiệc VIP.
+          </motion.div>
+
+          {/* Right: Content */}
+          <motion.div 
+            className="flex-1 w-full"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+          >
+            <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-charcoal/50 uppercase mb-4 font-bold block">
+              FEATURED PROJECT
+            </span>
+            <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-serif text-vinex-charcoal leading-[1.1] mb-6">
+              VINEX &times; MISS WORLD 2026
+            </h2>
+            <p className="text-vinex-charcoal/70 text-[15px] mb-12 leading-relaxed max-w-lg">
+              VINEX tự hào là đơn vị cung cấp quà tặng chính thức cho cuộc thi Miss World Vietnam 2026, chế tác riêng những bộ quà tặng mang đậm bản sắc văn hóa Việt để gửi tới bạn bè quốc tế.
             </p>
             
-            <div className="grid grid-cols-2 gap-8 mb-12">
-              <div>
-                <p className="text-4xl font-bold text-vinex-teal mb-2">5,000+</p>
-                <p className="text-[11px] font-bold text-vinex-charcoal/50 uppercase tracking-widest">Hộp Quà VIP</p>
+            <div className="grid grid-cols-3 gap-6 mb-12">
+              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                <Package className="w-6 h-6 text-vinex-gold mb-3 stroke-[1.5]" />
+                <p className="text-[24px] font-serif text-vinex-charcoal mb-1">5,000+</p>
+                <p className="text-[9px] font-bold text-vinex-charcoal/50 uppercase tracking-widest">VIP GIFT BOXES</p>
               </div>
-              <div>
-                <p className="text-4xl font-bold text-vinex-teal mb-2">100%</p>
-                <p className="text-[11px] font-bold text-vinex-charcoal/50 uppercase tracking-widest">Sơn Mài Thủ Công</p>
+              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                <Crown className="w-6 h-6 text-vinex-gold mb-3 stroke-[1.5]" />
+                <p className="text-[24px] font-serif text-vinex-charcoal mb-1">100%</p>
+                <p className="text-[9px] font-bold text-vinex-charcoal/50 uppercase tracking-widest">HANDCRAFTED<br/>LACQUER</p>
+              </div>
+              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                <Globe className="w-6 h-6 text-vinex-gold mb-3 stroke-[1.5]" />
+                <p className="text-[24px] font-serif text-vinex-charcoal mb-1">01</p>
+                <p className="text-[9px] font-bold text-vinex-charcoal/50 uppercase tracking-widest">GLOBAL<br/>EVENT</p>
               </div>
             </div>
             
-            <div>
-              <Link href={`/${lang}/miss-world-2026`}>
-                <button className="px-10 py-4 bg-transparent border border-vinex-teal text-vinex-teal font-semibold uppercase tracking-wider text-[14px] hover:bg-vinex-teal hover:text-white transition-all duration-300 rounded-lg">
-                  Chi tiết Dự án
-                </button>
-              </Link>
-            </div>
-          </div>
-        </motion.div>
+            <Link href={`/${lang}/miss-world-2026`}>
+              <button className="w-full sm:w-auto px-8 py-4 bg-vinex-teal text-white font-bold text-[11px] tracking-widest uppercase hover:bg-vinex-charcoal transition-colors flex items-center justify-center gap-2">
+                XEM CASE STUDY <span>&rarr;</span>
+              </button>
+            </Link>
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );

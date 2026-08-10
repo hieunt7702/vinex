@@ -3,11 +3,17 @@ import "../globals.css";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { Header } from "@/components/layout/Header";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
-import { Montserrat } from 'next/font/google';
+import { Montserrat, Playfair_Display } from 'next/font/google';
 
 const montserrat = Montserrat({
   subsets: ['latin', 'vietnamese'],
   variable: '--font-sans',
+  display: 'swap',
+});
+
+const playfair = Playfair_Display({
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-serif',
   display: 'swap',
 });
 
@@ -30,10 +36,10 @@ export default async function RootLayout({
   const { locale } = await params;
   
   return (
-    <html lang={locale} suppressHydrationWarning className={`${montserrat.variable}`}>
+    <html lang={locale} suppressHydrationWarning className={`${montserrat.variable} ${playfair.variable}`}>
       <body
         suppressHydrationWarning
-        className={`min-h-screen flex flex-col bg-vinex-white text-vinex-black font-sans antialiased relative`}
+        className={`min-h-screen flex flex-col bg-[#FAF8F2] text-[#24313A] font-sans antialiased relative`}
       >
         <Header />
         <main className="flex-1 flex flex-col">

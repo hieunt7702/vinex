@@ -3,7 +3,6 @@ import { Footer } from "@/components/layout/Footer";
 
 // Sections in order
 import { HomeHero } from "@/components/home/HomeHero";
-import { MissWorldSection } from "@/components/home/MissWorldSection";
 import { BrandPhilosophy } from "@/components/home/BrandPhilosophy";
 import { CollectionsPreview } from "@/components/home/CollectionsPreview";
 import { CorporateGiftingHome } from "@/components/home/CorporateGiftingHome";
@@ -17,42 +16,39 @@ import { FinalCTA } from "@/components/home/FinalCTA";
 export default function Home() {
   return (
     <SmoothScroll>
-      <main className="w-full flex flex-col min-h-screen selection:bg-[#D4AF37] selection:text-black bg-white">
+      <main className="w-full flex flex-col min-h-screen selection:bg-vinex-gold selection:text-white bg-vinex-ivory">
         {/* 1. Hero */}
         <HomeHero />
         
-        {/* 2. VINEX × Miss World 2026 */}
-        <MissWorldSection />
-        
-        {/* 3. Brand Philosophy */}
+        {/* 2. Brand Philosophy */}
         <BrandPhilosophy />
         
-        {/* 4. Collections */}
+        {/* 3. Collections */}
         <CollectionsPreview />
         
-        {/* 5. Corporate Gifting */}
+        {/* 4. Corporate Gifting */}
         <CorporateGiftingHome />
         
-        {/* 6. Bespoke Service */}
+        {/* 5. Bespoke Service */}
         <BespokeServiceHome />
         
-        {/* 7. Vietnam Story */}
+        {/* 6. Vietnam Story */}
         <VietnamStory />
         
-        {/* 8. Why VINEX */}
+        {/* 7. Why VINEX */}
         <WhyVinexHome />
         
-        {/* 9. Case Study */}
+        {/* 8. Case Study (Miss World) */}
         <CaseStudyHome />
         
-        {/* 10. Journal */}
+        {/* 9. Journal */}
         <LatestArticles />
         
-        {/* 11. Final CTA */}
+        {/* 10. Final CTA */}
         <FinalCTA />
       </main>
       
-      {/* 12. Footer */}
+      {/* 11. Footer */}
       <Footer />
     </SmoothScroll>
   );
