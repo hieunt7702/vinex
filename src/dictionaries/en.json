@@ -1,9 +1,19 @@
 {
   "hero": {
-    "title1": "Gifts of Connection",
-    "title2": "Timeless Value",
+    "title1": "VIETNAM,",
+    "title2": "BEAUTIFULLY GIFTED.",
     "subtitle": "Premium Tet gift collections exclusively curated for businesses and strategic partners.",
     "cta_collection": "View Collection",
     "cta_quote": "Get a Quote"
+  },
+  "nav": {
+    "home": "HOME",
+    "miss_world": "MISS WORLD 2026",
+    "corporate_gifts": "CORPORATE GIFTS",
+    "custom_gifts": "BESPOKE GIFTS",
+    "collections": "COLLECTIONS",
+    "about": "ABOUT US",
+    "contact": "CONTACT",
+    "request_quote": "GET A QUOTE"
   }
 }

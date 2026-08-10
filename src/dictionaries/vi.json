@@ -1,9 +1,19 @@
 {
   "hero": {
-    "title1": "Món quà kết nối",
-    "title2": "Giá trị vững bền",
+    "title1": "VIETNAM,",
+    "title2": "BEAUTIFULLY GIFTED.",
     "subtitle": "Bộ sưu tập quà Tết cao cấp dành riêng cho doanh nghiệp và đối tác chiến lược.",
     "cta_collection": "Xem bộ sưu tập",
     "cta_quote": "Nhận báo giá"
+  },
+  "nav": {
+    "home": "TRANG CHỦ",
+    "miss_world": "MISS WORLD 2026",
+    "corporate_gifts": "QUÀ DOANH NGHIỆP",
+    "custom_gifts": "THIẾT KẾ RIÊNG",
+    "collections": "BỘ SƯU TẬP",
+    "about": "VỀ VINEX",
+    "contact": "LIÊN HỆ",
+    "request_quote": "NHẬN TƯ VẤN"
   }
 }

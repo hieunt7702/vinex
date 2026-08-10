@@ -6,6 +6,7 @@ import { Logo } from '@/components/Logo';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { Download, Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { getDictionary } from '@/dictionaries';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 
 export const Header = () => {
@@ -14,6 +15,7 @@ export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
+  const dict = getDictionary(lang as 'en' | 'vi');
 
   const { scrollY } = useScroll();
 
@@ -36,30 +38,12 @@ export const Header = () => {
   }, []);
 
   const navLinks = [
-    { name: 'TRANG CHỦ', href: `/${lang}` },
-    { name: 'GIỚI THIỆU', href: `/${lang}/gioi-thieu` },
-    { 
-      name: 'NĂNG LỰC', 
-      href: '#',
-      hasDropdown: true,
-      children: [
-        { name: 'Nhà máy bóc tách điều', href: `/${lang}/nha-may-boc-tach-dieu` },
-        { name: 'Nhân điều trắng', href: `/${lang}/nhan-dieu-trang` }
-      ]
-    },
-    { 
-      name: 'SẢN PHẨM', 
-      href: `/${lang}/san-pham`,
-      hasDropdown: true,
-      children: [
-        { name: 'Hạt điều tẩm vị', href: `/${lang}/san-pham#hat-dieu` },
-        { name: 'Trà & cà phê', href: `/${lang}/san-pham#tra-ca-phe` },
-        { name: 'Bánh & kẹo', href: `/${lang}/san-pham#banh-keo` },
-        { name: 'Nông sản chế biến', href: `/${lang}/san-pham#nong-san` }
-      ]
-    },
-    { name: 'QUÀ TẶNG', href: `/${lang}/qua-tang-doanh-nghiep` },
-    { name: 'LIÊN HỆ', href: `/${lang}/lien-he` },
+    { name: dict.nav.home, href: `/${lang}` },
+    { name: dict.nav.miss_world, href: `/${lang}/miss-world-2026` },
+    { name: dict.nav.corporate_gifts, href: `/${lang}/corporate-gifts` },
+    { name: dict.nav.custom_gifts, href: `/${lang}/custom-gifts` },
+    { name: dict.nav.collections, href: `/${lang}/collections` },
+    { name: dict.nav.contact, href: `/${lang}/contact` },
   ];
 
   return (
@@ -131,7 +115,7 @@ export const Header = () => {
             <div className="hidden lg:block">
               <LanguageSwitcher />
             </div>
-            <Link href={`/${lang}/lien-he`}>
+            <Link href={`/${lang}/request-quote`}>
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
@@ -156,7 +140,7 @@ export const Header = () => {
                   animate={{ x: ["-100%", "200%"] }}
                   transition={{ duration: 2.5, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
                 />
-                <span className="relative z-10">NHẬN TƯ VẤN</span>
+                <span className="relative z-10">{dict.nav.request_quote}</span>
               </motion.button>
             </Link>
 

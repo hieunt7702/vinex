@@ -4,10 +4,14 @@ import React, { useRef } from "react";
 import { Logo } from "@/components/Logo";
 import { MapPin, Mail, Phone } from "lucide-react";
 import { motion, useInView } from "framer-motion";
+import { usePathname } from 'next/navigation';
+import Link from "next/link";
 
 export const Footer = () => {
   const container = useRef<HTMLDivElement>(null);
   const isInView = useInView(container, { once: true, margin: "-10%" });
+  const pathname = usePathname();
+  const lang = pathname.startsWith('/en') ? 'en' : 'vi';
 
   const footerVariants = {
     hidden: { opacity: 0 },
@@ -72,27 +76,25 @@ export const Footer = () => {
             </div>
           </motion.div>
 
-          {/* Column 2: NĂNG LỰC / SẢN PHẨM */}
+          {/* Column 2: MENU / SẢN PHẨM */}
           <motion.div variants={colVariants}>
-            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm font-sans">NĂNG LỰC / SẢN PHẨM</h4>
+            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm font-sans">GIẢI PHÁP & SẢN PHẨM</h4>
             <ul className="space-y-3 text-white/70 font-light text-sm">
-              <li><a href="/vi/nha-may-boc-tach-dieu" className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Nhà máy bóc tách điều thô</a></li>
-              <li><a href="/vi/nhan-dieu-trang" className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Nhân điều trắng</a></li>
-              <li><a href="/vi/san-pham" className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Sản phẩm nông sản Việt</a></li>
-              <li><a href="/vi/giai-phap-doanh-nghiep" className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Giải pháp doanh nghiệp</a></li>
-              <li><a href="/vi/qua-tang-doanh-nghiep" className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Quà tặng & Bao bì</a></li>
+              <li><Link href={`/${lang}/collections`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Bộ Sưu Tập Quà Tặng</Link></li>
+              <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Quà Doanh Nghiệp</Link></li>
+              <li><Link href={`/${lang}/custom-gifts`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Quà Thiết Kế Riêng (Bespoke)</Link></li>
+              <li><Link href={`/${lang}/miss-world-2026`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Miss World 2026 Collection</Link></li>
             </ul>
           </motion.div>
 
-          {/* Column 3: HỖ TRỢ */}
+          {/* Column 3: VỀ VINEX */}
           <motion.div variants={colVariants}>
-            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm font-sans">HỖ TRỢ</h4>
+            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm font-sans">VỀ VINEX</h4>
             <ul className="space-y-3 text-white/70 font-light text-sm">
-              <li><a href="#" className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Chính sách bảo mật</a></li>
-              <li><a href="#" className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Điều khoản sử dụng</a></li>
-              <li><a href="/vi/kien-thuc" className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Kiến thức nông sản</a></li>
-              <li><a href="#" className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Câu hỏi thường gặp</a></li>
-              <li><a href="/vi/lien-he" className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Liên hệ</a></li>
+              <li><Link href={`/${lang}/gioi-thieu`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Câu chuyện thương hiệu</Link></li>
+              <li><Link href={`/${lang}/case-studies`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Dự án thực tế</Link></li>
+              <li><Link href={`/${lang}/kien-thuc`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Tạp chí (Journal)</Link></li>
+              <li><Link href={`/${lang}/contact`} className="hover:text-vinex-yellow transition-colors hover:translate-x-1 inline-block transform duration-300">Liên hệ & Hỗ trợ</Link></li>
             </ul>
           </motion.div>
 
@@ -100,10 +102,9 @@ export const Footer = () => {
           <motion.div variants={colVariants}>
             <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm font-sans">LIÊN HỆ</h4>
             <ul className="space-y-4 text-white/70 font-light text-sm">
-              {/* TODO: Update with confirmed contact info
               <li className="flex items-start gap-3 group">
                 <Phone size={16} className="text-vinex-yellow shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                <span className="group-hover:text-white transition-colors">1900 1234 56</span>
+                <span className="group-hover:text-white transition-colors">+84 90 123 4567</span>
               </li>
               <li className="flex items-start gap-3 group">
                 <Mail size={16} className="text-vinex-yellow shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
@@ -117,9 +118,8 @@ export const Footer = () => {
               </li>
               <li className="flex items-start gap-3 group">
                 <MapPin size={16} className="text-vinex-yellow shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                <span className="leading-snug group-hover:text-white transition-colors">Số 123, Đường ABC, Quận 1,<br/>TP. Hồ Chí Minh</span>
+                <span className="leading-snug group-hover:text-white transition-colors">123 Đường Nguyễn Văn Linh,<br/>Quận 7, TP. Hồ Chí Minh</span>
               </li>
-              */}
             </ul>
           </motion.div>
         </motion.div>
