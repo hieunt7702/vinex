@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
+import { getDictionary } from '@/dictionaries';
+import type { Locale } from '@/dictionaries';
 
 export const metadata: Metadata = {
   title: "Sản phẩm hạt điều và nông sản Việt | VINEX",
@@ -15,16 +17,19 @@ const DUMMY_PRODUCTS = [
   { id: 4, slug: 'nong-san-che-bien', name: 'Nông sản chế biến', category: 'Nông sản Việt', status: 'Đang phát triển', desc: 'Mứt trái cây nhiệt đới, trái cây sấy và nông sản sấy đặc sản.', img: '' },
 ];
 
-export default function ProductsPage() {
+export default async function ProductsPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = getDictionary(locale as Locale);
+  const pg = t.pages.products;
   return (
     <SmoothScroll>
       <main className="w-full flex flex-col min-h-screen bg-[#FAF8F2] text-vinex-black pt-[90px]">
         
         {/* Header Section */}
         <section className="px-4 pt-20 pb-12 max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6">Sản phẩm từ hạt điều <br className="hidden sm:block" /> và nông sản Việt</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6">{pg.hero_title}</h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto font-light">
-             Danh mục sản phẩm đa dạng đang được VINEX nghiên cứu và phát triển để đáp ứng nhu cầu thị trường.
+             {pg.hero_desc}
           </p>
         </section>
 

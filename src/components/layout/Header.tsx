@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
-import { Menu, X, Phone, Mail, MapPin } from 'lucide-react';
+import { Menu, X, Phone, Mail } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import { useDict } from '@/hooks/useDict';
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,30 +33,32 @@ export const Header = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const t = useDict();
+
   const navLinks = [
-    { name: lang === 'en' ? 'HOME' : 'TRANG CHỦ', href: `/${lang}` },
-    { name: lang === 'en' ? 'ABOUT' : 'GIỚI THIỆU', href: `/${lang}/gioi-thieu` },
+    { name: t.nav.home, href: `/${lang}` },
+    { name: t.nav.about, href: `/${lang}/gioi-thieu` },
     { 
-      name: lang === 'en' ? 'CAPABILITY' : 'NĂNG LỰC', 
+      name: t.nav.capability, 
       href: '#',
       dropdown: [
-        { name: lang === 'en' ? 'VINEX Story' : 'Giới thiệu VINEX', href: `/${lang}/gioi-thieu` },
-        { name: lang === 'en' ? 'Cashew Factory' : 'Nhà máy bóc tách điều', href: `/${lang}/nha-may-boc-tach-dieu` },
-        { name: lang === 'en' ? 'White Cashews' : 'Nhân điều trắng', href: `/${lang}/nhan-dieu-trang` }
+        { name: t.nav.capability_story, href: `/${lang}/gioi-thieu` },
+        { name: t.nav.capability_factory, href: `/${lang}/nha-may-boc-tach-dieu` },
+        { name: t.nav.capability_cashew, href: `/${lang}/nhan-dieu-trang` }
       ]
     },
     { 
-      name: lang === 'en' ? 'PRODUCTS' : 'SẢN PHẨM', 
+      name: t.nav.products, 
       href: `/${lang}/san-pham`,
       dropdown: [
-        { name: lang === 'en' ? 'Flavored Cashews' : 'Hạt điều tẩm vị', href: `/${lang}/san-pham?category=hat-dieu` },
-        { name: lang === 'en' ? 'Tea & Coffee' : 'Trà & cà phê', href: `/${lang}/san-pham?category=tra-ca-phe` },
-        { name: lang === 'en' ? 'Bakery & Sweets' : 'Bánh & kẹo', href: `/${lang}/san-pham?category=banh-keo` },
-        { name: lang === 'en' ? 'Processed Agri' : 'Nông sản chế biến', href: `/${lang}/san-pham?category=nong-san` }
+        { name: t.nav.products_cashew, href: `/${lang}/san-pham?category=hat-dieu` },
+        { name: t.nav.products_tea, href: `/${lang}/san-pham?category=tra-ca-phe` },
+        { name: t.nav.products_bakery, href: `/${lang}/san-pham?category=banh-keo` },
+        { name: t.nav.products_agri, href: `/${lang}/san-pham?category=nong-san` }
       ]
     },
-    { name: lang === 'en' ? 'GIFTS' : 'QUÀ TẶNG', href: `/${lang}/qua-tang-doanh-nghiep` },
-    { name: lang === 'en' ? 'CONTACT' : 'LIÊN HỆ', href: lang === 'en' ? `/${lang}/contact` : `/${lang}/lien-he` },
+    { name: t.nav.gifts, href: `/${lang}/qua-tang-doanh-nghiep` },
+    { name: t.nav.contact, href: lang === 'en' ? `/${lang}/contact` : `/${lang}/lien-he` },
   ];
 
   return (
@@ -135,7 +138,7 @@ export const Header = () => {
             <Link href={`/${lang}/request-quote`} className="hidden md:block">
               <button className="relative overflow-hidden group px-6 py-2.5 bg-vinex-teal text-white font-bold text-[11px] tracking-widest uppercase shadow-[0_0_15px_rgba(13,89,98,0.3)] hover:shadow-[0_0_20px_rgba(13,89,98,0.5)] transition-all duration-300">
                 <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] animate-shine z-20" />
-                <span className="relative z-10 group-hover:text-vinex-gold transition-colors duration-300">{lang === 'en' ? 'GET CONSULTATION' : 'NHẬN TƯ VẤN'}</span>
+                <span className="relative z-10 group-hover:text-vinex-gold transition-colors duration-300">{t.nav.cta}</span>
                 <span className="absolute inset-0 bg-vinex-charcoal transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500 ease-out z-0" />
               </button>
             </Link>
@@ -228,7 +231,7 @@ export const Header = () => {
                <Link href={`/${lang}/request-quote`} onClick={() => setIsMobileMenuOpen(false)}>
                 <button className="relative overflow-hidden group w-full px-6 py-4 bg-vinex-teal text-white font-bold text-[11px] tracking-widest uppercase shadow-md">
                   <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] animate-shine z-20" />
-                  <span className="relative z-10 group-hover:text-vinex-gold transition-colors duration-300">{lang === 'en' ? 'GET CONSULTATION' : 'NHẬN TƯ VẤN'}</span>
+                  <span className="relative z-10 group-hover:text-vinex-gold transition-colors duration-300">{t.nav.cta}</span>
                   <span className="absolute inset-0 bg-vinex-charcoal transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500 ease-out z-0" />
                 </button>
               </Link>

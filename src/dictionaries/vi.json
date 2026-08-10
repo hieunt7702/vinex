@@ -1,19 +1,213 @@
 {
-  "hero": {
-    "title1": "VIETNAM,",
-    "title2": "BEAUTIFULLY GIFTED.",
-    "subtitle": "Bộ sưu tập quà Tết cao cấp dành riêng cho doanh nghiệp và đối tác chiến lược.",
-    "cta_collection": "Xem bộ sưu tập",
-    "cta_quote": "Nhận báo giá"
-  },
   "nav": {
     "home": "TRANG CHỦ",
-    "miss_world": "MISS WORLD 2026",
-    "corporate_gifts": "QUÀ DOANH NGHIỆP",
-    "custom_gifts": "THIẾT KẾ RIÊNG",
-    "collections": "BỘ SƯU TẬP",
-    "about": "VỀ VINEX",
+    "about": "GIỚI THIỆU",
+    "capability": "NĂNG LỰC",
+    "capability_story": "Giới thiệu VINEX",
+    "capability_factory": "Nhà máy bóc tách điều",
+    "capability_cashew": "Nhân điều trắng",
+    "products": "SẢN PHẨM",
+    "products_cashew": "Hạt điều tẩm vị",
+    "products_tea": "Trà & cà phê",
+    "products_bakery": "Bánh & kẹo",
+    "products_agri": "Nông sản chế biến",
+    "gifts": "QUÀ TẶNG",
     "contact": "LIÊN HỆ",
-    "request_quote": "NHẬN TƯ VẤN"
+    "cta": "NHẬN TƯ VẤN"
+  },
+  "hero": {
+    "title1": "Vietnam,",
+    "title2": "Beautifully Gifted.",
+    "subtitle": "Từ tinh hoa nông sản Việt đến những tặng phẩm được chế tác riêng cho thương hiệu của bạn.",
+    "cta_primary": "KHÁM PHÁ QUÀ TẶNG",
+    "cta_secondary": "NHẬN TƯ VẤN",
+    "badge1": "PREMIUM CORPORATE GIFTS",
+    "badge2": "MADE IN VIETNAM"
+  },
+  "missworld": {
+    "label": "Official Gift Partner",
+    "title1": "VINEX",
+    "title2": "Miss World 2026",
+    "desc": "Tự hào là Đối tác Quà tặng Chính thức của Miss World 2026. VINEX mang đến những tặng phẩm hội tụ tinh hoa hạt điều và nông sản Việt, kết tinh cùng nghệ thuật thiết kế bao bì cao cấp, góp phần tôn vinh nhan sắc và giá trị văn hóa trên đấu trường quốc tế.",
+    "img_label": "Hình ảnh chính thức",
+    "img_sub": "Miss World 2026 Sponsorship"
+  },
+  "brand": {
+    "label": "MORE THAN A GIFT.",
+    "headline": "Một món quà không chỉ được trao đi. Nó đại diện cho sự trân trọng, dấu ấn thương hiệu và câu chuyện của người trao.",
+    "tag1": "PRODUCT",
+    "tag2": "CRAFT",
+    "tag3": "CULTURE",
+    "tag4": "CONNECTION"
+  },
+  "collections": {
+    "label": "CURATED COLLECTIONS",
+    "headline": "Những tặng phẩm đáng được nhớ đến.",
+    "cta": "Khám phá bộ sưu tập",
+    "items": [
+      { "id": "01", "category": "SIGNATURE", "name": "Corporate Essentials" },
+      { "id": "02", "category": "EXECUTIVE", "name": "For Distinguished Partners" },
+      { "id": "03", "category": "HERITAGE", "name": "Vietnamese Heritage" },
+      { "id": "04", "category": "EVENT", "name": "Memorable Occasions" },
+      { "id": "05", "category": "BESPOKE", "name": "Custom Tailored Gifts" }
+    ]
+  },
+  "corporate": {
+    "headline": "ONE BRAND.\nMANY OCCASIONS.",
+    "desc": "Mỗi dịp quan trọng đều xứng đáng với một món quà đặc biệt.",
+    "cta": "YÊU CẦU BÁO GIÁ",
+    "occasions": [
+      "QUÀ TẶNG KHÁCH HÀNG",
+      "QUÀ TẶNG ĐỐI TÁC VIP",
+      "QUÀ TẶNG NHÂN VIÊN",
+      "QUÀ TẶNG SỰ KIỆN",
+      "QUÀ TẶNG QUỐC TẾ"
+    ]
+  },
+  "bespoke": {
+    "headline": "MADE FOR\nYOUR BRAND.",
+    "desc": "Không có hai thương hiệu giống nhau.\nVì vậy, không nên có hai món quà giống nhau.",
+    "cta": "TẠO BỘ QUÀ CỦA BẠN",
+    "steps": [
+      { "id": "01", "title": "TƯ VẤN & CONCEPT", "desc": "Lắng nghe nhu cầu, ngân sách và xây dựng ý tưởng thiết kế phù hợp định vị thương hiệu." },
+      { "id": "02", "title": "THIẾT KẾ & MẪU THỬ", "desc": "Lựa chọn kiểu hộp, ribbon, logo, thiệp và tiến hành làm mẫu thử (mockup) thực tế." },
+      { "id": "03", "title": "SẢN XUẤT", "desc": "Tiến hành sản xuất hàng loạt với quy trình kiểm soát chất lượng khắt khe từng chi tiết." },
+      { "id": "04", "title": "GIAO HÀNG", "desc": "Đóng gói an toàn và vận chuyển tận nơi theo đúng tiến độ cam kết với doanh nghiệp." }
+    ]
+  },
+  "vietnam": {
+    "label": "OUR STORY",
+    "headline": "FROM THE LAND\nTO THE GIFT",
+    "desc": "Từ đất đỏ bazan màu mỡ, chúng tôi chọn lọc từng nông sản tinh túy, để gìn giữ và lan tỏa tinh thần Việt qua những món quà được chế tác bằng tâm huyết.",
+    "cta": "Khám phá VINEX",
+    "steps": [
+      { "title": "NGUYÊN LIỆU VIỆT", "desc": "Tuyển chọn từ vùng trồng trù phú" },
+      { "title": "CRAFTSMANSHIP", "desc": "Tỉ mỉ chế tác và tinh tuyển" },
+      { "title": "MÓN QUÀ", "desc": "Tặng phẩm mang dấu ấn thương hiệu" }
+    ]
+  },
+  "why": {
+    "headline": "WHY VINEX",
+    "cta": "LÀM VIỆC VỚI VINEX",
+    "features": [
+      { "title": "CHẤT LƯỢNG", "desc": "Kiểm soát chất lượng nghiêm ngặt từ nguyên liệu thô đến thành phẩm cuối cùng." },
+      { "title": "THIẾT KẾ", "desc": "Năng lực thiết kế bao bì sáng tạo, tôn vinh nhận diện và câu chuyện thương hiệu." },
+      { "title": "CÁ NHÂN HÓA", "desc": "Giải pháp tùy biến linh hoạt theo ngân sách, mục đích và định hướng riêng." },
+      { "title": "SẢN LƯỢNG", "desc": "Nhà máy quy mô lớn, đáp ứng tiến độ cho các sự kiện và đơn hàng quốc tế." }
+    ],
+    "stats": [
+      { "number": "10+", "label": "NĂM\nKINH NGHIỆM" },
+      { "number": "50+", "label": "ĐỐI TÁC\nTIN TƯỞNG" },
+      { "number": "100K+", "label": "MÓN QUÀ\nĐÃ GIAO" }
+    ]
+  },
+  "casestudy": {
+    "label": "FEATURED PROJECT",
+    "headline": "VINEX × MISS WORLD 2026",
+    "desc": "VINEX tự hào là đơn vị cung cấp quà tặng chính thức cho cuộc thi Miss World Vietnam 2026, chế tác riêng những bộ quà tặng mang đậm bản sắc văn hóa Việt để gửi tới bạn bè quốc tế.",
+    "cta": "BẮT ĐẦU DỰ ÁN",
+    "stat1_num": "5,000+",
+    "stat1_label": "VIP GIFT BOXES",
+    "stat2_num": "100%",
+    "stat2_label": "HANDCRAFTED",
+    "stat3_num": "01",
+    "stat3_label": "GLOBAL EVENT"
+  },
+  "journal": {
+    "label": "THE VINEX JOURNAL",
+    "headline": "Câu chuyện, cảm hứng và góc nhìn từ VINEX.",
+    "cta": "Đọc thêm",
+    "articles": [
+      { "id": "01", "category": "QUÀ TẶNG DOANH NGHIỆP", "title": "Quà tặng VIP: Nghệ thuật tạo ấn tượng khó phai với đối tác quốc tế" },
+      { "id": "02", "category": "VĂN HÓA & ĐẶC SẢN VIỆT", "title": "Văn hóa tặng quà của người Việt: Từ truyền thống đến tư duy hiện đại" },
+      { "id": "03", "category": "CASE STUDY", "title": "Hậu trường sản xuất bộ quà tặng VINEX × Miss World 2026" }
+    ]
+  },
+  "cta": {
+    "headline": "LET'S CREATE SOMETHING MEMORABLE.",
+    "desc": "Bạn đang tìm kiếm một món quà xứng đáng với thương hiệu của mình?",
+    "cta_primary": "BẮT ĐẦU DỰ ÁN",
+    "cta_secondary": "NHẬN TƯ VẤN"
+  },
+  "footer": {
+    "tagline": "Tặng phẩm cao cấp từ tinh hoa nông sản Việt Nam.",
+    "col_collections": "COLLECTIONS",
+    "col_company": "CÔNG TY",
+    "col_contact": "LIÊN HỆ",
+    "links_collections": ["Signature Collection", "Executive Collection", "Heritage Collection", "Bespoke Collection"],
+    "links_company": ["Giới thiệu", "Nhà máy", "Nhân điều trắng", "Miss World 2026"],
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "copyright": "VINEX. All rights reserved."
+  },
+  "pages": {
+    "about": {
+      "hero_label": "VỀ VINEX",
+      "hero_title": "Chúng tôi không chỉ sản xuất quà tặng.",
+      "hero_desc": "Chúng tôi chế tác những câu chuyện đáng được kể và những kết nối đáng được trân trọng.",
+      "section1_title": "Hành trình chuỗi giá trị",
+      "section2_title": "Quan điểm về sản phẩm và bao bì",
+      "section3_title": "Phát triển giá trị từ hạt điều và nông sản Việt"
+    },
+    "contact": {
+      "hero_label": "KẾT NỐI",
+      "hero_title": "Bạn đang cần giải pháp nào từ VINEX?",
+      "form_title": "Kết nối cùng VINEX",
+      "form_name": "Họ tên đại diện",
+      "form_company": "Tên công ty",
+      "form_phone": "Số điện thoại",
+      "form_email": "Email",
+      "form_message": "Nội dung yêu cầu",
+      "form_submit": "GỬI YÊU CẦU",
+      "solutions": [
+        { "id": "01", "title": "Quà tặng doanh nghiệp", "desc": "Các bộ quà được thiết kế chuyên biệt cho doanh nghiệp." },
+        { "id": "02", "title": "Thiết kế bao bì riêng", "desc": "Tư vấn và thiết kế bao bì thương hiệu độc quyền." },
+        { "id": "03", "title": "Nhập khẩu nông sản", "desc": "Cung ứng nhân điều và nông sản chế biến chuẩn xuất khẩu." }
+      ]
+    },
+    "products": {
+      "hero_label": "SẢN PHẨM",
+      "hero_title": "Danh mục sản phẩm VINEX",
+      "hero_desc": "Khám phá các dòng sản phẩm từ hạt điều tẩm vị đến trà, cà phê và nông sản chế biến cao cấp.",
+      "tab_all": "Tất cả",
+      "tab_cashew": "Hạt điều",
+      "tab_tea": "Trà & cà phê",
+      "tab_bakery": "Bánh & kẹo",
+      "tab_agri": "Nông sản chế biến"
+    },
+    "gifts": {
+      "hero_label": "QUÀ TẶNG DOANH NGHIỆP",
+      "hero_title": "Tặng phẩm cao cấp dành riêng cho doanh nghiệp.",
+      "hero_desc": "Từ quà tặng khách hàng VIP đến quà tặng sự kiện quy mô lớn — VINEX đồng hành cùng thương hiệu của bạn.",
+      "cta": "YÊU CẦU BÁO GIÁ"
+    },
+    "factory": {
+      "hero_label": "NHÀ MÁY",
+      "hero_title": "Nhà máy bóc tách điều VINEX",
+      "hero_desc": "Công suất xử lý lớn, quy trình kiểm soát chất lượng nghiêm ngặt từ nguồn nguyên liệu đến thành phẩm.",
+      "cta": "LIÊN HỆ HỢP TÁC"
+    },
+    "cashew": {
+      "hero_label": "SẢN PHẨM",
+      "hero_title": "Nhân điều trắng VINEX",
+      "hero_desc": "Nhân điều chất lượng cao, đạt chuẩn xuất khẩu quốc tế, phù hợp cho chế biến thực phẩm và quà tặng.",
+      "cta": "YÊU CẦU BÁO GIÁ"
+    },
+    "request_quote": {
+      "hero_label": "BÁO GIÁ",
+      "hero_title": "Nhận đề xuất từ VINEX",
+      "hero_desc": "Điền thông tin để nhận báo giá chi tiết và tư vấn giải pháp quà tặng phù hợp.",
+      "form_company": "Tên công ty",
+      "form_name": "Người liên hệ",
+      "form_phone": "Số điện thoại",
+      "form_email": "Email",
+      "form_qty": "Số lượng quà",
+      "form_budget": "Ngân sách dự kiến",
+      "form_occasion": "Dịp tặng quà",
+      "form_deadline": "Ngày giao hàng mong muốn",
+      "form_branding": "Yêu cầu branding",
+      "form_note": "Ghi chú thêm",
+      "form_submit": "NHẬN ĐỀ XUẤT TỪ VINEX"
+    }
   }
 }

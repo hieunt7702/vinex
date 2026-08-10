@@ -1,6 +1,7 @@
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 // Sections in order
 import { HomeHero } from "@/components/home/HomeHero";
+import { MissWorldIntro } from "@/components/home/MissWorldIntro";
 import { BrandPhilosophy } from "@/components/home/BrandPhilosophy";
 import { CollectionsPreview } from "@/components/home/CollectionsPreview";
 import { CorporateGiftingHome } from "@/components/home/CorporateGiftingHome";
@@ -18,31 +19,34 @@ export default function Home() {
         {/* 1. Hero */}
         <HomeHero />
         
-        {/* 2. Brand Philosophy */}
+        {/* 2. Miss World 2026 Intro */}
+        <MissWorldIntro />
+        
+        {/* 3. Brand Philosophy */}
         <BrandPhilosophy />
         
-        {/* 3. Collections */}
+        {/* 4. Collections */}
         <CollectionsPreview />
         
-        {/* 4. Corporate Gifting */}
+        {/* 5. Corporate Gifting */}
         <CorporateGiftingHome />
         
-        {/* 5. Bespoke Service */}
+        {/* 6. Bespoke Service */}
         <BespokeServiceHome />
         
-        {/* 6. Vietnam Story */}
+        {/* 7. Vietnam Story */}
         <VietnamStory />
         
-        {/* 7. Why VINEX */}
+        {/* 8. Why VINEX */}
         <WhyVinexHome />
         
-        {/* 8. Case Study (Miss World) */}
+        {/* 9. Case Study (Miss World) */}
         <CaseStudyHome />
         
-        {/* 9. Journal */}
+        {/* 10. Journal */}
         <LatestArticles />
         
-        {/* 10. Final CTA */}
+        {/* 11. Final CTA */}
         <FinalCTA />
       </main>
     </SmoothScroll>

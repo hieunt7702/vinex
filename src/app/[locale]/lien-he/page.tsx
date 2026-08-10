@@ -1,17 +1,23 @@
 import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
+import { getDictionary } from '@/dictionaries';
+import type { Locale } from '@/dictionaries';
 
 export const metadata: Metadata = {
   title: "Liên hệ VINEX | Nông sản và Quà tặng doanh nghiệp",
   description: "Kết nối cùng VINEX để nhận tư vấn về cung ứng nhân điều trắng, sản phẩm nông sản, bao bì và bộ quà tặng doanh nghiệp.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = getDictionary(locale as Locale);
+  const pg = t.pages.contact;
+
   const solutions = [
-    { id: '01', title: 'Nhân điều trắng', desc: 'Trao đổi nguồn cung', link: '/vi/nhan-dieu-trang', bg: 'bg-[#FAF8F2] border-[#E8E4D9] text-vinex-teal', numBg: 'bg-vinex-gold text-vinex-teal' },
-    { id: '02', title: 'Danh mục sản phẩm', desc: 'Gửi nhu cầu sản phẩm', link: '/vi/giai-phap-doanh-nghiep', bg: 'bg-[#FAF8F2] border-[#E8E4D9] text-vinex-teal', numBg: 'bg-vinex-gold text-vinex-teal' },
-    { id: '03', title: 'Quà tặng doanh nghiệp', desc: 'Nhận tư vấn bộ quà', link: '/vi/qua-tang-doanh-nghiep', bg: 'bg-vinex-teal border-vinex-teal text-white shadow-xl', numBg: 'bg-vinex-gold text-vinex-teal' },
+    { id: '01', title: pg.solutions[0].title, desc: pg.solutions[0].desc, link: `/${locale}/nhan-dieu-trang`, bg: 'bg-[#FAF8F2] border-[#E8E4D9] text-vinex-teal', numBg: 'bg-vinex-gold text-vinex-teal' },
+    { id: '02', title: pg.solutions[1].title, desc: pg.solutions[1].desc, link: `/${locale}/giai-phap-doanh-nghiep`, bg: 'bg-[#FAF8F2] border-[#E8E4D9] text-vinex-teal', numBg: 'bg-vinex-gold text-vinex-teal' },
+    { id: '03', title: pg.solutions[2].title, desc: pg.solutions[2].desc, link: `/${locale}/qua-tang-doanh-nghiep`, bg: 'bg-vinex-teal border-vinex-teal text-white shadow-xl', numBg: 'bg-vinex-gold text-vinex-teal' },
   ];
 
   return (
@@ -21,7 +27,7 @@ export default function ContactPage() {
         {/* Section 1: Mỏ neo giải pháp */}
         <section className="px-4 py-24 max-w-7xl mx-auto w-full">
           <div className="text-center mb-10 md:mb-16">
-             <h1 className="text-3xl md:text-4xl lg:text-5xl font-marcellus text-vinex-teal mb-4 md:mb-6 leading-tight">Bạn đang cần giải pháp nào từ VINEX?</h1>
+             <h1 className="text-3xl md:text-4xl lg:text-5xl font-marcellus text-vinex-teal mb-4 md:mb-6 leading-tight">{pg.hero_title}</h1>
              <div className="w-[60px] h-[2px] bg-vinex-gold mx-auto"></div>
           </div>
           
@@ -44,7 +50,7 @@ export default function ContactPage() {
              
              {/* Form Section */}
              <div className="flex-1 bg-white p-6 sm:p-10 md:p-14 rounded-sm shadow-sm border border-[#E8E4D9]">
-                <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-8 md:mb-10">Kết nối cùng VINEX</h2>
+                <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-8 md:mb-10">{pg.form_title}</h2>
                 
                 <form className="space-y-6 md:space-y-8">
                    <div>
@@ -81,13 +87,13 @@ export default function ContactPage() {
                    <div className="flex items-start gap-4">
                       <input type="checkbox" id="consent" className="mt-1 accent-vinex-teal w-4 h-4 cursor-pointer" />
                       <label htmlFor="consent" className="text-[13px] text-gray-500 font-light leading-relaxed cursor-pointer">
-                         Tôi đồng ý với chính sách bảo mật và cho phép VINEX liên hệ dựa trên thông tin đã cung cấp.
+                         {pg.form_consent}
                       </label>
                    </div>
                    
                    <div className="pt-4">
                       <button type="button" className="px-12 py-4 bg-vinex-teal text-white rounded-sm font-bold uppercase tracking-[0.15em] text-xs hover:bg-vinex-teal/90 transition-colors w-full md:w-auto shadow-md">
-                         Gửi yêu cầu
+                         {pg.form_submit}
                       </button>
                    </div>
                 </form>

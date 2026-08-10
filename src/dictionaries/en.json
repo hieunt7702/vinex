@@ -1,19 +1,213 @@
 {
-  "hero": {
-    "title1": "VIETNAM,",
-    "title2": "BEAUTIFULLY GIFTED.",
-    "subtitle": "Premium Tet gift collections exclusively curated for businesses and strategic partners.",
-    "cta_collection": "View Collection",
-    "cta_quote": "Get a Quote"
-  },
   "nav": {
     "home": "HOME",
-    "miss_world": "MISS WORLD 2026",
-    "corporate_gifts": "CORPORATE GIFTS",
-    "custom_gifts": "BESPOKE GIFTS",
-    "collections": "COLLECTIONS",
-    "about": "ABOUT US",
+    "about": "ABOUT",
+    "capability": "CAPABILITY",
+    "capability_story": "VINEX Story",
+    "capability_factory": "Cashew Factory",
+    "capability_cashew": "White Cashews",
+    "products": "PRODUCTS",
+    "products_cashew": "Flavored Cashews",
+    "products_tea": "Tea & Coffee",
+    "products_bakery": "Bakery & Sweets",
+    "products_agri": "Processed Agri",
+    "gifts": "GIFTS",
     "contact": "CONTACT",
-    "request_quote": "GET A QUOTE"
+    "cta": "GET CONSULTATION"
+  },
+  "hero": {
+    "title1": "Vietnam,",
+    "title2": "Beautifully Gifted.",
+    "subtitle": "From the finest Vietnamese agricultural produce to bespoke gifts crafted for your brand.",
+    "cta_primary": "EXPLORE GIFTS",
+    "cta_secondary": "GET CONSULTATION",
+    "badge1": "PREMIUM CORPORATE GIFTS",
+    "badge2": "MADE IN VIETNAM"
+  },
+  "missworld": {
+    "label": "Official Gift Partner",
+    "title1": "VINEX",
+    "title2": "Miss World 2026",
+    "desc": "Proud to be the Official Gift Partner of Miss World 2026. VINEX presents gifts that bring together the finest Vietnamese cashews and agricultural products, combined with premium packaging artistry, honoring beauty and cultural values on the world stage.",
+    "img_label": "Official Imagery",
+    "img_sub": "Miss World 2026 Sponsorship"
+  },
+  "brand": {
+    "label": "MORE THAN A GIFT.",
+    "headline": "A gift is not merely given. It represents appreciation, brand identity, and the story of the giver.",
+    "tag1": "PRODUCT",
+    "tag2": "CRAFT",
+    "tag3": "CULTURE",
+    "tag4": "CONNECTION"
+  },
+  "collections": {
+    "label": "CURATED COLLECTIONS",
+    "headline": "Gifts worth remembering.",
+    "cta": "Explore collections",
+    "items": [
+      { "id": "01", "category": "SIGNATURE", "name": "Corporate Essentials" },
+      { "id": "02", "category": "EXECUTIVE", "name": "For Distinguished Partners" },
+      { "id": "03", "category": "HERITAGE", "name": "Vietnamese Heritage" },
+      { "id": "04", "category": "EVENT", "name": "Memorable Occasions" },
+      { "id": "05", "category": "BESPOKE", "name": "Custom Tailored Gifts" }
+    ]
+  },
+  "corporate": {
+    "headline": "ONE BRAND.\nMANY OCCASIONS.",
+    "desc": "Every important occasion deserves a truly special gift.",
+    "cta": "REQUEST A QUOTE",
+    "occasions": [
+      "CLIENT GIFTS",
+      "VIP PARTNER GIFTS",
+      "EMPLOYEE GIFTS",
+      "EVENT GIFTS",
+      "INTERNATIONAL GIFTS"
+    ]
+  },
+  "bespoke": {
+    "headline": "MADE FOR\nYOUR BRAND.",
+    "desc": "No two brands are alike.\nSo no two gifts should be either.",
+    "cta": "CREATE YOUR GIFT SET",
+    "steps": [
+      { "id": "01", "title": "CONSULT & CONCEPT", "desc": "Listen to your needs, budget and build a design concept aligned with your brand positioning." },
+      { "id": "02", "title": "DESIGN & SAMPLE", "desc": "Select box style, ribbon, logo, greeting card and proceed with physical mockup production." },
+      { "id": "03", "title": "PRODUCTION", "desc": "Mass production with strict quality control at every detail." },
+      { "id": "04", "title": "DELIVERY", "desc": "Safe packaging and delivery to your location on the committed timeline." }
+    ]
+  },
+  "vietnam": {
+    "label": "OUR STORY",
+    "headline": "FROM THE LAND\nTO THE GIFT",
+    "desc": "From the rich red basalt soil, we select the finest agricultural produce to preserve and share the Vietnamese spirit through gifts crafted with heart.",
+    "cta": "Explore VINEX",
+    "steps": [
+      { "title": "VIETNAMESE ORIGIN", "desc": "Sourced from fertile growing regions" },
+      { "title": "CRAFTSMANSHIP", "desc": "Meticulously crafted and refined" },
+      { "title": "THE GIFT", "desc": "A keepsake bearing your brand's mark" }
+    ]
+  },
+  "why": {
+    "headline": "WHY VINEX",
+    "cta": "WORK WITH VINEX",
+    "features": [
+      { "title": "QUALITY", "desc": "Strict quality control from raw materials to finished product." },
+      { "title": "DESIGN", "desc": "Creative packaging design that honors brand identity and storytelling." },
+      { "title": "CUSTOMIZATION", "desc": "Flexible customization tailored to budget, purpose and vision." },
+      { "title": "SCALE", "desc": "Large-scale factory capacity meeting timelines for international events and orders." }
+    ],
+    "stats": [
+      { "number": "10+", "label": "YEARS OF\nEXPERIENCE" },
+      { "number": "50+", "label": "PARTNERS\nTRUST US" },
+      { "number": "100K+", "label": "GIFTS\nDELIVERED" }
+    ]
+  },
+  "casestudy": {
+    "label": "FEATURED PROJECT",
+    "headline": "VINEX × MISS WORLD 2026",
+    "desc": "VINEX is proud to be the official gift supplier for Miss World Vietnam 2026, crafting bespoke gift sets imbued with Vietnamese cultural heritage for international guests.",
+    "cta": "START A PROJECT",
+    "stat1_num": "5,000+",
+    "stat1_label": "VIP GIFT BOXES",
+    "stat2_num": "100%",
+    "stat2_label": "HANDCRAFTED",
+    "stat3_num": "01",
+    "stat3_label": "GLOBAL EVENT"
+  },
+  "journal": {
+    "label": "THE VINEX JOURNAL",
+    "headline": "Stories, inspiration and perspectives from VINEX.",
+    "cta": "Read more",
+    "articles": [
+      { "id": "01", "category": "CORPORATE GIFTING", "title": "VIP Gifts: The Art of Making a Lasting Impression with International Partners" },
+      { "id": "02", "category": "CULTURE & VIETNAMESE HERITAGE", "title": "Vietnamese Gift-Giving Culture: From Tradition to Modern Thinking" },
+      { "id": "03", "category": "CASE STUDY", "title": "Behind the Scenes: Crafting the VINEX × Miss World 2026 Gift Collection" }
+    ]
+  },
+  "cta": {
+    "headline": "LET'S CREATE SOMETHING MEMORABLE.",
+    "desc": "Looking for a gift worthy of your brand?",
+    "cta_primary": "START A PROJECT",
+    "cta_secondary": "GET CONSULTATION"
+  },
+  "footer": {
+    "tagline": "Premium gifts from the finest Vietnamese agricultural produce.",
+    "col_collections": "COLLECTIONS",
+    "col_company": "COMPANY",
+    "col_contact": "CONTACT",
+    "links_collections": ["Signature Collection", "Executive Collection", "Heritage Collection", "Bespoke Collection"],
+    "links_company": ["About Us", "Factory", "White Cashews", "Miss World 2026"],
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "copyright": "VINEX. All rights reserved."
+  },
+  "pages": {
+    "about": {
+      "hero_label": "ABOUT VINEX",
+      "hero_title": "We don't just make gifts.",
+      "hero_desc": "We craft stories worth telling and connections worth cherishing.",
+      "section1_title": "Value Chain Journey",
+      "section2_title": "Our Product & Packaging Philosophy",
+      "section3_title": "Developing Value from Vietnamese Cashews & Agriculture"
+    },
+    "contact": {
+      "hero_label": "CONNECT",
+      "hero_title": "What solution are you looking for from VINEX?",
+      "form_title": "Connect with VINEX",
+      "form_name": "Representative Name",
+      "form_company": "Company Name",
+      "form_phone": "Phone Number",
+      "form_email": "Email",
+      "form_message": "Your Requirements",
+      "form_submit": "SEND REQUEST",
+      "solutions": [
+        { "id": "01", "title": "Corporate Gifts", "desc": "Bespoke gift sets designed specifically for businesses." },
+        { "id": "02", "title": "Custom Packaging Design", "desc": "Consultation and design for exclusive brand packaging." },
+        { "id": "03", "title": "Agricultural Import", "desc": "Supply of cashew kernels and processed agricultural products to export standards." }
+      ]
+    },
+    "products": {
+      "hero_label": "PRODUCTS",
+      "hero_title": "VINEX Product Catalog",
+      "hero_desc": "Explore our product lines from flavored cashews to tea, coffee and premium processed agricultural goods.",
+      "tab_all": "All",
+      "tab_cashew": "Cashews",
+      "tab_tea": "Tea & Coffee",
+      "tab_bakery": "Bakery & Sweets",
+      "tab_agri": "Processed Agri"
+    },
+    "gifts": {
+      "hero_label": "CORPORATE GIFTS",
+      "hero_title": "Premium gifts exclusively for businesses.",
+      "hero_desc": "From VIP client gifts to large-scale event gifts — VINEX accompanies your brand.",
+      "cta": "REQUEST A QUOTE"
+    },
+    "factory": {
+      "hero_label": "FACTORY",
+      "hero_title": "VINEX Cashew Processing Factory",
+      "hero_desc": "High-capacity processing with strict quality control from raw material sourcing to finished product.",
+      "cta": "CONTACT FOR PARTNERSHIP"
+    },
+    "cashew": {
+      "hero_label": "PRODUCTS",
+      "hero_title": "VINEX White Cashew Kernels",
+      "hero_desc": "High-quality cashew kernels meeting international export standards, suitable for food processing and gifting.",
+      "cta": "REQUEST A QUOTE"
+    },
+    "request_quote": {
+      "hero_label": "GET A QUOTE",
+      "hero_title": "Receive a Proposal from VINEX",
+      "hero_desc": "Fill in the information to receive a detailed quote and gift solution consultation.",
+      "form_company": "Company Name",
+      "form_name": "Contact Person",
+      "form_phone": "Phone Number",
+      "form_email": "Email",
+      "form_qty": "Gift Quantity",
+      "form_budget": "Expected Budget",
+      "form_occasion": "Gift Occasion",
+      "form_deadline": "Desired Delivery Date",
+      "form_branding": "Branding Requirements",
+      "form_note": "Additional Notes",
+      "form_submit": "RECEIVE PROPOSAL FROM VINEX"
+    }
   }
 }

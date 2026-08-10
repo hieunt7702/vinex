@@ -1,8 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useDict } from '@/hooks/useDict';
 
 export const BrandPhilosophy = () => {
+  const t = useDict();
+
   return (
     <section className="py-24 lg:py-32 bg-vinex-ivory">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
@@ -16,20 +19,20 @@ export const BrandPhilosophy = () => {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <span className="text-[13px] md:text-[15px] font-bold tracking-[0.2em] text-vinex-gold uppercase block mb-6">
-              MORE THAN A GIFT.
+              {t.brand.label}
             </span>
             <h2 className="text-[28px] sm:text-[34px] md:text-[40px] lg:text-[44px] font-marcellus leading-[1.2] text-vinex-charcoal mb-12">
-              Một món quà không chỉ được trao đi. Nó đại diện cho sự trân trọng, dấu ấn thương hiệu và câu chuyện của người trao.
+              {t.brand.headline}
             </h2>
             
             <div className="flex flex-wrap items-center gap-3 text-[10px] md:text-[11px] font-bold tracking-[0.2em] text-vinex-charcoal/60 uppercase">
-              <span>PRODUCT</span>
+              <span>{t.brand.tag1}</span>
               <span className="w-1 h-1 rounded-full bg-vinex-charcoal/60"></span>
-              <span>CRAFT</span>
+              <span>{t.brand.tag2}</span>
               <span className="w-1 h-1 rounded-full bg-vinex-charcoal/60"></span>
-              <span>CULTURE</span>
+              <span>{t.brand.tag3}</span>
               <span className="w-1 h-1 rounded-full bg-vinex-charcoal/60"></span>
-              <span>CONNECTION</span>
+              <span>{t.brand.tag4}</span>
             </div>
           </motion.div>
 

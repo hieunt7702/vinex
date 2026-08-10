@@ -3,52 +3,41 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { useDict } from '@/hooks/useDict';
 
-const collections = [
-  {
-    id: '01',
-    category: 'SIGNATURE',
-    name: 'Corporate Essentials',
-    imgColor: 'bg-vinex-teal/80'
-  },
-  {
-    id: '02',
-    category: 'EXECUTIVE',
-    name: 'For Distinguished Partners',
-    imgColor: 'bg-vinex-teal/90'
-  },
-  {
-    id: '03',
-    category: 'HERITAGE',
-    name: 'Vietnamese Heritage',
-    imgColor: 'bg-[#5C1A1B]' // A deep red/brown for heritage based on the image
-  }
+const imgColors = [
+  'bg-vinex-teal/80',
+  'bg-vinex-teal/90',
+  'bg-[#5C1A1B]',
+  'bg-vinex-gold/80',
+  'bg-vinex-charcoal/90'
 ];
 
 export const CollectionsPreview = () => {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
+  const t = useDict();
 
   return (
     <section className="py-20 lg:py-28 bg-vinex-ivory">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
           <div>
-            <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-charcoal/50 uppercase mb-4 font-bold block">CURATED COLLECTIONS</span>
+            <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-charcoal/50 uppercase mb-4 font-bold block">{t.collections.label}</span>
             <h2 className="text-[32px] sm:text-4xl md:text-[44px] font-marcellus text-vinex-charcoal leading-tight">
-              Những tặng phẩm đáng được nhớ đến.
+              {t.collections.headline}
             </h2>
           </div>
-          <Link href={`/${lang}/collections`}>
+          <Link href={`/${lang}/qua-tang-doanh-nghiep`}>
             <button className="text-vinex-charcoal font-bold uppercase tracking-widest text-[11px] hover:text-vinex-teal transition-colors flex items-center gap-2">
-              Xem tất cả bộ sưu tập <span>&rarr;</span>
+              {t.collections.cta} <span>&rarr;</span>
             </button>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {collections.map((col, idx) => (
-            <Link href={`/${lang}/collections/${col.category.toLowerCase()}`} key={col.id}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {t.collections.items.map((col, idx) => (
+            <Link href={`/${lang}/qua-tang-doanh-nghiep`} key={col.id}>
               <motion.div 
                 className="group cursor-pointer relative aspect-[4/3] w-full overflow-hidden"
                 initial={{ opacity: 0, y: 30 }}
@@ -57,11 +46,11 @@ export const CollectionsPreview = () => {
                 transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
               >
                 {/* Image Placeholder Background */}
-                <div className={`absolute inset-0 ${col.imgColor} transition-transform duration-700 group-hover:scale-105 flex items-center justify-center`}>
-                   <span className="font-marcellus italic text-white/30 text-xl">{col.category} Box Placeholder</span>
+                <div className={`absolute inset-0 ${imgColors[idx]} transition-transform duration-700 group-hover:scale-105 flex items-center justify-center`}>
+                   <span className="font-marcellus italic text-white/30 text-xl">{col.category} Box</span>
                 </div>
                 
-                {/* Gradient Overlay for Text Readability */}
+                {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                 {/* Text Content */}

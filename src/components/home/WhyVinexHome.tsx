@@ -1,22 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck, MapPin, Edit3, Briefcase } from 'lucide-react'; // Placeholder icons
+import Link from "next/link";
+import { usePathname } from 'next/navigation';
+import { ShieldCheck, Edit3, MapPin, Briefcase } from 'lucide-react';
+import { useDict } from '@/hooks/useDict';
 
-const features = [
-  { icon: ShieldCheck, title: "PREMIUM QUALITY", desc: "Kiểm soát chất lượng nghiêm ngặt từ nguyên liệu đến thành phẩm." },
-  { icon: MapPin, title: "VIETNAMESE ORIGIN", desc: "Tinh hoa nông sản Việt từ những vùng nguyên liệu chọn lọc." },
-  { icon: Edit3, title: "BESPOKE DESIGN", desc: "Thiết kế riêng theo nhận diện và câu chuyện thương hiệu." },
-  { icon: Briefcase, title: "ENTERPRISE SCALE", desc: "Đáp ứng đơn hàng lớn và các sự kiện quy mô quốc tế." }
-];
-
-const stats = [
-  { number: "10+", label: "YEARS\nOF EXPERIENCE" },
-  { number: "50+", label: "PARTNERS\nTRUST US" },
-  { number: "100K+", label: "GIFTS\nDELIVERED" }
-];
+const featureIcons = [ShieldCheck, Edit3, MapPin, Briefcase];
 
 export const WhyVinexHome = () => {
+  const pathname = usePathname();
+  const lang = pathname.startsWith('/en') ? 'en' : 'vi';
+  const t = useDict();
+
   return (
     <section className="py-20 lg:py-24 bg-vinex-teal text-white border-b border-white/10">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
@@ -26,14 +22,14 @@ export const WhyVinexHome = () => {
           <div className="w-full lg:w-[70%] flex flex-col justify-between">
             <div className="mb-10">
               <h2 className="text-[28px] sm:text-[36px] font-marcellus text-vinex-gold tracking-wider uppercase">
-                WHY VINEX
+                {t.why.headline}
               </h2>
               <div className="w-[50px] h-[2px] bg-vinex-gold mt-4"></div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
-              {features.map((item, idx) => {
-                const Icon = item.icon;
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10 mb-10">
+              {t.why.features.map((item, idx) => {
+                const Icon = featureIcons[idx];
                 return (
                   <motion.div 
                     key={idx}
@@ -58,11 +54,25 @@ export const WhyVinexHome = () => {
                 );
               })}
             </div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <Link href={`/${lang}/lien-he`}>
+                <button className="relative overflow-hidden group px-8 py-4 bg-vinex-gold text-vinex-charcoal font-bold text-[11px] tracking-widest uppercase hover:bg-white transition-colors w-full sm:w-auto">
+                  <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine z-20" />
+                  <span className="relative z-10">{t.why.cta}</span>
+                </button>
+              </Link>
+            </motion.div>
           </div>
 
           {/* Right Side: Stats (30%) */}
           <div className="w-full lg:w-[30%] flex flex-row lg:flex-col justify-between lg:justify-center gap-8 pt-8 lg:pt-0 border-t lg:border-t-0 lg:border-l border-white/10 lg:pl-16">
-            {stats.map((stat, idx) => (
+            {t.why.stats.map((stat, idx) => (
               <motion.div 
                 key={idx}
                 initial={{ opacity: 0, x: 20 }}

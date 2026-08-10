@@ -3,19 +3,15 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { Mountain, Leaf, Gem, Package, Users } from 'lucide-react'; // Placeholder icons
+import { Leaf, Gem, Package } from 'lucide-react';
+import { useDict } from '@/hooks/useDict';
 
-const flowSteps = [
-  { icon: Mountain, title: 'ĐẤT ĐỎ BAZAN', desc: 'Nguồn đất màu mỡ' },
-  { icon: Leaf, title: 'NÔNG SẢN VIỆT', desc: 'Tinh hoa từ thiên nhiên' },
-  { icon: Gem, title: 'CHẾ TÁC', desc: 'Thủ công tinh xảo' },
-  { icon: Package, title: 'VINEX', desc: 'Tặng phẩm cao cấp' },
-  { icon: Users, title: 'KẾT NỐI', desc: 'Trao đi sự trân trọng' }
-];
+const stepIcons = [Leaf, Gem, Package];
 
 export const VietnamStory = () => {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
+  const t = useDict();
 
   return (
     <section className="py-20 lg:py-28 bg-vinex-ivory">
@@ -30,33 +26,33 @@ export const VietnamStory = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-charcoal/50 uppercase mb-4 font-bold block">OUR STORY</span>
-            <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-marcellus text-vinex-charcoal leading-[1.1] mb-6">
-              FROM THE LAND<br />TO THE GIFT
+            <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-charcoal/50 uppercase mb-4 font-bold block">{t.vietnam.label}</span>
+            <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-marcellus text-vinex-charcoal leading-[1.1] mb-6 whitespace-pre-line">
+              {t.vietnam.headline}
             </h2>
             <p className="text-vinex-charcoal/70 text-[15px] mb-8 leading-relaxed max-w-sm">
-              Từ đất đỏ bazan màu mỡ, chúng tôi chọn lọc từng nông sản tinh túy, để gìn giữ và lan tỏa tinh thần Việt qua những món quà được chế tác bằng tâm huyết.
+              {t.vietnam.desc}
             </p>
             <Link href={`/${lang}/gioi-thieu`}>
               <button className="text-vinex-charcoal font-bold uppercase tracking-widest text-[11px] hover:text-vinex-teal transition-colors flex items-center gap-2">
-                Tìm hiểu câu chuyện VINEX <span>&rarr;</span>
+                {t.vietnam.cta} <span>&rarr;</span>
               </button>
             </Link>
           </motion.div>
 
           {/* Flow Content */}
-          <div className="lg:flex-1 w-full overflow-x-auto pb-6 scrollbar-hide">
-            <div className="flex items-start min-w-[800px] justify-between relative px-4">
+          <div className="lg:flex-1 w-full pb-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-6 md:gap-12 relative px-4">
               
               {/* Connecting Line */}
-              <div className="absolute top-[32px] left-[10%] right-[10%] h-[1px] bg-vinex-charcoal/10 -z-10" />
+              <div className="hidden sm:block absolute top-[32px] left-[15%] right-[15%] h-[1px] bg-vinex-charcoal/10 z-0" />
 
-              {flowSteps.map((step, idx) => {
-                const Icon = step.icon;
+              {t.vietnam.steps.map((step, idx) => {
+                const Icon = stepIcons[idx];
                 return (
                   <motion.div 
                     key={idx}
-                    className="flex flex-col items-center text-center w-[120px]"
+                    className="flex flex-col items-center text-center w-[160px] relative z-10"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
