@@ -3,10 +3,13 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { useDict } from '@/hooks/useDict';
 
 export default function AboutPage() {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
+  const t = useDict();
+  const pg = t.pages.about;
 
   return (
     <main className="w-full flex flex-col min-h-screen pt-[90px] bg-vinex-white text-vinex-black">
@@ -25,7 +28,7 @@ export default function AboutPage() {
             transition={{ duration: 1 }}
           >
             <span className="text-[12px] tracking-[0.2em] text-vinex-gold uppercase mb-6 font-bold block">VINEX - ENDURING EXCELLENCE</span>
-            <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-white mb-8 leading-tight">Từ hạt điều đến <br className="hidden sm:block" /> giải pháp sản phẩm</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-white mb-8 leading-tight">{pg.hero_title}</h1>
           </motion.div>
         </div>
       </section>

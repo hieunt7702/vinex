@@ -2,10 +2,13 @@
 
 import { motion } from "framer-motion";
 import { usePathname } from 'next/navigation';
+import { useDict } from '@/hooks/useDict';
 
 export default function RequestQuotePage() {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
+  const t = useDict();
+  const pg = t.pages.request_quote;
 
   return (
     <main className="w-full flex flex-col min-h-screen pt-[120px] pb-24 bg-vinex-white">
@@ -13,10 +16,8 @@ export default function RequestQuotePage() {
         
         <div className="text-center mb-12">
           <span className="text-xs tracking-[0.2em] text-[#D4AF37] uppercase mb-4 font-bold block">CORPORATE SOLUTIONS</span>
-          <h1 className="text-4xl md:text-5xl font-bold text-vinex-black mb-6">Yêu Cầu Báo Giá</h1>
-          <p className="text-gray-600 font-light">
-            Vui lòng cung cấp thông tin chi tiết để VINEX có thể chuẩn bị đề xuất phù hợp nhất với yêu cầu của doanh nghiệp.
-          </p>
+          <h1 className="text-4xl md:text-5xl font-bold text-vinex-black mb-6">{pg.hero_title}</h1>
+          <p className="text-gray-600 font-light">{pg.hero_desc}</p>
         </div>
 
         <motion.div 
@@ -109,7 +110,7 @@ export default function RequestQuotePage() {
 
             <div className="pt-6">
               <button type="button" className="w-full py-5 bg-gradient-to-r from-vinex-blue to-[#2B8390] text-white font-bold uppercase tracking-widest text-sm hover:shadow-lg transition-all rounded-md">
-                Nhận đề xuất từ VINEX
+                {pg.form_submit}
               </button>
             </div>
             

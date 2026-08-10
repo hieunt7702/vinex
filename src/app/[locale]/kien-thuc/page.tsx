@@ -1,13 +1,19 @@
 import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
+import { getDictionary } from '@/dictionaries';
+import type { Locale } from '@/dictionaries';
 
 export const metadata: Metadata = {
   title: "Kiến thức nông sản | VINEX",
   description: "Cập nhật các kiến thức chuyên sâu về hạt điều, quy trình bóc tách, ứng dụng sản phẩm và giải pháp quà tặng doanh nghiệp.",
 };
 
-export default function KnowledgePage() {
+export default async function KnowledgePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = getDictionary(locale as Locale);
+  const pg = t.pages.knowledge;
+
   const articles = [
     { title: 'Nhân điều trắng là gì? Phân loại và ứng dụng trong sản xuất', slug: 'nhan-dieu-trang-la-gi' },
     { title: 'Quy trình 8 bước từ điều thô đến nhân điều trắng đạt chuẩn', slug: 'quy-trinh-boc-tach-dieu' },
@@ -23,7 +29,8 @@ export default function KnowledgePage() {
              
              {/* Main Content */}
              <div className="flex-1">
-                <h1 className="text-4xl md:text-5xl font-bold mb-12">Kiến thức nông sản</h1>
+                <h1 className="text-4xl md:text-5xl font-bold mb-12">{pg.hero_title}</h1>
+                <p className="text-lg text-gray-600 mb-12 font-light">{pg.hero_desc}</p>
                 
                 <div className="space-y-12">
                    {articles.map((article, idx) => (

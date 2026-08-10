@@ -1,13 +1,19 @@
 import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
+import { getDictionary } from '@/dictionaries';
+import type { Locale } from '@/dictionaries';
 
 export const metadata: Metadata = {
   title: "Bao bì và hộp quà doanh nghiệp | VINEX",
   description: "Phát triển bao bì và hộp quà theo mùa vụ, nhận diện thương hiệu, nhóm sản phẩm và ngân sách doanh nghiệp.",
 };
 
-export default function PackagingPage() {
+export default async function PackagingPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = getDictionary(locale as Locale);
+  const pg = t.pages.packaging;
+
   const boxes = [
     { name: 'Hộp quai xách', desc: 'Cấu trúc gọn gàng, thuận tiện di chuyển, phù hợp với các chương trình quà tặng.' },
     { name: 'Hộp nắp mở', desc: 'Hình thức mở trực tiếp, dễ bố trí sản phẩm và tạo trải nghiệm rõ ràng cho người nhận.' },
@@ -20,9 +26,9 @@ export default function PackagingPage() {
         
         {/* Section 1: Hero */}
         <section className="px-4 py-20 max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Bao bì phù hợp với từng sản phẩm</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">{pg.hero_title}</h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-16 leading-relaxed">
-             Tập trung vào kết cấu vững chắc, trải nghiệm mở hộp tinh tế và khả năng tùy biến linh hoạt theo định vị thương hiệu.
+             {pg.hero_desc}
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

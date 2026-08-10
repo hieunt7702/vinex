@@ -158,6 +158,7 @@
       "form_phone": "Phone Number",
       "form_email": "Email",
       "form_message": "Your Requirements",
+      "form_consent": "I agree to the privacy policy and allow VINEX to contact me based on the information provided.",
       "form_submit": "SEND REQUEST",
       "solutions": [
         { "id": "01", "title": "Corporate Gifts", "desc": "Bespoke gift sets designed specifically for businesses." },
@@ -208,6 +209,18 @@
       "form_branding": "Branding Requirements",
       "form_note": "Additional Notes",
       "form_submit": "RECEIVE PROPOSAL FROM VINEX"
+    },
+    "miss_world": {
+      "hero_title": "Honoring Vietnamese Beauty & Heritage",
+      "hero_desc": "Official gift sponsor bringing the essence of Vietnamese agriculture to the international beauty arena."
+    },
+    "knowledge": {
+      "hero_title": "Agricultural Knowledge",
+      "hero_desc": "In-depth knowledge about cashews, processing procedures, and corporate gifting solutions."
+    },
+    "packaging": {
+      "hero_title": "Packaging for Every Product",
+      "hero_desc": "Focusing on solid structure, exquisite unboxing experience, and flexible customization according to brand positioning."
     }
   }
 }

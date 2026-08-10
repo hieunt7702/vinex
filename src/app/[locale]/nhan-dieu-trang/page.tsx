@@ -1,12 +1,18 @@
 import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { getDictionary } from '@/dictionaries';
+import type { Locale } from '@/dictionaries';
 
 export const metadata: Metadata = {
   title: "Nhân điều trắng VINEX | Cung ứng theo quy cách",
   description: "Nhân điều trắng từ hoạt động bóc tách điều thô của VINEX, phục vụ cung ứng và phát triển sản phẩm từ hạt điều.",
 };
 
-export default function WhiteCashewPage() {
+export default async function WhiteCashewPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = getDictionary(locale as Locale);
+  const pg = t.pages.cashew;
+
   const cmsFields = [
     { label: 'Grade / Kích cỡ', value: 'W240, W320, W450...' },
     { label: 'Màu sắc', value: 'Trắng chuẩn tự nhiên' },
@@ -22,9 +28,9 @@ export default function WhiteCashewPage() {
         
         {/* Section 1: Hero & Mô tả */}
         <section className="px-4 py-24 max-w-7xl mx-auto flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">Nhân điều trắng - nền tảng <br className="hidden sm:block" /> của chuỗi giá trị</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">{pg.hero_title}</h1>
           <p className="text-lg text-gray-600 max-w-3xl mb-16 font-light leading-relaxed">
-             Sản phẩm đầu ra chính từ hoạt động bóc tách điều thô, đáp ứng quy chuẩn cung ứng khắt khe để phục vụ chế biến sâu và mở rộng danh mục nông sản cao cấp.
+             {pg.hero_desc}
           </p>
           <div className="w-full aspect-[16/9] md:aspect-[21/9] bg-white rounded-sm overflow-hidden flex flex-col items-center justify-center relative shadow-xl border border-[#E8E4D9]">
              {/* Hero Image placeholder for macro shot */}

@@ -3,10 +3,13 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { useDict } from '@/hooks/useDict';
 
 export default function MissWorldPage() {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
+  const t = useDict();
+  const pg = t.pages.miss_world;
 
   return (
     <main className="w-full flex flex-col min-h-screen pt-[90px]">
@@ -31,11 +34,10 @@ export default function MissWorldPage() {
               <span className="text-3xl font-bold tracking-widest text-white">MISS WORLD 2026</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-              Tôn vinh vẻ đẹp <br/>
-              <span className="text-[#D4AF37] italic font-serif">& di sản Việt Nam</span>
+              {pg.hero_title}
             </h1>
             <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto">
-              Nhà tài trợ quà tặng chính thức mang tinh hoa nông sản Việt đến đấu trường nhan sắc quốc tế.
+              {pg.hero_desc}
             </p>
           </motion.div>
         </div>

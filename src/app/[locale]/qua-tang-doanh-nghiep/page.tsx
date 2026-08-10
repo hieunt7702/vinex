@@ -1,13 +1,19 @@
 import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
+import { getDictionary } from '@/dictionaries';
+import type { Locale } from '@/dictionaries';
 
 export const metadata: Metadata = {
   title: "Quà tặng doanh nghiệp từ nông sản Việt | VINEX",
   description: "Giải pháp quà Tết, quà khách hàng, quà đối tác và quà sự kiện với sản phẩm, bao bì và ngân sách theo nhu cầu.",
 };
 
-export default function CorporateGiftPage() {
+export default async function CorporateGiftPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = getDictionary(locale as Locale);
+  const pg = t.pages.gifts;
+
   const occasions = [
     { name: 'Quà Tết', bg: 'bg-vinex-gold text-vinex-teal border-vinex-gold' },
     { name: 'Quà khách hàng', bg: 'bg-white border-[#E8E4D9]' },
@@ -23,9 +29,9 @@ export default function CorporateGiftPage() {
         
         {/* Section 1: Hero & 3 nền tảng */}
         <section className="px-4 py-24 max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">Giải pháp quà tặng <br className="hidden sm:block" /> theo nhu cầu doanh nghiệp</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">{pg.hero_title}</h1>
           <p className="text-[17px] text-gray-600 max-w-3xl mx-auto mb-20 leading-relaxed font-light">
-             Một món quà cần phù hợp với người nhận, thể hiện đúng tinh thần thương hiệu và tạo trải nghiệm khác biệt khi mở hộp. VINEX thiết kế giải pháp dựa trên 3 nền tảng cốt lõi.
+             {pg.hero_desc}
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">

@@ -1,13 +1,19 @@
 import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
+import { getDictionary } from '@/dictionaries';
+import type { Locale } from '@/dictionaries';
 
 export const metadata: Metadata = {
   title: "Nhà máy bóc tách điều thô VINEX",
   description: "Tìm hiểu quy trình tiếp nhận, xử lý, bóc tách, bóc lụa, phân loại, kiểm tra và đóng gói nhân điều trắng tại VINEX.",
 };
 
-export default function FactoryPage() {
+export default async function FactoryPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = getDictionary(locale as Locale);
+  const pg = t.pages.factory;
+
   const steps = [
     { id: '1', title: 'Tiếp nhận điều thô' },
     { id: '2', title: 'Sàng lọc tạp chất' },
@@ -25,7 +31,7 @@ export default function FactoryPage() {
         
         {/* Section 1: Hero ảnh nhà máy thật & Mô tả */}
         <section className="px-4 py-24 max-w-7xl mx-auto flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">Nhà máy bóc tách điều thô</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">{pg.hero_title}</h1>
           <p className="text-lg text-gray-600 max-w-3xl mb-16 font-light leading-relaxed">
             Nền tảng vững chắc của VINEX, nơi tiếp nhận điều thô nguyên bản và trải qua quy trình chế biến khép kín để tạo ra nhân điều trắng đạt chuẩn chất lượng xuất khẩu cao nhất.
           </p>

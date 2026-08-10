@@ -158,6 +158,7 @@
       "form_phone": "Số điện thoại",
       "form_email": "Email",
       "form_message": "Nội dung yêu cầu",
+      "form_consent": "Tôi đồng ý với chính sách bảo mật và cho phép VINEX liên hệ dựa trên thông tin đã cung cấp.",
       "form_submit": "GỬI YÊU CẦU",
       "solutions": [
         { "id": "01", "title": "Quà tặng doanh nghiệp", "desc": "Các bộ quà được thiết kế chuyên biệt cho doanh nghiệp." },
@@ -208,6 +209,18 @@
       "form_branding": "Yêu cầu branding",
       "form_note": "Ghi chú thêm",
       "form_submit": "NHẬN ĐỀ XUẤT TỪ VINEX"
+    },
+    "miss_world": {
+      "hero_title": "Tôn vinh vẻ đẹp & di sản Việt Nam",
+      "hero_desc": "Nhà tài trợ quà tặng chính thức mang tinh hoa nông sản Việt đến đấu trường nhan sắc quốc tế."
+    },
+    "knowledge": {
+      "hero_title": "Kiến thức nông sản",
+      "hero_desc": "Cập nhật kiến thức chuyên sâu về hạt điều, quy trình chế biến và giải pháp quà tặng."
+    },
+    "packaging": {
+      "hero_title": "Bao bì phù hợp với từng sản phẩm",
+      "hero_desc": "Tập trung vào kết cấu vững chắc, trải nghiệm mở hộp tinh tế và khả năng tùy biến linh hoạt theo định vị thương hiệu."
     }
   }
 }
