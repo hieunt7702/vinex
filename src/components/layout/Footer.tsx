@@ -16,7 +16,7 @@ export const Footer = () => {
           {/* Brand Info */}
           <div className="lg:col-span-4 pr-8">
             <Link href={`/${lang}`} className="block mb-6">
-              <span className="text-white text-[32px] font-serif tracking-wide">VINEX</span>
+              <span className="text-white text-[32px] font-marcellus tracking-wide">VINEX</span>
             </Link>
             <p className="text-white/70 text-[13px] font-light leading-relaxed mb-8 max-w-sm">
               Vietnamese craftsmanship,<br />beautifully gifted.

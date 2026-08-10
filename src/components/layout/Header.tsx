@@ -56,7 +56,7 @@ export const Header = () => {
           
           <div className="flex items-center">
             <Link href={`/${lang}`} className="block">
-              <span className="text-vinex-teal text-3xl font-serif tracking-wide">VINEX</span>
+              <span className="text-vinex-teal text-3xl font-marcellus tracking-wide">VINEX</span>
             </Link>
           </div>
 
@@ -117,7 +117,7 @@ export const Header = () => {
               className="fixed inset-y-0 right-0 w-[300px] bg-vinex-ivory z-50 lg:hidden flex flex-col"
             >
               <div className="flex justify-between items-center p-6 border-b border-vinex-charcoal/10">
-                <span className="text-vinex-teal text-2xl font-serif">VINEX</span>
+                <span className="text-vinex-teal text-2xl font-marcellus">VINEX</span>
                 <button onClick={() => setIsMobileMenuOpen(false)}>
                   <X className="w-6 h-6 text-vinex-charcoal" />
                 </button>

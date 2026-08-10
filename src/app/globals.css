@@ -20,6 +20,7 @@
 
   --font-sans: var(--font-sans), sans-serif;
   --font-serif: var(--font-serif), serif;
+  --font-marcellus: var(--font-marcellus), serif;
 
 
   --spacing-clear-space: var(--vinex-star-height, 24px);
