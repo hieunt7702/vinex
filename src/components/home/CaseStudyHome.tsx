@@ -22,12 +22,8 @@ export const CaseStudyHome = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <div className="relative aspect-[4/3] w-full bg-vinex-charcoal overflow-hidden shadow-lg">
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1549451371-64aa98a6f660?q=80&w=1400&auto=format&fit=crop')] bg-cover bg-center mix-blend-luminosity opacity-70" />
-              {/* Event / Gift Box overlay placeholder */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                 <span className="font-serif italic text-white/50 text-xl">Miss World Stage Placeholder</span>
-              </div>
+            <div className="relative aspect-[4/3] w-full bg-vinex-charcoal flex items-center justify-center border border-white/10">
+              <span className="font-serif italic text-white/40 text-xl">Miss World Stage Placeholder</span>
             </div>
           </motion.div>
 

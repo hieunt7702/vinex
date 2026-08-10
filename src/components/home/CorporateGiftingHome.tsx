@@ -50,11 +50,8 @@ export const CorporateGiftingHome = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
           >
-            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-[400px] w-full bg-vinex-teal overflow-hidden shadow-lg">
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1616010652065-2c262174c3e8?q=80&w=1400&auto=format&fit=crop')] bg-cover bg-center mix-blend-multiply opacity-50" />
-              <div className="absolute inset-0 flex items-center justify-center text-vinex-gold">
-                <span className="font-serif italic text-2xl">VINEX</span>
-              </div>
+            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-[400px] w-full bg-vinex-teal flex items-center justify-center text-vinex-gold">
+              <span className="font-serif italic text-2xl opacity-70">VINEX Gift Box Image Placeholder</span>
             </div>
           </motion.div>
 

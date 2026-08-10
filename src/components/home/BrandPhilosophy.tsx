@@ -40,11 +40,8 @@ export const BrandPhilosophy = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <div className="relative aspect-[4/3] lg:aspect-[16/11] w-full bg-vinex-sage/20 shadow-lg">
-              {/* Image Placeholder */}
-              <div className="absolute inset-0 flex items-center justify-center text-vinex-charcoal/40 bg-[url('https://images.unsplash.com/photo-1542385151-efd9000785a0?q=80&w=1400&auto=format&fit=crop')] bg-cover bg-center mix-blend-luminosity opacity-80">
-                <span className="font-bold tracking-widest uppercase text-[10px] bg-white/50 px-4 py-2 backdrop-blur-sm">Terraced Fields Placeholder</span>
-              </div>
+            <div className="relative aspect-[4/3] lg:aspect-[16/11] w-full bg-vinex-sage/10 border border-vinex-charcoal/10 flex items-center justify-center">
+              <span className="font-serif italic text-vinex-charcoal/30 text-lg">Terraced Fields Image Placeholder</span>
             </div>
           </motion.div>
 
