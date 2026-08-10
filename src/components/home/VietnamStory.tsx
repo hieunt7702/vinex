@@ -31,7 +31,7 @@ export const VietnamStory = () => {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-charcoal/50 uppercase mb-4 font-bold block">OUR STORY</span>
-            <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-serif text-vinex-charcoal leading-[1.1] mb-6">
+            <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-marcellus text-vinex-charcoal leading-[1.1] mb-6">
               FROM THE LAND<br />TO THE GIFT
             </h2>
             <p className="text-vinex-charcoal/70 text-[15px] mb-8 leading-relaxed max-w-sm">

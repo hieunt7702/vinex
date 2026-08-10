@@ -1,8 +1,10 @@
 "use client";
 
+import React, { useCallback, useEffect, useState } from 'react';
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import useEmblaCarousel from 'embla-carousel-react';
 
 const processSteps = [
   {
@@ -35,6 +37,21 @@ export const BespokeServiceHome = () => {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
 
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    align: 'start',
+    loop: true
+  });
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    
+    const autoplay = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 3000);
+
+    return () => clearInterval(autoplay);
+  }, [emblaApi]);
+
   return (
     <section className="py-20 lg:py-32 bg-vinex-teal text-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
@@ -48,7 +65,7 @@ export const BespokeServiceHome = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h2 className="text-[32px] sm:text-[40px] font-serif leading-[1.1] mb-6">
+            <h2 className="text-[32px] sm:text-[40px] font-marcellus leading-[1.1] mb-6">
               MADE FOR <br />YOUR BRAND.
             </h2>
             <p className="text-white/80 text-[14px] leading-relaxed mb-10">
@@ -62,34 +79,35 @@ export const BespokeServiceHome = () => {
           </motion.div>
 
           {/* Right Content (Cards) */}
-          <div className="xl:flex-1 w-full overflow-x-auto pb-8 -mb-8 scrollbar-hide">
-            <div className="flex gap-6 min-w-max">
-              {processSteps.map((step, idx) => (
-                <motion.div 
-                  key={step.id}
-                  className="w-[260px] md:w-[280px] shrink-0"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
-                >
-                  <div className={`w-full aspect-[4/3] ${step.imgColor} mb-6 relative overflow-hidden group shadow-lg`}>
-                     {/* Image Placeholder */}
-                     <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-transparent transition-colors duration-500">
-                       <span className="text-white/50 text-xs font-bold uppercase tracking-widest">{step.title}</span>
-                     </div>
-                  </div>
-                  <div>
-                    <div className="flex items-end gap-3 mb-3">
-                      <span className="text-vinex-gold font-bold text-[16px]">{step.id}</span>
-                      <h3 className="text-[13px] font-bold tracking-widest uppercase">{step.title}</h3>
+          <div className="xl:flex-1 w-full overflow-hidden">
+            <div className="overflow-hidden" ref={emblaRef}>
+              <div className="flex gap-6">
+                {processSteps.map((step, idx) => (
+                  <motion.div 
+                    key={step.id}
+                    className="flex-[0_0_260px] md:flex-[0_0_280px] lg:flex-[0_0_300px] min-w-0"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
+                  >
+                    <div className={`w-full aspect-[4/3] ${step.imgColor} mb-6 relative overflow-hidden group shadow-lg`}>
+                       <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-transparent transition-colors duration-500">
+                         <span className="text-white/50 text-xs font-bold uppercase tracking-widest">{step.title}</span>
+                       </div>
                     </div>
-                    <p className="text-white/60 text-[13px] font-light leading-relaxed">
-                      {step.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+                    <div>
+                      <div className="flex items-end gap-3 mb-3">
+                        <span className="text-vinex-gold font-bold text-[16px]">{step.id}</span>
+                        <h3 className="text-[13px] font-bold tracking-widest uppercase">{step.title}</h3>
+                      </div>
+                      <p className="text-white/60 text-[13px] font-light leading-relaxed">
+                        {step.desc}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
 

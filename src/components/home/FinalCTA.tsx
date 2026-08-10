@@ -9,20 +9,20 @@ export const FinalCTA = () => {
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
 
   return (
-    <section className="py-24 lg:py-32 bg-vinex-teal text-white relative overflow-hidden">
+    <section className="py-16 lg:py-20 bg-vinex-teal text-white relative overflow-hidden">
 
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12 relative z-10">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12">
           
           <motion.div 
-            className="lg:max-w-2xl"
+            className="lg:max-w-[65%]"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h2 className="text-[40px] sm:text-[48px] lg:text-[56px] font-serif leading-[1.1] mb-6">
-              LET'S CREATE<br />SOMETHING MEMORABLE.
+            <h2 className="text-[32px] sm:text-[40px] lg:text-[48px] font-marcellus leading-[1.2] mb-4">
+              LET'S CREATE SOMETHING MEMORABLE.
             </h2>
             <p className="text-white/80 text-[15px] leading-relaxed max-w-md">
               Bạn đang tìm kiếm một món quà xứng đáng với thương hiệu của mình?

@@ -35,7 +35,7 @@ export const CollectionsPreview = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
           <div>
             <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-charcoal/50 uppercase mb-4 font-bold block">CURATED COLLECTIONS</span>
-            <h2 className="text-[32px] sm:text-4xl md:text-[44px] font-serif text-vinex-charcoal leading-tight">
+            <h2 className="text-[32px] sm:text-4xl md:text-[44px] font-marcellus text-vinex-charcoal leading-tight">
               Những tặng phẩm đáng được nhớ đến.
             </h2>
           </div>
@@ -58,7 +58,7 @@ export const CollectionsPreview = () => {
               >
                 {/* Image Placeholder Background */}
                 <div className={`absolute inset-0 ${col.imgColor} transition-transform duration-700 group-hover:scale-105 flex items-center justify-center`}>
-                   <span className="font-serif italic text-white/30 text-xl">{col.category} Box Placeholder</span>
+                   <span className="font-marcellus italic text-white/30 text-xl">{col.category} Box Placeholder</span>
                 </div>
                 
                 {/* Gradient Overlay for Text Readability */}

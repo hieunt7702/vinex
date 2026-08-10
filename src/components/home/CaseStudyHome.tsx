@@ -23,7 +23,7 @@ export const CaseStudyHome = () => {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <div className="relative aspect-[4/3] w-full bg-vinex-charcoal flex items-center justify-center border border-white/10">
-              <span className="font-serif italic text-white/40 text-xl">Miss World Stage Placeholder</span>
+              <span className="font-marcellus italic text-white/50 text-xl">Miss World Stage Placeholder</span>
             </div>
           </motion.div>
 
@@ -38,7 +38,7 @@ export const CaseStudyHome = () => {
             <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-charcoal/50 uppercase mb-4 font-bold block">
               FEATURED PROJECT
             </span>
-            <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-serif text-vinex-charcoal leading-[1.1] mb-6">
+            <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-marcellus text-vinex-charcoal leading-[1.1] mb-6">
               VINEX &times; MISS WORLD 2026
             </h2>
             <p className="text-vinex-charcoal/70 text-[15px] mb-12 leading-relaxed max-w-lg">
@@ -48,17 +48,17 @@ export const CaseStudyHome = () => {
             <div className="grid grid-cols-3 gap-6 mb-12">
               <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
                 <Package className="w-6 h-6 text-vinex-gold mb-3 stroke-[1.5]" />
-                <p className="text-[24px] font-serif text-vinex-charcoal mb-1">5,000+</p>
+                <p className="text-[24px] font-marcellus text-vinex-charcoal mb-1">5,000+</p>
                 <p className="text-[9px] font-bold text-vinex-charcoal/50 uppercase tracking-widest">VIP GIFT BOXES</p>
               </div>
               <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
                 <Crown className="w-6 h-6 text-vinex-gold mb-3 stroke-[1.5]" />
-                <p className="text-[24px] font-serif text-vinex-charcoal mb-1">100%</p>
+                <p className="text-[24px] font-marcellus text-vinex-charcoal mb-1">100%</p>
                 <p className="text-[9px] font-bold text-vinex-charcoal/50 uppercase tracking-widest">HANDCRAFTED<br/>LACQUER</p>
               </div>
               <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
                 <Globe className="w-6 h-6 text-vinex-gold mb-3 stroke-[1.5]" />
-                <p className="text-[24px] font-serif text-vinex-charcoal mb-1">01</p>
+                <p className="text-[24px] font-marcellus text-vinex-charcoal mb-1">01</p>
                 <p className="text-[9px] font-bold text-vinex-charcoal/50 uppercase tracking-widest">GLOBAL<br/>EVENT</p>
               </div>
             </div>

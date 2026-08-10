@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import "../globals.css";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
-import { Montserrat, Marcellus, Playfair_Display } from 'next/font/google';
+import { Montserrat, Marcellus } from 'next/font/google';
 
 const montserrat = Montserrat({
   subsets: ['latin', 'vietnamese'],
@@ -15,12 +16,6 @@ const marcellus = Marcellus({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-marcellus',
-  display: 'swap',
-});
-
-const playfair = Playfair_Display({
-  subsets: ['latin', 'vietnamese'],
-  variable: '--font-serif',
   display: 'swap',
 });
 
@@ -43,15 +38,16 @@ export default async function RootLayout({
   const { locale } = await params;
   
   return (
-    <html lang={locale} suppressHydrationWarning className={`${montserrat.variable} ${marcellus.variable} ${playfair.variable}`}>
+    <html lang={locale} suppressHydrationWarning className={`${montserrat.variable} ${marcellus.variable}`}>
       <body
         suppressHydrationWarning
-        className={`min-h-screen flex flex-col bg-[#FAF8F2] text-[#24313A] font-sans antialiased relative`}
+        className={`min-h-screen flex flex-col bg-[#FAF8F2] text-[#24313A] font-sans antialiased relative overflow-x-hidden`}
       >
         <Header />
         <main className="flex-1 flex flex-col">
           {children}
         </main>
+        <Footer />
         <ScrollToTop />
       </body>
     </html>

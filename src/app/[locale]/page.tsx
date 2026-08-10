@@ -1,6 +1,4 @@
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
-import { Footer } from "@/components/layout/Footer";
-
 // Sections in order
 import { HomeHero } from "@/components/home/HomeHero";
 import { BrandPhilosophy } from "@/components/home/BrandPhilosophy";
@@ -47,9 +45,6 @@ export default function Home() {
         {/* 10. Final CTA */}
         <FinalCTA />
       </main>
-      
-      {/* 11. Footer */}
-      <Footer />
     </SmoothScroll>
   );
 }

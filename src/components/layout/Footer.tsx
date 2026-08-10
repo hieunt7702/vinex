@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import { Logo } from '@/components/Logo';
 
 export const Footer = () => {
   const pathname = usePathname();
@@ -15,9 +16,9 @@ export const Footer = () => {
           
           {/* Brand Info */}
           <div className="lg:col-span-4 pr-8">
-            <Link href={`/${lang}`} className="block mb-6">
-              <span className="text-white text-[32px] font-marcellus tracking-wide">VINEX</span>
-            </Link>
+            <div className="-ml-6 md:-ml-12 xl:-ml-16 mb-4 mt-2">
+              <Logo lang={lang as any} />
+            </div>
             <p className="text-white/70 text-[13px] font-light leading-relaxed mb-8 max-w-sm">
               Vietnamese craftsmanship,<br />beautifully gifted.
             </p>
@@ -38,7 +39,7 @@ export const Footer = () => {
           </div>
 
           {/* Links */}
-          <div className="lg:col-span-5 grid grid-cols-3 gap-8">
+          <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-8 gap-y-12">
             <div>
               <h4 className="text-[10px] font-bold tracking-[0.15em] text-vinex-gold uppercase mb-6">COLLECTIONS</h4>
               <ul className="space-y-4 text-[13px] font-light text-white/70">
@@ -89,10 +90,10 @@ export const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-light text-white/50">
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-[11px] font-light text-white/50 text-center md:text-left">
           <div className="flex items-center gap-4">
             <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <span>•</span>
+            <span className="hidden sm:inline">•</span>
             <Link href="#" className="hover:text-white transition-colors">Terms of Use</Link>
           </div>
           <div>

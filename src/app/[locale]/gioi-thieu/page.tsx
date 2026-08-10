@@ -9,46 +9,43 @@ export default function AboutPage() {
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
 
   return (
-    <main className="w-full flex flex-col min-h-screen pt-[90px] bg-white">
+    <main className="w-full flex flex-col min-h-screen pt-[90px] bg-vinex-white text-vinex-black">
       
       {/* Hero Section */}
-      <section className="relative h-[60vh] bg-vinex-black flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-black/60 z-10" />
+      <section className="relative h-[60vh] bg-vinex-teal flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-vinex-teal/90 z-10" />
         <div className="absolute inset-0 flex items-center justify-center bg-gray-900 z-0">
-          <span className="text-gray-500 font-bold tracking-widest uppercase">About VINEX Background</span>
+          <span className="text-gray-500 font-bold tracking-widest uppercase">About VINEX Hero</span>
         </div>
         
-        <div className="relative z-20 text-center px-4 max-w-4xl">
+        <div className="relative z-20 text-center px-4 max-w-4xl mt-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            <span className="text-sm tracking-widest text-[#D4AF37] uppercase mb-4 font-bold block">OUR STORY</span>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Câu chuyện của VINEX</h1>
-            <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto">
-              Từ xưởng bóc tách điều thô đến hành trình định hình lại tiêu chuẩn quà tặng cao cấp Việt Nam.
-            </p>
+            <span className="text-[12px] tracking-[0.2em] text-vinex-gold uppercase mb-6 font-bold block">VINEX - ENDURING EXCELLENCE</span>
+            <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-white mb-8 leading-tight">Từ hạt điều đến <br className="hidden sm:block" /> giải pháp sản phẩm</h1>
           </motion.div>
         </div>
       </section>
 
-      {/* The Origin */}
-      <section className="py-24 px-4 bg-vinex-white">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      {/* Hành trình chuỗi giá trị */}
+      <section className="py-16 md:py-24 px-4 bg-vinex-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl font-bold text-vinex-black mb-6">Nơi mọi thứ bắt đầu</h2>
-            <div className="space-y-4 text-gray-600 font-light leading-relaxed">
+            <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-8 leading-snug">Hành trình bắt đầu từ nguồn nguyên liệu trân quý</h2>
+            <div className="space-y-6 text-gray-600 font-light leading-relaxed text-[15px]">
               <p>
-                Tiền thân của VINEX là một nhà máy chuyên bóc tách và chế biến hạt điều nhân trắng tại vùng đất đỏ bazan trứ danh của Việt Nam. Hàng chục năm gắn bó với cây điều, chúng tôi thấu hiểu từng giọt mồ hôi của người nông dân và giá trị quý giá của nông sản Việt.
+                VINEX bắt đầu từ nền tảng nhà máy bóc tách điều thô, nơi nguyên liệu được tuyển chọn kỹ lưỡng, xử lý và phân loại theo tiêu chuẩn khắt khe nhất để tạo ra nhân điều trắng thượng hạng.
               </p>
               <p>
-                Tuy nhiên, hầu hết hạt điều Việt Nam lại được xuất khẩu dưới dạng thô hoặc gia công cho các thương hiệu nước ngoài. Niềm trăn trở đó đã thôi thúc chúng tôi bước ra khỏi vùng an toàn, tạo ra VINEX - với khát vọng đưa nông sản Việt lên một tầm cao mới.
+                Từ nền tảng ấy, VINEX không ngừng mở rộng sang các dòng hạt điều tẩm vị, sản phẩm từ nông sản Việt Nam, bao bì sáng tạo và cuối cùng là hoàn thiện các giải pháp quà tặng doanh nghiệp đẳng cấp.
               </p>
             </div>
           </motion.div>
@@ -57,97 +54,97 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative aspect-[4/3] bg-gray-200 rounded-xl overflow-hidden shadow-lg"
+            className="relative aspect-square md:aspect-[4/3] bg-gray-200 rounded-sm overflow-hidden shadow-2xl"
           >
-            <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-              <span className="font-bold tracking-widest uppercase text-xs">Cashew Farm Origin</span>
+            <div className="absolute inset-0 flex items-center justify-center text-gray-500 bg-white">
+              <span className="font-bold tracking-widest uppercase text-xs">Origin Process Image</span>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Craftsmanship */}
-      <section className="py-24 px-4 bg-white">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      {/* Quan điểm về sản phẩm và bao bì */}
+      <section className="py-16 md:py-24 px-4 bg-[#FAF8F2]">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1 relative aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-lg max-w-lg mx-auto w-full"
+            className="order-1 relative aspect-square bg-white rounded-sm overflow-hidden shadow-xl max-w-lg mx-auto w-full"
           >
             <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
-              <span className="font-bold tracking-widest uppercase mb-1">Craftsmanship Process</span>
+              <span className="font-bold tracking-widest uppercase mb-1">Product & Packaging</span>
               <span className="text-xs">1:1 Aspect Ratio</span>
             </div>
           </motion.div>
           
           <motion.div 
-            className="order-1 lg:order-2"
+            className="order-2"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl font-bold text-vinex-black mb-6">Nghệ thuật Chế tác & Định vị</h2>
-            <div className="space-y-4 text-gray-600 font-light leading-relaxed">
+            <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-8 leading-snug">Chất lượng cốt lõi & Vẻ đẹp nguyên bản</h2>
+            <div className="space-y-6 text-gray-600 font-light leading-relaxed text-[15px]">
               <p>
-                Không chỉ dừng lại ở nguyên liệu tốt, VINEX đặt tiêu chuẩn khắt khe cho sự hoàn mỹ của bao bì và thiết kế. Mỗi hộp quà là sự kết hợp giữa nghệ thuật thủ công truyền thống (như sơn mài, giấy dó) và công nghệ in ấn hiện đại.
+                Sản phẩm của VINEX luôn đặt tiêu chí tự nhiên và an toàn lên hàng đầu. Chúng tôi trân trọng hương vị nguyên bản của nông sản Việt, kết hợp với công nghệ chế biến hiện đại để tạo ra những sản phẩm an toàn, bổ dưỡng.
               </p>
               <p>
-                Chúng tôi chuyển mình từ một nhà sản xuất nông sản đơn thuần trở thành thương hiệu cung cấp Giải pháp Quà tặng Doanh nghiệp Cao cấp. Nơi mà mỗi sản phẩm không chỉ có hương vị thượng hạng mà còn là đại diện cho vị thế và đẳng cấp của người tặng.
+                Song hành cùng chất lượng là tính thẩm mỹ trong bao bì. VINEX tin rằng một thiết kế bao bì chỉn chu không chỉ bảo vệ sản phẩm mà còn tôn vinh giá trị thương hiệu, thể hiện trọn vẹn câu chuyện và ý nghĩa của mỗi món quà.
               </p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-24 px-4 bg-[#FAFAFA]">
-        <div className="max-w-7xl mx-auto text-center mb-16">
-          <h2 className="text-3xl font-bold text-vinex-black mb-4">Giá Trị Cốt Lõi</h2>
+      {/* Nhóm năng lực chính */}
+      <section className="py-16 md:py-24 px-4 bg-white">
+        <div className="max-w-7xl mx-auto text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Phát triển giá trị từ hạt điều và nông sản Việt</h2>
+          <div className="w-[60px] h-[2px] bg-vinex-gold mx-auto"></div>
         </div>
         
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {[
-            { title: "Nguồn Gốc", desc: "Tôn vinh nguyên liệu và nông sản bản địa Việt Nam." },
-            { title: "Sáng Tạo", desc: "Không ngừng đổi mới trong thiết kế bao bì và hương vị." },
-            { title: "Hoàn Mỹ", desc: "Chỉn chu đến từng chi tiết nhỏ nhất trước khi đến tay khách hàng." }
+            { title: "Năng lực Cung ứng", desc: "Hệ thống nhà máy chuẩn hóa, cung cấp nhân điều trắng và nông sản chế biến quy mô lớn, đáp ứng tiêu chuẩn xuất khẩu khắt khe." },
+            { title: "Giải pháp Doanh nghiệp", desc: "Tư vấn và thiết kế danh mục sản phẩm, bao bì chuyên biệt và bộ quà tặng doanh nghiệp theo nhu cầu định vị thương hiệu riêng." }
           ].map((val, idx) => (
             <motion.div 
               key={idx}
-              className="bg-white p-10 rounded-xl text-center border border-gray-100 shadow-sm"
+              className="bg-[#FAF8F2] p-8 md:p-12 rounded-sm text-center border border-[#E8E4D9] shadow-sm hover:shadow-md transition-shadow"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
             >
-              <div className="w-16 h-16 bg-[#D4AF37]/10 rounded-full flex items-center justify-center text-[#D4AF37] font-bold text-2xl mx-auto mb-6">
-                0{idx + 1}
+              <div className="w-16 h-16 bg-vinex-teal/5 rounded-full flex items-center justify-center border border-vinex-teal/10 mx-auto mb-6">
+                <span className="text-vinex-gold font-bold text-xl">0{idx + 1}</span>
               </div>
-              <h3 className="font-bold text-xl text-vinex-black mb-3">{val.title}</h3>
-              <p className="text-gray-500 font-light">{val.desc}</p>
+              <h3 className="font-marcellus text-2xl text-vinex-teal mb-4">{val.title}</h3>
+              <p className="text-gray-600 font-light text-[15px] leading-relaxed">{val.desc}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-vinex-blue text-white px-4 text-center">
+      <section className="py-28 bg-vinex-teal text-white px-4 text-center border-t border-white/10">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6">Trở thành một phần của câu chuyện</h2>
-          <p className="text-blue-100 mb-10 font-light text-lg">
-            Đồng hành cùng VINEX để tạo ra những món quà ý nghĩa nhất.
+          <h2 className="text-3xl md:text-[40px] font-marcellus mb-8">Trở thành đối tác của VINEX</h2>
+          <p className="text-white/80 mb-12 font-light text-lg">
+            Cùng VINEX nâng tầm giá trị nông sản Việt và kiến tạo những giải pháp sản phẩm vượt trội.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href={`/${lang}/collections`}>
-              <button className="px-10 py-4 bg-white text-vinex-blue font-bold uppercase tracking-widest text-sm hover:bg-gray-100 transition-colors rounded shadow-lg w-full sm:w-auto">
-                Xem Bộ Sưu Tập
+          <div className="flex flex-col sm:flex-row justify-center gap-6">
+            <Link href={`/${lang}/nha-may-boc-tach-dieu`}>
+              <button className="px-10 py-4 bg-white/5 border border-white/20 text-white font-bold uppercase tracking-[0.15em] text-xs hover:bg-white/10 transition-colors rounded-none w-full sm:w-auto">
+                Khám phá năng lực
               </button>
             </Link>
-            <Link href={`/${lang}/request-quote`}>
-              <button className="px-10 py-4 bg-[#D4AF37] text-vinex-black font-bold uppercase tracking-widest text-sm hover:bg-white transition-colors rounded shadow-lg w-full sm:w-auto">
-                Nhận Báo Giá
+            <Link href={`/${lang}/lien-he`}>
+              <button className="px-10 py-4 bg-vinex-gold text-vinex-teal font-bold uppercase tracking-[0.15em] text-xs hover:bg-white transition-colors rounded-none shadow-xl w-full sm:w-auto">
+                Nhận tư vấn
               </button>
             </Link>
           </div>

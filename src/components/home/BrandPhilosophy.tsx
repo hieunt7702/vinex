@@ -15,10 +15,10 @@ export const BrandPhilosophy = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <span className="text-[10px] md:text-[11px] font-bold tracking-[0.2em] text-vinex-gold uppercase block mb-8">
+            <span className="text-[13px] md:text-[15px] font-bold tracking-[0.2em] text-vinex-gold uppercase block mb-6">
               MORE THAN A GIFT.
             </span>
-            <h2 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-serif leading-[1.2] text-vinex-charcoal mb-16">
+            <h2 className="text-[28px] sm:text-[34px] md:text-[40px] lg:text-[44px] font-marcellus leading-[1.2] text-vinex-charcoal mb-12">
               Một món quà không chỉ được trao đi. Nó đại diện cho sự trân trọng, dấu ấn thương hiệu và câu chuyện của người trao.
             </h2>
             

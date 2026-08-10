@@ -29,7 +29,7 @@ export const CorporateGiftingHome = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h2 className="text-[32px] sm:text-[40px] font-serif text-vinex-charcoal leading-tight mb-6">
+            <h2 className="text-[32px] sm:text-[40px] font-marcellus text-vinex-charcoal leading-tight mb-6">
               ONE BRAND.<br />MANY OCCASIONS.
             </h2>
             <p className="text-vinex-charcoal/70 text-[15px] mb-10 leading-relaxed">
@@ -51,7 +51,7 @@ export const CorporateGiftingHome = () => {
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
           >
             <div className="relative aspect-[4/3] lg:aspect-auto lg:h-[400px] w-full bg-vinex-teal flex items-center justify-center text-vinex-gold">
-              <span className="font-serif italic text-2xl opacity-70">VINEX Gift Box Image Placeholder</span>
+              <span className="font-marcellus italic text-2xl opacity-70">VINEX Gift Box Image Placeholder</span>
             </div>
           </motion.div>
 
