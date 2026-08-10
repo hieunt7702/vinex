@@ -37,7 +37,14 @@ export const Header = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const navLinks = [
+  type NavLink = {
+    name: string;
+    href: string;
+    hasDropdown?: boolean;
+    children?: { name: string; href: string }[];
+  };
+
+  const navLinks: NavLink[] = [
     { name: dict.nav.home, href: `/${lang}` },
     { name: dict.nav.miss_world, href: `/${lang}/miss-world-2026` },
     { name: dict.nav.corporate_gifts, href: `/${lang}/corporate-gifts` },
