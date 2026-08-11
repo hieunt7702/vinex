@@ -16,8 +16,8 @@
     "cta": "NHẬN TƯ VẤN"
   },
   "hero": {
-    "title1": "Vietnam,",
-    "title2": "Beautifully Gifted.",
+    "title1": "Việt Nam,",
+    "title2": "Tuyệt tác Quà tặng.",
     "subtitle": "Từ tinh hoa nông sản Việt đến những tặng phẩm được chế tác riêng cho thương hiệu của bạn.",
     "cta_primary": "KHÁM PHÁ QUÀ TẶNG",
     "cta_secondary": "NHẬN TƯ VẤN",
@@ -25,7 +25,7 @@
     "badge2": "MADE IN VIETNAM"
   },
   "missworld": {
-    "label": "Official Gift Partner",
+    "label": "Đối tác Quà tặng Chính thức",
     "title1": "VINEX",
     "title2": "Miss World 2026",
     "desc": "Tự hào là Đối tác Quà tặng Chính thức của Miss World 2026. VINEX mang đến những tặng phẩm hội tụ tinh hoa hạt điều và nông sản Việt, kết tinh cùng nghệ thuật thiết kế bao bì cao cấp, góp phần tôn vinh nhan sắc và giá trị văn hóa trên đấu trường quốc tế.",
@@ -33,27 +33,28 @@
     "img_sub": "Miss World 2026 Sponsorship"
   },
   "brand": {
-    "label": "MORE THAN A GIFT.",
+    "label": "HƠN CẢ MỘT MÓN QUÀ.",
     "headline": "Một món quà không chỉ được trao đi. Nó đại diện cho sự trân trọng, dấu ấn thương hiệu và câu chuyện của người trao.",
-    "tag1": "PRODUCT",
-    "tag2": "CRAFT",
-    "tag3": "CULTURE",
-    "tag4": "CONNECTION"
+    "tag1": "SẢN PHẨM",
+    "tag2": "CHẾ TÁC",
+    "tag3": "VĂN HÓA",
+    "tag4": "KẾT NỐI"
   },
   "collections": {
-    "label": "CURATED COLLECTIONS",
+    "label": "BỘ SƯU TẬP QUÀ TẶNG",
     "headline": "Những tặng phẩm đáng được nhớ đến.",
     "cta": "Khám phá bộ sưu tập",
     "items": [
-      { "id": "01", "category": "SIGNATURE", "name": "Corporate Essentials" },
-      { "id": "02", "category": "EXECUTIVE", "name": "For Distinguished Partners" },
-      { "id": "03", "category": "HERITAGE", "name": "Vietnamese Heritage" },
-      { "id": "04", "category": "EVENT", "name": "Memorable Occasions" },
-      { "id": "05", "category": "BESPOKE", "name": "Custom Tailored Gifts" }
+      { "id": "01", "category": "KHAY DƯỠNG", "name": "Layout khay dưỡng 1" },
+      { "id": "02", "category": "KHAY DƯỠNG", "name": "Layout khay dưỡng 2" },
+      { "id": "03", "category": "KHAY DƯỠNG", "name": "Layout khay dưỡng 3" },
+      { "id": "04", "category": "KHAY DƯỠNG", "name": "Layout khay dưỡng 4" },
+      { "id": "05", "category": "SIÊU THỊ", "name": "Bao bì hạt điều siêu thị 1" },
+      { "id": "06", "category": "SIÊU THỊ", "name": "Bao bì hạt điều siêu thị 2" }
     ]
   },
   "corporate": {
-    "headline": "ONE BRAND.\nMANY OCCASIONS.",
+    "headline": "MỘT THƯƠNG HIỆU.\nĐA DẠNG NHU CẦU.",
     "desc": "Mỗi dịp quan trọng đều xứng đáng với một món quà đặc biệt.",
     "cta": "YÊU CẦU BÁO GIÁ",
     "occasions": [
@@ -65,7 +66,7 @@
     ]
   },
   "bespoke": {
-    "headline": "MADE FOR\nYOUR BRAND.",
+    "headline": "THIẾT KẾ RIÊNG\nCHO THƯƠNG HIỆU CỦA BẠN.",
     "desc": "Không có hai thương hiệu giống nhau.\nVì vậy, không nên có hai món quà giống nhau.",
     "cta": "TẠO BỘ QUÀ CỦA BẠN",
     "steps": [
@@ -76,8 +77,8 @@
     ]
   },
   "vietnam": {
-    "label": "OUR STORY",
-    "headline": "FROM THE LAND\nTO THE GIFT",
+    "label": "CÂU CHUYỆN CỦA CHÚNG TÔI",
+    "headline": "TỪ VÙNG NGUYÊN LIỆU\nĐẾN TẶNG PHẨM",
     "desc": "Từ đất đỏ bazan màu mỡ, chúng tôi chọn lọc từng nông sản tinh túy, để gìn giữ và lan tỏa tinh thần Việt qua những món quà được chế tác bằng tâm huyết.",
     "cta": "Khám phá VINEX",
     "steps": [
@@ -87,7 +88,7 @@
     ]
   },
   "why": {
-    "headline": "WHY VINEX",
+    "headline": "TẠI SAO CHỌN VINEX",
     "cta": "LÀM VIỆC VỚI VINEX",
     "features": [
       { "title": "CHẤT LƯỢNG", "desc": "Kiểm soát chất lượng nghiêm ngặt từ nguyên liệu thô đến thành phẩm cuối cùng." },
@@ -102,7 +103,7 @@
     ]
   },
   "casestudy": {
-    "label": "FEATURED PROJECT",
+    "label": "DỰ ÁN TIÊU BIỂU",
     "headline": "VINEX × MISS WORLD 2026",
     "desc": "VINEX tự hào là đơn vị cung cấp quà tặng chính thức cho cuộc thi Miss World Vietnam 2026, chế tác riêng những bộ quà tặng mang đậm bản sắc văn hóa Việt để gửi tới bạn bè quốc tế.",
     "cta": "BẮT ĐẦU DỰ ÁN",
@@ -114,7 +115,7 @@
     "stat3_label": "GLOBAL EVENT"
   },
   "journal": {
-    "label": "THE VINEX JOURNAL",
+    "label": "TẠP CHÍ VINEX",
     "headline": "Câu chuyện, cảm hứng và góc nhìn từ VINEX.",
     "cta": "Đọc thêm",
     "articles": [
@@ -124,21 +125,22 @@
     ]
   },
   "cta": {
-    "headline": "LET'S CREATE SOMETHING MEMORABLE.",
+    "headline": "HÃY TẠO NÊN DẤU ẤN KHÓ QUÊN.",
     "desc": "Bạn đang tìm kiếm một món quà xứng đáng với thương hiệu của mình?",
     "cta_primary": "BẮT ĐẦU DỰ ÁN",
     "cta_secondary": "NHẬN TƯ VẤN"
   },
   "footer": {
-    "tagline": "Tặng phẩm cao cấp từ tinh hoa nông sản Việt Nam.",
-    "col_collections": "COLLECTIONS",
-    "col_company": "CÔNG TY",
-    "col_contact": "LIÊN HỆ",
-    "links_collections": ["Signature Collection", "Executive Collection", "Heritage Collection", "Bespoke Collection"],
-    "links_company": ["Giới thiệu", "Nhà máy", "Nhân điều trắng", "Miss World 2026"],
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Use",
-    "copyright": "VINEX. All rights reserved."
+    "tagline": "Từ tinh hoa nông sản Việt đến tặng phẩm chế tác.",
+    "col_collections": "BỘ SƯU TẬP",
+    "col_solutions": "GIẢI PHÁP",
+    "col_about": "VỀ VINEX",
+    "links_collections": ["Signature", "Executive", "Heritage", "Miss World 2026"],
+    "links_solutions": ["Quà tặng Doanh nghiệp", "Thiết kế độc quyền", "Sự kiện", "Quốc tế"],
+    "links_about": ["Câu chuyện", "Dự án", "Tạp chí", "Liên hệ"],
+    "privacy": "Chính sách bảo mật",
+    "terms": "Điều khoản sử dụng",
+    "copyright": "Bản quyền thuộc về VINEX."
   },
   "pages": {
     "about": {

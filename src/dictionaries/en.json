@@ -45,11 +45,12 @@
     "headline": "Gifts worth remembering.",
     "cta": "Explore collections",
     "items": [
-      { "id": "01", "category": "SIGNATURE", "name": "Corporate Essentials" },
-      { "id": "02", "category": "EXECUTIVE", "name": "For Distinguished Partners" },
-      { "id": "03", "category": "HERITAGE", "name": "Vietnamese Heritage" },
-      { "id": "04", "category": "EVENT", "name": "Memorable Occasions" },
-      { "id": "05", "category": "BESPOKE", "name": "Custom Tailored Gifts" }
+      { "id": "01", "category": "GIFT BOX", "name": "Layout khay dưỡng 1" },
+      { "id": "02", "category": "GIFT BOX", "name": "Layout khay dưỡng 2" },
+      { "id": "03", "category": "GIFT BOX", "name": "Layout khay dưỡng 3" },
+      { "id": "04", "category": "GIFT BOX", "name": "Layout khay dưỡng 4" },
+      { "id": "05", "category": "RETAIL", "name": "Bao bì hạt điều siêu thị 1" },
+      { "id": "06", "category": "RETAIL", "name": "Bao bì hạt điều siêu thị 2" }
     ]
   },
   "corporate": {
@@ -130,12 +131,13 @@
     "cta_secondary": "GET CONSULTATION"
   },
   "footer": {
-    "tagline": "Premium gifts from the finest Vietnamese agricultural produce.",
+    "tagline": "Vietnamese craftsmanship, beautifully gifted.",
     "col_collections": "COLLECTIONS",
-    "col_company": "COMPANY",
-    "col_contact": "CONTACT",
-    "links_collections": ["Signature Collection", "Executive Collection", "Heritage Collection", "Bespoke Collection"],
-    "links_company": ["About Us", "Factory", "White Cashews", "Miss World 2026"],
+    "col_solutions": "SOLUTIONS",
+    "col_about": "ABOUT",
+    "links_collections": ["Signature", "Executive", "Heritage", "Miss World 2026"],
+    "links_solutions": ["Corporate Gifts", "Bespoke", "Events", "International"],
+    "links_about": ["Our Story", "Projects", "Journal", "Contact"],
     "privacy": "Privacy Policy",
     "terms": "Terms of Use",
     "copyright": "VINEX. All rights reserved."

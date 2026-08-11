@@ -98,7 +98,7 @@ export const Header = () => {
                       </button>
                       
                       {/* Dropdown Menu */}
-                      <div className="absolute top-full left-0 w-64 bg-vinex-ivory border border-vinex-teal/10 shadow-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50 py-3">
+                      <div className="absolute top-[calc(100%-16px)] left-0 w-64 bg-vinex-ivory border border-vinex-teal/10 shadow-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50 py-3">
                         {link.dropdown.map((subItem) => (
                           <Link
                             key={subItem.name}

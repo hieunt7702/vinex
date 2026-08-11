@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { useDict } from '@/hooks/useDict';
 
 export const CorporateGiftingHome = () => {
@@ -44,8 +45,8 @@ export const CorporateGiftingHome = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
           >
-            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-[400px] w-full bg-vinex-teal flex items-center justify-center text-vinex-gold">
-              <span className="font-marcellus italic text-2xl opacity-70">VINEX Gift Box Image</span>
+            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-[400px] w-full bg-vinex-teal flex items-center justify-center text-vinex-gold overflow-hidden">
+              <Image src="/images/product/Bao bì hạt điều lọ.png" alt="VINEX Gift Box" fill className="object-cover" />
             </div>
           </motion.div>
 

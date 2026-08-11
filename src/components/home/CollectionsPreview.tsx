@@ -4,13 +4,24 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { useDict } from '@/hooks/useDict';
+import Image from 'next/image';
 
 const imgColors = [
   'bg-vinex-teal/80',
   'bg-vinex-teal/90',
   'bg-[#5C1A1B]',
   'bg-vinex-gold/80',
-  'bg-vinex-charcoal/90'
+  'bg-vinex-charcoal/90',
+  'bg-[#8C7B65]'
+];
+
+const colImages = [
+  '/images/product/Layout khay dưỡng 1.png',
+  '/images/product/Layout khay dưỡng 2.png',
+  '/images/product/Layout kjhay dưỡng 3.png',
+  '/images/product/Layout khay dưỡng 4.png',
+  '/images/product/Bao bi hat dieu sieu thi 1.png',
+  '/images/product/Bao bi hat dieu sieu thi 2.png'
 ];
 
 export const CollectionsPreview = () => {
@@ -45,9 +56,10 @@ export const CollectionsPreview = () => {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
               >
-                {/* Image Placeholder Background */}
-                <div className={`absolute inset-0 ${imgColors[idx]} transition-transform duration-700 group-hover:scale-105 flex items-center justify-center`}>
-                   <span className="font-marcellus italic text-white/30 text-xl">{col.category} Box</span>
+                {/* Image Background */}
+                <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+                   <Image src={colImages[idx]} alt={col.category} fill className="object-cover" />
+                   <div className={`absolute inset-0 ${imgColors[idx]} mix-blend-multiply opacity-60 group-hover:opacity-40 transition-opacity duration-500`} />
                 </div>
                 
                 {/* Gradient Overlay */}

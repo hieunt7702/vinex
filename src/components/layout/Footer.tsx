@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import { Logo } from '@/components/Logo';
+import { useDict } from '@/hooks/useDict';
 
 export const Footer = () => {
   const pathname = usePathname();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
+  const t = useDict();
 
   return (
     <footer className="bg-vinex-teal text-white pt-20 pb-8 border-t border-white/10">
@@ -16,11 +18,11 @@ export const Footer = () => {
           
           {/* Brand Info */}
           <div className="lg:col-span-4 pr-8">
-            <div className="-ml-6 md:-ml-12 xl:-ml-16 mb-4 mt-2">
+            <div className="-ml-6 md:-ml-12 xl:-ml-16 mb-4 -mt-4">
               <Logo lang={lang as any} />
             </div>
             <p className="text-white/70 text-[13px] font-light leading-relaxed mb-8 max-w-sm">
-              Vietnamese craftsmanship,<br />beautifully gifted.
+              {t.footer.tagline}
             </p>
             <div className="flex items-center gap-4 text-vinex-gold">
               <a href="#" className="hover:text-white transition-colors" aria-label="Facebook">
@@ -41,30 +43,30 @@ export const Footer = () => {
           {/* Links */}
           <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-8 gap-y-12">
             <div>
-              <h4 className="text-[10px] font-bold tracking-[0.15em] text-vinex-gold uppercase mb-6">COLLECTIONS</h4>
+              <h4 className="text-[10px] font-bold tracking-[0.15em] text-vinex-gold uppercase mb-6">{t.footer.col_collections}</h4>
               <ul className="space-y-4 text-[13px] font-light text-white/70">
-                <li><Link href={`/${lang}/collections/signature`} className="hover:text-white transition-colors">Signature</Link></li>
-                <li><Link href={`/${lang}/collections/executive`} className="hover:text-white transition-colors">Executive</Link></li>
-                <li><Link href={`/${lang}/collections/heritage`} className="hover:text-white transition-colors">Heritage</Link></li>
-                <li><Link href={`/${lang}/miss-world-2026`} className="hover:text-white transition-colors">Miss World 2026</Link></li>
+                <li><Link href={`/${lang}/collections/signature`} className="hover:text-white transition-colors">{t.footer.links_collections[0]}</Link></li>
+                <li><Link href={`/${lang}/collections/executive`} className="hover:text-white transition-colors">{t.footer.links_collections[1]}</Link></li>
+                <li><Link href={`/${lang}/collections/heritage`} className="hover:text-white transition-colors">{t.footer.links_collections[2]}</Link></li>
+                <li><Link href={`/${lang}/miss-world-2026`} className="hover:text-white transition-colors">{t.footer.links_collections[3]}</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-[10px] font-bold tracking-[0.15em] text-vinex-gold uppercase mb-6">SOLUTIONS</h4>
+              <h4 className="text-[10px] font-bold tracking-[0.15em] text-vinex-gold uppercase mb-6">{t.footer.col_solutions}</h4>
               <ul className="space-y-4 text-[13px] font-light text-white/70">
-                <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-white transition-colors">Corporate Gifts</Link></li>
-                <li><Link href={`/${lang}/custom-gifts`} className="hover:text-white transition-colors">Bespoke</Link></li>
-                <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-white transition-colors">Events</Link></li>
-                <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-white transition-colors">International</Link></li>
+                <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-white transition-colors">{t.footer.links_solutions[0]}</Link></li>
+                <li><Link href={`/${lang}/custom-gifts`} className="hover:text-white transition-colors">{t.footer.links_solutions[1]}</Link></li>
+                <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-white transition-colors">{t.footer.links_solutions[2]}</Link></li>
+                <li><Link href={`/${lang}/corporate-gifts`} className="hover:text-white transition-colors">{t.footer.links_solutions[3]}</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-[10px] font-bold tracking-[0.15em] text-vinex-gold uppercase mb-6">ABOUT</h4>
+              <h4 className="text-[10px] font-bold tracking-[0.15em] text-vinex-gold uppercase mb-6">{t.footer.col_about}</h4>
               <ul className="space-y-4 text-[13px] font-light text-white/70">
-                <li><Link href={`/${lang}/gioi-thieu`} className="hover:text-white transition-colors">Our Story</Link></li>
-                <li><Link href={`/${lang}/case-studies`} className="hover:text-white transition-colors">Projects</Link></li>
-                <li><Link href={`/${lang}/kien-thuc`} className="hover:text-white transition-colors">Journal</Link></li>
-                <li><Link href={`/${lang}/contact`} className="hover:text-white transition-colors">Contact</Link></li>
+                <li><Link href={`/${lang}/gioi-thieu`} className="hover:text-white transition-colors">{t.footer.links_about[0]}</Link></li>
+                <li><Link href={`/${lang}/case-studies`} className="hover:text-white transition-colors">{t.footer.links_about[1]}</Link></li>
+                <li><Link href={`/${lang}/kien-thuc`} className="hover:text-white transition-colors">{t.footer.links_about[2]}</Link></li>
+                <li><Link href={`/${lang}/contact`} className="hover:text-white transition-colors">{t.footer.links_about[3]}</Link></li>
               </ul>
             </div>
           </div>
@@ -92,12 +94,12 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-[11px] font-light text-white/50 text-center md:text-left">
           <div className="flex items-center gap-4">
-            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="#" className="hover:text-white transition-colors">{t.footer.privacy}</Link>
             <span className="hidden sm:inline">•</span>
-            <Link href="#" className="hover:text-white transition-colors">Terms of Use</Link>
+            <Link href="#" className="hover:text-white transition-colors">{t.footer.terms}</Link>
           </div>
           <div>
-            &copy; {new Date().getFullYear()} VINEX. All rights reserved.
+            &copy; {new Date().getFullYear()} {t.footer.copyright}
           </div>
         </div>
       </div>
