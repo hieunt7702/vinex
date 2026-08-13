@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useDict } from '@/hooks/useDict';
 
 export const MissWorldIntro = () => {
@@ -38,12 +39,14 @@ export const MissWorldIntro = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="w-full max-w-5xl aspect-[21/9] bg-vinex-teal/5 relative rounded-sm overflow-hidden"
+          className="w-full max-w-5xl aspect-[21/9] relative rounded-sm overflow-hidden"
         >
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-vinex-teal/30">
-             <span className="font-bold tracking-widest uppercase text-sm mb-2">{t.missworld.img_label}</span>
-             <span className="text-xs">{t.missworld.img_sub}</span>
-          </div>
+          <Image 
+            src="/images/banner/b_miss_world_2026.png" 
+            alt={t.missworld.title2} 
+            fill 
+            className="object-cover object-center" 
+          />
         </motion.div>
       </div>
     </section>

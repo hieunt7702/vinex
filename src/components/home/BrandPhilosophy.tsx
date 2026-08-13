@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from 'next/image';
 import { useDict } from '@/hooks/useDict';
 
 export const BrandPhilosophy = () => {
@@ -43,8 +44,13 @@ export const BrandPhilosophy = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <div className="relative aspect-[4/3] lg:aspect-[16/11] w-full bg-vinex-sage/10 border border-vinex-charcoal/10 flex items-center justify-center">
-              <span className="font-serif italic text-vinex-charcoal/30 text-lg">Terraced Fields Image Placeholder</span>
+            <div className="relative aspect-[4/3] lg:aspect-[16/11] w-full bg-vinex-sage/10 border border-vinex-charcoal/10 flex items-center justify-center overflow-hidden">
+              <Image 
+                src="/images/banner/b_more_than_a_gift.png" 
+                alt="More than a gift" 
+                fill 
+                className="object-cover object-center" 
+              />
             </div>
           </motion.div>
 
