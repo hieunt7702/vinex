@@ -34,7 +34,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         <section className="px-4 md:px-8 xl:px-12 pb-16 lg:pb-20 max-w-[1400px] mx-auto flex flex-col md:flex-row gap-12">
           
           {/* Sidebar Filters */}
-          <aside className="w-full md:w-[240px] shrink-0 sticky top-32">
+          <aside className="w-full md:w-[240px] shrink-0 sticky top-32 h-fit">
             <h3 className="font-bold text-sm mb-6 uppercase tracking-widest text-vinex-teal">Bộ lọc</h3>
             <div className="space-y-8">
                <div>
