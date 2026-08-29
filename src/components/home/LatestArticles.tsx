@@ -19,7 +19,7 @@ export const LatestArticles = () => {
   const t = useDict();
 
   return (
-    <section className="py-16 lg:py-20 bg-vinex-ivory">
+    <section className="py-12 lg:py-20 bg-vinex-ivory">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
           <div>

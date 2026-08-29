@@ -14,7 +14,7 @@ export const CaseStudyHome = () => {
   const t = useDict();
 
   return (
-    <section className="py-16 lg:py-20 bg-vinex-ivory overflow-hidden">
+    <section className="py-12 lg:py-20 bg-vinex-ivory overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
         <div className="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-12">
           
@@ -26,7 +26,7 @@ export const CaseStudyHome = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <div className="relative h-full min-h-[350px] lg:min-h-0 w-full overflow-hidden rounded-sm bg-vinex-ivory shadow-xl group">
+            <div className="relative h-full min-h-[300px] lg:min-h-0 w-full overflow-hidden rounded-sm bg-vinex-ivory shadow-xl group">
               <Image src="/images/missworld.png" alt="Miss World 2026" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
               
               {/* Top Left Gradient Bracket (Inner) */}
@@ -51,10 +51,10 @@ export const CaseStudyHome = () => {
               {t.casestudy.label}
             </span>
             <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-6"></div>
-            <h2 className="text-[32px] sm:text-[36px] md:text-[40px] lg:text-[44px] xl:text-[48px] font-marcellus text-vinex-teal leading-[1.1] mb-6 whitespace-nowrap">
+            <h2 className="text-[32px] sm:text-[36px] md:text-[40px] lg:text-[44px] xl:text-[48px] font-marcellus text-vinex-teal leading-[1.1] mb-6 whitespace-normal sm:whitespace-nowrap">
               {t.casestudy.headline}
             </h2>
-            <p className="text-vinex-charcoal/70 text-[15px] mb-12 leading-relaxed max-w-lg">
+            <p className="text-vinex-charcoal/70 text-[14px] md:text-[15px] mb-10 lg:mb-12 leading-relaxed max-w-lg">
               {t.casestudy.desc}
             </p>
             

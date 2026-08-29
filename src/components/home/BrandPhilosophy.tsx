@@ -8,9 +8,9 @@ export const BrandPhilosophy = () => {
   const t = useDict();
 
   return (
-    <section className="py-16 lg:py-20 bg-vinex-ivory">
+    <section className="py-12 lg:py-20 bg-vinex-ivory">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
           
           <motion.div 
             className="flex-1 w-full"

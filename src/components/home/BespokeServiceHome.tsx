@@ -31,7 +31,7 @@ export const BespokeServiceHome = () => {
   }, [emblaApi]);
 
   return (
-    <section className="py-16 lg:py-20 bg-vinex-teal text-white overflow-hidden">
+    <section className="py-12 lg:py-20 bg-vinex-teal text-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
         <div className="flex flex-col xl:flex-row gap-16 xl:gap-12 items-start">
           

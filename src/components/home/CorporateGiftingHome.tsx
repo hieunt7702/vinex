@@ -13,7 +13,7 @@ export const CorporateGiftingHome = () => {
   const t = useDict();
 
   return (
-    <section className="py-16 lg:py-20 bg-vinex-ivory border-t border-vinex-charcoal/5">
+    <section className="py-12 lg:py-20 bg-vinex-ivory border-t border-vinex-charcoal/5">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
@@ -29,7 +29,7 @@ export const CorporateGiftingHome = () => {
               {t.corporate.headline}
             </h2>
             <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-8"></div>
-            <p className="text-vinex-charcoal/70 text-[15px] mb-10 leading-relaxed">
+            <p className="text-vinex-charcoal/70 text-[14px] md:text-[15px] mb-10 leading-relaxed">
               {t.corporate.desc}
             </p>
             <Link href={`/${lang}/request-quote`}>

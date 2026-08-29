@@ -23,20 +23,20 @@ export const VietnamStory = () => {
   }, [emblaApi]);
 
   return (
-    <section className="py-16 lg:py-20 bg-vinex-ivory overflow-hidden">
+    <section className="py-12 lg:py-20 bg-vinex-ivory overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
         <div className="flex flex-col gap-12 xl:gap-16">
           
           {/* Header Content - Top */}
           <motion.div 
-            className="text-center xl:text-left"
+            className="text-left"
             initial={{ opacity: 0, y: -30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-teal uppercase mb-4 font-bold block">{t.vietnam.label}</span>
-            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-6 mx-auto xl:mx-0"></div>
+            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-6 mx-0"></div>
             <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-marcellus text-vinex-teal leading-[1.1]">
               {t.vietnam.headline.replace('\n', ' ')}
             </h2>
@@ -47,13 +47,13 @@ export const VietnamStory = () => {
             
             {/* Left Block: Description & CTA */}
             <motion.div 
-              className="xl:w-[320px] shrink-0 text-center xl:text-left border-l-[3px] border-vinex-gold pl-6"
+              className="xl:w-[320px] shrink-0 text-left border-l-[3px] border-vinex-gold pl-5"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.8 }}
             >
-              <p className="text-vinex-charcoal/80 text-[15px] leading-relaxed mb-8 max-w-xl mx-auto xl:mx-0">
+              <p className="text-vinex-charcoal/80 text-[14px] md:text-[15px] leading-relaxed mb-8 max-w-xl mx-0">
                 {t.vietnam.desc}
               </p>
               <Link href={`/${lang}/gioi-thieu`} className="inline-block">
