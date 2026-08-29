@@ -1,0 +1,193 @@
+﻿Diagnose log at 2026-08-29T19:51:37Z
+
+AppPath: D:\Git\mingw64\bin\git-credential-manager.exe
+InstallDir: D:\Git\mingw64\bin\
+Version: 2.8.0+d5e8a3442d48cc5efe7014e093e44242c0bd395f
+
+------------
+Diagnostic: Environment
+Skipped: False
+Success: True
+Exception: None
+Log:
+OSType: Windows
+OSVersion: 10.0 (build 26200)
+Reading environment variables... OK
+ Variables:
+OneDriveConsumer=C:\Users\hieun\OneDrive
+ANTIGRAVITY_APPROVAL_POLICY=never
+MSYSTEM=MINGW64
+ProgramW6432=C:\Program Files
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
+ZES_ENABLE_SYSMAN=1
+TMP=C:\Users\hieun\AppData\Local\Temp
+PROCESSOR_ARCHITECTURE=AMD64
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+VSCODE_CWD=D:\Antigravity
+PROCESSOR_REVISION=a502
+ANTIGRAVITY_SOURCE_METADATA={"tool":{"conversationId":"8a98c63f-a68c-4994-8b35-3930c29644cb","stepIndex":1568,"toolCall":{"id":"call_148592","name":"run_command","argumentsJson":"{\"CommandLine\":\"git credential-manager diagnose\",\"Cwd\":\"d:\\\\Hieudeptraivl\\\\vinex\",\"WaitMsBeforeAsync\":500,\"toolAction\":\"Diagnosing GCM\",\"toolSummary\":\"Diagnose GCM\"}","thinkingSignature":"EooGCocGARFNMg9JeEGa5YnEiCYX5r4UcxihgkEJkzfq3lALR+5c97oqwkhnizRq7yPL+BeoofQlb8Vjdhx05Q30A7ul4VLVu+Wb6ajjonBgdO918raw1yyUK1al3qABYpmv2gwqVenqCNah43Hn04dOp7mReup2OxklRAW/6i8HjfmegyqpsdTh5HmtgkpdSHX3LWd4nW1u/CnRAsZ74rJvovYluvfjntp9DVSewIVAPT1wUXn9hwhl6MisKPPSHvwR3XFWDeV3ZYRrHXu+r+3VPJBtG1S/r3iKcnW++2j4KOo2XSFxEjlDYdY52Ztqi3k5tRadji4k/2AQnmBQ8XEZW2Rs06GhGdX9oyzNOFJD4WJp86jZKE7IWPlWhedTr+vHUajqwugCeSzxCcT4YuVl6JxlqwkoLxKp4nRiVZgZY6XBC5lWmIAZhQsLggBezmA5UhJGn6utWAh1ffY0AIFWsWWhQjyt4IlFpmjF/x1dzOHK+uh798gGoMpVnDC2EbQHvQUc7M46cWN2KU84Y738NX7/aMwIDz5ZGJ16otbI+f+3JGLmDtXVIBo3S+vBEOoFjGkmOlN8ZYqnDy/A+KyjQD0tneePBCUoBv5gIzk5DPMmrlYqpAVVwVrPJd8bzsTKfS0fyYd059t/IXwzL4cj86L0wfUwuR+PgT09WPU1fiB4iBca5y9kMhVXVuxYul2W9oYWQVexi+O5PWVC0irO0VhqLcEWjYJl1tjn0IwZvTk8E77+fBRT38wb8icWtxzCQ90B/udqmpp1xlvtr1WTr2+VoGk1CU2a9X57B6Hvn8EgjgK7xBi/njriZiYKYOTFQgOr+07usbACq9f4fM2Ot7Xv6FcWAe+DjRfU/YiOfic4htCaO6MRwChbRIpd62aJJ2fV/U6zVz91pPycbEy46E0O9w8uKgkRFVWftpShSlH5mjSCpTUm/5VO210GgjCFnyLiO/P4keWPxGKU25880OWfN+9PE2TxhW0zYoEGuE67FE83JOvrMglgAGfmD+bJSbnjlW/bxicS5A==","originalName":"run_command"}}}
+TEMP=C:\Users\hieun\AppData\Local\Temp
+USERPROFILE=C:\Users\hieun
+LOGONSERVER=\\HIEUNT
+TERM=xterm-256color
+USERNAME=hieun
+SystemRoot=C:\WINDOWS
+ANTIGRAVITY_AUTO_APPROVE=true
+GIT_EXEC_PATH=D:/Git/mingw64/libexec/git-core
+PLINK_PROTOCOL=ssh
+EFC_20276_1592913036=1
+PATH=D:/Git/mingw64/libexec/git-core;D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\hieun\bin;C:/Users/hieun/.gemini/antigravity-ide/bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Docker\Docker\resources\bin;D:\;C:\Users\hieun\AppData\Local\Microsoft\WindowsApps;D:\Antigravity\bin;C:\Users\hieun\AppData\Roaming\npm;D:\Git\cmd;C:\Users\hieun\AppData\Local\Programs\Antigravity IDE\bin
+OneDrive=C:\Users\hieun\OneDrive
+ALLUSERSPROFILE=C:\ProgramData
+CommonProgramFiles=C:\Program Files\Common Files
+ANTIGRAVITY_TRAJECTORY_ID=bd8cc6a9-072e-411a-92d9-9d3fe94eba6e
+ProgramData=C:\ProgramData
+LC_CTYPE=C.UTF-8
+HOMEPATH=\Users\hieun
+COMPUTERNAME=HIEUNT
+ANTIGRAVITY_AGENT=1
+CommonProgramW6432=C:\Program Files\Common Files
+ProgramFiles(x86)=C:\Program Files (x86)
+SESSIONNAME=Console
+VSCODE_IPC_HOOK=\\.\pipe\4341ffc9-1.107.0-main-sock
+DriverData=C:\Windows\System32\Drivers\DriverData
+HOMEDRIVE=C:
+VSCODE_PID=6640
+windir=C:\WINDOWS
+GIT_TRACE2_PARENT_SID=2b623156-846d-494d-9e96-ac9aa6178dd8
+SystemDrive=C:
+NUMBER_OF_PROCESSORS=12
+OS=Windows_NT
+AGENT_YES=1
+ProgramFiles=C:\Program Files
+ComSpec=C:\WINDOWS\system32\cmd.exe
+USERDOMAIN_ROAMINGPROFILE=HIEUNT
+HOME=C:\Users\hieun
+PSModulePath=C:\Users\hieun\OneDrive\Tài liệu\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+ANTIGRAVITY_CSRF_TOKEN=615ca025-26a0-4dfe-b486-08a4c7b7a99d
+ANTIGRAVITY_LS_ADDRESS=localhost:54178
+TMPDIR=C:\Users\hieun\AppData\Local\Temp
+APPDATA=C:\Users\hieun\AppData\Roaming
+USERDOMAIN=HIEUNT
+PROCESSOR_LEVEL=6
+ANTIGRAVITY_EDITOR_APP_ROOT=d:\Antigravity\resources\app
+LOCALAPPDATA=C:\Users\hieun\AppData\Local
+VSCODE_NLS_CONFIG={"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"D:\\Antigravity\\resources\\app\\out\\nls.messages.json","locale":"en-us","availableLanguages":{}}
+CHROME_CRASHPAD_PIPE_NAME=\\.\pipe\crashpad_6640_LOOGRITYUHHOHGJO
+CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+COLORTERM=truecolor
+VSCODE_CODE_CACHE_PATH=C:\Users\hieun\AppData\Roaming\Antigravity IDE\CachedData\bf9a033f33934fb4496d7eebed52486272437c3a
+PUBLIC=C:\Users\Public
+
+
+------------
+Diagnostic: File system
+Skipped: False
+Success: True
+Exception: None
+Log:
+Temporary directory is 'C:\Users\hieun\AppData\Local\Temp\'...
+Checking basic file I/O...
+Writing to temporary file 'C:\Users\hieun\AppData\Local\Temp\53534981a2bbd8482003633b'... OK
+Reading from temporary file 'C:\Users\hieun\AppData\Local\Temp\53534981a2bbd8482003633b'... OK
+Deleting temporary file 'C:\Users\hieun\AppData\Local\Temp\53534981a2bbd8482003633b'... OK
+Testing IFileSystem instance...
+UserHomePath: C:\Users\hieun
+UserDataDirectoryPath: C:\Users\hieun\.gcm
+GetCurrentDirectory(): D:\Hieudeptraivl\vinex
+
+------------
+Diagnostic: Networking
+Skipped: False
+Success: True
+Exception: None
+Log:
+Checking networking and HTTP stack...
+Creating HTTP client... OK
+IsNetworkAvailable: True
+Sending HEAD request to http://example.com... OK
+Sending HEAD request to https://example.com... OK
+Acquiring free TCP port... OK
+Testing local HTTP loopback connections...
+Creating new HTTP listener for http://localhost:61063/... OK
+Waiting for loopback connection... OK
+Writing response... OK
+Waiting for response data... OK
+Loopback connection data OK
+
+------------
+Diagnostic: Git
+Skipped: False
+Success: True
+Exception: None
+Log:
+Getting Git version... OK
+Git version is '2.55.0.windows.2'
+Locating current repository...Git repository at 'D:/Hieudeptraivl/vinex/.git'
+ OK
+Listing all Git configuration... OK
+Git configuration:
+file:D:/Git/etc/gitconfig	diff.astextplain.textconv=astextplain
+file:D:/Git/etc/gitconfig	filter.lfs.clean=git-lfs clean -- %f
+file:D:/Git/etc/gitconfig	filter.lfs.smudge=git-lfs smudge -- %f
+file:D:/Git/etc/gitconfig	filter.lfs.process=git-lfs filter-process
+file:D:/Git/etc/gitconfig	filter.lfs.required=true
+file:D:/Git/etc/gitconfig	http.sslbackend=schannel
+file:D:/Git/etc/gitconfig	core.autocrlf=true
+file:D:/Git/etc/gitconfig	core.fscache=true
+file:D:/Git/etc/gitconfig	core.symlinks=false
+file:D:/Git/etc/gitconfig	pull.rebase=false
+file:D:/Git/etc/gitconfig	credential.helper=manager
+file:D:/Git/etc/gitconfig	credential.https://dev.azure.com.usehttppath=true
+file:D:/Git/etc/gitconfig	init.defaultbranch=master
+file:C:/Users/hieun/.gitconfig	safe.directory=D:/Hieudeptraivl/fb-auto
+file:C:/Users/hieun/.gitconfig	safe.directory=D:/Hieudeptraivl/audio_app
+file:C:/Users/hieun/.gitconfig	user.email=hieunt270702@gmail.com
+file:.git/config	core.repositoryformatversion=0
+file:.git/config	core.filemode=false
+file:.git/config	core.bare=false
+file:.git/config	core.logallrefupdates=true
+file:.git/config	core.symlinks=false
+file:.git/config	core.ignorecase=true
+file:.git/config	remote.origin.url=https://github.com/hieunt7702/vinex.git
+file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+file:.git/config	branch.master.remote=origin
+file:.git/config	branch.master.merge=refs/heads/master
+file:.git/config	branch.master.vscode-merge-base=origin/master
+
+
+------------
+Diagnostic: Credential storage
+Skipped: False
+Success: True
+Exception: None
+Log:
+ICredentialStore instance is of type: CredentialStore
+Writing test credential... OK
+Reading test credential... OK
+Deleting test credential... OK
+
+------------
+Diagnostic: Microsoft authentication (AAD/MSA)
+Skipped: False
+Success: True
+Exception: None
+Log:
+Broker is not enabled.
+Flow type is: Auto
+Gathering MSAL token cache data... OK
+CacheDirectory: C:\Users\hieun\AppData\Local\.IdentityService
+CacheFileName: msal.cache
+CacheFilePath: C:\Users\hieun\AppData\Local\.IdentityService\msal.cache
+Creating cache helper... OK
+Verifying MSAL token cache persistence... OK
+
+------------
+Diagnostic: GitHub API
+Skipped: False
+Success: True
+Exception: None
+Log:
+Using 'https://github.com/' as API target.
+Querying '/meta' endpoint... OK
+

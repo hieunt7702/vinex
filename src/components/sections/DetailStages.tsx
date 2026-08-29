@@ -16,8 +16,8 @@ export const DetailStages = () => {
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const sections = gsap.utils.toArray(".stage-block");
-    sections.forEach((section: Element | string | object) => {
+    const sections = gsap.utils.toArray<HTMLElement>(".stage-block");
+    sections.forEach((section) => {
       gsap.fromTo(
         section,
         { opacity: 0, y: 50 },
