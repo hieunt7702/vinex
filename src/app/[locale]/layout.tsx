@@ -20,7 +20,7 @@ const marcellus = Marcellus({
 });
 
 export const metadata: Metadata = {
-  title: "VINEX | Nhân điều trắng, nông sản và quà tặng doanh nghiệp",
+  title: "VINEX | Tiếp nối tinh hoa",
   description: "VINEX phát triển từ nhà máy bóc tách điều thô, nhân điều trắng, sản phẩm từ nông sản Việt đến bao bì và quà tặng doanh nghiệp.",
   robots: {
     index: false,
