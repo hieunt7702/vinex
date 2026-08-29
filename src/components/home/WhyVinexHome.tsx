@@ -33,18 +33,17 @@ export const WhyVinexHome = () => {
         </motion.div>
 
         {/* Items Container */}
-        <div className="w-full overflow-x-auto no-scrollbar">
-          <div className="flex items-center min-w-max gap-8 xl:gap-12 pr-8 pb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 xl:gap-6 2xl:gap-12 w-full">
             {t.why.features.map((item, idx) => (
               <motion.div 
                 key={idx}
-                className="flex items-start xl:items-center gap-4 w-[240px] xl:w-[280px] shrink-0"
+                className="flex items-start gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
               >
-                <div className="relative w-10 h-10 xl:w-12 xl:h-12 shrink-0 mt-1 xl:mt-0">
+                <div className="relative w-10 h-10 shrink-0 mt-1">
                   <Image 
                     src={`/images/why${idx + 1}.png`} 
                     alt={item.title} 
@@ -53,12 +52,11 @@ export const WhyVinexHome = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="text-[13px] font-bold text-vinex-charcoal mb-1.5 leading-tight">{item.title}</h3>
-                  <p className="text-[12px] text-vinex-charcoal/70 leading-relaxed font-light">{item.desc}</p>
+                  <h3 className="text-[14px] md:text-[15px] font-bold text-vinex-charcoal mb-2 leading-tight">{item.title}</h3>
+                  <p className="text-[13px] md:text-[14px] text-vinex-charcoal/70 leading-relaxed font-light">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
-          </div>
         </div>
 
       </div>
