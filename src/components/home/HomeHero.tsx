@@ -50,6 +50,7 @@ export const HomeHero = () => {
             fill 
             className="object-contain object-bottom right-0 drop-shadow-2xl" 
             priority
+            unoptimized
           />
         </motion.div>
       </div>
