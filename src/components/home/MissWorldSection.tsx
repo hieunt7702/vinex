@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { Button } from '@/components/ui/Button';
 
 export const MissWorldSection = () => {
   const pathname = usePathname();
@@ -41,9 +42,9 @@ export const MissWorldSection = () => {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href={`/${lang}/miss-world-2026`}>
-                <button className="px-10 py-4 bg-vinex-gold text-vinex-charcoal font-semibold uppercase tracking-wider text-[14px] hover:bg-white transition-colors duration-300 w-full sm:w-auto text-center rounded-lg">
+                <Button variant="gold" className="w-full sm:w-auto">
                   Khám phá câu chuyện
-                </button>
+                </Button>
               </Link>
             </div>
           </motion.div>

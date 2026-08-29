@@ -45,12 +45,12 @@
     "headline": "Gifts worth remembering.",
     "cta": "Explore collections",
     "items": [
-      { "id": "01", "category": "GIFT BOX", "name": "Layout khay dưỡng 1" },
-      { "id": "02", "category": "GIFT BOX", "name": "Layout khay dưỡng 2" },
-      { "id": "03", "category": "GIFT BOX", "name": "Layout khay dưỡng 3" },
-      { "id": "04", "category": "GIFT BOX", "name": "Layout khay dưỡng 4" },
-      { "id": "05", "category": "RETAIL", "name": "Bao bì hạt điều siêu thị 1" },
-      { "id": "06", "category": "RETAIL", "name": "Bao bì hạt điều siêu thị 2" }
+      { "id": "01", "category": "GIFT BOX", "name": "Gift Set 01" },
+      { "id": "02", "category": "GIFT BOX", "name": "Gift Set 02" },
+      { "id": "03", "category": "GIFT BOX", "name": "Gift Set 03" },
+      { "id": "04", "category": "GIFT BOX", "name": "Gift Set 04" },
+      { "id": "05", "category": "GIFT BOX", "name": "Gift Set 05" },
+      { "id": "06", "category": "GIFT BOX", "name": "Gift Set 06" }
     ]
   },
   "corporate": {
@@ -82,19 +82,22 @@
     "desc": "From the rich red basalt soil, we select the finest agricultural produce to preserve and share the Vietnamese spirit through gifts crafted with heart.",
     "cta": "Explore VINEX",
     "steps": [
-      { "title": "VIETNAMESE ORIGIN", "desc": "Sourced from fertile growing regions" },
-      { "title": "CRAFTSMANSHIP", "desc": "Meticulously crafted and refined" },
-      { "title": "THE GIFT", "desc": "A keepsake bearing your brand's mark" }
+      { "title": "BASALT SOIL", "desc": "Fertile land" },
+      { "title": "VIETNAMESE PRODUCE", "desc": "Essence of nature" },
+      { "title": "CRAFTSMANSHIP", "desc": "Exquisite handcrafted details" },
+      { "title": "VINEX", "desc": "Premium gifts" },
+      { "title": "CONNECTION", "desc": "Delivering appreciation" }
     ]
   },
   "why": {
-    "headline": "WHY VINEX",
+    "headline": "WHY VINEX?",
     "cta": "WORK WITH VINEX",
     "features": [
-      { "title": "QUALITY", "desc": "Strict quality control from raw materials to finished product." },
-      { "title": "DESIGN", "desc": "Creative packaging design that honors brand identity and storytelling." },
-      { "title": "CUSTOMIZATION", "desc": "Flexible customization tailored to budget, purpose and vision." },
-      { "title": "SCALE", "desc": "Large-scale factory capacity meeting timelines for international events and orders." }
+      { "title": "Premium Quality", "desc": "Carefully selected ingredients, strict quality control." },
+      { "title": "Exquisite Design", "desc": "Combining traditional and modern styles." },
+      { "title": "Sustainable Production", "desc": "Eco-friendly, community responsibility." },
+      { "title": "Dedicated Service", "desc": "Attentive and caring customer support." },
+      { "title": "Prestige & Trust", "desc": "Trusted partner of many domestic and foreign enterprises." }
     ],
     "stats": [
       { "number": "10+", "label": "YEARS OF\nEXPERIENCE" },
@@ -127,20 +130,26 @@
   "cta": {
     "headline": "LET'S CREATE SOMETHING MEMORABLE.",
     "desc": "Looking for a gift worthy of your brand?",
-    "cta_primary": "START A PROJECT",
-    "cta_secondary": "GET CONSULTATION"
+    "primary": "START A PROJECT",
+    "secondary": "GET CONSULTATION"
   },
   "footer": {
-    "tagline": "Vietnamese craftsmanship, beautifully gifted.",
-    "col_collections": "COLLECTIONS",
-    "col_solutions": "SOLUTIONS",
-    "col_about": "ABOUT",
-    "links_collections": ["Signature", "Executive", "Heritage", "Miss World 2026"],
-    "links_solutions": ["Corporate Gifts", "Bespoke", "Events", "International"],
-    "links_about": ["Our Story", "Projects", "Journal", "Contact"],
+    "tagline": "Vinex brings quality, sustainable, and exquisite products, creating long-lasting value for life.",
+    "col_products": "PRODUCTS",
+    "col_support": "SUPPORT",
+    "col_about": "ABOUT VINEX",
+    "col_contact": "CONTACT",
+    "links_products": ["New Arrivals", "Best Sellers", "Product Catalog", "Collections"],
+    "links_support": ["Help Center", "Shopping Guide", "Shipping Policy", "FAQ"],
+    "links_about": ["About Us", "News", "Careers", "Contact Us"],
+    "contact_phone": "(+84) 966 967 966",
+    "contact_phone_sub": "(8:00 - 22:00, Mon - Sun)",
+    "contact_email": "info@vinexgroup.vn",
+    "contact_address_1": "Hanoi Office: Lobby 2B, Sun Grand City - 69B Thuy Khue - Hanoi",
+    "contact_address_2": "Factory: Zone 6 Bang Doan, Bang Luan Commune, Phu Tho Province",
     "privacy": "Privacy Policy",
-    "terms": "Terms of Use",
-    "copyright": "VINEX. All rights reserved."
+    "terms": "Terms of Service",
+    "copyright": "Copyright by VINEX. All rights reserved."
   },
   "pages": {
     "about": {

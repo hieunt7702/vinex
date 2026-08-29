@@ -39,14 +39,22 @@ export const MissWorldIntro = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="w-full max-w-5xl aspect-[21/9] relative rounded-sm overflow-hidden"
+          className="w-full max-w-5xl aspect-[21/9] relative rounded-sm overflow-hidden group shadow-xl"
         >
           <Image 
             src="/images/banner/b_miss_world_2026.png" 
             alt={t.missworld.title2} 
             fill 
-            className="object-cover object-center" 
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-105" 
           />
+          
+          {/* Top Left Gradient Bracket (Inner) */}
+          <div className="absolute top-0 left-0 w-16 h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:w-28 opacity-80 group-hover:opacity-100"></div>
+          <div className="absolute top-0 left-0 w-[2px] h-16 bg-gradient-to-b from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:h-28 opacity-80 group-hover:opacity-100"></div>
+          
+          {/* Bottom Right Gradient Bracket (Inner) */}
+          <div className="absolute bottom-0 right-0 w-16 h-[2px] bg-gradient-to-l from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:w-28 opacity-80 group-hover:opacity-100"></div>
+          <div className="absolute bottom-0 right-0 w-[2px] h-16 bg-gradient-to-t from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:h-28 opacity-80 group-hover:opacity-100"></div>
         </motion.div>
       </div>
     </section>

@@ -5,7 +5,13 @@ import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { useDict } from '@/hooks/useDict';
 
-const articleColors = ['bg-[#2A2A2A]', 'bg-[#C2A383]', 'bg-[#0D5962]'];
+import Image from 'next/image';
+
+const tempImages = [
+  '/images/product/Collection 1.png',
+  '/images/product/Collection 2.png',
+  '/images/product/Collection 3.png'
+];
 
 export const LatestArticles = () => {
   const pathname = usePathname();
@@ -13,14 +19,15 @@ export const LatestArticles = () => {
   const t = useDict();
 
   return (
-    <section className="py-20 lg:py-28 bg-vinex-ivory border-t border-vinex-charcoal/5">
+    <section className="py-16 lg:py-20 bg-vinex-ivory">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
           <div>
-            <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-charcoal/50 uppercase mb-4 font-bold block">
+            <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-teal uppercase mb-4 font-bold block">
               {t.journal.label}
             </span>
-            <h2 className="text-[32px] sm:text-4xl md:text-[44px] font-marcellus text-vinex-charcoal leading-tight">
+            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-6"></div>
+            <h2 className="text-[32px] sm:text-4xl md:text-[44px] font-marcellus text-vinex-teal leading-tight">
               {t.journal.headline}
             </h2>
           </div>
@@ -41,9 +48,24 @@ export const LatestArticles = () => {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
             >
-              <div className={`relative aspect-[4/3] w-full overflow-hidden ${articleColors[idx]}`}>
-                <div className="absolute inset-0 flex items-center justify-center mix-blend-overlay opacity-30 bg-black/20" />
-                <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105" />
+              <div className="relative aspect-[4/3] w-full group">
+                <div className="relative h-full w-full overflow-hidden bg-vinex-charcoal/5 rounded-t-sm shadow-md">
+                  <Image 
+                    src={tempImages[idx]} 
+                    alt={article.title} 
+                    fill 
+                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                  />
+                  <div className="absolute inset-0 mix-blend-overlay opacity-20 bg-black pointer-events-none transition-opacity group-hover:opacity-10" />
+                  
+                  {/* Top Left Gradient Bracket (Inner) */}
+                  <div className="absolute top-0 left-0 w-16 h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:w-28 opacity-80 group-hover:opacity-100"></div>
+                  <div className="absolute top-0 left-0 w-[2px] h-16 bg-gradient-to-b from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:h-28 opacity-80 group-hover:opacity-100"></div>
+                  
+                  {/* Bottom Right Gradient Bracket (Inner) */}
+                  <div className="absolute bottom-0 right-0 w-16 h-[2px] bg-gradient-to-l from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:w-28 opacity-80 group-hover:opacity-100"></div>
+                  <div className="absolute bottom-0 right-0 w-[2px] h-16 bg-gradient-to-t from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:h-28 opacity-80 group-hover:opacity-100"></div>
+                </div>
               </div>
               
               <div className="p-8 flex flex-col flex-1">

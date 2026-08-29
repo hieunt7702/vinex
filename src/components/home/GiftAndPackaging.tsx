@@ -37,10 +37,10 @@ export const GiftAndPackaging = () => {
           </div>
           
           <div className="flex flex-wrap justify-center gap-4">
-            <button className="px-6 py-2 bg-vinex-blue text-white rounded-full font-medium text-sm hover:scale-105 transition-transform">Quà Tết</button>
-            <button className="px-6 py-2 bg-gray-50 text-gray-700 hover:bg-gray-100 rounded-full font-medium text-sm hover:scale-105 transition-transform">Quà khách hàng</button>
-            <button className="px-6 py-2 bg-gray-50 text-gray-700 hover:bg-gray-100 rounded-full font-medium text-sm hover:scale-105 transition-transform">Quà đối tác</button>
-            <button className="px-6 py-2 bg-gray-50 text-gray-700 hover:bg-gray-100 rounded-full font-medium text-sm hover:scale-105 transition-transform">Quà sự kiện</button>
+            <button className="px-6 py-2 bg-vinex-blue text-white rounded-none font-medium text-sm hover:scale-105 transition-transform">Quà Tết</button>
+            <button className="px-6 py-2 bg-gray-50 text-gray-700 hover:bg-gray-100 rounded-none font-medium text-sm hover:scale-105 transition-transform">Quà khách hàng</button>
+            <button className="px-6 py-2 bg-gray-50 text-gray-700 hover:bg-gray-100 rounded-none font-medium text-sm hover:scale-105 transition-transform">Quà đối tác</button>
+            <button className="px-6 py-2 bg-gray-50 text-gray-700 hover:bg-gray-100 rounded-none font-medium text-sm hover:scale-105 transition-transform">Quà sự kiện</button>
           </div>
         </ScrollReveal>
       </div>

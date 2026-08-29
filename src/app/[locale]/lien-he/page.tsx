@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { Button } from "@/components/ui/Button";
 import Link from 'next/link';
 import { getDictionary } from '@/dictionaries';
 import type { Locale } from '@/dictionaries';
@@ -25,10 +26,10 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
       <main className="w-full flex flex-col min-h-screen bg-vinex-white text-vinex-black pt-[90px]">
         
         {/* Section 1: Mỏ neo giải pháp */}
-        <section className="px-4 py-24 max-w-7xl mx-auto w-full">
+        <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto w-full">
           <div className="text-center mb-10 md:mb-16">
              <h1 className="text-3xl md:text-4xl lg:text-5xl font-marcellus text-vinex-teal mb-4 md:mb-6 leading-tight">{pg.hero_title}</h1>
-             <div className="w-[60px] h-[2px] bg-vinex-gold mx-auto"></div>
+             <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
@@ -45,12 +46,13 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         </section>
 
         {/* Section 2: Form liên hệ và Thông tin */}
-        <section className="px-4 py-16 md:py-24 bg-[#FAF8F2] border-t border-[#E8E4D9]">
+        <section className="px-4 py-16 lg:py-20 bg-[#FAF8F2] border-t border-[#E8E4D9]">
           <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-12 lg:gap-16">
              
              {/* Form Section */}
              <div className="flex-1 bg-white p-6 sm:p-10 md:p-14 rounded-sm shadow-sm border border-[#E8E4D9]">
-                <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-8 md:mb-10">{pg.form_title}</h2>
+                <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-4 md:mb-6">{pg.form_title}</h2>
+                <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-10"></div>
                 
                 <form className="space-y-6 md:space-y-8">
                    <div>
@@ -92,9 +94,9 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                    </div>
                    
                    <div className="pt-4">
-                      <button type="button" className="px-12 py-4 bg-vinex-teal text-white rounded-sm font-bold uppercase tracking-[0.15em] text-xs hover:bg-vinex-teal/90 transition-colors w-full md:w-auto shadow-md">
+                      <Button variant="primary" className="w-full md:w-auto">
                          {pg.form_submit}
-                      </button>
+                      </Button>
                    </div>
                 </form>
              </div>
@@ -102,23 +104,28 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
              {/* Info Section */}
              <div className="w-full lg:w-[400px] shrink-0 flex flex-col gap-12 pt-4">
                 <div>
-                   <h3 className="text-2xl font-marcellus text-vinex-teal mb-8">Thông tin liên hệ</h3>
+                   <h3 className="text-2xl font-marcellus text-vinex-teal mb-4">Thông tin liên hệ</h3>
+                   <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-8"></div>
                    <ul className="space-y-8 text-gray-600">
                       <li>
                          <span className="block font-bold text-xs uppercase tracking-widest text-vinex-gold mb-2">Hotline</span>
-                         <span className="text-lg text-vinex-black">090 123 4567</span>
+                         <span className="text-lg text-vinex-black">(+84) 966 967 966</span>
                       </li>
                       <li>
                          <span className="block font-bold text-xs uppercase tracking-widest text-vinex-gold mb-2">Email</span>
-                         <span className="text-lg text-vinex-black">hello@vinex.vn</span>
+                         <span className="text-lg text-vinex-black">info@vinexgroup.vn</span>
                       </li>
                       <li>
-                         <span className="block font-bold text-xs uppercase tracking-widest text-vinex-gold mb-2">Văn phòng đại diện</span>
-                         <span className="text-[15px] font-light leading-relaxed text-vinex-black">Tầng 12, Tòa nhà Vincom Center, 72 Lê Thánh Tôn, Bến Nghé, Quận 1, TP. HCM</span>
+                         <span className="block font-bold text-xs uppercase tracking-widest text-vinex-gold mb-2">Website</span>
+                         <span className="text-[15px] font-light leading-relaxed text-vinex-black">www.vinexgroup.vn</span>
+                      </li>
+                      <li>
+                         <span className="block font-bold text-xs uppercase tracking-widest text-vinex-gold mb-2">Văn phòng Hà Nội</span>
+                         <span className="text-[15px] font-light leading-relaxed text-vinex-black">Sảnh 2B tòa nhà Sun Grand City - 69B Thụy Khuê - Hà Nội</span>
                       </li>
                       <li>
                          <span className="block font-bold text-xs uppercase tracking-widest text-vinex-gold mb-2">Nhà máy sản xuất</span>
-                         <span className="text-[15px] font-light leading-relaxed text-vinex-black">Khu công nghiệp Bàu Bàng, Xã Lai Uyên, Huyện Bàu Bàng, Tỉnh Bình Dương</span>
+                         <span className="text-[15px] font-light leading-relaxed text-vinex-black">Khu 6 Bằng Doãn, Xã Bằng Luân, Tỉnh Phú Thọ</span>
                       </li>
                    </ul>
                 </div>

@@ -37,7 +37,7 @@ export const CorporateSolutions = () => {
   ];
 
   return (
-    <section ref={container} className="py-32 px-6 md:px-12 bg-vinex-blue text-vinex-white">
+    <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 bg-vinex-blue text-vinex-white">
       <div className="max-w-[90rem] mx-auto">
         <div className="text-center mb-20">
           <h2 className="text-sm font-bold tracking-widest text-vinex-yellow uppercase mb-4">Corporate Solutions</h2>

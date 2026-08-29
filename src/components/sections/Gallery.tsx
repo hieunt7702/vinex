@@ -16,7 +16,8 @@ const images = [
 
 export const Gallery = () => {
   const container = useRef<HTMLDivElement>(null);
-  const [selectedImg, setSelectedImg] = useState<any>(null);
+  type ImageItem = { id: number, type: string, title: string };
+  const [selectedImg, setSelectedImg] = useState<ImageItem | null>(null);
 
   useEffect(() => {
     gsap.fromTo(
@@ -47,7 +48,7 @@ export const Gallery = () => {
   }, [selectedImg]);
 
   return (
-    <section ref={container} className="py-32 px-6 md:px-12 bg-white text-vinex-black">
+    <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 bg-white text-vinex-black">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl  font-bold text-vinex-blue mb-4">Bộ nhận diện mẫu</h2>

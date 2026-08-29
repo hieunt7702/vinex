@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
+import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 const data = [
   { name: "Q1", sales: 4000, leads: 2400 },
@@ -17,7 +17,7 @@ export const DetailStages = () => {
 
   useEffect(() => {
     const sections = gsap.utils.toArray(".stage-block");
-    sections.forEach((section: any) => {
+    sections.forEach((section: Element | string | object) => {
       gsap.fromTo(
         section,
         { opacity: 0, y: 50 },
@@ -36,7 +36,7 @@ export const DetailStages = () => {
   }, []);
 
   return (
-    <section ref={container} className="py-24 bg-white text-vinex-black">
+    <section ref={container} className="py-16 lg:py-20 bg-white text-vinex-black">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Stage 1 */}
         <div className="stage-block mb-32 grid md:grid-cols-2 gap-12 items-center">

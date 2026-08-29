@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { useDict } from '@/hooks/useDict';
+import { Button } from '@/components/ui/Button';
 
 export const FinalCTA = () => {
   const pathname = usePathname();
@@ -11,7 +12,7 @@ export const FinalCTA = () => {
   const t = useDict();
 
   return (
-    <section className="py-16 lg:py-20 bg-vinex-teal text-white relative overflow-hidden">
+    <section className="py-12 lg:py-16 bg-vinex-teal text-white relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12 relative z-10">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12">
           
@@ -25,6 +26,7 @@ export const FinalCTA = () => {
             <h2 className="text-[32px] sm:text-[40px] lg:text-[48px] font-marcellus leading-[1.2] mb-4">
               {t.cta.headline}
             </h2>
+            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-6"></div>
             <p className="text-white/80 text-[15px] leading-relaxed max-w-md">
               {t.cta.desc}
             </p>
@@ -38,15 +40,14 @@ export const FinalCTA = () => {
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
           >
             <Link href={`/${lang}/request-quote`}>
-              <button className="relative overflow-hidden group w-full sm:w-auto px-8 py-4 bg-vinex-gold text-vinex-charcoal font-bold text-[11px] tracking-widest uppercase hover:bg-white transition-colors flex items-center justify-center gap-2">
-                <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine z-20" />
-                <span className="relative z-10">{t.cta.cta_primary} <span>&rarr;</span></span>
-              </button>
+              <Button variant="gold" className="w-full sm:w-auto">
+                {t.cta.primary}
+              </Button>
             </Link>
             <Link href={`/${lang}/lien-he`}>
-              <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white text-white font-bold text-[11px] tracking-widest uppercase hover:bg-white hover:text-vinex-teal transition-colors flex items-center justify-center">
-                {t.cta.cta_secondary}
-              </button>
+              <Button variant="secondary" className="w-full sm:w-auto !border-white !text-white hover:!border-vinex-gold hover:!text-vinex-gold">
+                {t.cta.secondary}
+              </Button>
             </Link>
           </motion.div>
 

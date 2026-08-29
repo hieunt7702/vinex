@@ -42,7 +42,7 @@ export const About = () => {
   ];
 
   return (
-    <section ref={container} className="py-32 px-6 md:px-12 lg:px-24 bg-vinex-white text-vinex-black relative">
+    <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 lg:px-24 bg-vinex-white text-vinex-black relative">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
           <h2 className="about-text text-4xl md:text-5xl  font-bold text-vinex-blue mb-6">

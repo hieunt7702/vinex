@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Button } from '@/components/ui/Button';
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { useDict } from '@/hooks/useDict';
@@ -44,7 +45,7 @@ export default function MissWorldPage() {
       </section>
 
       {/* Role & Reason Section */}
-      <section className="py-24 bg-white px-4">
+      <section className="py-16 lg:py-20 bg-white px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <motion.div 
@@ -53,7 +54,8 @@ export default function MissWorldPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl font-bold text-vinex-black mb-6">Vai trò và Sứ mệnh</h2>
+              <h2 className="text-3xl font-marcellus text-vinex-teal mb-4">Vai trò và Sứ mệnh</h2>
+              <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-8"></div>
               <div className="space-y-4 text-gray-600 font-light leading-relaxed">
                 <p>
                   Đồng hành cùng Miss World 2026, VINEX mang trên mình trọng trách thiết kế và chế tác các bộ quà tặng cao cấp dành riêng cho các thí sinh, ban giám khảo và khách mời VIP từ khắp nơi trên thế giới.
@@ -81,9 +83,10 @@ export default function MissWorldPage() {
       </section>
 
       {/* The Gift Box Story */}
-      <section className="py-24 bg-vinex-white px-4">
+      <section className="py-16 lg:py-20 bg-vinex-white px-4">
         <div className="max-w-7xl mx-auto text-center mb-16">
-          <h2 className="text-3xl font-bold text-vinex-black mb-6">Câu chuyện Bộ Quà Tặng</h2>
+          <h2 className="text-3xl font-marcellus text-vinex-teal mb-4">Câu chuyện Bộ Quà Tặng</h2>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>
           <p className="text-gray-600 max-w-3xl mx-auto font-light">
             Sự kết hợp hoàn hảo giữa nguyên liệu bản địa và thiết kế đương đại.
           </p>
@@ -105,7 +108,7 @@ export default function MissWorldPage() {
                   <span className="text-xs">1:1 Aspect Ratio</span>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-vinex-black mb-4">The Crown Collection {item}</h3>
+              <h3 className="text-2xl font-marcellus text-vinex-teal mb-4">The Crown Collection {item}</h3>
               <p className="text-gray-500 font-light">
                 Hộp quà sơn mài thủ công với các sản phẩm hạt điều tẩm vị đặc sản, kết hợp cùng trà sen Tây Hồ hảo hạng.
               </p>
@@ -115,9 +118,10 @@ export default function MissWorldPage() {
       </section>
 
       {/* Preparation & BTS */}
-      <section className="py-24 bg-white px-4">
+      <section className="py-16 lg:py-20 bg-white px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-vinex-black mb-12 text-center">Hậu trường & Quá trình chuẩn bị</h2>
+          <h2 className="text-3xl font-marcellus text-vinex-teal mb-4 text-center">Hậu trường & Quá trình chuẩn bị</h2>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-12"></div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((item) => (
@@ -141,16 +145,17 @@ export default function MissWorldPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-vinex-blue text-white px-4 text-center">
+      <section className="py-16 lg:py-20 bg-vinex-teal text-white px-4 text-center">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6">Trải nghiệm Quà Tặng Đẳng Cấp</h2>
-          <p className="text-blue-100 mb-10 font-light text-lg">
+          <h2 className="text-3xl font-marcellus text-vinex-gold mb-4">Trải nghiệm Quà Tặng Đẳng Cấp</h2>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>
+          <p className="text-white/80 mb-10 font-light text-lg">
             Khám phá các giải pháp quà tặng doanh nghiệp tiêu chuẩn quốc tế từ VINEX.
           </p>
           <Link href={`/${lang}/corporate-gifts`}>
-            <button className="px-10 py-4 bg-[#D4AF37] text-vinex-black font-bold uppercase tracking-widest text-sm hover:bg-white transition-colors rounded-md shadow-lg">
-              Khám phá Corporate Gifts
-            </button>
+            <Button variant="gold">
+              Tải hồ sơ dự án
+            </Button>
           </Link>
         </div>
       </section>

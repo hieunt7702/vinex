@@ -32,7 +32,7 @@ export const CTABanner = () => {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="relative py-24 overflow-hidden text-white flex items-center justify-center min-h-[400px]">
+    <section ref={containerRef} className="relative py-16 lg:py-20 overflow-hidden text-white flex items-center justify-center min-h-[400px]">
       
       {/* Animated Parallax Background */}
       <div 

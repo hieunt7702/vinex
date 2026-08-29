@@ -25,7 +25,7 @@ export const Testimonials = () => {
   ];
 
   return (
-    <section ref={container} className="py-32 bg-vinex-black text-white relative overflow-hidden">
+    <section ref={container} className="py-16 lg:py-20 bg-vinex-black text-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-vinex-blue/20 to-transparent"></div>
       
       <div className="max-w-[90rem] mx-auto px-6 md:px-12 relative z-10">
@@ -46,7 +46,7 @@ export const Testimonials = () => {
           {reviews.map((rev, idx) => (
             <div key={idx} className="testi-card bg-white/5 p-10 border border-white/10 relative hover:bg-white/10 transition-colors duration-500 group">
               <Quote className="absolute top-8 right-8 text-white/5 group-hover:text-vinex-yellow/10 transition-colors duration-500" size={80} />
-              <p className="text-lg text-white/80 font-light leading-relaxed mb-12 relative z-10 italic">"{rev.text}"</p>
+              <p className="text-lg text-white/80 font-light leading-relaxed mb-12 relative z-10 italic">&quot;{rev.text}&quot;</p>
               
               <div className="flex items-center gap-4 border-t border-white/10 pt-6">
                 <div className="w-14 h-14 rounded-full bg-white/10 overflow-hidden">

@@ -45,7 +45,7 @@ export const Process = () => {
   };
 
   return (
-    <section ref={container} className="py-24 bg-white text-vinex-black relative overflow-hidden">
+    <section ref={container} className="py-16 lg:py-20 bg-white text-vinex-black relative overflow-hidden">
       
       {/* SVG Definitions for Gradient Icons */}
       <svg width="0" height="0" className="absolute">

@@ -25,7 +25,7 @@ export const NewsSection = () => {
   ];
 
   return (
-    <section ref={container} className="py-32 bg-vinex-white text-vinex-black">
+    <section ref={container} className="py-16 lg:py-20 bg-vinex-white text-vinex-black">
       <div className="max-w-[90rem] mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-black/10 pb-8">
           <div>
@@ -51,9 +51,10 @@ export const NewsSection = () => {
                 <span className="w-1 h-1 rounded-full bg-black/20"></span>
                 <span className="text-xs font-light tracking-widest text-black/50 uppercase">{item.date}</span>
               </div>
-              <h3 className="text-2xl font-light text-vinex-black group-hover:text-vinex-yellow transition-colors duration-300 leading-snug mb-4 flex-grow">
+              <h3 className="text-2xl font-light text-vinex-teal group-hover:text-vinex-yellow transition-colors duration-300 leading-snug mb-4 flex-grow">
                 {item.title}
               </h3>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
               <div className="mt-auto">
                 <span className="inline-block pb-1 border-b border-black/20 uppercase tracking-widest text-xs font-bold group-hover:border-vinex-yellow transition-colors">
                   Read Article

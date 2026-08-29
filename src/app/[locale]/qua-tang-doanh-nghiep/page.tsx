@@ -28,8 +28,9 @@ export default async function CorporateGiftPage({ params }: { params: Promise<{ 
       <main className="w-full flex flex-col min-h-screen bg-[#FAF8F2] text-vinex-black pt-[90px]">
         
         {/* Section 1: Hero & 3 nền tảng */}
-        <section className="px-4 py-24 max-w-7xl mx-auto text-center">
+        <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">{pg.hero_title}</h1>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
           <p className="text-[17px] text-gray-600 max-w-3xl mx-auto mb-20 leading-relaxed font-light">
              {pg.hero_desc}
           </p>
@@ -54,7 +55,7 @@ export default async function CorporateGiftPage({ params }: { params: Promise<{ 
         </section>
 
         {/* Section 2: Ứng dụng theo dịp */}
-        <section className="px-4 py-20 bg-white border-y border-[#E8E4D9]">
+        <section className="px-4 py-16 bg-white border-y border-[#E8E4D9]">
           <div className="max-w-4xl mx-auto">
              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 {occasions.map((occ, idx) => (
@@ -67,9 +68,10 @@ export default async function CorporateGiftPage({ params }: { params: Promise<{ 
         </section>
 
         {/* Section 3: Xem thêm khả năng tùy biến bao bì */}
-        <section className="px-4 py-32 bg-[#FAF8F2] text-center">
+        <section className="px-4 py-16 lg:py-20 bg-[#FAF8F2] text-center">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-8">Bao bì và hộp quà theo yêu cầu</h2>
+            <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Bao bì và hộp quà theo yêu cầu</h2>
+            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
             <p className="text-[15px] md:text-[17px] text-gray-600 mb-12 font-light">Khám phá các lựa chọn kết cấu hộp, trải nghiệm mở hộp và khả năng tùy biến nhận diện thương hiệu.</p>
             <div className="w-full aspect-[4/3] md:aspect-[21/9] bg-white border border-[#E8E4D9] rounded-sm mb-12 flex items-center justify-center shadow-lg relative overflow-hidden">
                <div className="absolute inset-0 bg-vinex-teal/5"></div>
@@ -82,9 +84,10 @@ export default async function CorporateGiftPage({ params }: { params: Promise<{ 
         </section>
 
         {/* Section 4: Form tư vấn */}
-        <section className="px-4 py-32 bg-vinex-teal text-white border-t border-white/10">
+        <section className="px-4 py-16 lg:py-20 bg-vinex-teal text-white border-t border-white/10">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-gold mb-6">Liên hệ tư vấn quà tặng</h2>
+            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
             <p className="text-white/80 mb-12 font-light text-[17px]">Đội ngũ VINEX sẵn sàng lắng nghe và xây dựng bộ quà hoàn hảo nhất cho doanh nghiệp của bạn.</p>
             <Link href="/vi/lien-he" className="inline-block px-12 py-4 bg-vinex-gold text-vinex-teal rounded-sm font-bold uppercase tracking-[0.15em] text-xs hover:bg-white transition-colors shadow-xl">
               Nhận tư vấn bộ quà

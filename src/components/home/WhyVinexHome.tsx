@@ -1,12 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { ShieldCheck, Edit3, MapPin, Briefcase } from 'lucide-react';
 import { useDict } from '@/hooks/useDict';
-
-const featureIcons = [ShieldCheck, Edit3, MapPin, Briefcase];
+import Image from 'next/image';
 
 export const WhyVinexHome = () => {
   const pathname = usePathname();
@@ -14,84 +11,56 @@ export const WhyVinexHome = () => {
   const t = useDict();
 
   return (
-    <section className="py-20 lg:py-24 bg-vinex-teal text-white border-b border-white/10">
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
-        <div className="flex flex-col lg:flex-row items-stretch gap-12 lg:gap-16">
-          
-          {/* Left Side: Heading & Features Grid (70%) */}
-          <div className="w-full lg:w-[70%] flex flex-col justify-between">
-            <div className="mb-10">
-              <h2 className="text-[28px] sm:text-[36px] font-marcellus text-vinex-gold tracking-wider uppercase">
-                {t.why.headline}
-              </h2>
-              <div className="w-[50px] h-[2px] bg-vinex-gold mt-4"></div>
-            </div>
+    <section className="py-8 lg:py-10 bg-vinex-ivory relative overflow-hidden">
+      {/* Background motif on the right */}
+      <div className="absolute right-[-10%] sm:right-[-5%] xl:right-[-3%] top-1/2 -translate-y-1/2 h-[180px] md:h-[220px] xl:h-[280px] aspect-square z-0 opacity-40 pointer-events-none mix-blend-multiply">
+        <Image src="/images/motif_leaf3.png" alt="Motif" fill className="object-contain object-right" />
+      </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10 mb-10">
-              {t.why.features.map((item, idx) => {
-                const Icon = featureIcons[idx];
-                return (
-                  <motion.div 
-                    key={idx}
-                    className="flex gap-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  >
-                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 mt-0.5">
-                      <Icon className="w-5 h-5 text-vinex-gold stroke-[1.5]" />
-                    </div>
-                    <div>
-                      <h3 className="text-[13px] font-bold tracking-widest text-vinex-gold uppercase mb-2 leading-tight">
-                        {item.title}
-                      </h3>
-                      <p className="text-white/80 font-light text-[13px] leading-relaxed max-w-[280px]">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <Link href={`/${lang}/lien-he`}>
-                <button className="relative overflow-hidden group px-8 py-4 bg-vinex-gold text-vinex-charcoal font-bold text-[11px] tracking-widest uppercase hover:bg-white transition-colors w-full sm:w-auto">
-                  <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine z-20" />
-                  <span className="relative z-10">{t.why.cta}</span>
-                </button>
-              </Link>
-            </motion.div>
-          </div>
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12 relative z-10 w-full">
+        
+        {/* Title */}
+        <motion.div 
+          className="mb-8 xl:mb-12"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <h2 className="text-[18px] xl:text-[20px] font-marcellus text-vinex-teal tracking-widest uppercase font-bold mb-4">
+            {t.why.headline}
+          </h2>
+          <div className="w-[60px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent"></div>
+        </motion.div>
 
-          {/* Right Side: Stats (30%) */}
-          <div className="w-full lg:w-[30%] flex flex-row lg:flex-col justify-between lg:justify-center gap-8 pt-8 lg:pt-0 border-t lg:border-t-0 lg:border-l border-white/10 lg:pl-16">
-            {t.why.stats.map((stat, idx) => (
+        {/* Items Container */}
+        <div className="w-full overflow-x-auto no-scrollbar">
+          <div className="flex items-center min-w-max gap-8 xl:gap-12 pr-8 pb-4">
+            {t.why.features.map((item, idx) => (
               <motion.div 
                 key={idx}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                className="flex items-start xl:items-center gap-4 w-[240px] xl:w-[280px] shrink-0"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="flex flex-col sm:flex-row lg:flex-row items-start sm:items-center gap-2 lg:gap-4"
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
               >
-                <span className="text-[36px] lg:text-[44px] font-marcellus text-vinex-gold leading-none shrink-0 min-w-[70px]">
-                  {stat.number}
-                </span>
-                <span className="text-[10px] font-bold tracking-[0.15em] text-white/75 uppercase whitespace-pre-line leading-snug">
-                  {stat.label}
-                </span>
+                <div className="relative w-10 h-10 xl:w-12 xl:h-12 shrink-0 mt-1 xl:mt-0">
+                  <Image 
+                    src={`/images/why${idx + 1}.png`} 
+                    alt={item.title} 
+                    fill 
+                    className="object-contain drop-shadow-sm mix-blend-multiply" 
+                  />
+                </div>
+                <div>
+                  <h3 className="text-[13px] font-bold text-vinex-charcoal mb-1.5 leading-tight">{item.title}</h3>
+                  <p className="text-[12px] text-vinex-charcoal/70 leading-relaxed font-light">{item.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
-
         </div>
+
       </div>
     </section>
   );

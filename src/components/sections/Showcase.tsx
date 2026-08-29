@@ -65,7 +65,7 @@ export const Showcase = () => {
   ];
 
   return (
-    <section ref={container} className="py-16 md:py-24 px-6 md:px-12 bg-vinex-black text-white relative overflow-hidden">
+    <section ref={container} className="py-16 md:py-16 lg:py-20 px-6 md:px-12 bg-vinex-black text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-16">
           <div>

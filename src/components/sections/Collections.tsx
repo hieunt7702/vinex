@@ -36,7 +36,7 @@ export const Collections = () => {
   ];
 
   return (
-    <section ref={container} className="py-24 px-4 md:px-8 bg-[#fafafa]">
+    <section ref={container} className="py-16 lg:py-20 px-4 md:px-8 bg-[#fafafa]">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex justify-between items-end mb-12">
           <div>

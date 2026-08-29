@@ -34,7 +34,7 @@ export const WhyChooseUs = () => {
   };
 
   return (
-    <section ref={container} className="py-24 bg-vinex-blue text-white relative overflow-hidden">
+    <section ref={container} className="py-16 lg:py-20 bg-vinex-blue text-white relative overflow-hidden">
       
       {/* Shared Gradient for Icons */}
       <svg width="0" height="0" className="absolute">

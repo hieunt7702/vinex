@@ -30,7 +30,7 @@ export const Personalization = () => {
   ];
 
   return (
-    <section ref={container} className="py-24 px-6 md:px-12 bg-vinex-black text-white overflow-hidden">
+    <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 bg-vinex-black text-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <h2 className="text-3xl md:text-5xl  font-bold text-vinex-yellow mb-4">Dấu ấn độc bản</h2>

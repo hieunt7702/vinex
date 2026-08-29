@@ -21,15 +21,16 @@ export default function CorporateGiftsPage() {
     <main className="w-full flex flex-col min-h-screen pt-[90px] bg-[#FAFAFA]">
       
       {/* Header */}
-      <section className="py-20 text-center px-4 bg-white border-b border-gray-100">
+      <section className="py-16 lg:py-20 text-center px-4 bg-white border-b border-gray-100">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <span className="text-sm tracking-widest text-vinex-blue uppercase mb-4 font-bold block">VINEX B2B SOLUTIONS</span>
-          <h1 className="text-4xl md:text-5xl font-bold text-vinex-black mb-6">Giải Pháp Quà Tặng Doanh Nghiệp</h1>
+          <span className="text-sm tracking-widest text-vinex-teal uppercase mb-4 font-bold block">VINEX B2B SOLUTIONS</span>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>
+          <h1 className="text-4xl md:text-5xl font-marcellus text-vinex-teal mb-6">Giải Pháp Quà Tặng Doanh Nghiệp</h1>
           <p className="text-gray-600 text-lg font-light max-w-2xl mx-auto">
             Khẳng định đẳng cấp thương hiệu và xây dựng mối quan hệ bền chặt thông qua các bộ sưu tập quà tặng cao cấp được thiết kế riêng.
           </p>
@@ -37,7 +38,7 @@ export default function CorporateGiftsPage() {
       </section>
 
       {/* Categories */}
-      <section className="py-24 px-4">
+      <section className="py-16 lg:py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {categories.map((cat, idx) => (
@@ -67,10 +68,11 @@ export default function CorporateGiftsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-vinex-white text-center px-4 relative overflow-hidden">
+      <section className="py-16 lg:py-20 bg-vinex-white text-center px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-5 pointer-events-none" />
         <div className="max-w-3xl mx-auto relative z-10">
-          <h2 className="text-3xl font-bold text-vinex-black mb-6">Bạn cần tư vấn giải pháp quà tặng?</h2>
+          <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Bạn cần tư vấn giải pháp quà tặng?</h2>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
           <p className="text-gray-600 mb-10 font-light">
             Đội ngũ chuyên gia của VINEX luôn sẵn sàng lắng nghe và xây dựng phương án phù hợp nhất với ngân sách và mục tiêu của doanh nghiệp.
           </p>

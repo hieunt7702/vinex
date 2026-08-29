@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { Button } from '@/components/ui/Button';
 
 export default function CustomGiftsPage() {
   const pathname = usePathname();
@@ -107,9 +108,9 @@ export default function CustomGiftsPage() {
             Tạo dấu ấn khác biệt với bộ quà tặng độc bản từ VINEX.
           </p>
           <Link href={`/${lang}/request-quote`}>
-            <button className="px-10 py-4 bg-[#D4AF37] text-vinex-black font-bold uppercase tracking-widest text-sm hover:bg-white transition-colors rounded-md shadow-lg">
+            <Button variant="gold">
               Tạo bộ quà của bạn
-            </button>
+            </Button>
           </Link>
         </div>
       </section>

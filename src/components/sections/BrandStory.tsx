@@ -22,7 +22,7 @@ export const BrandStory = () => {
   }, []);
 
   return (
-    <section ref={container} className="py-32 px-6 md:px-12 bg-vinex-white text-vinex-black overflow-hidden relative">
+    <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 bg-vinex-white text-vinex-black overflow-hidden relative">
       <div className="max-w-[90rem] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
         
         {/* Storytelling Text */}

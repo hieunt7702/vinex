@@ -45,12 +45,12 @@
     "headline": "Những tặng phẩm đáng được nhớ đến.",
     "cta": "Khám phá bộ sưu tập",
     "items": [
-      { "id": "01", "category": "KHAY DƯỠNG", "name": "Layout khay dưỡng 1" },
-      { "id": "02", "category": "KHAY DƯỠNG", "name": "Layout khay dưỡng 2" },
-      { "id": "03", "category": "KHAY DƯỠNG", "name": "Layout khay dưỡng 3" },
-      { "id": "04", "category": "KHAY DƯỠNG", "name": "Layout khay dưỡng 4" },
-      { "id": "05", "category": "SIÊU THỊ", "name": "Bao bì hạt điều siêu thị 1" },
-      { "id": "06", "category": "SIÊU THỊ", "name": "Bao bì hạt điều siêu thị 2" }
+      { "id": "01", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 01" },
+      { "id": "02", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 02" },
+      { "id": "03", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 03" },
+      { "id": "04", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 04" },
+      { "id": "05", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 05" },
+      { "id": "06", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 06" }
     ]
   },
   "corporate": {
@@ -82,19 +82,22 @@
     "desc": "Từ đất đỏ bazan màu mỡ, chúng tôi chọn lọc từng nông sản tinh túy, để gìn giữ và lan tỏa tinh thần Việt qua những món quà được chế tác bằng tâm huyết.",
     "cta": "Khám phá VINEX",
     "steps": [
-      { "title": "NGUYÊN LIỆU VIỆT", "desc": "Tuyển chọn từ vùng trồng trù phú" },
-      { "title": "CRAFTSMANSHIP", "desc": "Tỉ mỉ chế tác và tinh tuyển" },
-      { "title": "MÓN QUÀ", "desc": "Tặng phẩm mang dấu ấn thương hiệu" }
+      { "title": "ĐẤT ĐỎ BAZAN", "desc": "Nguồn đất màu mỡ" },
+      { "title": "NÔNG SẢN VIỆT", "desc": "Tinh hoa từ thiên nhiên" },
+      { "title": "CHẾ TÁC", "desc": "Thủ công tinh xảo" },
+      { "title": "VINEX", "desc": "Tặng phẩm cao cấp" },
+      { "title": "KẾT NỐI", "desc": "Trao đi sự trân trọng" }
     ]
   },
   "why": {
-    "headline": "TẠI SAO CHỌN VINEX",
+    "headline": "TẠI SAO CHỌN VINEX?",
     "cta": "LÀM VIỆC VỚI VINEX",
     "features": [
-      { "title": "CHẤT LƯỢNG", "desc": "Kiểm soát chất lượng nghiêm ngặt từ nguyên liệu thô đến thành phẩm cuối cùng." },
-      { "title": "THIẾT KẾ", "desc": "Năng lực thiết kế bao bì sáng tạo, tôn vinh nhận diện và câu chuyện thương hiệu." },
-      { "title": "CÁ NHÂN HÓA", "desc": "Giải pháp tùy biến linh hoạt theo ngân sách, mục đích và định hướng riêng." },
-      { "title": "SẢN LƯỢNG", "desc": "Nhà máy quy mô lớn, đáp ứng tiến độ cho các sự kiện và đơn hàng quốc tế." }
+      { "title": "Chất lượng vượt trội", "desc": "Nguyên liệu tuyển chọn, kiểm định nghiêm ngặt." },
+      { "title": "Thiết kế tinh tế", "desc": "Kết hợp truyền thống và phong cách hiện đại." },
+      { "title": "Sản xuất bền vững", "desc": "Thân thiện môi trường, trách nhiệm cộng đồng." },
+      { "title": "Dịch vụ tận tâm", "desc": "Đồng hành và chăm sóc khách hàng chu đáo." },
+      { "title": "Uy tín & tin cậy", "desc": "Đối tác của nhiều doanh nghiệp trong và ngoài nước." }
     ],
     "stats": [
       { "number": "10+", "label": "NĂM\nKINH NGHIỆM" },
@@ -127,17 +130,23 @@
   "cta": {
     "headline": "HÃY TẠO NÊN DẤU ẤN KHÓ QUÊN.",
     "desc": "Bạn đang tìm kiếm một món quà xứng đáng với thương hiệu của mình?",
-    "cta_primary": "BẮT ĐẦU DỰ ÁN",
-    "cta_secondary": "NHẬN TƯ VẤN"
+    "primary": "BẮT ĐẦU DỰ ÁN",
+    "secondary": "NHẬN TƯ VẤN"
   },
   "footer": {
-    "tagline": "Từ tinh hoa nông sản Việt đến tặng phẩm chế tác.",
-    "col_collections": "BỘ SƯU TẬP",
-    "col_solutions": "GIẢI PHÁP",
+    "tagline": "Vinex mang đến những sản phẩm chất lượng, bền vững và tinh tế, kiến tạo giá trị lâu dài cho cuộc sống.",
+    "col_products": "SẢN PHẨM",
+    "col_support": "HỖ TRỢ",
     "col_about": "VỀ VINEX",
-    "links_collections": ["Signature", "Executive", "Heritage", "Miss World 2026"],
-    "links_solutions": ["Quà tặng Doanh nghiệp", "Thiết kế độc quyền", "Sự kiện", "Quốc tế"],
-    "links_about": ["Câu chuyện", "Dự án", "Tạp chí", "Liên hệ"],
+    "col_contact": "LIÊN HỆ",
+    "links_products": ["Sản phẩm mới", "Sản phẩm bán chạy", "Danh mục sản phẩm", "Bộ sưu tập"],
+    "links_support": ["Trung tâm trợ giúp", "Hướng dẫn mua hàng", "Chính sách vận chuyển", "Câu hỏi thường gặp"],
+    "links_about": ["Giới thiệu", "Tin tức", "Tuyển dụng", "Liên hệ"],
+    "contact_phone": "(+84) 966 967 966",
+    "contact_phone_sub": "(8:00 - 22:00, Thứ 2 - Chủ nhật)",
+    "contact_email": "info@vinexgroup.vn",
+    "contact_address_1": "VP Hà Nội: Sảnh 2B tòa nhà Sun Grand City - 69B Thụy Khuê - Hà Nội",
+    "contact_address_2": "Nhà máy: Khu 6 Bằng Doãn, Xã Bằng Luân, Tỉnh Phú Thọ",
     "privacy": "Chính sách bảo mật",
     "terms": "Điều khoản sử dụng",
     "copyright": "Bản quyền thuộc về VINEX."

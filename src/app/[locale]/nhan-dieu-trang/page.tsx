@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { getDictionary } from '@/dictionaries';
 import type { Locale } from '@/dictionaries';
+import { Button } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
   title: "Nhân điều trắng VINEX | Cung ứng theo quy cách",
@@ -27,24 +29,29 @@ export default async function WhiteCashewPage({ params }: { params: Promise<{ lo
       <main className="w-full flex flex-col min-h-screen bg-[#FAF8F2] text-vinex-black pt-[90px]">
         
         {/* Section 1: Hero & Mô tả */}
-        <section className="px-4 py-24 max-w-7xl mx-auto flex flex-col items-center text-center">
+        <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto flex flex-col items-center text-center">
           <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">{pg.hero_title}</h1>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
           <p className="text-lg text-gray-600 max-w-3xl mb-16 font-light leading-relaxed">
              {pg.hero_desc}
           </p>
-          <div className="w-full aspect-[16/9] md:aspect-[21/9] bg-white rounded-sm overflow-hidden flex flex-col items-center justify-center relative shadow-xl border border-[#E8E4D9]">
-             {/* Hero Image placeholder for macro shot */}
-             <div className="absolute inset-0 bg-gray-100/50"></div>
-             <span className="font-bold tracking-widest text-gray-400 uppercase text-[10px] md:text-xs relative z-10 text-center px-4">Macro White Cashew Placeholder</span>
+          <div className="w-full aspect-[16/9] md:aspect-[21/9] rounded-sm overflow-hidden relative shadow-xl border border-[#E8E4D9]">
+             <Image
+               src="/images/banner/nhan_dieu_trang.png"
+               alt="Nhân điều trắng VINEX"
+               fill
+               className="object-cover object-center"
+               priority
+             />
           </div>
         </section>
 
         {/* Section 2: Thông số kỹ thuật (CMS fields) */}
-        <section className="px-4 py-24 bg-white border-t border-[#E8E4D9]">
+        <section className="px-4 py-16 lg:py-20 bg-white border-t border-[#E8E4D9]">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
                <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Thông số kỹ thuật</h2>
-               <div className="w-[60px] h-[2px] bg-vinex-gold mx-auto"></div>
+               <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto"></div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
               {cmsFields.map((field, idx) => (
@@ -61,10 +68,11 @@ export default async function WhiteCashewPage({ params }: { params: Promise<{ lo
         </section>
 
         {/* Section 3: Ứng dụng & Quy cách đóng gói */}
-        <section className="px-4 py-24 bg-[#FAF8F2]">
+        <section className="px-4 py-16 lg:py-20 bg-[#FAF8F2]">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
             <div>
-              <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-10">4 Nhóm ứng dụng</h2>
+              <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">4 Nhóm ứng dụng</h2>
+              <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-10"></div>
               <ul className="space-y-4">
                  {[
                    "Cung ứng thương mại nguyên liệu",
@@ -82,7 +90,8 @@ export default async function WhiteCashewPage({ params }: { params: Promise<{ lo
               </ul>
             </div>
             <div className="flex flex-col h-full">
-              <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-10">Quy cách đóng gói</h2>
+              <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Quy cách đóng gói</h2>
+              <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-10"></div>
               <div className="bg-white p-8 rounded-sm border border-[#E8E4D9] flex-1 flex flex-col items-center justify-center text-center shadow-sm">
                  <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center mb-6">
                     <span className="text-gray-400 text-xs font-bold uppercase tracking-widest">Image</span>
@@ -95,10 +104,11 @@ export default async function WhiteCashewPage({ params }: { params: Promise<{ lo
         </section>
 
         {/* Section 4: Form yêu cầu cung ứng */}
-        <section className="px-4 py-28 bg-vinex-teal text-white border-t border-white/10">
+        <section className="px-4 py-16 lg:py-20 bg-vinex-teal text-white border-t border-white/10">
           <div className="max-w-4xl mx-auto bg-white/5 p-8 md:p-16 rounded-sm border border-white/10 backdrop-blur-sm shadow-2xl">
             <div className="text-center mb-12">
                <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-gold mb-6">Trao đổi nhu cầu cung ứng</h2>
+               <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
                <p className="text-white/80 font-light text-[15px]">Để lại thông tin, đội ngũ VINEX sẽ liên hệ tư vấn quy cách và báo giá phù hợp nhất.</p>
             </div>
             
@@ -131,9 +141,9 @@ export default async function WhiteCashewPage({ params }: { params: Promise<{ lo
               </div>
               
               <div className="text-center pt-8">
-                <button type="button" className="px-12 py-4 bg-vinex-gold text-vinex-teal rounded-sm font-bold uppercase tracking-[0.15em] text-xs hover:bg-white transition-colors w-full md:w-auto shadow-xl">
+                <Button variant="gold" className="w-full md:w-auto">
                   Gửi yêu cầu cung ứng
-                </button>
+                </Button>
               </div>
             </form>
           </div>

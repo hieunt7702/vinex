@@ -93,9 +93,9 @@ export default async function ProductDetailPage({ params }: Props) {
                  <div className="relative z-10">
                    <h3 className="text-2xl font-marcellus mb-4">Quan tâm sản phẩm này?</h3>
                    <p className="text-white/80 mb-8 text-[14px] leading-relaxed max-w-sm">Để lại thông tin để nhận mẫu thử và báo giá chi tiết cho doanh nghiệp.</p>
-                   <a href="/vi/lien-he" className="inline-block px-8 py-4 bg-transparent border border-vinex-gold text-vinex-gold font-bold uppercase tracking-widest text-[11px] hover:bg-vinex-gold hover:text-vinex-charcoal transition-colors text-center">
+                   <Link href="/vi/lien-he" className="inline-block px-8 py-4 bg-transparent border border-vinex-gold text-vinex-gold font-bold uppercase tracking-widest text-[11px] hover:bg-vinex-gold hover:text-vinex-charcoal transition-colors text-center">
                       Gửi yêu cầu
-                   </a>
+                   </Link>
                  </div>
               </div>
            </div>

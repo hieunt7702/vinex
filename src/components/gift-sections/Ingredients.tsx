@@ -29,7 +29,7 @@ export const Ingredients = () => {
   }, []);
 
   return (
-    <section ref={container} className="py-32 bg-white text-vinex-black">
+    <section ref={container} className="py-16 lg:py-20 bg-white text-vinex-black">
       <div className="max-w-[90rem] mx-auto px-6 md:px-12">
         <div className="text-center mb-20">
           <h2 className="text-sm font-bold tracking-widest text-vinex-blue uppercase mb-4">Inside the Gift</h2>

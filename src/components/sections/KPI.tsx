@@ -42,7 +42,7 @@ export const KPI = () => {
   ];
 
   return (
-    <section ref={container} className="py-32 px-6 md:px-12 bg-vinex-black text-white relative overflow-hidden">
+    <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 bg-vinex-black text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto border-t border-white/10 pt-20">
         <h2 className="text-3xl md:text-5xl  font-bold text-center mb-20 text-vinex-yellow">Kết quả kỳ vọng</h2>
         

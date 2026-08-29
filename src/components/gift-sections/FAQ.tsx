@@ -27,7 +27,7 @@ export const FAQ = () => {
   ];
 
   return (
-    <section ref={container} className="py-32 bg-vinex-white text-vinex-black">
+    <section ref={container} className="py-16 lg:py-20 bg-vinex-white text-vinex-black">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-20">
           <h2 className="text-sm font-bold tracking-widest text-vinex-blue uppercase mb-4">FAQ</h2>

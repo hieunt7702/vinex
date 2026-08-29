@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { usePathname } from 'next/navigation';
 import { useDict } from '@/hooks/useDict';
+import { Button } from '@/components/ui/Button';
 
 export default function RequestQuotePage() {
   const pathname = usePathname();
@@ -15,8 +16,9 @@ export default function RequestQuotePage() {
       <div className="max-w-4xl mx-auto px-4 w-full">
         
         <div className="text-center mb-12">
-          <span className="text-xs tracking-[0.2em] text-[#D4AF37] uppercase mb-4 font-bold block">CORPORATE SOLUTIONS</span>
-          <h1 className="text-4xl md:text-5xl font-bold text-vinex-black mb-6">{pg.hero_title}</h1>
+          <span className="text-xs tracking-[0.2em] text-vinex-teal uppercase mb-4 font-bold block">CORPORATE SOLUTIONS</span>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>
+          <h1 className="text-4xl md:text-5xl font-marcellus text-vinex-teal mb-6">{pg.hero_title}</h1>
           <p className="text-gray-600 font-light">{pg.hero_desc}</p>
         </div>
 
@@ -34,19 +36,19 @@ export default function RequestQuotePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-bold text-vinex-black uppercase tracking-wider mb-2">Tên Công Ty *</label>
-                  <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-blue transition-all" required />
+                  <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-teal transition-all" required />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-vinex-black uppercase tracking-wider mb-2">Người Liên Hệ *</label>
-                  <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-blue transition-all" required />
+                  <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-teal transition-all" required />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-vinex-black uppercase tracking-wider mb-2">Số Điện Thoại *</label>
-                  <input type="tel" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-blue transition-all" required />
+                  <input type="tel" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-teal transition-all" required />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-vinex-black uppercase tracking-wider mb-2">Email *</label>
-                  <input type="email" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-blue transition-all" required />
+                  <input type="email" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-teal transition-all" required />
                 </div>
               </div>
             </div>
@@ -57,7 +59,7 @@ export default function RequestQuotePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-bold text-vinex-black uppercase tracking-wider mb-2">Số lượng dự kiến</label>
-                  <select className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-blue transition-all text-gray-700">
+                  <select className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-teal transition-all text-gray-700">
                     <option>50 - 100 hộp</option>
                     <option>100 - 500 hộp</option>
                     <option>500 - 1000 hộp</option>
@@ -66,7 +68,7 @@ export default function RequestQuotePage() {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-vinex-black uppercase tracking-wider mb-2">Ngân sách dự kiến (VNĐ/Hộp)</label>
-                  <select className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-blue transition-all text-gray-700">
+                  <select className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-teal transition-all text-gray-700">
                     <option>Dưới 500.000đ</option>
                     <option>500.000đ - 1.000.000đ</option>
                     <option>1.000.000đ - 2.000.000đ</option>
@@ -75,11 +77,11 @@ export default function RequestQuotePage() {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-vinex-black uppercase tracking-wider mb-2">Dịp tặng quà</label>
-                  <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-blue transition-all" placeholder="VD: Quà Tết, Sự kiện kỷ niệm..." />
+                  <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-teal transition-all" placeholder="VD: Quà Tết, Sự kiện kỷ niệm..." />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-vinex-black uppercase tracking-wider mb-2">Ngày cần giao hàng (dự kiến)</label>
-                  <input type="date" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-blue transition-all text-gray-700" />
+                  <input type="date" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-teal transition-all text-gray-700" />
                 </div>
               </div>
             </div>
@@ -89,29 +91,29 @@ export default function RequestQuotePage() {
               <h3 className="text-lg font-bold text-vinex-black mb-6 border-b border-gray-100 pb-2">3. Yêu cầu tùy chỉnh (Branding)</h3>
               <div className="flex flex-wrap gap-6 mb-6">
                 <label className="flex items-center gap-2 cursor-pointer group">
-                  <input type="checkbox" className="w-4 h-4 text-vinex-blue rounded border-gray-300 focus:ring-vinex-blue" />
+                  <input type="checkbox" className="w-4 h-4 text-vinex-teal rounded border-gray-300 focus:ring-vinex-teal" />
                   <span className="text-gray-600 font-light group-hover:text-vinex-black transition-colors">In/Ép kim Logo lên hộp</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer group">
-                  <input type="checkbox" className="w-4 h-4 text-vinex-blue rounded border-gray-300 focus:ring-vinex-blue" />
+                  <input type="checkbox" className="w-4 h-4 text-vinex-teal rounded border-gray-300 focus:ring-vinex-teal" />
                   <span className="text-gray-600 font-light group-hover:text-vinex-black transition-colors">Ruy băng in Logo</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer group">
-                  <input type="checkbox" className="w-4 h-4 text-vinex-blue rounded border-gray-300 focus:ring-vinex-blue" />
+                  <input type="checkbox" className="w-4 h-4 text-vinex-teal rounded border-gray-300 focus:ring-vinex-teal" />
                   <span className="text-gray-600 font-light group-hover:text-vinex-black transition-colors">Thiệp chúc mừng riêng</span>
                 </label>
               </div>
               
               <div>
                 <label className="block text-xs font-bold text-vinex-black uppercase tracking-wider mb-2">Ghi chú bổ sung</label>
-                <textarea rows={4} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-blue transition-all resize-none" placeholder="Mô tả thêm về yêu cầu đặc biệt của bạn..."></textarea>
+                <textarea rows={4} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-vinex-teal transition-all resize-none" placeholder="Mô tả thêm về yêu cầu đặc biệt của bạn..."></textarea>
               </div>
             </div>
 
             <div className="pt-6">
-              <button type="button" className="w-full py-5 bg-gradient-to-r from-vinex-blue to-[#2B8390] text-white font-bold uppercase tracking-widest text-sm hover:shadow-lg transition-all rounded-md">
+              <Button variant="primary" className="w-full">
                 {pg.form_submit}
-              </button>
+              </Button>
             </div>
             
           </form>

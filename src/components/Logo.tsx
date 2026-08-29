@@ -11,15 +11,14 @@ export const Logo: React.FC<LogoProps> = ({ className = '', lang = 'en', variant
   return (
     <Link 
       href={`/${lang}`} 
-      /* Enforcing Clear Space: Margin and padding mathematically tied to the star height */
       className={`inline-block focus:outline-none outline-none transition-all ${className}`}
       aria-label="VINEX Home"
     >
-      <div className={`relative flex items-center w-auto ${variant === 'small' ? 'h-[40px]' : 'h-[60px] md:h-[90px]'}`}>
+      <div className={`relative flex items-center ${variant === 'small' ? 'h-[36px]' : 'h-[48px] md:h-[64px]'}`}>
         <img 
-          src="/images/logo.png" 
+          src={lang === 'en' ? "/images/logo_en.png" : "/images/logo.png"} 
           alt="VINEX Logo" 
-          className={`h-full w-auto object-contain origin-left ${variant === 'small' ? 'scale-[2.4] translate-y-0' : 'scale-[1.6] md:scale-[1.8] translate-y-[6px]'}`}
+          className="h-full w-auto object-contain object-left"
         />
       </div>
     </Link>

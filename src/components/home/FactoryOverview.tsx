@@ -29,7 +29,7 @@ export const FactoryOverview = () => {
                 <button
                   key={index}
                   onClick={() => setActiveStep(index)}
-                  className={`py-3 px-4 rounded-lg text-center text-sm font-bold transition-all duration-300 ${
+                  className={`py-3 px-4 rounded-none text-center text-sm font-bold transition-all duration-300 ${
                     activeStep === index
                       ? "bg-vinex-yellow text-vinex-blue shadow-lg scale-105"
                       : "bg-white text-vinex-charcoal hover:bg-gray-50 border border-gray-100"

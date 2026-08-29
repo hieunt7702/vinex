@@ -43,5 +43,65 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: none;
+  }
+
+  html {
+    overscroll-behavior-y: none;
+  }
+
+  /* Senior performance optimization: force hardware acceleration for all next/image wrappers to prevent layout thrashing on scroll */
+  img {
+    -webkit-user-drag: none;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply relative overflow-hidden inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-vinex-teal to-[#157a87] text-white font-bold text-[11px] md:text-xs tracking-widest uppercase shadow-[0_4px_15px_rgba(13,89,98,0.3)] hover:shadow-[0_6px_25px_rgba(13,89,98,0.5)] transition-all duration-300 z-0 rounded-sm border border-transparent;
+  }
+  
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-vinex-charcoal to-[#334654] transform scale-x-0 origin-left transition-transform duration-500 ease-out z-[-1];
+  }
+  
+  .btn-primary:hover::before {
+    @apply scale-x-100;
+  }
+  
+  .btn-primary::after {
+    content: '';
+    @apply absolute top-0 left-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[150%] animate-shine pointer-events-none z-[1];
+  }
+  
+  .btn-primary:hover {
+    @apply text-vinex-gold border-vinex-gold/20;
+  }
+  
+  .btn-secondary {
+    @apply relative overflow-hidden inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border border-vinex-teal text-vinex-teal font-bold text-[11px] md:text-xs tracking-widest uppercase hover:text-white transition-all duration-300 z-0 rounded-sm hover:shadow-[0_4px_15px_rgba(13,89,98,0.2)];
+  }
+  
+  .btn-secondary::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-vinex-teal to-[#157a87] transform scale-x-0 origin-left transition-transform duration-500 ease-out z-[-1];
+  }
+  
+  .btn-secondary:hover::before {
+    @apply scale-x-100;
+  }
+}
+
+/* Utilities */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 }

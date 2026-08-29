@@ -4,10 +4,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { X } from "lucide-react";
+import Image from "next/image";
 
 export const GalleryGift = () => {
   const container = useRef<HTMLDivElement>(null);
-  const [selectedImg, setSelectedImg] = useState<any>(null);
+  type ImageType = { id: number, title: string, img: string, aspect: string, size: string };
+  const [selectedImg, setSelectedImg] = useState<ImageType | null>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -41,7 +43,7 @@ export const GalleryGift = () => {
   ];
 
   return (
-    <section ref={container} className="py-32 bg-vinex-white text-vinex-black">
+    <section ref={container} className="py-16 lg:py-20 bg-vinex-white text-vinex-black">
       <div className="max-w-[90rem] mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20">
           <div className="max-w-2xl">
@@ -82,11 +84,14 @@ export const GalleryGift = () => {
               <X size={40} strokeWidth={1} />
             </button>
             
-            <img 
-              src={selectedImg.img} 
-              alt={selectedImg.title} 
-              className="max-w-full max-h-full object-contain shadow-2xl" 
-            />
+            <div className="relative w-full h-[80vh]">
+              <Image 
+                src={selectedImg.img} 
+                alt={selectedImg.title} 
+                fill
+                className="object-contain shadow-2xl" 
+              />
+            </div>
             
             <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center">
               <h3 className="text-2xl md:text-4xl font-light text-white drop-shadow-lg">{selectedImg.title}</h3>

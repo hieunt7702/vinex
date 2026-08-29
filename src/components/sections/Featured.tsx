@@ -34,7 +34,7 @@ export const Featured = () => {
   };
 
   return (
-    <section ref={container} className="py-24 bg-white text-vinex-black">
+    <section ref={container} className="py-16 lg:py-20 bg-white text-vinex-black">
       <div className="max-w-[90rem] mx-auto px-6 md:px-12">
         
         {/* Section Header */}

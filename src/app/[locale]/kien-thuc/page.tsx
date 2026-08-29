@@ -24,12 +24,13 @@ export default async function KnowledgePage({ params }: { params: Promise<{ loca
     <SmoothScroll>
       <main className="w-full flex flex-col min-h-screen bg-vinex-white text-vinex-black pt-20">
         
-        <section className="px-4 py-20 max-w-7xl mx-auto w-full">
+        <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto w-full">
           <div className="flex flex-col md:flex-row gap-16 items-start">
              
              {/* Main Content */}
              <div className="flex-1">
-                <h1 className="text-4xl md:text-5xl font-bold mb-12">{pg.hero_title}</h1>
+                <h1 className="text-4xl md:text-5xl font-marcellus text-vinex-teal mb-6">{pg.hero_title}</h1>
+                <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-12"></div>
                 <p className="text-lg text-gray-600 mb-12 font-light">{pg.hero_desc}</p>
                 
                 <div className="space-y-12">
@@ -40,13 +41,13 @@ export default async function KnowledgePage({ params }: { params: Promise<{ loca
                             <div className="absolute inset-0 bg-vinex-blue/0 group-hover:bg-vinex-blue/10 transition-colors"></div>
                          </div>
                          <div className="flex-1">
-                            <h2 className="text-2xl font-bold mb-3 group-hover:text-vinex-blue transition-colors">
+                            <h2 className="text-2xl font-bold mb-3 group-hover:text-vinex-teal transition-colors">
                                <Link href={`/vi/kien-thuc/${article.slug}`}>{article.title}</Link>
                             </h2>
                             <p className="text-gray-600 mb-4 line-clamp-2">
                                Mô tả ngắn gọn về bài viết. Cung cấp kiến thức hữu ích về nông sản, từ quy trình sản xuất đến giải pháp bao bì và quà tặng.
                             </p>
-                            <Link href={`/vi/kien-thuc/${article.slug}`} className="text-sm font-bold text-vinex-blue uppercase tracking-wider hover:underline">
+                            <Link href={`/vi/kien-thuc/${article.slug}`} className="text-sm font-bold text-vinex-teal uppercase tracking-wider hover:underline">
                                Đọc tiếp
                             </Link>
                          </div>
@@ -57,10 +58,10 @@ export default async function KnowledgePage({ params }: { params: Promise<{ loca
 
              {/* Sidebar (CTA) */}
              <aside className="w-full md:w-80 shrink-0">
-                <div className="bg-vinex-blue p-8 rounded-xl text-white sticky top-32">
+                <div className="bg-vinex-teal p-8 rounded-xl text-white sticky top-32">
                    <h3 className="text-xl font-bold mb-4">Bạn cần tư vấn trực tiếp?</h3>
                    <p className="text-white/70 text-sm mb-8">VINEX sẵn sàng hỗ trợ bạn với các giải pháp cung ứng, sản phẩm và quà tặng doanh nghiệp chuyên nghiệp.</p>
-                   <Link href="/vi/lien-he" className="block w-full py-4 bg-vinex-yellow text-vinex-black rounded text-center font-bold uppercase tracking-wider hover:bg-vinex-yellow/90 transition-colors">
+                   <Link href="/vi/lien-he" className="block w-full py-4 bg-vinex-gold text-vinex-charcoal rounded text-center font-bold uppercase tracking-wider hover:bg-white transition-colors">
                       Nhận tư vấn
                    </Link>
                 </div>

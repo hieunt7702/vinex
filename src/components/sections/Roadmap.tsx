@@ -55,7 +55,8 @@ export const Roadmap = () => {
               <div className="w-24 h-24 rounded-full bg-white border-[4px] border-vinex-indigo shadow-lg flex items-center justify-center text-3xl font-bold  text-vinex-indigo mb-6 relative z-10 transition-all duration-500 group-hover:bg-vinex-yellow group-hover:text-white group-hover:border-vinex-yellow group-hover:scale-110">
                 {step.num}
               </div>
-              <h3 className="text-2xl  font-bold text-center text-vinex-black group-hover:text-vinex-blue transition-colors duration-300">{step.title}</h3>
+              <h3 className="text-2xl  font-bold text-center text-vinex-teal group-hover:text-vinex-blue transition-colors duration-300">{step.title}</h3>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
             </div>
           </div>
         ))}

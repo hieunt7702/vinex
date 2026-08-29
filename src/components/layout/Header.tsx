@@ -64,17 +64,18 @@ export const Header = () => {
   return (
     <>
       <motion.header
-        initial={{ backgroundColor: 'rgba(250, 248, 242, 0)' }}
+        initial={{ backgroundColor: 'rgba(250, 248, 242, 0)', backdropFilter: 'blur(0px)' }}
         animate={{ 
-          backgroundColor: isScrolled ? 'rgba(250, 248, 242, 0.98)' : 'rgba(250, 248, 242, 0)',
-          borderBottom: isScrolled ? '1px solid rgba(0,0,0,0.05)' : '1px solid transparent'
+          backgroundColor: isScrolled ? 'rgba(250, 248, 242, 0.85)' : 'rgba(250, 248, 242, 0)',
+          borderBottom: isScrolled ? '1px solid rgba(0,0,0,0.05)' : '1px solid transparent',
+          backdropFilter: isScrolled ? 'blur(12px)' : 'blur(0px)'
         }}
         transition={{ duration: 0.3 }}
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm"
+        className="fixed top-0 left-0 right-0 z-50"
       >
         <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12 flex items-center justify-between h-[80px]">
           
-          <div className="flex items-center -ml-6 md:-ml-12 xl:-ml-16">
+          <div className="flex items-center">
             <Logo lang={lang} />
           </div>
 
@@ -218,13 +219,13 @@ export const Header = () => {
             {/* Bottom Actions */}
             <div className="mt-auto p-8 border-t border-vinex-teal/10 bg-white">
               <div className="mb-6 grid grid-cols-1 gap-3 text-[12px] font-light text-vinex-charcoal/70">
-                <a href="tel:+84123456789" className="flex items-center gap-3 hover:text-vinex-teal transition-colors">
+                <a href="tel:+84966967966" className="flex items-center gap-3 hover:text-vinex-teal transition-colors">
                   <Phone className="w-4 h-4 text-vinex-gold" />
-                  <span>+84 123 456 789</span>
+                  <span>(+84) 966 967 966</span>
                 </a>
-                <a href="mailto:hello@vinex.vn" className="flex items-center gap-3 hover:text-vinex-teal transition-colors">
+                <a href="mailto:info@vinexgroup.vn" className="flex items-center gap-3 hover:text-vinex-teal transition-colors">
                   <Mail className="w-4 h-4 text-vinex-gold" />
-                  <span>hello@vinex.vn</span>
+                  <span>info@vinexgroup.vn</span>
                 </a>
               </div>
 

@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/Button';
+
 export const TrustAndFAQ = () => {
   return (
     <section id="niem-tin" className="py-24 bg-vinex-white/50 px-4">
@@ -26,9 +28,9 @@ export const TrustAndFAQ = () => {
           <p className="text-white text-lg max-w-2xl">
             Chia sẻ nhu cầu, số lượng và thời gian dự kiến để VINEX phối hợp đề xuất phương án phù hợp.
           </p>
-          <button className="px-8 py-3 bg-vinex-yellow text-vinex-black rounded font-bold uppercase tracking-wider text-sm hover:bg-vinex-yellow/90 transition-colors whitespace-nowrap">
+          <Button variant="gold">
             Gửi yêu cầu
-          </button>
+          </Button>
         </div>
       </div>
     </section>

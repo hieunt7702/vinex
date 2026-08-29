@@ -33,7 +33,7 @@ export const Role = () => {
   ];
 
   return (
-    <section ref={container} className="py-32 px-6 md:px-12 lg:px-24 bg-vinex-black text-vinex-white relative overflow-hidden">
+    <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 lg:px-24 bg-vinex-black text-vinex-white relative overflow-hidden">
       {/* Decorative gradient blur */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-vinex-blue/20 rounded-full blur-[120px] pointer-events-none"></div>
 

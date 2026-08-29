@@ -14,18 +14,18 @@ export const metadata: Metadata = {
 const DUMMY_PRODUCTS = [
   {
     "id": 1,
-    "slug": "bao-bi-hat-dieu-sieu-thi-1",
-    "name": "Bao bi hat dieu sieu thi 1",
-    "category": "Hạt điều và sản phẩm từ hạt",
+    "slug": "bo-qua-tang-05",
+    "name": "Bộ quà tặng 05",
+    "category": "Quà tặng",
     "status": "Sẵn sàng cung ứng",
     "desc": "Sản phẩm cao cấp từ VINEX.",
     "img": "/images/product/Bao bi hat dieu sieu thi 1.png"
   },
   {
     "id": 2,
-    "slug": "bao-bi-hat-dieu-sieu-thi-2",
-    "name": "Bao bi hat dieu sieu thi 2",
-    "category": "Hạt điều và sản phẩm từ hạt",
+    "slug": "bo-qua-tang-06",
+    "name": "Bộ quà tặng 06",
+    "category": "Quà tặng",
     "status": "Sẵn sàng cung ứng",
     "desc": "Sản phẩm cao cấp từ VINEX.",
     "img": "/images/product/Bao bi hat dieu sieu thi 2.png"
@@ -140,36 +140,36 @@ const DUMMY_PRODUCTS = [
   },
   {
     "id": 15,
-    "slug": "layout-khay-duong-1",
-    "name": "Layout khay dưỡng 1",
-    "category": "Hạt điều và sản phẩm từ hạt",
+    "slug": "bo-qua-tang-01",
+    "name": "Bộ quà tặng 01",
+    "category": "Quà tặng",
     "status": "Sẵn sàng cung ứng",
     "desc": "Sản phẩm cao cấp từ VINEX.",
     "img": "/images/product/Layout khay dưỡng 1.png"
   },
   {
     "id": 16,
-    "slug": "layout-khay-duong-2",
-    "name": "Layout khay dưỡng 2",
-    "category": "Hạt điều và sản phẩm từ hạt",
+    "slug": "bo-qua-tang-02",
+    "name": "Bộ quà tặng 02",
+    "category": "Quà tặng",
     "status": "Sẵn sàng cung ứng",
     "desc": "Sản phẩm cao cấp từ VINEX.",
     "img": "/images/product/Layout khay dưỡng 2.png"
   },
   {
     "id": 17,
-    "slug": "layout-khay-duong-4",
-    "name": "Layout khay dưỡng 4",
-    "category": "Hạt điều và sản phẩm từ hạt",
+    "slug": "bo-qua-tang-04",
+    "name": "Bộ quà tặng 04",
+    "category": "Quà tặng",
     "status": "Sẵn sàng cung ứng",
     "desc": "Sản phẩm cao cấp từ VINEX.",
     "img": "/images/product/Layout khay dưỡng 4.png"
   },
   {
     "id": 18,
-    "slug": "layout-kjhay-duong-3",
-    "name": "Layout kjhay dưỡng 3",
-    "category": "Hạt điều và sản phẩm từ hạt",
+    "slug": "bo-qua-tang-03",
+    "name": "Bộ quà tặng 03",
+    "category": "Quà tặng",
     "status": "Sẵn sàng cung ứng",
     "desc": "Sản phẩm cao cấp từ VINEX.",
     "img": "/images/product/Layout kjhay dưỡng 3.png"
@@ -575,13 +575,14 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         {/* Header Section */}
         <section className="px-4 md:px-8 xl:px-12 pt-20 pb-12 max-w-[1400px] mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6">{pg.hero_title}</h1>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto font-light">
              {pg.hero_desc}
           </p>
         </section>
 
         {/* Filters and Product List */}
-        <section className="px-4 md:px-8 xl:px-12 pb-24 max-w-[1400px] mx-auto flex flex-col md:flex-row gap-12">
+        <section className="px-4 md:px-8 xl:px-12 pb-16 lg:pb-20 max-w-[1400px] mx-auto flex flex-col md:flex-row gap-12">
           
           {/* Sidebar Filters */}
           <aside className="w-full md:w-[240px] shrink-0">

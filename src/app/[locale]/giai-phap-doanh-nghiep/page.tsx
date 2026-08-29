@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
+import { Button } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
   title: "Giải pháp sản phẩm theo nhu cầu doanh nghiệp | VINEX",
@@ -22,8 +23,9 @@ export default function BusinessSolutionPage() {
       <main className="w-full flex flex-col min-h-screen bg-[#FAF8F2] text-vinex-black pt-[90px]">
         
         {/* Section 1: Hero & 6 Steps */}
-        <section className="px-4 py-24 max-w-7xl mx-auto flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-8 leading-tight">Từ nhu cầu đến phương án <br className="hidden sm:block" /> sản phẩm phù hợp</h1>
+        <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto flex flex-col items-center text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">Từ nhu cầu đến phương án <br className="hidden sm:block" /> sản phẩm phù hợp</h1>
+          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
           <p className="text-lg text-gray-600 max-w-3xl mb-20 font-light leading-relaxed">
             VINEX phối hợp cùng đối tác để lựa chọn nhóm sản phẩm, xây dựng cơ cấu danh mục, định hướng quy cách và bao bì, từ đó hoàn thiện phương án triển khai tối ưu nhất.
           </p>
@@ -43,10 +45,11 @@ export default function BusinessSolutionPage() {
         </section>
 
         {/* Section 2: Form Brief */}
-        <section className="px-4 py-24 bg-vinex-teal text-white border-t border-white/10">
+        <section className="px-4 py-16 lg:py-20 bg-vinex-teal text-white border-t border-white/10">
           <div className="max-w-4xl mx-auto bg-white/5 rounded-sm p-6 sm:p-10 md:p-16 border border-white/10 backdrop-blur-sm shadow-2xl">
             <div className="text-center mb-12">
-               <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-gold mb-4">Gửi nhu cầu sản phẩm</h2>
+               <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-gold mb-6">Gửi nhu cầu sản phẩm</h2>
+               <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
                <p className="text-white/80 font-light text-[15px]">Vui lòng cung cấp một số thông tin cơ bản để đội ngũ VINEX có thể đề xuất giải pháp phù hợp nhất.</p>
             </div>
             
@@ -96,9 +99,9 @@ export default function BusinessSolutionPage() {
                </div>
                
                <div className="text-center pt-8">
-                  <button type="button" className="px-12 py-4 bg-vinex-gold text-vinex-teal rounded-sm font-bold uppercase tracking-[0.15em] text-xs hover:bg-white transition-colors w-full md:w-auto shadow-xl">
+                  <Button variant="gold" className="w-full md:w-auto">
                      Gửi yêu cầu sản phẩm
-                  </button>
+                  </Button>
                </div>
             </form>
           </div>
