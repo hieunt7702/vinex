@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
 import Image from 'next/image';
+import { products } from '@/data/products';
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>;
@@ -12,6 +13,7 @@ export async function generateMetadata(
   { params }: Props
 ): Promise<Metadata> {
   const { slug } = await params;
+  const product = products.find(p => p.slug === slug) || products[0];
   return {
     title: `Sản phẩm ${slug} | VINEX`,
     description: `Khám phá chi tiết sản phẩm ${slug} tại VINEX.`,
@@ -20,6 +22,7 @@ export async function generateMetadata(
 
 export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
+  const product = products.find(p => p.slug === slug) || products[0];
   
   return (
     <SmoothScroll>
@@ -30,7 +33,7 @@ export default async function ProductDetailPage({ params }: Props) {
            <div className="flex items-center text-[10px] uppercase tracking-widest font-bold text-vinex-charcoal/50">
              <Link href="/vi/san-pham" className="hover:text-vinex-teal transition-colors">Sản phẩm</Link>
              <span className="mx-4 text-vinex-gold">/</span>
-             <span className="text-vinex-charcoal">{slug.replace(/-/g, ' ')}</span>
+             <span className="text-vinex-charcoal">{product.name}</span>
            </div>
         </div>
 
@@ -45,14 +48,14 @@ export default async function ProductDetailPage({ params }: Props) {
                  {/* Main Image placeholder */}
                  <div className="absolute inset-0 flex items-center justify-center p-8 lg:p-12">
                    <div className="w-full h-full relative">
-                     <Image src="/images/product/Bao bi hat dieu sieu thi 1.png" alt={slug} fill className="object-contain" />
+                     <Image src={product.img} alt={product.name} fill className="object-contain" />
                    </div>
                  </div>
               </div>
               <div className="grid grid-cols-4 gap-6">
                  {[1, 2, 3, 4].map((img) => (
                     <div key={img} className="aspect-square bg-vinex-teal/5 border border-vinex-charcoal/10 flex items-center justify-center cursor-pointer hover:border-vinex-teal transition-colors relative p-2">
-                       <Image src={`/images/product/Bao bi hat dieu sieu thi 1.png`} alt={`Thumb ${img}`} fill className="object-contain p-2 opacity-60 hover:opacity-100 transition-opacity" />
+                       <Image src={product.img} alt={`Thumb ${img}`} fill className="object-contain p-2 opacity-60 hover:opacity-100 transition-opacity" />
                     </div>
                  ))}
               </div>
@@ -61,7 +64,7 @@ export default async function ProductDetailPage({ params }: Props) {
            {/* Product Info */}
            <div className="flex-1 w-full lg:py-6">
               <div className="mb-12 border-b border-vinex-charcoal/10 pb-10">
-                 <h1 className="text-[40px] sm:text-[48px] font-marcellus text-vinex-charcoal leading-[1.1] mb-6 capitalize">{slug.replace(/-/g, ' ')}</h1>
+                 <h1 className="text-[40px] sm:text-[48px] font-marcellus text-vinex-charcoal leading-[1.1] mb-6 capitalize">{product.name}</h1>
                  <p className="text-[15px] text-vinex-charcoal/70 leading-relaxed max-w-xl">
                     Mô tả ngắn về đặc điểm sản phẩm, ứng dụng và hình thức bao bì. (Ví dụ: Sự kết hợp giữa vị béo tự nhiên của hạt điều và những công thức hương vị hiện đại tạo nên sản phẩm phù hợp với nhu cầu ăn nhẹ, bán lẻ, phân phối và quà tặng).
                  </p>
