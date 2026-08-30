@@ -33,6 +33,18 @@ export const Header = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const t = useDict();
 
   const navLinks = [
@@ -166,7 +178,7 @@ export const Header = () => {
           >
             {/* Top Bar matching Header height */}
             <div className="flex items-center justify-between h-[80px] px-4 md:px-8 border-b border-vinex-teal/10">
-              <div className="flex items-center -ml-6 md:-ml-12">
+              <div className="flex items-center">
                 <Logo lang={lang} />
               </div>
               <button 
@@ -178,21 +190,21 @@ export const Header = () => {
             </div>
             
             {/* Menu Links */}
-            <div className="px-8 py-10 flex flex-col gap-10 overflow-y-auto flex-1">
+            <div className="px-4 md:px-8 py-8 flex flex-col gap-8 overflow-y-auto flex-1">
               {navLinks.map((link) => (
-                <div key={link.name} className="flex flex-col gap-5">
+                <div key={link.name} className="flex flex-col gap-4">
                   {link.dropdown ? (
                     <>
                       <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-vinex-gold">
                         {link.name}
                       </span>
-                      <div className="flex flex-col gap-5 pl-4 border-l border-vinex-gold/30">
+                      <div className="flex flex-col gap-4 pl-4 border-l border-vinex-gold/30">
                         {link.dropdown.map((subItem) => (
                           <Link
                             key={subItem.name}
                             href={subItem.href}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className={`text-xl font-marcellus tracking-wide ${
+                            className={`text-[17px] font-marcellus tracking-wide ${
                               pathname === subItem.href ? 'text-vinex-teal' : 'text-vinex-charcoal/80 hover:text-vinex-teal'
                             }`}
                           >
@@ -205,7 +217,7 @@ export const Header = () => {
                     <Link
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`text-[26px] font-marcellus tracking-wide ${
+                      className={`text-[20px] font-marcellus tracking-wide ${
                         pathname === link.href ? 'text-vinex-teal' : 'text-vinex-charcoal hover:text-vinex-teal'
                       }`}
                     >
@@ -217,8 +229,8 @@ export const Header = () => {
             </div>
             
             {/* Bottom Actions */}
-            <div className="mt-auto p-8 border-t border-vinex-teal/10 bg-white">
-              <div className="mb-6 grid grid-cols-1 gap-3 text-[12px] font-light text-vinex-charcoal/70">
+            <div className="mt-auto p-4 md:p-8 py-8 border-t border-vinex-teal/10 bg-white">
+              <div className="mb-6 grid grid-cols-1 gap-4 text-[14px] md:text-[15px] font-light text-vinex-charcoal/80">
                 <a href="tel:+84966967966" className="flex items-center gap-3 hover:text-vinex-teal transition-colors">
                   <Phone className="w-4 h-4 text-vinex-gold" />
                   <span>(+84) 966 967 966</span>
