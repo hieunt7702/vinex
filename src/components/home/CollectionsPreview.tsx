@@ -1,101 +1,183 @@
 "use client";
 
-import { motion } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from 'next/navigation';
-import { useDict } from '@/hooks/useDict';
-import Image from 'next/image';
-import { Button } from '@/components/ui/Button';
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { ArrowRight, ArrowUpRight, ChevronRight, ChevronLeft } from "lucide-react";
+import { useDict } from "@/hooks/useDict";
 
-const imgColors = [
-  'bg-vinex-teal/80',
-  'bg-vinex-teal/90',
-  'bg-[#5C1A1B]',
-  'bg-vinex-gold/80',
-  'bg-vinex-charcoal/90',
-  'bg-[#8C7B65]'
-];
-
-const colImages = [
-  '/images/product/Layout khay dưỡng 1.png',
-  '/images/product/Layout khay dưỡng 2.png',
-  '/images/product/Layout kjhay dưỡng 3.png',
-  '/images/product/Layout khay dưỡng 4.png',
-  '/images/product/Bao bi hat dieu sieu thi 1.png',
-  '/images/product/Bao bi hat dieu sieu thi 2.png'
-];
-
-export const CollectionsPreview = () => {
+export const CollectionsPreview: React.FC = () => {
   const pathname = usePathname();
-  const lang = pathname.startsWith('/en') ? 'en' : 'vi';
+  const lang = pathname.startsWith("/en") ? "en" : "vi";
   const t = useDict();
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  // Check scroll position to toggle navigation buttons
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    const el = scrollRef.current;
+    if (el) {
+      el.addEventListener("scroll", checkScroll);
+      window.addEventListener("resize", checkScroll);
+      return () => {
+        el.removeEventListener("scroll", checkScroll);
+        window.removeEventListener("resize", checkScroll);
+      };
+    }
+  }, [t.collections.items]);
+
+  const handleNext = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      if (scrollLeft + clientWidth >= scrollWidth - 10) {
+        scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        scrollRef.current.scrollBy({ left: 320, behavior: "smooth" });
+      }
+    }
+  };
+
+  const handlePrev = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -320, behavior: "smooth" });
+    }
+  };
+
   return (
-    <section className="py-12 lg:py-20 bg-vinex-ivory">
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
-          <div>
-            <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-teal uppercase mb-4 font-bold block">{t.collections.label}</span>
-            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-4 md:mb-6"></div>
-            <h2 className="text-[32px] sm:text-4xl md:text-[44px] font-marcellus text-vinex-teal leading-tight">
-              {t.collections.headline}
+    <section className="py-14 sm:py-18 lg:py-24 bg-vinex-ivory relative overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 xl:px-12">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10 xl:gap-14">
+
+          {/* Left Column: Heading, Subtitle & Glowing Aura CTA */}
+          <div className="w-full lg:w-[32%] xl:w-[30%] shrink-0 flex flex-col items-start text-left">
+            <h2 className="text-[26px] sm:text-[30px] md:text-[34px] xl:text-[36px] font-semibold text-[#074751] uppercase tracking-tight leading-[1.2]">
+              {t.collections.title1 || "BỘ SƯU TẬP QUÀ TẶNG"}
             </h2>
-          </div>
-          <Link href={`/${lang}/qua-tang-doanh-nghiep`}>
-            <Button variant="secondary">
-              {t.collections.cta} <span>&rarr;</span>
-            </Button>
-          </Link>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {t.collections.items.map((col, idx) => (
-            <Link href={`/${lang}/qua-tang-doanh-nghiep`} key={col.id}>
-              <motion.div 
-                className="group cursor-pointer relative aspect-[4/3] w-full"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
+            <div className="text-[22px] sm:text-[25px] md:text-[28px] xl:text-[30px] font-medium text-[#0b5460] tracking-tight leading-[1.25] mt-1 sm:mt-1.5">
+              {t.collections.title2 || "Đẳng cấp trong từng chi tiết"}
+            </div>
+
+            <p className="text-[#2b5963] text-[14px] sm:text-[15px] leading-[1.7] mt-4 sm:mt-5 mb-7 sm:mb-8 max-w-[400px]">
+              {t.collections.desc ||
+                "Từ những hộp quà tinh tế đến thiết kế cá nhân hóa, VINEX mang đến bộ sưu tập quà tặng đa dạng, phù hợp cho mọi dịp đặc biệt."}
+            </p>
+
+            {/* Glowing Pill Button matching media_1789360330972.png */}
+            <div className="relative group inline-block">
+              {/* Cyan-Teal Glowing Aura */}
+              <span
+                className="absolute -inset-1 rounded-full bg-gradient-to-r from-teal-400/50 to-cyan-400/40 blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                aria-hidden="true"
+              />
+              <Link
+                href={`/${lang}/qua-tang-doanh-nghiep`}
+                className="relative z-10 inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#074751] via-[#0b535f] to-[#10626f] text-white text-[14px] sm:text-[14.5px] font-medium shadow-[0_8px_22px_rgba(7,71,81,0.35)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <div className="relative w-full h-full rounded-sm overflow-hidden bg-vinex-ivory shadow-xl">
-                  {/* Image Background */}
-                  <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
-                     <Image src={colImages[idx]} alt={col.category} fill className="object-cover" />
-                     <div className={`absolute inset-0 ${imgColors[idx]} mix-blend-multiply opacity-60 group-hover:opacity-40 transition-opacity duration-500`} />
-                  </div>
-                  
-                  {/* Top Left Gradient Bracket (Inner) */}
-                  <div className="absolute top-0 left-0 w-16 h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:w-28 opacity-80 group-hover:opacity-100"></div>
-                  <div className="absolute top-0 left-0 w-[2px] h-16 bg-gradient-to-b from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:h-28 opacity-80 group-hover:opacity-100"></div>
-                  
-                  {/* Bottom Right Gradient Bracket (Inner) */}
-                  <div className="absolute bottom-0 right-0 w-16 h-[2px] bg-gradient-to-l from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:w-28 opacity-80 group-hover:opacity-100"></div>
-                  <div className="absolute bottom-0 right-0 w-[2px] h-16 bg-gradient-to-t from-vinex-gold via-vinex-gold/80 to-transparent z-10 transition-all duration-700 group-hover:h-28 opacity-80 group-hover:opacity-100"></div>
+                <span>{t.collections.cta || "Xem tất cả"}</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
 
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-[5]" />
+          {/* Right Column: Carousel Track with Cards & Next/Prev Controls */}
+          <div className="w-full lg:w-[68%] xl:w-[70%] min-w-0 relative flex items-center">
 
-                  {/* Text Content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex justify-between items-end z-20">
-                    <div>
-                      <span className="text-[11px] font-bold tracking-[0.15em] text-vinex-gold uppercase block mb-2">
-                        {col.id} &mdash; {col.category}
-                      </span>
-                      <h3 className="text-[20px] md:text-[22px] font-bold text-white leading-snug">
-                        {col.name}
-                      </h3>
+            {/* Scrollable Track */}
+            <div
+              ref={scrollRef}
+              className="w-full flex items-stretch gap-5 sm:gap-6 overflow-x-auto scroll-smooth no-scrollbar py-4 px-1 snap-x snap-mandatory"
+            >
+              {t.collections.items.map((item, idx) => (
+                <div
+                  key={item.id || idx}
+                  className="w-[260px] sm:w-[280px] md:w-[300px] shrink-0 snap-start"
+                >
+                  <Link
+                    href={`/${lang}/qua-tang-doanh-nghiep`}
+                    className="group flex flex-col h-full bg-white rounded-[24px] overflow-hidden border border-white/90 shadow-[0_12px_32px_rgba(7,71,81,0.07)] hover:shadow-[0_20px_45px_rgba(7,71,81,0.13)] transition-all duration-400 hover:-translate-y-1.5"
+                  >
+                    {/* Top Image Container with Soft Ambient Lighting */}
+                    <div className="relative aspect-[4/3.2] w-full overflow-hidden bg-[#eef3ee]/60">
+                      <Image
+                        src={item.img || `/images/product/Collection ${idx + 1}.png`}
+                        alt={item.title}
+                        fill
+                        sizes="(max-width: 640px) 260px, (max-width: 1024px) 280px, 300px"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+
+                      {/* Subtle Top Gloss Sheen */}
+                      <div
+                        className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white/30 to-transparent pointer-events-none"
+                        aria-hidden="true"
+                      />
                     </div>
-                    <div className="text-white opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                      &rarr;
+
+                    {/* Bottom Info Banner matching Screenshot */}
+                    <div className="p-4 sm:p-5 bg-white flex items-center justify-between gap-3 border-t border-slate-100/70">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-[15px] sm:text-[15.5px] font-semibold text-[#074751] leading-snug truncate group-hover:text-[#0c616d] transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-[12.5px] sm:text-[13px] text-[#5c858e] font-medium mt-0.5 truncate">
+                          {item.sub}
+                        </p>
+                      </div>
+
+                      {/* Circular Button with Gold Border & White Arrow ↗ */}
+                      <div
+                        className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-[#074751] border-[1.5px] border-[#d4af37] flex items-center justify-center text-white shrink-0 group-hover:bg-[#0b5460] group-hover:scale-110 transition-all duration-300 shadow-xs"
+                        aria-hidden="true"
+                      >
+                        <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
-              </motion.div>
-            </Link>
-          ))}
+              ))}
+            </div>
+
+            {/* Optional Left Chevron (appears if scrolled) */}
+            {canScrollLeft && (
+              <button
+                type="button"
+                onClick={handlePrev}
+                aria-label="Previous items"
+                className="hidden sm:flex absolute -left-3 lg:-left-5 z-20 w-10 h-10 rounded-full bg-white/95 backdrop-blur-sm shadow-[0_4px_18px_rgba(0,0,0,0.12)] border border-slate-100 items-center justify-center text-[#074751] hover:bg-white hover:scale-110 hover:text-[#0c616d] active:scale-95 transition-all duration-200 cursor-pointer"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            )}
+
+            {/* Right Navigation Circle Button (matching media_1789360330972.png) */}
+            <button
+              type="button"
+              onClick={handleNext}
+              aria-label="Next items"
+              className="hidden sm:flex absolute -right-3 lg:-right-5 z-20 w-10 h-10 rounded-full bg-white/95 backdrop-blur-sm shadow-[0_4px_18px_rgba(0,0,0,0.12)] border border-slate-100 items-center justify-center text-[#074751] hover:bg-white hover:scale-110 hover:text-[#0c616d] active:scale-95 transition-all duration-200 cursor-pointer"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+          </div>
+
         </div>
       </div>
     </section>
   );
 };
+
+export default CollectionsPreview;

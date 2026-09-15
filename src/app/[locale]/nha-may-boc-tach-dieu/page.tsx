@@ -4,6 +4,7 @@ import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
 import { getDictionary } from '@/dictionaries';
 import type { Locale } from '@/dictionaries';
+import { GlassButton, GlassCard } from '@/components/ui/glass';
 
 export const metadata: Metadata = {
   title: "Nhà máy bóc tách điều thô VINEX",
@@ -29,7 +30,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
   return (
     <SmoothScroll>
       <main className="w-full flex flex-col min-h-screen bg-vinex-white text-vinex-black pt-[90px]">
-        
+
         {/* Section 1: Hero ảnh nhà máy thật & Mô tả */}
         <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto flex flex-col items-center text-center">
           <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">{pg.hero_title}</h1>
@@ -37,14 +38,14 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
           <p className="text-lg text-gray-600 max-w-3xl mb-16 font-light leading-relaxed">
             Nền tảng vững chắc của VINEX, nơi tiếp nhận điều thô nguyên bản và trải qua quy trình chế biến khép kín để tạo ra nhân điều trắng đạt chuẩn chất lượng xuất khẩu cao nhất.
           </p>
-          <div className="w-full aspect-[16/9] md:aspect-[21/9] rounded-sm overflow-hidden relative shadow-xl border border-[#E8E4D9]">
-             <Image
-               src="/images/banner/nha_may_boc_tach.png"
-               alt="Nhà máy bóc tách điều VINEX"
-               fill
-               className="object-cover object-center"
-               priority
-             />
+          <div className="w-full aspect-[16/9] md:aspect-[21/9] rounded-[24px] overflow-hidden relative shadow-xl border border-[#E8E4D9]">
+            <Image
+              src="/images/banner/nha_may_boc_tach.png"
+              alt="Nhà máy bóc tách điều VINEX"
+              fill
+              className="object-cover object-center"
+              priority
+            />
           </div>
         </section>
 
@@ -52,17 +53,17 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
         <section className="px-4 py-16 lg:py-20 bg-[#FAF8F2]">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-               <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Quy trình 8 bước</h2>
-               <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto"></div>
+              <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Quy trình 8 bước</h2>
+              <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto"></div>
             </div>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-               {steps.map((step) => (
-                  <div key={step.id} className="bg-white border border-[#E8E4D9] p-4 sm:p-6 lg:p-8 rounded-sm text-center flex flex-col items-center justify-center hover:shadow-lg transition-shadow">
-                     <span className="text-vinex-gold font-marcellus text-xl md:text-2xl mb-2 md:mb-3">{step.id}.</span>
-                     <span className="font-bold text-vinex-teal text-[11px] md:text-[13px] uppercase tracking-wide leading-tight">{step.title}</span>
-                  </div>
-               ))}
+              {steps.map((step) => (
+                <GlassCard key={step.id} variant="interactive" className="p-6 text-center flex flex-col items-center justify-center">
+                  <span className="text-vinex-gold font-marcellus text-2xl mb-2">{step.id}.</span>
+                  <span className="font-semibold text-vinex-teal text-xs md:text-sm uppercase tracking-wide leading-tight">{step.title}</span>
+                </GlassCard>
+              ))}
             </div>
           </div>
         </section>
@@ -71,19 +72,19 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
         <section className="px-4 py-16 lg:py-20 bg-white">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-               <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Hình ảnh khu vực sản xuất</h2>
-               <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto"></div>
+              <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Hình ảnh khu vực sản xuất</h2>
+              <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto"></div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {[2, 3, 4, 5, 6, 7].map((num) => (
-                 <div key={num} className="aspect-[4/3] rounded-sm border border-[#E8E4D9] overflow-hidden group relative">
-                    <Image
-                      src={`/images/banner/nha_may${num}.png`}
-                      alt={`Khu vực sản xuất ${num - 1}`}
-                      fill
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                    />
-                 </div>
+                <div key={num} className="aspect-[4/3] rounded-[18px] border border-[#E8E4D9] overflow-hidden group relative">
+                  <Image
+                    src={`/images/banner/nha_may${num}.png`}
+                    alt={`Khu vực sản xuất ${num - 1}`}
+                    fill
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -108,8 +109,10 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
             <p className="text-lg text-white/80 mb-12 font-light">
               Liên hệ ngay để nhận thông tin chi tiết về năng lực sản xuất và báo giá theo tiêu chuẩn.
             </p>
-            <Link href="/vi/lien-he" className="inline-block px-12 py-4 bg-vinex-gold text-vinex-teal rounded-sm font-bold uppercase tracking-[0.15em] text-xs hover:bg-white transition-colors shadow-xl">
-              Nhận tư vấn ngay
+            <Link href="/vi/lien-he">
+              <GlassButton variant="gold" size="lg">
+                Nhận tư vấn ngay
+              </GlassButton>
             </Link>
           </div>
         </section>

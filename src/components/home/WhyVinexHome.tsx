@@ -1,65 +1,98 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { usePathname } from 'next/navigation';
-import { useDict } from '@/hooks/useDict';
-import Image from 'next/image';
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  Award,
+  Leaf,
+  Globe,
+  Flower2,
+  BadgeCheck,
+  Users,
+  ArrowRight,
+} from "lucide-react";
+import { useDict } from "@/hooks/useDict";
+import { GlassCard } from "@/components/ui/glass";
 
-export const WhyVinexHome = () => {
+const featureIcons = [
+  Award,
+  Leaf,
+  Globe,
+  Flower2,
+  BadgeCheck,
+  Users,
+];
+
+export const WhyVinexHome: React.FC = () => {
   const pathname = usePathname();
-  const lang = pathname.startsWith('/en') ? 'en' : 'vi';
+  const lang = pathname.startsWith("/en") ? "en" : "vi";
   const t = useDict();
 
   return (
-    <section className="py-8 lg:py-10 bg-vinex-ivory relative overflow-hidden">
-      {/* Background motif on the right */}
-      <div className="absolute right-[-10%] sm:right-[-5%] xl:right-[-3%] top-1/2 -translate-y-1/2 h-[180px] md:h-[220px] xl:h-[280px] aspect-square z-0 opacity-40 pointer-events-none mix-blend-multiply">
-        <Image src="/images/motif_leaf3.png" alt="Motif" fill className="object-contain object-right" />
-      </div>
+    <section className="py-14 sm:py-18 lg:py-24 bg-vinex-ivory relative overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 xl:px-12 relative z-10 w-full">
 
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12 relative z-10 w-full">
-        
-        {/* Title */}
-        <motion.div 
-          className="mb-8 xl:mb-12"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <h2 className="text-[18px] xl:text-[20px] font-marcellus text-vinex-teal tracking-widest uppercase font-bold mb-4">
-            {t.why.headline}
-          </h2>
-          <div className="w-[60px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent"></div>
-        </motion.div>
+        {/* Header Row: Badge, Title & Top-Right Button */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 sm:mb-12">
 
-        {/* Items Container */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 xl:gap-6 2xl:gap-12 w-full">
-            {t.why.features.map((item, idx) => (
-              <motion.div 
-                key={idx}
-                className="flex items-start gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-              >
-                <div className="relative w-10 h-10 shrink-0 mt-1">
-                  <Image 
-                    src={`/images/why${idx + 1}.png`} 
-                    alt={item.title} 
-                    fill 
-                    className="object-contain drop-shadow-sm mix-blend-multiply" 
-                  />
-                </div>
-                <div>
-                  <h3 className="text-[14px] md:text-[15px] font-bold text-vinex-charcoal mb-2 leading-tight">{item.title}</h3>
-                  <p className="text-[13px] md:text-[14px] text-vinex-charcoal/70 leading-relaxed font-light">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+          {/* Left: Badge & Headline */}
+          <div className="flex flex-col items-start text-left">
+            <span className="inline-flex items-center px-3.5 py-1 rounded-full border border-[#0d5962]/40 bg-white/40 text-[#074751] text-[11px] sm:text-[11.5px] font-semibold tracking-wider uppercase mb-2.5 shadow-[0_2px_8px_rgba(7,71,81,0.03)]">
+              {t.why.badge || "TẠI SAO CHỌN VINEX?"}
+            </span>
+            <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-semibold text-[#074751] tracking-tight leading-tight">
+              {t.why.headline || "Giá trị tạo nên sự khác biệt"}
+            </h2>
+          </div>
+
+          {/* Right: Outlined Pill Button (matching Screenshot) */}
+          <Link
+            href={`/${lang}/ve-chung-toi`}
+            className="group inline-flex items-center gap-2 px-5 py-2 sm:px-6 sm:py-2.5 rounded-full border border-[#074751]/30 hover:border-[#074751]/60 bg-white/60 hover:bg-white/90 text-[#074751] text-[13px] sm:text-[13.5px] font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xs self-start sm:self-auto shrink-0"
+          >
+            <span>{t.why.cta || "Xem tất cả"}</span>
+            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </Link>
+        </div>
+
+        {/* 6 Liquid Glass Cards in a single balanced grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-4.5 xl:gap-5 w-full">
+          {t.why.features.map((item, idx) => {
+            const IconComponent = featureIcons[idx % featureIcons.length];
+
+            return (
+              <div key={item.id || idx} className="h-full">
+                <GlassCard
+                  radius={26}
+                  displacementScale={20}
+                  blurAmount={0.35}
+                  className="group h-full hover:-translate-y-1.5 transition-all duration-300 p-5 sm:p-6 flex flex-col items-center justify-center text-center min-h-[175px] sm:min-h-[190px]"
+                >
+                  {/* Circular Icon Badge */}
+                  <div className="w-12 h-12 rounded-full bg-[#EBF3F5] text-[#074751] flex items-center justify-center mb-3.5 sm:mb-4 shrink-0 shadow-xs group-hover:scale-110 group-hover:bg-[#d8e9ec] transition-all duration-300">
+                    <IconComponent className="w-6 h-6 stroke-[2]" />
+                  </div>
+
+                  {/* Two-Line Title */}
+                  <div className="flex flex-col items-center">
+                    <span className="font-semibold text-[#074751] text-[13.5px] sm:text-[14px] leading-snug">
+                      {item.title1}
+                    </span>
+                    <span className="font-medium text-[#195a66] text-[13px] sm:text-[13.5px] leading-snug mt-0.5">
+                      {item.title2}
+                    </span>
+                  </div>
+                </GlassCard>
+              </div>
+            );
+          })}
         </div>
 
       </div>
     </section>
   );
 };
+
+export default WhyVinexHome;
+

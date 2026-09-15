@@ -56,15 +56,15 @@ export const CTA = () => {
     <section ref={container} className="relative py-40 px-6 overflow-hidden bg-vinex-blue flex items-center justify-center">
       {/* Luxury Background elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-vinex-yellow/20 via-vinex-blue to-vinex-black opacity-90"></div>
-      
+
       <div className="relative z-10 text-center max-w-4xl mx-auto">
-        <h2 ref={textRef} className="text-4xl md:text-6xl lg:text-7xl  font-bold text-white mb-12 leading-tight">
+        <h2 ref={textRef} className="text-4xl md:text-6xl lg:text-7xl  font-semibold text-white mb-12 leading-tight">
           Sẵn sàng phát triển thương hiệu cùng <span className="text-vinex-yellow">VINEX</span>?
         </h2>
-        
-        <button 
-          ref={btnRef} 
-          className="group relative inline-flex items-center justify-center px-12 py-6 font-bold text-vinex-blue bg-white rounded-full overflow-hidden  text-xl shadow-[0_0_40px_rgba(255,199,3,0.3)] hover:shadow-[0_0_60px_rgba(255,199,3,0.6)] transition-shadow duration-300"
+
+        <button
+          ref={btnRef}
+          className="group relative inline-flex items-center justify-center px-12 py-6 font-semibold text-vinex-blue bg-white rounded-full overflow-hidden  text-xl shadow-[0_0_40px_rgba(255,199,3,0.3)] hover:shadow-[0_0_60px_rgba(255,199,3,0.6)] transition-shadow duration-300"
         >
           <div className="absolute inset-0 w-full h-full bg-vinex-yellow transition-transform duration-500 origin-left scale-x-0 group-hover:scale-x-100"></div>
           <span className="relative flex items-center gap-3 group-hover:text-vinex-black transition-colors duration-300">

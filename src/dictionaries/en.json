@@ -1,39 +1,64 @@
 {
   "nav": {
-    "home": "HOME",
-    "about": "ABOUT",
-    "capability": "CAPABILITY",
+    "home": "Home",
+    "products": "Products",
+    "ecosystem": "Ecosystem",
+    "projects": "Projects",
+    "about": "About us",
+    "magazine": "Magazine",
+    "capability": "Capability",
     "capability_story": "VINEX Story",
     "capability_factory": "Cashew Factory",
     "capability_cashew": "White Cashews",
-    "products": "PRODUCTS",
     "products_cashew": "Flavored Cashews",
     "products_tea": "Tea & Coffee",
     "products_bakery": "Bakery & Sweets",
     "products_agri": "Processed Agri",
-    "gifts": "GIFTS",
-    "contact": "CONTACT",
-    "cta": "GET CONSULTATION"
+    "gifts": "Gifts",
+    "contact": "Contact",
+    "cta": "Contact"
   },
   "hero": {
+    "badge": "FOR COMMUNITY HEALTH",
     "title1": "Vietnam,",
-    "title2": "Beautifully Gifted.",
+    "title2": "Masterpiece of Gifting.",
     "subtitle": "From the finest Vietnamese agricultural produce to bespoke gifts crafted for your brand.",
-    "cta_primary": "EXPLORE GIFTS",
-    "cta_secondary": "GET CONSULTATION",
+    "cta_primary": "Explore Gifts",
+    "cta_secondary": "Get Consultation",
     "badge1": "PREMIUM CORPORATE GIFTS",
-    "badge2": "MADE IN VIETNAM"
+    "badge2": "MADE IN VIETNAM",
+    "stat1_val": "30+",
+    "stat1_lbl": "Strategic Partners",
+    "stat2_val": "5+",
+    "stat2_lbl": "Export Countries",
+    "stat3_val": "100%",
+    "stat3_lbl": "Quality Products",
+    "cat1_title": "Cashews",
+    "cat1_sub": "& Products",
+    "cat2_title": "Dried Agri",
+    "cat2_sub": "Products",
+    "cat3_title": "Tropical",
+    "cat3_sub": "Fruits",
+    "cat4_title": "Processed",
+    "cat4_sub": "Foods",
+    "cat5_title": "Corporate",
+    "cat5_sub": "Gifting"
   },
   "missworld": {
+    "badge": "VINEX X MISS WORLD 2026",
+    "title1": "Youth of Today",
+    "title2": "Shaping Tomorrow",
+    "desc": "VINEX partners with Miss World 2026 in community initiatives, sharing the essence of Vietnamese agriculture and sustainable beauty.",
+    "cta": "Learn more",
+    "partner": "Proud Partner",
     "label": "Official Gift Partner",
-    "title1": "VINEX",
-    "title2": "Miss World 2026",
-    "desc": "Proud to be the Official Gift Partner of Miss World 2026. VINEX presents gifts that bring together the finest Vietnamese cashews and agricultural products, combined with premium packaging artistry, honoring beauty and cultural values on the world stage.",
     "img_label": "Official Imagery",
     "img_sub": "Miss World 2026 Sponsorship"
   },
   "brand": {
     "label": "MORE THAN A GIFT.",
+    "desc": "Every VINEX creation is more than the taste of nature—it is a heartfelt wish of wellness, prosperity, and enduring connection.",
+    "cta": "Explore gifts",
     "headline": "A gift is not merely given. It represents appreciation, brand identity, and the story of the giver.",
     "tag1": "PRODUCT",
     "tag2": "CRAFT",
@@ -41,22 +66,62 @@
     "tag4": "CONNECTION"
   },
   "collections": {
-    "label": "CURATED COLLECTIONS",
-    "headline": "Gifts worth remembering.",
-    "cta": "Explore collections",
+    "title1": "GIFT COLLECTIONS",
+    "title2": "Excellence in Every Detail",
+    "desc": "From sophisticated gift boxes to bespoke customizations, VINEX presents a diverse gift collection crafted for every special occasion.",
+    "cta": "View all",
     "items": [
-      { "id": "01", "category": "GIFT BOX", "name": "Gift Set 01" },
-      { "id": "02", "category": "GIFT BOX", "name": "Gift Set 02" },
-      { "id": "03", "category": "GIFT BOX", "name": "Gift Set 03" },
-      { "id": "04", "category": "GIFT BOX", "name": "Gift Set 04" },
-      { "id": "05", "category": "GIFT BOX", "name": "Gift Set 05" },
-      { "id": "06", "category": "GIFT BOX", "name": "Gift Set 06" }
+      {
+        "id": "01",
+        "title": "Premium Gifts",
+        "sub": "Corporate",
+        "img": "/images/product/Collection 1.png"
+      },
+      {
+        "id": "02",
+        "title": "Partner Gifts",
+        "sub": "Conferences & Summits",
+        "img": "/images/product/Collection 2.png"
+      },
+      {
+        "id": "03",
+        "title": "Personalized Gifts",
+        "sub": "Bespoke Design",
+        "img": "/images/product/Collection 3.png"
+      },
+      {
+        "id": "04",
+        "title": "Event Gifts",
+        "sub": "Anniversaries & Celebrations",
+        "img": "/images/product/Collection 4.png"
+      },
+      {
+        "id": "05",
+        "title": "VIP Executive Gifts",
+        "sub": "Handcrafted Luxury",
+        "img": "/images/product/Collection 6.png"
+      },
+      {
+        "id": "06",
+        "title": "Festive Gifts",
+        "sub": "Prosperity & Connection",
+        "img": "/images/product/Collection 7.png"
+      }
     ]
   },
   "corporate": {
+    "badge": "BESPOKE DESIGN",
+    "title1": "ONE BRAND.",
+    "title2": "MANY OCCASIONS.",
+    "desc": "VINEX provides end-to-end design, manufacturing, and custom packaging printing solutions, helping your brand leave a unique impression in every product.",
+    "cta": "Consult now",
+    "features": [
+      { "id": "01", "title": "Bespoke Design", "icon": "palette" },
+      { "id": "02", "title": "Logo Printing", "icon": "printer" },
+      { "id": "03", "title": "Packaging Variety", "icon": "package" },
+      { "id": "04", "title": "Flexible Quantity", "icon": "sliders" }
+    ],
     "headline": "ONE BRAND.\nMANY OCCASIONS.",
-    "desc": "Every important occasion deserves a truly special gift.",
-    "cta": "REQUEST A QUOTE",
     "occasions": [
       "CLIENT GIFTS",
       "VIP PARTNER GIFTS",
@@ -77,10 +142,13 @@
     ]
   },
   "vietnam": {
+    "badge": "VINEX ORIGIN",
+    "headline": "OUR STORY",
+    "desc": "From pristine cashew harvests, VINEX embarked on a journey connecting Vietnamese agricultural excellence with the world. Guided by our vision, we deliver not only fine products, but the enduring cultural spirit and dedication of Vietnam.",
+    "cta": "Learn more",
+    "slogan_line1": "From Vietnam",
+    "slogan_line2": "To The World",
     "label": "OUR STORY",
-    "headline": "FROM THE LAND\nTO THE GIFT",
-    "desc": "From the rich red basalt soil, we select the finest agricultural produce to preserve and share the Vietnamese spirit through gifts crafted with heart.",
-    "cta": "Explore VINEX",
     "steps": [
       { "title": "BASALT SOIL", "desc": "Fertile land" },
       { "title": "VIETNAMESE PRODUCE", "desc": "Essence of nature" },
@@ -90,14 +158,46 @@
     ]
   },
   "why": {
-    "headline": "WHY VINEX?",
-    "cta": "WORK WITH VINEX",
+    "badge": "WHY CHOOSE VINEX?",
+    "headline": "Values That Create Difference",
+    "cta": "View all",
     "features": [
-      { "title": "Premium Quality", "desc": "Carefully selected ingredients, strict quality control." },
-      { "title": "Exquisite Design", "desc": "Combining traditional and modern styles." },
-      { "title": "Sustainable Production", "desc": "Eco-friendly, community responsibility." },
-      { "title": "Dedicated Service", "desc": "Attentive and caring customer support." },
-      { "title": "Prestige & Trust", "desc": "Trusted partner of many domestic and foreign enterprises." }
+      {
+        "id": "01",
+        "title1": "Superior",
+        "title2": "Quality",
+        "icon": "award"
+      },
+      {
+        "id": "02",
+        "title1": "Sustainable",
+        "title2": "Supply Chain",
+        "icon": "leaf"
+      },
+      {
+        "id": "03",
+        "title1": "Trusted Partner",
+        "title2": "With Farmers",
+        "icon": "globe"
+      },
+      {
+        "id": "04",
+        "title1": "Enduring Value",
+        "title2": "& Community",
+        "icon": "community"
+      },
+      {
+        "id": "05",
+        "title1": "Professional",
+        "title2": "& Dedicated Team",
+        "icon": "badge"
+      },
+      {
+        "id": "06",
+        "title1": "Flexible Service",
+        "title2": "On Demand",
+        "icon": "users"
+      }
     ],
     "stats": [
       { "number": "10+", "label": "YEARS OF\nEXPERIENCE" },
@@ -118,20 +218,48 @@
     "stat3_label": "GLOBAL EVENT"
   },
   "journal": {
-    "label": "THE VINEX JOURNAL",
-    "headline": "Stories, inspiration and perspectives from VINEX.",
-    "cta": "Read more",
+    "badge": "VINEX JOURNAL",
+    "headline": "Knowledge • Trends • Agricultural Stories",
+    "cta": "View all",
     "articles": [
-      { "id": "01", "category": "CORPORATE GIFTING", "title": "VIP Gifts: The Art of Making a Lasting Impression with International Partners" },
-      { "id": "02", "category": "CULTURE & VIETNAMESE HERITAGE", "title": "Vietnamese Gift-Giving Culture: From Tradition to Modern Thinking" },
-      { "id": "03", "category": "CASE STUDY", "title": "Behind the Scenes: Crafting the VINEX × Miss World 2026 Gift Collection" }
-    ]
+      {
+        "id": "01",
+        "title": "Value of Vietnamese Cashews & Export Opportunities",
+        "date": "May 2026",
+        "img": "/images/article_1.png",
+        "category": "VIETNAMESE PRODUCE"
+      },
+      {
+        "id": "02",
+        "title": "Trends in Premium Corporate Gifting for 2026",
+        "date": "May 2026",
+        "img": "/images/article_2.png",
+        "category": "TRENDS"
+      },
+      {
+        "id": "03",
+        "title": "Journey from Pristine Farm to Global Market",
+        "date": "April 2026",
+        "img": "/images/article_3.png",
+        "category": "STORIES"
+      },
+      {
+        "id": "04",
+        "title": "VINEX at the International Food & Beverage Expo 2026",
+        "date": "March 2026",
+        "img": "/images/article_4.png",
+        "category": "EVENTS"
+      }
+    ],
+    "label": "VINEX JOURNAL"
   },
   "cta": {
-    "headline": "LET'S CREATE SOMETHING MEMORABLE.",
-    "desc": "Looking for a gift worthy of your brand?",
-    "primary": "START A PROJECT",
-    "secondary": "GET CONSULTATION"
+    "prefix": "LET'S CREATE",
+    "headline": "A LASTING IMPRESSION.",
+    "desc": "Partner with VINEX to craft enduring values.",
+    "btn": "Contact now",
+    "primary": "Contact now",
+    "secondary": "Get consultation"
   },
   "footer": {
     "tagline": "Vinex brings quality, sustainable, and exquisite products, creating long-lasting value for life.",

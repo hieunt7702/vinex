@@ -16,7 +16,7 @@ export const Footer = () => {
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-vinex-gold to-transparent opacity-50 mb-16"></div>
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8 mb-12">
-          
+
           {/* Brand Info (col 1-3) */}
           <div className="lg:col-span-3 lg:pr-4">
             <div className="mb-4">
@@ -33,7 +33,7 @@ export const Footer = () => {
                 { name: 'LinkedIn', d: "M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" }
               ].map((social, idx) => (
                 <a key={idx} href="#" className="w-8 h-8 rounded-full bg-vinex-teal text-white flex items-center justify-center hover:bg-vinex-gold hover:text-vinex-teal transition-colors" aria-label={social.name}>
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d={social.d}/></svg>
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d={social.d} /></svg>
                 </a>
               ))}
             </div>
@@ -41,7 +41,7 @@ export const Footer = () => {
 
           {/* SẢN PHẨM (col 4-5) */}
           <div className="lg:col-span-2">
-            <h4 className="text-[13px] font-bold text-vinex-teal uppercase mb-4">{t.footer.col_products}</h4>
+            <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_products}</h4>
             <div className="w-8 h-[1px] bg-vinex-gold mb-4"></div>
             <ul className="space-y-3.5 text-[13px] font-normal text-vinex-charcoal/80">
               {t.footer.links_products.map((link, idx) => (
@@ -57,7 +57,7 @@ export const Footer = () => {
 
           {/* HỖ TRỢ (col 6-7) */}
           <div className="lg:col-span-2">
-            <h4 className="text-[13px] font-bold text-vinex-teal uppercase mb-4">{t.footer.col_support}</h4>
+            <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_support}</h4>
             <div className="w-8 h-[1px] bg-vinex-gold mb-4"></div>
             <ul className="space-y-3.5 text-[13px] font-normal text-vinex-charcoal/80">
               {t.footer.links_support.map((link, idx) => (
@@ -73,7 +73,7 @@ export const Footer = () => {
 
           {/* VỀ VINEX (col 8-9) */}
           <div className="lg:col-span-2">
-            <h4 className="text-[13px] font-bold text-vinex-teal uppercase mb-4">{t.footer.col_about}</h4>
+            <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_about}</h4>
             <div className="w-8 h-[1px] bg-vinex-gold mb-4"></div>
             <ul className="space-y-3.5 text-[13px] font-normal text-vinex-charcoal/80">
               {t.footer.links_about.map((link, idx) => (
@@ -89,7 +89,7 @@ export const Footer = () => {
 
           {/* LIÊN HỆ (col 10-12) */}
           <div className="lg:col-span-3">
-            <h4 className="text-[13px] font-bold text-vinex-teal uppercase mb-4">{t.footer.col_contact}</h4>
+            <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_contact}</h4>
             <div className="w-8 h-[1px] bg-vinex-gold mb-4"></div>
             <ul className="space-y-4 text-[13px] text-vinex-charcoal/80">
               <li className="flex items-start gap-3">

@@ -23,42 +23,42 @@ export default function Home() {
   return (
     <SmoothScroll>
       <main className="w-full flex flex-col min-h-screen selection:bg-vinex-gold selection:text-white bg-vinex-ivory">
-        {/* 1. Hero */}
+        {/* 1. Hero: Ấn tượng đầu tiên & Định vị thương hiệu */}
         <HomeHero />
         
-        {/* 2. Miss World 2026 Intro */}
+        {/* 2. Miss World 2026: Trẻ trung hôm nay - Kiến tạo ngày mai (Dự án tiêu biểu & Bảo chứng thương hiệu) */}
         <MissWorldIntro />
-        <Divider />
         
-        {/* 3. Brand Philosophy */}
+        {/* 3. Brand Philosophy: Triết lý thương hiệu & Giới thiệu VINEX */}
         <BrandPhilosophy />
         <Divider />
         
-        {/* 4. Collections */}
-        <CollectionsPreview />
-        
-        {/* 5. Corporate Gifting */}
+        {/* 4. Corporate Gifting: Quà tặng Doanh nghiệp trọng tâm */}
         <CorporateGiftingHome />
         
-        {/* 6. Bespoke Service */}
+        {/* 5. Bespoke Service: Dịch vụ chế tác quà tặng may đo */}
         <BespokeServiceHome />
+        <Divider />
         
-        {/* 7. Vietnam Story */}
+        {/* 6. Collections: Bộ sưu tập sản phẩm & Tặng phẩm nông sản */}
+        <CollectionsPreview />
+        
+        {/* 7. Vietnam Story: Câu chuyện nông sản & Nguồn cội đất Việt */}
         <VietnamStory />
         <Divider />
         
-        {/* 8. Why VINEX */}
+        {/* 8. Why VINEX: Năng lực sản xuất & Lý do lựa chọn */}
         <WhyVinexHome />
         <Divider />
         
-        {/* 9. Case Study (Miss World) */}
+        {/* 9. Case Study: Phân tích dự án & Tặng phẩm chính thức */}
         <CaseStudyHome />
         
-        {/* 10. Journal */}
+        {/* 10. Journal: Tạp chí & Tri thức nông sản */}
         <Divider />
         <LatestArticles />
         
-        {/* 11. Final CTA */}
+        {/* 11. Final CTA: Kêu gọi tư vấn & Hợp tác */}
         <FinalCTA />
       </main>
     </SmoothScroll>

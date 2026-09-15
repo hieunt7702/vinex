@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vinex_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-vinex}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vinex_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-vinex_db}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - vinex_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-vinex} -d ${POSTGRES_DB:-vinex_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  vinex_pgdata:
+    name: vinex_pgdata

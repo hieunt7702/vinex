@@ -1,39 +1,64 @@
 {
   "nav": {
-    "home": "TRANG CHỦ",
-    "about": "GIỚI THIỆU",
-    "capability": "NĂNG LỰC",
+    "home": "Trang chủ",
+    "products": "Sản phẩm",
+    "ecosystem": "Hệ sinh thái",
+    "projects": "Dự án",
+    "about": "Về chúng tôi",
+    "magazine": "Tạp chí",
+    "capability": "Năng lực",
     "capability_story": "Giới thiệu VINEX",
     "capability_factory": "Nhà máy bóc tách điều",
     "capability_cashew": "Nhân điều trắng",
-    "products": "SẢN PHẨM",
     "products_cashew": "Hạt điều tẩm vị",
     "products_tea": "Trà & cà phê",
     "products_bakery": "Bánh & kẹo",
     "products_agri": "Nông sản chế biến",
-    "gifts": "QUÀ TẶNG",
-    "contact": "LIÊN HỆ",
-    "cta": "NHẬN TƯ VẤN"
+    "gifts": "Quà tặng",
+    "contact": "Liên hệ",
+    "cta": "Liên hệ"
   },
   "hero": {
+    "badge": "VÌ SỨC KHỎE CỘNG ĐỒNG",
     "title1": "Việt Nam,",
     "title2": "Tuyệt tác Quà tặng.",
     "subtitle": "Từ tinh hoa nông sản Việt đến những tặng phẩm được chế tác riêng cho thương hiệu của bạn.",
-    "cta_primary": "KHÁM PHÁ QUÀ TẶNG",
-    "cta_secondary": "NHẬN TƯ VẤN",
+    "cta_primary": "Khám phá quà tặng",
+    "cta_secondary": "Nhận tư vấn",
     "badge1": "PREMIUM CORPORATE GIFTS",
-    "badge2": "MADE IN VIETNAM"
+    "badge2": "MADE IN VIETNAM",
+    "stat1_val": "30+",
+    "stat1_lbl": "Đối tác chiến lược",
+    "stat2_val": "5+",
+    "stat2_lbl": "Quốc gia xuất khẩu",
+    "stat3_val": "100%",
+    "stat3_lbl": "Sản phẩm chất lượng",
+    "cat1_title": "Hạt điều",
+    "cat1_sub": "& Sản phẩm",
+    "cat2_title": "Nông sản",
+    "cat2_sub": "sấy khô",
+    "cat3_title": "Trái cây",
+    "cat3_sub": "nhiệt đới",
+    "cat4_title": "Thực phẩm",
+    "cat4_sub": "chế biến",
+    "cat5_title": "Quà tặng",
+    "cat5_sub": "Doanh nghiệp"
   },
   "missworld": {
+    "badge": "VINEX X MISS WORLD 2026",
+    "title1": "Trẻ trung hôm nay",
+    "title2": "Kiến tạo ngày mai",
+    "desc": "VINEX đồng hành cùng Miss World 2026 trong các hoạt động vì cộng đồng, lan tỏa giá trị nông sản Việt và vẻ đẹp bền vững.",
+    "cta": "Tìm hiểu thêm",
+    "partner": "Proud Partner",
     "label": "Đối tác Quà tặng Chính thức",
-    "title1": "VINEX",
-    "title2": "Miss World 2026",
-    "desc": "Tự hào là Đối tác Quà tặng Chính thức của Miss World 2026. VINEX mang đến những tặng phẩm hội tụ tinh hoa hạt điều và nông sản Việt, kết tinh cùng nghệ thuật thiết kế bao bì cao cấp, góp phần tôn vinh nhan sắc và giá trị văn hóa trên đấu trường quốc tế.",
     "img_label": "Hình ảnh chính thức",
     "img_sub": "Miss World 2026 Sponsorship"
   },
   "brand": {
     "label": "HƠN CẢ MỘT MÓN QUÀ.",
+    "desc": "Mỗi sản phẩm của VINEX không chỉ là hương vị thiên nhiên, mà còn là lời chúc sức khỏe, thịnh vượng và tinh thần gắn kết.",
+    "cta": "Khám phá quà tặng",
     "headline": "Một món quà không chỉ được trao đi. Nó đại diện cho sự trân trọng, dấu ấn thương hiệu và câu chuyện của người trao.",
     "tag1": "SẢN PHẨM",
     "tag2": "CHẾ TÁC",
@@ -41,22 +66,62 @@
     "tag4": "KẾT NỐI"
   },
   "collections": {
-    "label": "BỘ SƯU TẬP QUÀ TẶNG",
-    "headline": "Những tặng phẩm đáng được nhớ đến.",
-    "cta": "Khám phá bộ sưu tập",
+    "title1": "BỘ SƯU TẬP QUÀ TẶNG",
+    "title2": "Đẳng cấp trong từng chi tiết",
+    "desc": "Từ những hộp quà tinh tế đến thiết kế cá nhân hóa, VINEX mang đến bộ sưu tập quà tặng đa dạng, phù hợp cho mọi dịp đặc biệt.",
+    "cta": "Xem tất cả",
     "items": [
-      { "id": "01", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 01" },
-      { "id": "02", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 02" },
-      { "id": "03", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 03" },
-      { "id": "04", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 04" },
-      { "id": "05", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 05" },
-      { "id": "06", "category": "QUÀ TẶNG", "name": "Bộ quà tặng 06" }
+      {
+        "id": "01",
+        "title": "Quà tặng cao cấp",
+        "sub": "Doanh nghiệp",
+        "img": "/images/product/Collection 1.png"
+      },
+      {
+        "id": "02",
+        "title": "Quà tặng đối tác",
+        "sub": "Hội nghị, hội thảo",
+        "img": "/images/product/Collection 2.png"
+      },
+      {
+        "id": "03",
+        "title": "Quà tặng cá nhân",
+        "sub": "Thiết kế riêng",
+        "img": "/images/product/Collection 3.png"
+      },
+      {
+        "id": "04",
+        "title": "Quà tặng sự kiện",
+        "sub": "Kỷ niệm, tri ân",
+        "img": "/images/product/Collection 4.png"
+      },
+      {
+        "id": "05",
+        "title": "Quà tặng cao cấp VIP",
+        "sub": "Chế tác thủ công",
+        "img": "/images/product/Collection 6.png"
+      },
+      {
+        "id": "06",
+        "title": "Quà tặng lễ hội",
+        "sub": "Gắn kết thịnh vượng",
+        "img": "/images/product/Collection 7.png"
+      }
     ]
   },
   "corporate": {
+    "badge": "THIẾT KẾ RIÊNG",
+    "title1": "MỘT THƯƠNG HIỆU.",
+    "title2": "ĐA DẠNG NHU CẦU.",
+    "desc": "VINEX cung cấp giải pháp thiết kế, sản xuất và in ấn bao bì quà tặng theo yêu cầu, giúp thương hiệu của bạn tạo dấu ấn riêng trong từng sản phẩm.",
+    "cta": "Tư vấn ngay",
+    "features": [
+      { "id": "01", "title": "Thiết kế riêng", "icon": "palette" },
+      { "id": "02", "title": "In ấn logo", "icon": "printer" },
+      { "id": "03", "title": "Đa dạng bao bì", "icon": "package" },
+      { "id": "04", "title": "Số lượng linh hoạt", "icon": "sliders" }
+    ],
     "headline": "MỘT THƯƠNG HIỆU.\nĐA DẠNG NHU CẦU.",
-    "desc": "Mỗi dịp quan trọng đều xứng đáng với một món quà đặc biệt.",
-    "cta": "YÊU CẦU BÁO GIÁ",
     "occasions": [
       "QUÀ TẶNG KHÁCH HÀNG",
       "QUÀ TẶNG ĐỐI TÁC VIP",
@@ -77,10 +142,13 @@
     ]
   },
   "vietnam": {
+    "badge": "VINEX ORIGIN",
+    "headline": "CÂU CHUYỆN CỦA CHÚNG TÔI",
+    "desc": "Từ những hạt điều tinh túy, VINEX bắt đầu hành trình kết nối nông sản Việt với thế giới. Cùng tầm nhìn, chúng tôi không chỉ mang đến sản phẩm, mà còn lan tỏa giá trị văn hóa và con người Việt.",
+    "cta": "Tìm hiểu thêm",
+    "slogan_line1": "From Vietnam",
+    "slogan_line2": "To The World",
     "label": "CÂU CHUYỆN CỦA CHÚNG TÔI",
-    "headline": "TỪ VÙNG NGUYÊN LIỆU\nĐẾN TẶNG PHẨM",
-    "desc": "Từ đất đỏ bazan màu mỡ, chúng tôi chọn lọc từng nông sản tinh túy, để gìn giữ và lan tỏa tinh thần Việt qua những món quà được chế tác bằng tâm huyết.",
-    "cta": "Khám phá VINEX",
     "steps": [
       { "title": "ĐẤT ĐỎ BAZAN", "desc": "Nguồn đất màu mỡ" },
       { "title": "NÔNG SẢN VIỆT", "desc": "Tinh hoa từ thiên nhiên" },
@@ -90,14 +158,46 @@
     ]
   },
   "why": {
-    "headline": "TẠI SAO CHỌN VINEX?",
-    "cta": "LÀM VIỆC VỚI VINEX",
+    "badge": "TẠI SAO CHỌN VINEX?",
+    "headline": "Giá trị tạo nên sự khác biệt",
+    "cta": "Xem tất cả",
     "features": [
-      { "title": "Chất lượng vượt trội", "desc": "Nguyên liệu tuyển chọn, kiểm định nghiêm ngặt." },
-      { "title": "Thiết kế tinh tế", "desc": "Kết hợp truyền thống và phong cách hiện đại." },
-      { "title": "Sản xuất bền vững", "desc": "Thân thiện môi trường, trách nhiệm cộng đồng." },
-      { "title": "Dịch vụ tận tâm", "desc": "Đồng hành và chăm sóc khách hàng chu đáo." },
-      { "title": "Uy tín & tin cậy", "desc": "Đối tác của nhiều doanh nghiệp trong và ngoài nước." }
+      {
+        "id": "01",
+        "title1": "Chất lượng",
+        "title2": "vượt trội",
+        "icon": "award"
+      },
+      {
+        "id": "02",
+        "title1": "Chuỗi cung ứng",
+        "title2": "bền vững",
+        "icon": "leaf"
+      },
+      {
+        "id": "03",
+        "title1": "Đối tác tin cậy",
+        "title2": "với nông dân",
+        "icon": "globe"
+      },
+      {
+        "id": "04",
+        "title1": "Giá trị bền vững",
+        "title2": "và cộng đồng",
+        "icon": "community"
+      },
+      {
+        "id": "05",
+        "title1": "Đội ngũ chuyên nghiệp",
+        "title2": "& tận tâm",
+        "icon": "badge"
+      },
+      {
+        "id": "06",
+        "title1": "Dịch vụ linh hoạt",
+        "title2": "theo nhu cầu",
+        "icon": "users"
+      }
     ],
     "stats": [
       { "number": "10+", "label": "NĂM\nKINH NGHIỆM" },
@@ -118,20 +218,48 @@
     "stat3_label": "GLOBAL EVENT"
   },
   "journal": {
-    "label": "TẠP CHÍ VINEX",
-    "headline": "Câu chuyện, cảm hứng và góc nhìn từ VINEX.",
-    "cta": "Đọc thêm",
+    "badge": "TẠP CHÍ VINEX",
+    "headline": "Kiến thức - Xu hướng - Câu chuyện nông sản",
+    "cta": "Xem tất cả",
     "articles": [
-      { "id": "01", "category": "QUÀ TẶNG DOANH NGHIỆP", "title": "Quà tặng VIP: Nghệ thuật tạo ấn tượng khó phai với đối tác quốc tế" },
-      { "id": "02", "category": "VĂN HÓA & ĐẶC SẢN VIỆT", "title": "Văn hóa tặng quà của người Việt: Từ truyền thống đến tư duy hiện đại" },
-      { "id": "03", "category": "CASE STUDY", "title": "Hậu trường sản xuất bộ quà tặng VINEX × Miss World 2026" }
-    ]
+      {
+        "id": "01",
+        "title": "Giá trị hạt điều Việt Nam và cơ hội xuất khẩu",
+        "date": "Tháng 5, 2026",
+        "img": "/images/article_1.png",
+        "category": "NÔNG SẢN VIỆT"
+      },
+      {
+        "id": "02",
+        "title": "Xu hướng quà tặng doanh nghiệp cao cấp năm 2026",
+        "date": "Tháng 5, 2026",
+        "img": "/images/article_2.png",
+        "category": "XU HƯỚNG"
+      },
+      {
+        "id": "03",
+        "title": "Hành trình từ nông trại đến thị trường thế giới",
+        "date": "Tháng 4, 2026",
+        "img": "/images/article_3.png",
+        "category": "CÂU CHUYỆN"
+      },
+      {
+        "id": "04",
+        "title": "VINEX tại hội chợ quốc tế Food & Beverage 2026",
+        "date": "Tháng 3, 2026",
+        "img": "/images/article_4.png",
+        "category": "SỰ KIỆN"
+      }
+    ],
+    "label": "TẠP CHÍ VINEX"
   },
   "cta": {
-    "headline": "HÃY TẠO NÊN DẤU ẤN KHÓ QUÊN.",
-    "desc": "Bạn đang tìm kiếm một món quà xứng đáng với thương hiệu của mình?",
-    "primary": "BẮT ĐẦU DỰ ÁN",
-    "secondary": "NHẬN TƯ VẤN"
+    "prefix": "HÃY TẠO NÊN",
+    "headline": "DẤU ẤN KHÓ QUÊN.",
+    "desc": "Cùng VINEX kiến tạo những giá trị bền vững.",
+    "btn": "Liên hệ ngay",
+    "primary": "Liên hệ ngay",
+    "secondary": "Nhận tư vấn"
   },
   "footer": {
     "tagline": "Vinex mang đến những sản phẩm chất lượng, bền vững và tinh tế, kiến tạo giá trị lâu dài cho cuộc sống.",
