@@ -55,7 +55,7 @@ export default function LoginPage() {
       
       // Hardcoded login for VINEX ADMIN
       if (data.username === 'admin' && data.password === 'admin') {
-        const fakeUser = { id: 1, name: 'VINEX Admin', role: 'admin' };
+        const fakeUser = { id: 1, username: 'admin', name: 'VINEX Admin', role: 'admin' };
         const fakeToken = 'vinex-admin-token';
         login(fakeUser, fakeToken);
         router.push('/admin');

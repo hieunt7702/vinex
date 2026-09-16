@@ -89,7 +89,7 @@ export const LatestArticles: React.FC = () => {
                   className="!w-[260px] sm:!w-[285px] md:!w-[310px]"
                 >
                   <Link
-                    href={`/${lang}/tin-tuc/${article.slug || ''}`}
+                    href={`/${lang}/tin-tuc/${(article as any).slug || article.id || ''}`}
                     className="group flex flex-col h-full rounded-[24px] overflow-hidden select-none block"
                   >
                     <GlassCard
