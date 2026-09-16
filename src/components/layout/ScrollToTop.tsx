@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ArrowUp } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Glass } from "@/components/ui/glass";
 
 export const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -16,7 +16,7 @@ export const ScrollToTop = () => {
       }
     };
 
-    window.addEventListener("scroll", toggleVisibility);
+    window.addEventListener("scroll", toggleVisibility, { passive: true });
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
@@ -27,20 +27,22 @@ export const ScrollToTop = () => {
     });
   };
 
+  if (!isVisible) return null;
+
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-3 bg-vinex-blue text-vinex-white rounded-full shadow-xl hover:bg-vinex-blue/90 hover:scale-110 transition-all duration-300 group"
-          aria-label="Scroll to top"
-        >
-          <ArrowUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
-        </motion.button>
-      )}
-    </AnimatePresence>
+    <button
+      onClick={scrollToTop}
+      className="fixed bottom-8 right-8 z-50 group cursor-pointer transition-transform duration-300 hover:scale-110 active:scale-95 w-12 h-12"
+      aria-label="Scroll to top"
+    >
+      <Glass
+        radius={999}
+        className="w-full h-full text-vinex-teal bg-white/60 shadow-lg border border-white/40 group-hover:text-vinex-gold transition-colors"
+      >
+        <div className="w-full h-full flex items-center justify-center">
+          <ArrowUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
+        </div>
+      </Glass>
+    </button>
   );
 };

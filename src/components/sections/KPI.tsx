@@ -43,18 +43,18 @@ export const KPI = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 bg-vinex-black text-white relative overflow-hidden">
-      <div className="max-w-7xl mx-auto border-t border-white/10 pt-20">
-        <h2 className="text-3xl md:text-5xl  font-bold text-center mb-20 text-vinex-yellow">Kết quả kỳ vọng</h2>
-        
+      <div className="max-w-[1536px] mx-auto border-t border-white/10 pt-20">
+        <h2 className="text-3xl md:text-5xl text-center mb-20 text-vinex-yellow font-semibold">Kết quả kỳ vọng</h2>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
           {kpis.map((kpi, idx) => (
             <div key={idx} className="kpi-item flex flex-col items-center">
               <span className="text-vinex-white/30  text-sm tracking-[0.2em] mb-4 block">NO. {kpi.num}</span>
-              <div className="text-5xl md:text-7xl  font-bold text-white mb-4">
+              <div className="text-5xl md:text-7xl  font-semibold text-white mb-4">
                 {inView ? <CountUp end={kpi.value} duration={3} /> : "0"}
                 <span className="text-vinex-red">{kpi.suffix}</span>
               </div>
-              <h3 className="text-lg md:text-xl  text-vinex-white/70 uppercase tracking-wider">{kpi.title}</h3>
+              <h3 className="text-lg md:text-xl text-vinex-white/70 uppercase tracking-wider font-semibold">{kpi.title}</h3>
             </div>
           ))}
         </div>

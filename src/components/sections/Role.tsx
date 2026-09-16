@@ -37,9 +37,9 @@ export const Role = () => {
       {/* Decorative gradient blur */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-vinex-blue/20 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-[1536px] mx-auto relative z-10">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl  font-bold text-vinex-white mb-6">Vai trò của Thương hiệu & Marketing</h2>
+          <h2 className="text-4xl md:text-5xl text-vinex-white mb-6 font-semibold">Vai trò của Thương hiệu & Marketing</h2>
           <div className="w-24 h-1 bg-vinex-yellow mx-auto"></div>
         </div>
 
@@ -48,12 +48,12 @@ export const Role = () => {
             <div key={idx} className="role-card group relative p-8 rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm overflow-hidden hover:bg-white/10 transition-colors duration-500">
               {/* Hover Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-vinex-yellow/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
+
               <div className="relative z-10">
                 <div className="mb-6 inline-flex p-4 rounded-lg bg-vinex-blue/40 text-vinex-yellow group-hover:scale-110 transition-transform duration-500">
                   <role.icon size={32} strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl  font-bold mb-3">{role.title}</h3>
+                <h3 className="text-xl mb-3 font-semibold">{role.title}</h3>
                 <p className="text-sm  text-white/60 leading-relaxed">{role.desc}</p>
               </div>
             </div>

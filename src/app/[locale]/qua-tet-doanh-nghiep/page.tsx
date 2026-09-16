@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function CorporateGiftPage() {
   return (
     <SmoothScroll>
-      <main className="w-full flex flex-col min-h-screen selection:bg-vinex-yellow selection:text-vinex-black bg-white">
+      <main className="w-full flex flex-col min-h-screen selection:bg-vinex-yellow selection:text-vinex-black ">
         <Hero />
         <WhyChooseUs />
         <Featured />

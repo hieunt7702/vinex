@@ -10,7 +10,7 @@ export const FAQ = () => {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    
+
     gsap.fromTo(
       ".faq-item",
       { opacity: 0, y: 30 },
@@ -30,15 +30,15 @@ export const FAQ = () => {
     <section ref={container} className="py-16 lg:py-20 bg-vinex-white text-vinex-black">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-sm font-bold tracking-widest text-vinex-blue uppercase mb-4">FAQ</h2>
-          <h3 className="text-4xl md:text-5xl font-light mb-6">Common <span className="font-bold text-vinex-blue">Inquiries</span></h3>
+          <h2 className="text-sm tracking-widest text-vinex-blue uppercase mb-4 font-semibold">FAQ</h2>
+          <h3 className="text-4xl md:text-5xl font-light mb-6 font-semibold">Common <span className="font-semibold text-vinex-blue">Inquiries</span></h3>
           <div className="w-12 h-[1px] bg-vinex-yellow mx-auto"></div>
         </div>
-        
+
         <div className="space-y-4">
           {faqs.map((faq, idx) => (
             <div key={idx} className="faq-item border-b border-black/10">
-              <button 
+              <button
                 className="w-full flex items-center justify-between py-6 text-left group"
                 onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
               >
@@ -48,8 +48,8 @@ export const FAQ = () => {
                   <span className={`absolute w-[1px] h-full transition-transform duration-500 ${openIdx === idx ? 'rotate-90 bg-transparent' : 'bg-black/30 group-hover:bg-vinex-blue'}`}></span>
                 </div>
               </button>
-              
-              <div 
+
+              <div
                 className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
                 style={{ maxHeight: openIdx === idx ? '200px' : '0', opacity: openIdx === idx ? 1 : 0 }}
               >

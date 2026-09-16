@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
-import Link from 'next/link';
-import { Button } from '@/components/ui/Button';
+import { GlassButton, GlassCard, GlassInput, GlassTextarea } from '@/components/ui/glass';
 
 export const metadata: Metadata = {
   title: "Giải pháp sản phẩm theo nhu cầu doanh nghiệp | VINEX",
@@ -20,8 +19,8 @@ export default function BusinessSolutionPage() {
 
   return (
     <SmoothScroll>
-      <main className="w-full flex flex-col min-h-screen bg-[#FAF8F2] text-vinex-black pt-[90px]">
-        
+      <main className="w-full flex flex-col min-h-screen text-vinex-black pt-[90px]">
+
         {/* Section 1: Hero & 6 Steps */}
         <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto flex flex-col items-center text-center">
           <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">Từ nhu cầu đến phương án <br className="hidden sm:block" /> sản phẩm phù hợp</h1>
@@ -31,79 +30,94 @@ export default function BusinessSolutionPage() {
           </p>
 
           {/* 6 Steps Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 md:gap-x-8 gap-y-8 md:gap-y-12 w-full max-w-5xl">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-5xl">
             {steps.map((step, idx) => (
-              <div key={idx} className="flex flex-col items-center group">
-                 <div className={`w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center font-bold text-xl md:text-2xl mb-4 md:mb-6 shadow-md transition-transform duration-300 group-hover:-translate-y-2
+              <GlassCard key={idx} variant="interactive" className="flex flex-col items-center justify-center p-6 text-center">
+                <div className={`w-14 h-14 rounded-full flex items-center justify-center font-semibold text-xl mb-4 shadow-sm
                     ${idx === 5 ? 'bg-vinex-teal text-white' : 'bg-vinex-gold text-vinex-teal'}`}>
-                    <span className="font-marcellus">{step.id}</span>
-                 </div>
-                 <span className="font-bold text-[13px] md:text-[15px] text-vinex-teal uppercase tracking-wider text-center">{step.title}</span>
-              </div>
+                  <span className="font-marcellus">{step.id}</span>
+                </div>
+                <span className="font-semibold text-[13px] md:text-[15px] text-vinex-teal uppercase tracking-wider">{step.title}</span>
+              </GlassCard>
             ))}
           </div>
         </section>
 
         {/* Section 2: Form Brief */}
         <section className="px-4 py-16 lg:py-20 bg-vinex-teal text-white border-t border-white/10">
-          <div className="max-w-4xl mx-auto bg-white/5 rounded-sm p-6 sm:p-10 md:p-16 border border-white/10 backdrop-blur-sm shadow-2xl">
-            <div className="text-center mb-12">
-               <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-gold mb-6">Gửi nhu cầu sản phẩm</h2>
-               <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
-               <p className="text-white/80 font-light text-[15px]">Vui lòng cung cấp một số thông tin cơ bản để đội ngũ VINEX có thể đề xuất giải pháp phù hợp nhất.</p>
-            </div>
-            
-            <form className="space-y-6 md:space-y-8">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                 <div>
-                    <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 md:mb-3 text-white/90">Nhóm sản phẩm quan tâm</label>
-                    <select className="w-full p-3 md:p-4 rounded-sm bg-white/10 border border-white/20 text-white focus:outline-none focus:border-vinex-gold transition-colors font-light appearance-none text-sm md:text-base">
-                       <option value="" className="text-black">Chọn nhóm sản phẩm...</option>
-                       <option value="hat-dieu" className="text-black">Hạt điều & sản phẩm từ hạt</option>
-                       <option value="tra-ca-phe" className="text-black">Trà, thảo mộc, cà phê</option>
-                       <option value="banh-keo" className="text-black">Bánh, bánh quy, kẹo</option>
-                       <option value="nong-san" className="text-black">Trái cây sấy, nông sản chế biến</option>
+          <div className="max-w-4xl mx-auto">
+            <GlassCard variant="elevated" className="p-8 sm:p-12 md:p-16">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-4">Gửi nhu cầu sản phẩm</h2>
+                <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>
+                <p className="text-gray-600 font-light text-[15px]">Vui lòng cung cấp một số thông tin cơ bản để đội ngũ VINEX có thể đề xuất giải pháp phù hợp nhất.</p>
+              </div>
+
+              <form className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-widest mb-2 text-vinex-charcoal">Nhóm sản phẩm quan tâm</label>
+                    <select className="w-full px-4 py-3 rounded-[12px] bg-white/60 border border-vinex-charcoal/10 text-vinex-charcoal focus:outline-none focus:border-vinex-teal transition-colors font-light appearance-none text-sm">
+                      <option value="">Chọn nhóm sản phẩm...</option>
+                      <option value="hat-dieu">Hạt điều & sản phẩm từ hạt</option>
+                      <option value="tra-ca-phe">Trà, thảo mộc, cà phê</option>
+                      <option value="banh-keo">Bánh, bánh quy, kẹo</option>
+                      <option value="nong-san">Trái cây sấy, nông sản chế biến</option>
                     </select>
-                 </div>
-                 <div>
-                    <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 md:mb-3 text-white/90">Mục đích sử dụng / Kênh phân phối</label>
-                    <input type="text" placeholder="Bán lẻ, đóng bộ quà..." className="w-full p-3 md:p-4 rounded-sm bg-white/10 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-vinex-gold transition-colors font-light text-sm md:text-base" />
-                 </div>
-               </div>
+                  </div>
+                  <div>
+                    <GlassInput
+                      label="Mục đích sử dụng / Kênh phân phối"
+                      placeholder="Bán lẻ, đóng bộ quà..."
+                    />
+                  </div>
+                </div>
 
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                 <div>
-                    <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 md:mb-3 text-white/90">Số lượng dự kiến</label>
-                    <input type="text" placeholder="10.000 túi, 5.000 hộp..." className="w-full p-3 md:p-4 rounded-sm bg-white/10 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-vinex-gold transition-colors font-light text-sm md:text-base" />
-                 </div>
-                 <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest mb-3 text-white/90">Ngân sách dự kiến</label>
-                    <input type="text" placeholder="Khoảng ngân sách / sản phẩm" className="w-full p-4 rounded-sm bg-white/10 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-vinex-gold transition-colors font-light" />
-                 </div>
-               </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <GlassInput
+                      label="Số lượng dự kiến"
+                      placeholder="10.000 túi, 5.000 hộp..."
+                    />
+                  </div>
+                  <div>
+                    <GlassInput
+                      label="Ngân sách dự kiến"
+                      placeholder="Khoảng ngân sách / sản phẩm"
+                    />
+                  </div>
+                </div>
 
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                 <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest mb-3 text-white/90">Thời gian dự kiến</label>
-                    <input type="text" placeholder="Tháng triển khai" className="w-full p-4 rounded-sm bg-white/10 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-vinex-gold transition-colors font-light" />
-                 </div>
-                 <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest mb-3 text-white/90">Thông tin liên hệ</label>
-                    <input type="text" placeholder="Tên / Email / SĐT" className="w-full p-4 rounded-sm bg-white/10 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-vinex-gold transition-colors font-light" />
-                 </div>
-               </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <GlassInput
+                      label="Thời gian dự kiến"
+                      placeholder="Tháng triển khai"
+                    />
+                  </div>
+                  <div>
+                    <GlassInput
+                      label="Thông tin liên hệ"
+                      placeholder="Tên / Email / SĐT"
+                    />
+                  </div>
+                </div>
 
-               <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest mb-3 text-white/90">Yêu cầu quy cách và bao bì</label>
-                  <textarea rows={4} placeholder="Ví dụ: Cần đóng túi zip 100g, hộp quà 3 set..." className="w-full p-4 rounded-sm bg-white/10 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-vinex-gold transition-colors font-light resize-none"></textarea>
-               </div>
-               
-               <div className="text-center pt-8">
-                  <Button variant="gold" className="w-full md:w-auto">
-                     Gửi yêu cầu sản phẩm
-                  </Button>
-               </div>
-            </form>
+                <div>
+                  <GlassTextarea
+                    label="Yêu cầu quy cách và bao bì"
+                    placeholder="Ví dụ: Cần đóng túi zip 100g, hộp quà 3 set..."
+                    rows={4}
+                  />
+                </div>
+
+                <div className="text-center pt-6">
+                  <GlassButton variant="primary" size="lg" className="w-full md:w-auto">
+                    Gửi yêu cầu sản phẩm
+                  </GlassButton>
+                </div>
+              </form>
+            </GlassCard>
           </div>
         </section>
 

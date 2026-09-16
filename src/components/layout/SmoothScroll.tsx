@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { ReactLenis } from "lenis/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useAnimationFrame } from "framer-motion";
 import type { LenisRef } from "lenis/react";
 
 // Register GSAP ScrollTrigger globally
@@ -18,6 +18,13 @@ interface SmoothScrollProps {
 
 export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
   const lenisRef = useRef<LenisRef>(null);
+  const pathname = usePathname();
+
+  // Reset scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    lenisRef.current?.lenis?.scrollTo(0, { immediate: true });
+  }, [pathname]);
 
   useEffect(() => {
     // Force ScrollTrigger to update precisely when Lenis scrolls
@@ -28,16 +35,10 @@ export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
     };
   }, []);
 
-  // Sync Lenis RAF with Framer Motion's internal render loop.
-  // This completely eliminates scroll tearing and lag on heavy motion layouts.
-  useAnimationFrame((time) => {
-    lenisRef.current?.lenis?.raf(time);
-  });
-
   return (
     <ReactLenis
       ref={lenisRef}
-      autoRaf={false}
+      autoRaf={true}
       root
       options={{
         lerp: 0.1,

@@ -34,17 +34,17 @@ export const Clients = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 bg-white">
-      <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-3xl md:text-5xl  font-bold text-vinex-blue mb-4">Đối tác đồng hành</h2>
+      <div className="max-w-[1536px] mx-auto text-center">
+        <h2 className="text-3xl md:text-5xl text-vinex-blue mb-4 font-semibold">Đối tác đồng hành</h2>
         <p className="text-lg text-black/60  mb-16">Hơn 50+ tập đoàn, doanh nghiệp đã tin tưởng lựa chọn quà Tết Vinex.</p>
-        
+
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {clients.map((client) => (
             <div key={client.id} className="client-logo group relative aspect-square bg-gray-50 rounded-lg flex items-center justify-center cursor-pointer border border-transparent hover:border-vinex-yellow transition-colors overflow-hidden">
-              <span className=" font-bold text-vinex-black/30 group-hover:opacity-0 transition-opacity duration-300">{client.name}</span>
-              
+              <span className=" font-semibold text-vinex-black/30 group-hover:opacity-0 transition-opacity duration-300">{client.name}</span>
+
               <div className="absolute inset-0 bg-vinex-yellow flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-vinex-black">
-                <span className=" font-bold text-2xl">{client.qty.toLocaleString()}</span>
+                <span className=" font-semibold text-2xl">{client.qty.toLocaleString()}</span>
                 <span className=" text-xs uppercase tracking-wider">Hộp quà</span>
               </div>
             </div>

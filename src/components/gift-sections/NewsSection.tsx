@@ -10,7 +10,7 @@ export const NewsSection = () => {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    
+
     gsap.fromTo(
       ".news-card",
       { opacity: 0, y: 50 },
@@ -29,10 +29,10 @@ export const NewsSection = () => {
       <div className="max-w-[90rem] mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-black/10 pb-8">
           <div>
-            <h2 className="text-sm font-bold tracking-widest text-vinex-blue uppercase mb-4">Vinex Journal</h2>
-            <h3 className="text-4xl md:text-6xl font-light text-vinex-black tracking-tight">Stories & <span className="font-bold">Inspiration</span></h3>
+            <h2 className="text-sm tracking-widest text-vinex-blue uppercase mb-4 font-semibold">Vinex Journal</h2>
+            <h3 className="text-4xl md:text-6xl font-light text-vinex-black tracking-tight font-semibold">Stories & <span className="font-bold">Inspiration</span></h3>
           </div>
-          <button className="hidden md:flex items-center gap-2 uppercase tracking-widest text-sm font-bold hover:text-vinex-yellow transition-colors group mt-8 md:mt-0">
+          <button className="hidden md:flex items-center gap-2 uppercase tracking-widest text-sm font-semibold over:text-vinex-yellow transition-colors group mt-8 md:mt-0">
             View All Articles <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
           </button>
         </div>
@@ -41,22 +41,22 @@ export const NewsSection = () => {
           {news.map((item, idx) => (
             <article key={idx} className="news-card group cursor-pointer flex flex-col h-full">
               <div className="w-full aspect-[4/3] bg-gray-100 mb-8 overflow-hidden relative">
-                 <div 
-                   className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                   style={{ backgroundImage: `url(${item.img})` }}
-                 ></div>
+                <div
+                  className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                  style={{ backgroundImage: `url(${item.img})` }}
+                ></div>
               </div>
               <div className="flex items-center gap-4 mb-4">
-                <span className="text-vinex-blue text-xs font-bold tracking-widest uppercase">{item.category}</span>
+                <span className="text-vinex-blue text-xs font-semibold tracking-widest uppercase">{item.category}</span>
                 <span className="w-1 h-1 rounded-full bg-black/20"></span>
                 <span className="text-xs font-light tracking-widest text-black/50 uppercase">{item.date}</span>
               </div>
-              <h3 className="text-2xl font-light text-vinex-teal group-hover:text-vinex-yellow transition-colors duration-300 leading-snug mb-4 flex-grow">
+              <h3 className="text-2xl font-light text-vinex-teal group-hover:text-vinex-yellow transition-colors duration-300 leading-snug mb-4 flex-grow font-semibold">
                 {item.title}
               </h3>
-          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
+              <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
               <div className="mt-auto">
-                <span className="inline-block pb-1 border-b border-black/20 uppercase tracking-widest text-xs font-bold group-hover:border-vinex-yellow transition-colors">
+                <span className="inline-block pb-1 border-b border-black/20 uppercase tracking-widest text-xs font-semibold roup-hover:border-vinex-yellow transition-colors">
                   Read Article
                 </span>
               </div>

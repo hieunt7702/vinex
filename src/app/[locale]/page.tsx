@@ -1,65 +1,71 @@
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
-// Sections in order
 import { HomeHero } from "@/components/home/HomeHero";
-import { MissWorldIntro } from "@/components/home/MissWorldIntro";
-import { BrandPhilosophy } from "@/components/home/BrandPhilosophy";
-import { CollectionsPreview } from "@/components/home/CollectionsPreview";
+import { ValueLayers } from "@/components/home/ValueLayers";
+import { FactoryProof } from "@/components/home/FactoryProof";
+import { WhiteCashewProof } from "@/components/home/WhiteCashewProof";
+import { FlavoredCashewsHome } from "@/components/home/FlavoredCashewsHome";
+import { VietnameseAgriHome } from "@/components/home/VietnameseAgriHome";
 import { CorporateGiftingHome } from "@/components/home/CorporateGiftingHome";
-import { BespokeServiceHome } from "@/components/home/BespokeServiceHome";
-import { VietnamStory } from "@/components/home/VietnamStory";
-import { WhyVinexHome } from "@/components/home/WhyVinexHome";
-import { CaseStudyHome } from "@/components/home/CaseStudyHome";
+import { MissWorldIntro } from "@/components/home/MissWorldIntro";
 import { LatestArticles } from "@/components/home/LatestArticles";
 import { FinalCTA } from "@/components/home/FinalCTA";
 
 const Divider = () => (
   <div className="w-full relative z-10 flex justify-center py-0">
-    <div className="w-full max-w-[1400px] h-[1px] bg-gradient-to-r from-transparent via-vinex-gold/40 to-transparent"></div>
+    <div className="w-full max-w-[1400px] h-[1px] bg-gradient-to-r from-transparent via-vinex-gold/30 to-transparent"></div>
   </div>
 );
 
 export default function Home() {
-
   return (
     <SmoothScroll>
-      <main className="w-full flex flex-col min-h-screen selection:bg-vinex-gold selection:text-white bg-vinex-ivory">
-        {/* 1. Hero */}
-        <HomeHero />
+      <main className="w-full flex flex-col min-h-screen selection:bg-vinex-gold selection:text-white relative overflow-hidden">
         
-        {/* 2. Miss World 2026 Intro */}
+        {/* Ambient Global Gradient for Liquid Glass Refraction */}
+        <div className="fixed inset-0 pointer-events-none z-0">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#074751]/30 rounded-full blur-[160px]" />
+          <div className="absolute top-[40%] right-[-10%] w-[50%] h-[50%] bg-vinex-gold/30 rounded-full blur-[160px]" />
+          <div className="absolute bottom-[-10%] left-[20%] w-[60%] h-[60%] bg-[#5C7B6C]/30 rounded-full blur-[160px]" />
+        </div>
+
+        <div className="relative z-10">
+          {/* 01. Hero thương hiệu */}
+          <HomeHero />
+
+          {/* 02. 3 Lớp Giá Trị */}
+        <ValueLayers />
+        <Divider />
+
+        {/* 03. Nhà Máy */}
+        <FactoryProof />
+        <Divider />
+
+        {/* 04. Nhân Điều Trắng */}
+        <WhiteCashewProof />
+        <Divider />
+
+        {/* 05. Hạt Điều Tẩm Vị */}
+        <FlavoredCashewsHome />
+        <Divider />
+
+        {/* 06. Hệ Nông Sản Việt */}
+        <VietnameseAgriHome />
+        <Divider />
+
+        {/* 07. Quà Tặng Doanh Nghiệp */}
+        <CorporateGiftingHome />
+        <Divider />
+
+        {/* 08. Miss World */}
         <MissWorldIntro />
         <Divider />
-        
-        {/* 3. Brand Philosophy */}
-        <BrandPhilosophy />
-        <Divider />
-        
-        {/* 4. Collections */}
-        <CollectionsPreview />
-        
-        {/* 5. Corporate Gifting */}
-        <CorporateGiftingHome />
-        
-        {/* 6. Bespoke Service */}
-        <BespokeServiceHome />
-        
-        {/* 7. Vietnam Story */}
-        <VietnamStory />
-        <Divider />
-        
-        {/* 8. Why VINEX */}
-        <WhyVinexHome />
-        <Divider />
-        
-        {/* 9. Case Study (Miss World) */}
-        <CaseStudyHome />
-        
-        {/* 10. Journal */}
-        <Divider />
+
+        {/* 09. Tin Tức / Câu Chuyện */}
         <LatestArticles />
-        
-        {/* 11. Final CTA */}
+
+        {/* 10. Final CTA */}
         <FinalCTA />
+        </div>
       </main>
     </SmoothScroll>
   );

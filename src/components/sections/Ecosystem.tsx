@@ -33,15 +33,15 @@ export const Ecosystem = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 bg-[#fafafa] text-vinex-black relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 text-center mb-16 relative z-20">
-        <h2 className="text-4xl md:text-5xl  font-bold text-vinex-blue mb-4">Hệ sinh thái Thương hiệu</h2>
+      <div className="max-w-[1536px] mx-auto px-6 text-center mb-16 relative z-20">
+        <h2 className="text-4xl md:text-5xl text-vinex-blue mb-4 font-semibold">Hệ sinh thái Thương hiệu</h2>
         <p className="text-lg text-black/60  max-w-2xl mx-auto">Mạng lưới kết nối đa nền tảng, tạo ra một vòng lặp giá trị không ngừng nghỉ cho doanh nghiệp.</p>
       </div>
 
       <div className="relative w-full max-w-5xl mx-auto h-[600px] flex items-center justify-center">
         {/* Center Node */}
         <div className="eco-center z-10 w-32 h-32 rounded-full bg-vinex-blue text-white shadow-2xl flex flex-col items-center justify-center border-4 border-white">
-          <span className=" font-bold text-2xl">VINEX</span>
+          <span className=" font-semibold text-2xl">VINEX</span>
           <span className="text-[10px]  uppercase tracking-widest text-vinex-yellow">Marketing</span>
         </div>
 
@@ -54,23 +54,23 @@ export const Ecosystem = () => {
             </linearGradient>
           </defs>
           {nodes.map((node, i) => (
-             // Approximate center lines
-            <line 
-              key={`line-${i}`} 
-              className="eco-line origin-center" 
-              x1="50%" y1="50%" 
-              x2={node.x} y2={node.y} 
-              stroke="url(#lineGrad)" 
-              strokeWidth="2" 
+            // Approximate center lines
+            <line
+              key={`line-${i}`}
+              className="eco-line origin-center"
+              x1="50%" y1="50%"
+              x2={node.x} y2={node.y}
+              stroke="url(#lineGrad)"
+              strokeWidth="2"
               strokeDasharray="4 4"
             />
           ))}
         </svg>
 
         {nodes.map((node, i) => (
-          <div 
-            key={i} 
-            className="eco-node absolute w-24 h-24 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center text-sm  font-bold text-vinex-indigo hover:scale-110 transition-transform duration-300 cursor-pointer hover:border-vinex-yellow z-10"
+          <div
+            key={i}
+            className="eco-node absolute w-24 h-24 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center text-sm  font-semibold text-vinex-indigo hover:scale-110 transition-transform duration-300 cursor-pointer hover:border-vinex-yellow z-10"
             style={{ left: `calc(${node.x} - 3rem)`, top: `calc(${node.y} - 3rem)` }}
           >
             {node.name}

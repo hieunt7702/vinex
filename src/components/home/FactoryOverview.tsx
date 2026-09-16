@@ -16,11 +16,11 @@ export const FactoryOverview = () => {
   ];
 
   return (
-    <section id="nha-may" className="py-24 bg-vinex-ivory px-4 overflow-hidden">
+    <section id="nha-may" className="py-24  px-4 overflow-hidden">
       <ScrollReveal>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+        <div className="max-w-[1536px] mx-auto flex flex-col md:flex-row gap-12 items-center">
           <div className="flex-1">
-            <h2 className="text-3xl md:text-4xl font-bold text-vinex-blue mb-6">Nền tảng từ nhà máy bóc tách điều thô</h2>
+            <h2 className="text-3xl md:text-4xl text-vinex-blue mb-6 font-semibold">Nền tảng từ nhà máy bóc tách điều thô</h2>
             <p className="text-vinex-charcoal/80 mb-8 max-w-xl leading-relaxed">
               Điều thô được tiếp nhận, xử lý, bóc tách và phân loại để tạo ra nhân điều trắng phù hợp với yêu cầu cung ứng. Quy trình khép kín đảm bảo chất lượng hàng đầu.
             </p>
@@ -29,11 +29,10 @@ export const FactoryOverview = () => {
                 <button
                   key={index}
                   onClick={() => setActiveStep(index)}
-                  className={`py-3 px-4 rounded-none text-center text-sm font-bold transition-all duration-300 ${
-                    activeStep === index
+                  className={`py-3 px-4 rounded-none text-center text-sm font-semibold ransition-all duration-300 ${activeStep === index
                       ? "bg-vinex-yellow text-vinex-blue shadow-lg scale-105"
                       : "bg-white text-vinex-charcoal hover:bg-gray-50 border border-gray-100"
-                  }`}
+                    }`}
                 >
                   {step.name}
                 </button>
@@ -43,15 +42,15 @@ export const FactoryOverview = () => {
           <div className="flex-1 w-full h-[450px] bg-white rounded-2xl overflow-hidden shadow-xl flex items-center justify-center p-2 relative group cursor-pointer border border-gray-100">
             {/* The image will naturally break if not found, showing the alt text */}
             <div className="w-full h-full bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
-              <img 
-                src={steps[activeStep].img} 
+              <img
+                src={steps[activeStep].img}
                 alt={steps[activeStep].alt}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
-            
+
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/5">
-               {/* This text is just a fallback if image is totally broken and alt is not rendering beautifully */}
+              {/* This text is just a fallback if image is totally broken and alt is not rendering beautifully */}
             </div>
           </div>
         </div>
