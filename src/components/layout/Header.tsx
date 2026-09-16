@@ -8,12 +8,12 @@ import { Menu, X, ArrowRight, Globe } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useDict } from '@/hooks/useDict';
 
-import { Glass, GlassButton } from '@/components/ui/glass';
+import { GlassButton, Glass, GlassCard } from '@/components/ui/glass';
 
 export const Header = () => {
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProductsOpen, setIsProductsOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -28,11 +28,14 @@ export const Header = () => {
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
   }, [isMobileMenuOpen]);
 
@@ -48,11 +51,20 @@ export const Header = () => {
     router.push(newPath);
   };
 
-  // 6 Navigation Links matching standard enterprise information architecture
+  // 6 Navigation Links matching V2 Sitemap architecture
   const navItems = [
     { name: t.nav?.home || 'Trang chủ', href: `/${lang}`, exact: true },
-    { name: t.nav?.about || (lang === 'en' ? 'About us' : 'Về chúng tôi'), href: `/${lang}/gioi-thieu` },
-    { name: t.nav?.ecosystem || (lang === 'en' ? 'Ecosystem' : 'Hệ sinh thái'), href: `/${lang}#ecosystem` },
+    { name: t.nav?.about || 'Giới thiệu', href: `/${lang}/gioi-thieu` },
+    {
+      name: t.nav?.capability || 'Năng lực',
+      href: `/${lang}/nha-may-boc-tach-dieu`,
+      hasDropdown: true,
+      dropdown: [
+        { name: t.nav?.capability_story || 'Giới thiệu VINEX', href: `/${lang}/gioi-thieu` },
+        { name: t.nav?.capability_factory || 'Nhà máy bóc tách điều', href: `/${lang}/nha-may-boc-tach-dieu` },
+        { name: t.nav?.capability_cashew || 'Nhân điều trắng', href: `/${lang}/nhan-dieu-trang` },
+      ]
+    },
     {
       name: t.nav?.products || 'Sản phẩm',
       href: `/${lang}/san-pham`,
@@ -64,8 +76,8 @@ export const Header = () => {
         { name: t.nav?.products_agri || 'Nông sản chế biến', href: `/${lang}/san-pham?category=nong-san` },
       ]
     },
-    { name: t.nav?.projects || (lang === 'en' ? 'Projects' : 'Dự án'), href: `/${lang}/miss-world-2026` },
-    { name: t.nav?.magazine || (lang === 'en' ? 'Magazine' : 'Tạp chí'), href: `/${lang}/kien-thuc` },
+    { name: t.nav?.gifts || 'Quà tặng', href: `/${lang}/qua-tang-doanh-nghiep` },
+    { name: t.nav?.news || 'Tin tức', href: `/${lang}/tin-tuc` },
   ];
 
   const checkIsActive = (href: string, exact = false) => {
@@ -106,14 +118,14 @@ export const Header = () => {
               <div
                 key={item.name}
                 className="relative flex-shrink-0"
-                onMouseEnter={() => setIsProductsOpen(true)}
-                onMouseLeave={() => setIsProductsOpen(false)}
+                onMouseEnter={() => setActiveDropdown(item.name)}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
                 {isActive ? (
                   <div className="relative flex items-center justify-center flex-shrink-0">
                     <Link
                       href={item.href}
-                      className="px-4 py-1.5 rounded-[16px] bg-white/60 border border-white/60 text-[#074751] font-semibold text-[13.5px] xl:text-[14px] whitespace-nowrap select-none shadow-[0_2px_12px_rgba(0,0,0,0.06)] flex items-center justify-center transition-all duration-200"
+                      className="px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-[#074751] font-semibold text-[13.5px] xl:text-[14px] whitespace-nowrap select-none shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.9),0_2px_12px_rgba(7,71,81,0.02)] flex items-center justify-center transition-all duration-200"
                     >
                       {item.name}
                     </Link>
@@ -121,7 +133,7 @@ export const Header = () => {
                 ) : (
                   <Link
                     href={item.href}
-                    className={`px-3.5 xl:px-4 py-1.5 rounded-[12px] text-[13.5px] xl:text-[14px] font-medium whitespace-nowrap select-none block transition-all duration-200 ${isProductsOpen
+                    className={`px-3.5 xl:px-4 py-1.5 rounded-full text-[13.5px] xl:text-[14px] font-medium whitespace-nowrap select-none block transition-all duration-200 ${activeDropdown === item.name
                       ? 'text-[#062c31] bg-white/30 shadow-xs'
                       : 'text-[#0c353b] hover:text-[#062c31] hover:bg-white/20'
                       }`}
@@ -130,31 +142,32 @@ export const Header = () => {
                   </Link>
                 )}
 
-                {/* Dropdown Menu with smooth fade-slide transition & authentic Liquid Glass */}
                 <div
-                  className={`absolute top-full left-0 pt-2 z-50 w-64 pointer-events-auto transition-all duration-200 ease-out origin-top-left ${isProductsOpen
+                  className={`absolute top-full left-0 pt-2 z-50 w-64 pointer-events-auto transition-all duration-200 ease-out origin-top-left ${activeDropdown === item.name
                     ? 'opacity-100 translate-y-0 visible pointer-events-auto'
                     : 'opacity-0 -translate-y-2 invisible pointer-events-none'
                     }`}
                 >
-                  <div className="liquid-glass-dropdown relative w-full rounded-[12px] p-1.5 flex flex-col gap-0.5 overflow-hidden">
-                    {/* Specular sheen reflection gradient overlay */}
-                    <span
-                      className="absolute inset-0 bg-gradient-to-b from-white/35 via-white/5 to-transparent pointer-events-none rounded-[inherit]"
-                      aria-hidden="true"
-                    />
-                    {item.dropdown?.map((sub) => (
-                      <Link
-                        key={sub.name}
-                        href={sub.href}
-                        onClick={() => setIsProductsOpen(false)}
-                        className="relative z-10 flex items-center justify-between px-3.5 py-2.5 rounded-[9px] text-[13.5px] font-medium text-[#074751] hover:bg-white/55 hover:border hover:border-white/60 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.7),0_2px_8px_rgba(7,71,81,0.06)] border border-transparent whitespace-nowrap transition-all duration-150 group"
-                      >
-                        <span className="group-hover:translate-x-0.5 transition-transform duration-150">{sub.name}</span>
-                        <span className="text-[11px] text-vinex-gold opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-150 font-bold">&rarr;</span>
-                      </Link>
-                    ))}
-                  </div>
+                  <Glass radius={12} className="w-full relative shadow-[0_8px_32px_rgba(7,71,81,0.04)] border border-white/80">
+                    <div className="w-full rounded-[12px] p-1.5 flex flex-col gap-0.5 relative z-10 bg-white/40">
+                      {/* Specular sheen reflection gradient overlay */}
+                      <span
+                        className="absolute inset-0 bg-gradient-to-b from-white/50 via-white/5 to-transparent pointer-events-none rounded-[inherit]"
+                        aria-hidden="true"
+                      />
+                      {item.dropdown?.map((sub) => (
+                        <Link
+                          key={sub.name}
+                          href={sub.href}
+                          onClick={() => setActiveDropdown(null)}
+                          className="relative z-10 flex items-center justify-between px-3.5 py-2.5 rounded-[9px] text-[13.5px] font-medium text-[#074751] hover:bg-white/55 hover:border hover:border-white/60 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.7),0_2px_8px_rgba(7,71,81,0.06)] border border-transparent whitespace-nowrap transition-all duration-150 group"
+                        >
+                          <span className="group-hover:translate-x-0.5 transition-transform duration-150">{sub.name}</span>
+                          <span className="text-[11px] text-vinex-gold opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-150 font-bold">&rarr;</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </Glass>
                 </div>
               </div>
             );
@@ -164,7 +177,7 @@ export const Header = () => {
             <div key={item.name} className="relative flex items-center justify-center flex-shrink-0">
               <Link
                 href={item.href}
-                className="px-4 py-1.5 rounded-[12px] bg-white/60 border border-white/60 text-[#074751] font-semibold text-[13.5px] xl:text-[14px] whitespace-nowrap select-none shadow-[0_2px_12px_rgba(0,0,0,0.06)] flex items-center justify-center transition-all duration-200"
+                className="px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-[#074751] font-semibold text-[13.5px] xl:text-[14px] whitespace-nowrap select-none shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.9),0_2px_12px_rgba(7,71,81,0.08)] flex items-center justify-center transition-all duration-200"
               >
                 {item.name}
               </Link>
@@ -173,7 +186,7 @@ export const Header = () => {
             <Link
               key={item.name}
               href={item.href}
-              className="px-3.5 xl:px-4 py-1.5 rounded-[12px] text-[13.5px] xl:text-[14px] font-medium text-[#0c353b] hover:text-[#062c31] hover:bg-white/20 whitespace-nowrap select-none block transition-colors duration-200"
+              className="px-3.5 xl:px-4 py-1.5 rounded-full text-[13.5px] xl:text-[14px] font-medium text-[#0c353b] hover:text-[#062c31] hover:bg-white/20 whitespace-nowrap select-none block transition-colors duration-200"
             >
               {item.name}
             </Link>
@@ -187,7 +200,6 @@ export const Header = () => {
         <GlassButton
           variant="secondary"
           size="sm"
-          radius={12}
           leftIcon={<Globe className="w-3.5 h-3.5 text-[#074751]/80" strokeWidth={2} />}
           onClick={() => toggleLanguage(lang === 'vi' ? 'en' : 'vi')}
           className="text-[12.5px] px-3 py-1.5 font-semibold"
@@ -204,7 +216,6 @@ export const Header = () => {
           <GlassButton
             variant="primary"
             size="sm"
-            radius={12}
             rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
             className="text-[13px] px-4 py-2 font-medium"
           >
@@ -216,7 +227,6 @@ export const Header = () => {
         <GlassButton
           variant="secondary"
           size="sm"
-          radius={12}
           onClick={() => setIsMobileMenuOpen(true)}
           className="lg:hidden p-2 w-9 h-9 flex items-center justify-center"
           aria-label="Open Mobile Navigation"
@@ -230,97 +240,153 @@ export const Header = () => {
   return (
     <>
       {/* Floating Island Navigation Dock strictly matching Section Grid Width, radius 16px */}
-      <header className="fixed top-2.5 sm:top-3.5 left-0 right-0 z-50 pointer-events-none">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12 w-full">
+      <header className="fixed top-2.5 sm:top-3.5 left-0 right-0 z-[100] pointer-events-none">
+        <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full">
           <div className="pointer-events-auto relative w-full h-[66px] md:h-[70px]">
-            <Glass
-              radius={16}
-              displacementScale={40}
-              blurAmount={0.5}
-              saturation={140}
-              aberrationIntensity={1.5}
-              elasticity={0}
-              padding="0"
-              className="liquid-glass-header"
-              style={{ width: '100%', height: '100%' }}
-              fallback={
-                <div className="liquid-glass-header w-full h-[66px] md:h-[70px] rounded-[16px] flex items-center justify-between px-4 md:px-6">
-                  {HeaderContent}
-                </div>
-              }
-            >
+            {/* Background Layer */}
+            <div className="absolute inset-0 z-0">
+              <Glass radius={9999} className="w-full h-full relative border border-white/45 rounded-full shadow-[0_4px_24px_rgba(7,71,81,0.02)]">
+                <div />
+              </Glass>
+            </div>
+
+            {/* Foreground Content Layer */}
+            <div className="absolute inset-0 z-10 px-4 md:px-6">
+              {/* Specular sheen reflection gradient overlay */}
+              <span
+                className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/5 to-transparent pointer-events-none rounded-full"
+                aria-hidden="true"
+              />
               {HeaderContent}
-            </Glass>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Mobile Drawer (No animation, standard DOM) */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden bg-black/50 flex flex-col justify-end p-3">
-          <div className="w-full max-h-[85vh] bg-white rounded-[16px] border border-white/80 shadow-2xl flex flex-col overflow-hidden">
-            {/* Drawer Top */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-black/5">
-              <div className="relative h-[36px] w-[100px]">
-                <Image
-                  src={lang === 'en' ? "/images/logo_en.png" : "/images/logo.png"}
-                  alt="VINEX"
-                  fill
-                  className="object-contain object-left"
-                />
-              </div>
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2 rounded-full bg-black/5 text-[#074751]"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+      {/* Mobile Drawer (Premium Right-Side Sliding Panel) */}
+      <div
+        className={`fixed inset-0 z-[100] lg:hidden transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
+      >
+        {/* Backdrop */}
+        <div
+          className={`absolute inset-0 bg-[#074751]/20 backdrop-blur-md transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
+            }`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
 
-            {/* Drawer Links */}
-            <div className="px-6 py-5 flex flex-col gap-2 overflow-y-auto flex-1">
-              {navItems.map((item) => {
-                const isActive = checkIsActive(item.href, item.exact);
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`px-4 py-3 rounded-2xl text-[15px] font-medium ${isActive
-                      ? 'bg-[#074751] text-white font-semibold'
-                      : 'text-[#0c353b] hover:bg-black/5'
-                      }`}
+        {/* Right Side Drawer */}
+        <div
+          className={`absolute inset-y-0 right-0 w-[85vw] max-w-[380px] h-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
+        >
+          <div className="w-full h-full bg-[#FAF8F2]/90 backdrop-blur-3xl border-l border-white/60 flex flex-col shadow-[-10px_0_40px_rgba(7,71,81,0.15)] relative overflow-hidden">
+            {/* Ambient Glass Reflections */}
+            <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-vinex-gold/20 rounded-full blur-[80px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[250px] h-[250px] bg-[#074751]/10 rounded-full blur-[100px] pointer-events-none" />
+
+             {/* Drawer Header */}
+             <div className="flex items-center justify-between px-6 py-6 border-b border-[#074751]/10 relative z-10">
+                <div className="relative h-[34px] w-[95px]">
+                  <Image
+                    src={lang === 'en' ? "/images/logo_en.png" : "/images/logo.png"}
+                    alt="VINEX"
+                    fill
+                    className="object-contain object-left"
+                  />
+                </div>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-full bg-white/60 text-[#074751] hover:bg-white transition-colors border border-white/60 shadow-[0_2px_10px_rgba(7,71,81,0.05)]"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+             </div>
+
+             {/* Drawer Links */}
+             <div 
+                className="px-7 py-8 flex flex-col gap-6 overflow-y-auto flex-1 hide-scrollbar relative z-10 overscroll-contain"
+                data-lenis-prevent="true"
+             >
+                {navItems.map((item) => {
+                  const isActive = checkIsActive(item.href, item.exact);
+
+                  if (item.hasDropdown) {
+                    return (
+                      <div key={item.name} className="flex flex-col group">
+                        <Link
+                          href={item.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className={`flex items-center justify-between py-1 text-[22px] font-marcellus tracking-wide transition-colors ${isActive ? 'text-vinex-gold' : 'text-[#074751]'}`}
+                        >
+                          <span>{item.name}</span>
+                        </Link>
+                        <div className="flex flex-col pl-4 mt-3 gap-3 border-l-[1.5px] border-[#074751]/15">
+                          {item.dropdown?.map((sub) => (
+                            <Link
+                              key={sub.name}
+                              href={sub.href}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="text-[15px] font-medium text-[#074751]/75 hover:text-[#074751] transition-colors py-1 flex items-center gap-2"
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-vinex-gold/50"></span>
+                              {sub.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div key={item.name} className="flex flex-col group">
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`flex items-center justify-between py-1 text-[22px] font-marcellus tracking-wide transition-colors ${isActive ? 'text-vinex-gold' : 'text-[#074751]'}`}
+                      >
+                        <span>{item.name}</span>
+                      </Link>
+                    </div>
+                  );
+                })}
+             </div>
+
+             {/* Drawer Bottom Action */}
+             <div className="px-6 py-4 border-t border-[#074751]/10 bg-white/50 relative z-10 flex flex-row items-center gap-3">
+                <GlassButton
+                  variant="secondary"
+                  radius={9999}
+                  leftIcon={<Globe className="w-4 h-4 text-[#074751]/80" strokeWidth={2} />}
+                  onClick={() => {
+                    toggleLanguage(lang === 'vi' ? 'en' : 'vi');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="!px-4 !h-[48px] flex-shrink-0 shadow-[0_4px_16px_rgba(7,71,81,0.02)] font-semibold"
+                  aria-label="Switch Language"
+                >
+                  <span className="uppercase tracking-wide text-[14px] whitespace-nowrap">{lang}</span>
+                </GlassButton>
+                <Link
+                  href={lang === 'en' ? `/${lang}/contact` : `/${lang}/lien-he`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full flex-1"
+                >
+                  <GlassButton
+                    as="div"
+                    variant="primary"
+                    radius={9999}
+                    rightIcon={<ArrowRight className="w-4 h-4" />}
+                    className="w-full !h-[48px] shadow-[0_8px_20px_rgba(7,71,81,0.08)] font-semibold text-[14.5px] whitespace-nowrap"
                   >
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Drawer Bottom Action */}
-            <div className="p-5 border-t border-black/5 flex gap-3">
-              <button
-                onClick={() => {
-                  toggleLanguage(lang === 'vi' ? 'en' : 'vi');
-                  setIsMobileMenuOpen(false);
-                }}
-                className="flex-1 py-3 rounded-xl bg-black/5 text-[#074751] font-semibold text-[14px] flex items-center justify-center gap-2"
-              >
-                <Globe className="w-4 h-4 text-[#074751]/80" strokeWidth={2} />
-                <span>{lang === 'vi' ? 'English (EN)' : 'Tiếng Việt (VI)'}</span>
-              </button>
-              <Link
-                href={lang === 'en' ? `/${lang}/contact` : `/${lang}/lien-he`}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex-1 py-3 rounded-xl bg-[#074751] text-white text-center font-medium text-[14px]"
-              >
-                {lang === 'en' ? 'Contact' : 'Liên hệ'}
-              </Link>
-            </div>
+                    {lang === 'en' ? 'Contact Us' : 'Liên hệ tư vấn'}
+                  </GlassButton>
+                </Link>
+             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };

@@ -52,14 +52,14 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
   const purposesList = ["Bán lẻ", "Đóng bộ quà"];
 
   return (
-    <section className="px-4 md:px-8 xl:px-12 pb-16 lg:pb-20 max-w-[1400px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12">
+    <section className="px-4 md:px-8 xl:px-12 pb-16 lg:pb-20 max-w-[1536px] mx-auto flex flex-col lg:flex-row lg:items-start gap-8 lg:gap-12">
       {/* Sidebar Filters */}
       <ProductFilterDrawer
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onClear={clearFilters}
       >
-        <h3 className="font-semibold text-sm mb-6 uppercase tracking-widest text-vinex-teal hidden lg:block">Bộ lọc</h3>
+        <h3 className="text-sm mb-6 uppercase tracking-widest text-vinex-teal hidden lg:block font-semibold">Bộ lọc</h3>
         <div className="space-y-8">
           <div>
             <h4 className="font-semibold mb-4 text-vinex-black text-[15px]">Nhóm sản phẩm</h4>
@@ -147,31 +147,51 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProducts.map(product => (
-              <Link href={`/vi/san-pham/${product.slug}`} key={product.id} className="block h-full group">
-                <GlassCard variant="interactive" radius={12} displacementScale={15} blurAmount={0.06} className="h-full flex flex-col transition-all duration-300 overflow-hidden">
-                  <div className="relative aspect-square bg-gray-100/50 flex items-center justify-center p-6 overflow-hidden">
+              <Link href={`/vi/san-pham/${product.slug}`} key={product.id} className="block h-full group hover:-translate-y-1.5 transition-all duration-400">
+                <GlassCard
+                  radius={24}
+                  className="h-full flex flex-col overflow-hidden border border-white/45 shadow-[0_16px_40px_rgba(7,71,81,0.08),inset_0_1.5px_2px_rgba(255,255,255,0.7)]"
+                  contentClassName="flex flex-col h-full bg-white/40 hover:bg-white/50 transition-colors duration-400"
+                >
+                  <div className="relative aspect-square bg-[#eef3ef] flex items-center justify-center p-6 overflow-hidden">
+                    {/* Background Mesh Gradient if no image */}
+                    {!product.img && (
+                      <>
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#074751] via-[#10626f] to-[#5C7B6C] opacity-90 transition-transform duration-700 ease-out group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+                        <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full border border-white/20 bg-white/10 backdrop-blur-2xl group-hover:bg-white/20 transition-all duration-700 shadow-2xl" />
+                      </>
+                    )}
+
+                    {/* Specular sheen reflection */}
+                    <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/35 via-white/10 to-transparent pointer-events-none" aria-hidden="true" />
+                    
                     {/* Badge */}
-                    <div className="absolute top-3 left-3 z-10">
-                      <Glass radius={999} displacementScale={12} blurAmount={0.05} className="bg-vinex-teal text-vinex-gold text-[10px] font-semibold uppercase tracking-widest px-3 py-1 shadow-sm border border-vinex-gold/20">
-                        <span>{product.status}</span>
-                      </Glass>
+                    <div className="absolute top-4 left-4 z-20">
+                      <div className="backdrop-blur-md bg-white/70 border border-white/80 text-[#074751] text-[10px] font-semibold uppercase tracking-widest px-3.5 py-1.5 rounded-full shadow-sm flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-vinex-teal animate-pulse"></span>
+                        {product.status}
+                      </div>
                     </div>
+
                     {/* Product Image */}
                     {product.img ? (
-                      <div className="absolute inset-0 w-full h-full">
-                        <Image src={product.img} alt={product.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-0 w-full h-full z-10">
+                        <Image src={product.img} alt={product.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" aria-hidden="true" />
                       </div>
                     ) : (
-                      <div className="w-full h-full bg-gray-200/50 flex flex-col items-center justify-center text-gray-400">
-                        <span className="font-semibold uppercase tracking-widest text-xs mb-2">{product.name}</span>
-                        <span className="text-[10px]">CMS Image Content</span>
+                      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white/80 text-center">
+                        <span className="font-semibold uppercase tracking-widest text-xs mb-2 text-white">{product.name}</span>
+                        <span className="text-[10px] opacity-70">Coming soon</span>
                       </div>
                     )}
                   </div>
-                  <div className="p-6 flex flex-col flex-1">
-                    <span className="text-[10px] font-semibold text-vinex-teal uppercase tracking-widest mb-2.5">{product.category}</span>
-                    <h3 className="font-marcellus text-xl mb-3 text-vinex-black group-hover:text-vinex-teal transition-colors">{product.name}</h3>
-                    <p className="text-xs text-gray-600 mb-0 flex-1 font-light leading-relaxed">{product.desc}</p>
+                  
+                  <div className="p-6 flex flex-col flex-1 relative z-20">
+                    <span className="text-[10px] font-semibold text-[#074751]/70 uppercase tracking-widest mb-2.5">{product.category}</span>
+                    <h3 className="text-xl lg:text-2xl mb-3 text-[#074751] group-hover:text-[#F2B719] transition-colors duration-300 font-semibold">{product.name}</h3>
+                    <p className="text-[13px] text-[#074751]/80 mb-0 flex-1 font-light leading-relaxed">{product.desc}</p>
                   </div>
                 </GlassCard>
               </Link>

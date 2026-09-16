@@ -48,13 +48,16 @@ export const VietnamStory: React.FC = () => {
           {/* Left Column: Badge, Typography & Glowing CTA Button */}
           <div className="w-full lg:w-[48%] xl:w-[44%] flex flex-col items-start text-left">
 
-            {/* Outlined Pill Badge */}
-            <span className="inline-flex items-center px-3.5 py-1 rounded-full border border-[#0d5962]/40 bg-white/50 backdrop-blur-xs text-[#074751] text-[11px] sm:text-[11.5px] font-semibold tracking-wider uppercase mb-3 sm:mb-4 shadow-[0_2px_8px_rgba(7,71,81,0.03)]">
-              {t.vietnam.badge || "VINEX ORIGIN"}
-            </span>
+            {/* Outlined Pill Badge with Gold Accent */}
+            <div className="flex items-center gap-3 mb-3 sm:mb-4">
+              <span className="font-marcellus uppercase inline-flex items-center px-3.5 py-1 rounded-full border border-[#0d5962]/40 bg-white/50 backdrop-blur-xs text-[#074751] text-[11px] sm:text-[11.5px] shadow-[0_2px_8px_rgba(7,71,81,0.03)]">
+                {t.vietnam.badge || "VINEX ORIGIN"}
+              </span>
+              <div className="w-[40px] h-[1px] bg-vinex-gold"></div>
+            </div>
 
             {/* Main Headline */}
-            <h2 className="text-[28px] sm:text-[34px] md:text-[38px] lg:text-[42px] font-semibold text-[#074751] uppercase tracking-tight leading-[1.2] drop-shadow-xs">
+            <h2 className="text-[28px] sm:text-[34px] md:text-[38px] lg:text-[42px] text-[#074751] uppercase tracking-tight leading-[1.2] drop-shadow-xs font-semibold">
               {t.vietnam.headline || "CÂU CHUYỆN CỦA CHÚNG TÔI"}
             </h2>
 
@@ -76,7 +79,7 @@ export const VietnamStory: React.FC = () => {
                 className="relative z-10 inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#074751] via-[#0b535f] to-[#10626f] text-white text-[14px] sm:text-[14.5px] font-medium shadow-[0_8px_22px_rgba(7,71,81,0.35)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span>{t.vietnam.cta || "Tìm hiểu thêm"}</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                <ArrowRight className="w-[18px] h-[18px] text-vinex-gold transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </div>
           </div>
@@ -141,7 +144,7 @@ export const VietnamStory: React.FC = () => {
                 <div className="w-16 h-16 rounded-full bg-vinex-teal/40 text-white flex items-center justify-center mx-auto mb-4 border border-white/30">
                   <Play className="w-8 h-8 fill-white translate-x-0.5" />
                 </div>
-                <h3 className="text-white text-xl font-semibold mb-2">VINEX &mdash; Từ Nông Sản Đến Tặng Phẩm Quốc Tế</h3>
+                <h3 className="text-white text-xl mb-2 font-semibold">VINEX &mdash; Từ Nông Sản Đến Tặng Phẩm Quốc Tế</h3>
                 <p className="text-white/60 text-sm max-w-md mx-auto">
                   Video giới thiệu hành trình vùng nguyên liệu và sứ mệnh nâng tầm nông sản Việt ra thế giới.
                 </p>

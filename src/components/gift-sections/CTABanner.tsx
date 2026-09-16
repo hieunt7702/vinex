@@ -49,7 +49,7 @@ export const CTABanner = () => {
         <div className="lg:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           
           <div className="md:col-span-7 text-left">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-marcellus uppercase tracking-wide leading-tight mb-4 text-white">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl uppercase tracking-wide leading-tight mb-4 text-white font-semibold">
               DOANH NGHIỆP CỦA BẠN <br />
               <span className="text-vinex-gold font-light normal-case italic text-2xl md:text-3xl lg:text-4xl mt-2 block">xứng đáng với món quà tinh tế nhất</span>
             </h2>

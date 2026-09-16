@@ -18,7 +18,7 @@ export default function CustomGiftsPage() {
   ];
 
   return (
-    <main className="w-full flex flex-col min-h-screen pt-[90px] bg-vinex-ivory text-vinex-black">
+    <main className="w-full flex flex-col min-h-screen pt-[90px]  text-vinex-black">
 
       {/* Header */}
       <section className="relative h-[60vh] bg-vinex-teal flex items-center justify-center text-center overflow-hidden">
@@ -40,7 +40,7 @@ export default function CustomGiftsPage() {
       </section>
 
       {/* Options */}
-      <section className="py-20 px-4 bg-white/40 border-b border-black/5">
+      <section className="py-20 px-4  border-b border-black/5">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-marcellus text-vinex-teal mb-4">Các Lựa Chọn Cá Nhân Hóa</h2>
@@ -69,7 +69,7 @@ export default function CustomGiftsPage() {
       </section>
 
       {/* Process */}
-      <section className="py-20 px-4 bg-vinex-ivory">
+      <section className="py-20 px-4 ">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-marcellus text-vinex-teal mb-4">Quy Trình Triển Khai</h2>

@@ -33,8 +33,8 @@ export const Ecosystem = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 bg-[#fafafa] text-vinex-black relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 text-center mb-16 relative z-20">
-        <h2 className="text-4xl md:text-5xl  font-semibold text-vinex-blue mb-4">Hệ sinh thái Thương hiệu</h2>
+      <div className="max-w-[1536px] mx-auto px-6 text-center mb-16 relative z-20">
+        <h2 className="text-4xl md:text-5xl text-vinex-blue mb-4 font-semibold">Hệ sinh thái Thương hiệu</h2>
         <p className="text-lg text-black/60  max-w-2xl mx-auto">Mạng lưới kết nối đa nền tảng, tạo ra một vòng lặp giá trị không ngừng nghỉ cho doanh nghiệp.</p>
       </div>
 

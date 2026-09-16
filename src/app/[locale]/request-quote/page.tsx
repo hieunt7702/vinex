@@ -11,7 +11,7 @@ export default function RequestQuotePage() {
   const pg = t.pages.request_quote;
 
   return (
-    <main className="w-full flex flex-col min-h-screen pt-[120px] pb-24 bg-vinex-ivory">
+    <main className="w-full flex flex-col min-h-screen pt-[120px] pb-24 ">
       <div className="max-w-4xl mx-auto px-4 w-full">
 
         <div className="text-center mb-12">

@@ -28,8 +28,8 @@ export const BrandStory = () => {
         {/* Storytelling Text */}
         <div className="order-2 lg:order-1">
           <div className="mb-12">
-            <h2 className="story-text text-sm font-semibold tracking-widest text-vinex-blue uppercase mb-4">Our Story</h2>
-            <h3 className="story-text text-5xl md:text-7xl font-semibold tracking-tight mb-8">
+            <h2 className="story-text text-sm tracking-widest text-vinex-blue uppercase mb-4 font-semibold">Our Story</h2>
+            <h3 className="story-text text-5xl md:text-7xl tracking-tight mb-8 font-semibold">
               Crafting <span className="text-vinex-blue font-light italic">Legacy</span>
             </h3>
             <div className="story-text w-16 h-[1px] bg-vinex-yellow mb-8"></div>

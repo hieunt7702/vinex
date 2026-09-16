@@ -37,10 +37,10 @@ export const Collections = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 px-4 md:px-8 bg-[#fafafa]">
-      <div className="max-w-[1400px] mx-auto">
+      <div className="max-w-[1536px] mx-auto">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-4xl md:text-5xl  font-semibold text-vinex-red mb-4">Bộ sưu tập 2027</h2>
+            <h2 className="text-4xl md:text-5xl text-vinex-red mb-4 font-semibold">Bộ sưu tập 2027</h2>
             <div className="w-16 h-1 bg-vinex-orange"></div>
           </div>
         </div>
@@ -62,7 +62,7 @@ export const Collections = () => {
               {/* Content */}
               <div className="absolute inset-0 p-8 flex flex-col justify-end">
                 <p className="text-vinex-yellow  text-sm uppercase tracking-widest mb-2 opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">{col.desc}</p>
-                <h3 className="text-2xl md:text-3xl  font-semibold text-white mb-4 translate-y-8 group-hover:translate-y-0 transition-transform duration-500">{col.title}</h3>
+                <h3 className="text-2xl md:text-3xl text-white mb-4 translate-y-8 group-hover:translate-y-0 transition-transform duration-500 font-semibold">{col.title}</h3>
 
                 <div className="overflow-hidden h-0 group-hover:h-12 transition-all duration-500">
                   <button className="flex items-center gap-2 text-white  uppercase text-sm tracking-wider hover:text-vinex-yellow transition-colors">

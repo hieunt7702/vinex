@@ -31,7 +31,7 @@ export const WhyChooseUs = () => {
 
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-marcellus tracking-widest uppercase mb-4 text-white">
+          <h2 className="text-3xl md:text-4xl tracking-widest uppercase mb-4 text-white font-semibold">
             VÌ SAO CHỌN VINEX
           </h2>
           <div className="flex items-center justify-center gap-4">
@@ -48,8 +48,6 @@ export const WhyChooseUs = () => {
               key={idx}
               variant="interactive"
               radius={14}
-              displacementScale={15}
-              blurAmount={0.06}
               className="flex flex-col items-center text-center p-6 bg-white/10 border border-white/15 shadow-sm group hover:shadow-lg transition-all"
             >
               <div className="mb-6 transition-transform duration-300 group-hover:scale-110">
@@ -59,7 +57,7 @@ export const WhyChooseUs = () => {
                   style={{ stroke: "url(#goldGradientWhy)" }}
                 />
               </div>
-              <h3 className="text-[15px] md:text-base font-semibold mb-2.5 tracking-wide text-white group-hover:text-vinex-gold transition-colors duration-300">
+              <h3 className="text-[15px] md:text-base mb-2.5 tracking-wide text-white group-hover:text-vinex-gold transition-colors duration-300 font-semibold">
                 {val.title}
               </h3>
               <p className="text-[13px] md:text-[14px] text-white/80 font-light leading-relaxed">

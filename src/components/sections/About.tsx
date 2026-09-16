@@ -43,9 +43,9 @@ export const About = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 lg:px-24 bg-vinex-white text-vinex-black relative">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="max-w-[1536px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
-          <h2 className="about-text text-4xl md:text-5xl  font-semibold text-vinex-blue mb-6">
+          <h2 className="about-text text-4xl md:text-5xl text-vinex-blue mb-6 font-semibold">
             Giới thiệu VINEX
           </h2>
           <p className="about-text text-lg text-vinex-black/80  leading-relaxed mb-8">
@@ -53,7 +53,7 @@ export const About = () => {
           </p>
 
           <div className="about-text relative pl-6 border-l-2 border-vinex-yellow">
-            <h3 className="text-xl font-semibold text-vinex-indigo mb-2">Tầm nhìn chiến lược</h3>
+            <h3 className="text-xl text-vinex-indigo mb-2 font-semibold">Tầm nhìn chiến lược</h3>
             <p className="text-vinex-black/70 ">Trở thành bệ phóng vững chắc nhất, đồng hành cùng khát vọng vươn xa của các thương hiệu Việt Nam trên trường quốc tế.</p>
           </div>
         </div>

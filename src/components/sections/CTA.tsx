@@ -58,7 +58,7 @@ export const CTA = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-vinex-yellow/20 via-vinex-blue to-vinex-black opacity-90"></div>
 
       <div className="relative z-10 text-center max-w-4xl mx-auto">
-        <h2 ref={textRef} className="text-4xl md:text-6xl lg:text-7xl  font-semibold text-white mb-12 leading-tight">
+        <h2 ref={textRef} className="text-4xl md:text-6xl lg:text-7xl text-white mb-12 leading-tight font-semibold">
           Sẵn sàng phát triển thương hiệu cùng <span className="text-vinex-yellow">VINEX</span>?
         </h2>
 

@@ -54,7 +54,7 @@ export const Hero = () => {
             <span className="hero-pre text-sm font-semibold text-vinex-teal uppercase tracking-[0.2em] mb-4 drop-shadow-sm">
               VINEX - Enduring Excellence.
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-marcellus text-vinex-teal tracking-tight leading-[1.15] mb-6 flex flex-col">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl text-vinex-teal tracking-tight leading-[1.15] mb-6 flex flex-col font-semibold">
               <div className="overflow-hidden py-1"><div className="hero-line-1 origin-bottom-left">Phát triển giá trị từ hạt điều</div></div>
               <div className="overflow-hidden py-1"><div className="hero-line-2 origin-bottom-left text-vinex-teal">và nông sản Việt</div></div>
             </h1>

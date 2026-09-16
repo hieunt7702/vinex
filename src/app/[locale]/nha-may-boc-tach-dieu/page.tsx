@@ -29,14 +29,21 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
 
   return (
     <SmoothScroll>
-      <main className="w-full flex flex-col min-h-screen bg-vinex-white text-vinex-black pt-[90px]">
+      <main className="w-full flex flex-col min-h-screen text-vinex-black pt-[90px] relative overflow-hidden">
+        {/* Ambient Global Gradient for Liquid Glass Refraction */}
+        <div className="fixed inset-0 pointer-events-none z-0">
+          <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#074751]/30 rounded-full blur-[160px]" />
+          <div className="absolute bottom-[20%] left-[-10%] w-[50%] h-[50%] bg-vinex-gold/30 rounded-full blur-[160px]" />
+          <div className="absolute bottom-[-10%] right-[20%] w-[60%] h-[60%] bg-[#5C7B6C]/30 rounded-full blur-[160px]" />
+        </div>
 
+        <div className="relative z-10">
         {/* Section 1: Hero ảnh nhà máy thật & Mô tả */}
         <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto flex flex-col items-center text-center">
           <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">{pg.hero_title}</h1>
           <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
           <p className="text-lg text-gray-600 max-w-3xl mb-16 font-light leading-relaxed">
-            Nền tảng vững chắc của VINEX, nơi tiếp nhận điều thô nguyên bản và trải qua quy trình chế biến khép kín để tạo ra nhân điều trắng đạt chuẩn chất lượng xuất khẩu cao nhất.
+            Nền tảng vững chắc của VINEX, nơi tiếp nhận điều thô nguyên bản và trải qua quy trình chế biến khép kín để tạo ra nhân điều trắng đáp ứng tiêu chuẩn xuất khẩu.
           </p>
           <div className="w-full aspect-[16/9] md:aspect-[21/9] rounded-[24px] overflow-hidden relative shadow-xl border border-[#E8E4D9]">
             <Image
@@ -50,7 +57,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
         </section>
 
         {/* Section 2: Quy trình 8 bước */}
-        <section className="px-4 py-16 lg:py-20 bg-[#FAF8F2]">
+        <section className="px-4 py-16 lg:py-20">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Quy trình 8 bước</h2>
@@ -69,7 +76,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
         </section>
 
         {/* Section 3: Gallery khu vực nhà máy */}
-        <section className="px-4 py-16 lg:py-20 bg-white">
+        <section className="px-4 py-16 lg:py-20 ">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Hình ảnh khu vực sản xuất</h2>
@@ -91,12 +98,12 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
         </section>
 
         {/* Section 4: Nguyên tắc kiểm tra và đóng gói */}
-        <section className="px-4 py-16 lg:py-20 bg-[#FAF8F2]">
+        <section className="px-4 py-16 lg:py-20">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Nguyên tắc kiểm tra & đóng gói</h2>
             <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
             <p className="text-[15px] text-gray-600 mb-8 font-light leading-relaxed">
-              Kiểm soát chất lượng nghiêm ngặt ở bước cuối cùng đảm bảo độ ẩm, màu sắc và kích thước hạt đồng đều tuyệt đối. Bao bì chuyên dụng giúp bảo quản tối đa hương vị tự nhiên của hạt điều, đáp ứng vòng đời lưu kho an toàn.
+              Kiểm soát tỷ lệ vỡ và các tiêu chuẩn ở bước cuối cùng đảm bảo độ ẩm, màu sắc và kích thước hạt đồng đều. Bao bì chuyên dụng giúp bảo quản tối đa hương vị tự nhiên của hạt điều, đáp ứng vòng đời lưu kho an toàn.
             </p>
           </div>
         </section>
@@ -117,6 +124,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
           </div>
         </section>
 
+        </div>
       </main>
     </SmoothScroll>
   );

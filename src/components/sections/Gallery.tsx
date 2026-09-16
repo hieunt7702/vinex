@@ -49,9 +49,9 @@ export const Gallery = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 bg-white text-vinex-black">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1536px] mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl  font-semibold text-vinex-blue mb-4">Bộ nhận diện mẫu</h2>
+          <h2 className="text-4xl md:text-5xl text-vinex-blue mb-4 font-semibold">Bộ nhận diện mẫu</h2>
           <p className="text-lg text-black/60 ">Chạm vào từng thiết kế để khám phá sự tinh tế trong ngôn ngữ hình ảnh.</p>
         </div>
 
@@ -89,7 +89,7 @@ export const Gallery = () => {
               <X size={32} />
             </button>
             <div className="w-full aspect-[16/9] md:aspect-[21/9] bg-gray-100 rounded-lg flex items-center justify-center">
-              <h3 className="text-4xl  font-semibold text-vinex-blue">{selectedImg.title}</h3>
+              <h3 className="text-4xl text-vinex-blue font-semibold">{selectedImg.title}</h3>
             </div>
           </div>
         </div>

@@ -37,7 +37,7 @@ export const Process = () => {
             <span className="text-sm font-semibold tracking-[0.2em] text-vinex-gold mb-2 block uppercase">
               Quy trình
             </span>
-            <h2 className="text-3xl md:text-5xl font-marcellus text-vinex-teal tracking-tight leading-tight mb-4">
+            <h2 className="text-3xl md:text-5xl text-vinex-teal tracking-tight leading-tight mb-4 font-semibold">
               CÁ NHÂN HÓA QUÀ TẶNG
             </h2>
           </div>
@@ -57,8 +57,6 @@ export const Process = () => {
                 key={idx}
                 variant="interactive"
                 radius={14}
-                displacementScale={15}
-                blurAmount={0.06}
                 className="flex flex-col items-center text-center p-5 bg-white/80 border border-black/5 shadow-sm group hover:shadow-md transition-all"
               >
                 {/* Step Circle */}
@@ -77,7 +75,7 @@ export const Process = () => {
                 </div>
 
                 {/* Step Label */}
-                <h3 className="text-xs font-semibold text-vinex-teal tracking-wide leading-relaxed group-hover:text-vinex-gold transition-colors duration-300">
+                <h3 className="text-xs text-vinex-teal tracking-wide leading-relaxed group-hover:text-vinex-gold transition-colors duration-300 font-semibold">
                   {step.label}
                 </h3>
               </GlassCard>

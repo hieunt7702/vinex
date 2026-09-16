@@ -53,7 +53,7 @@ export default async function PackagingPage({ params }: { params: Promise<{ loca
         </section>
 
         {/* Section 2: Khả năng tùy biến */}
-        <section className="px-4 py-16 lg:py-20 bg-white">
+        <section className="px-4 py-16 lg:py-20 ">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-marcellus text-vinex-teal mb-4">Khả năng tùy biến</h2>

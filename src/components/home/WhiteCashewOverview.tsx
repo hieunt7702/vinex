@@ -1,9 +1,9 @@
 export const WhiteCashewOverview = () => {
   return (
     <section id="nhan-dieu-trang" className="py-24 bg-vinex-white/50 px-4">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row-reverse gap-12 items-center">
+      <div className="max-w-[1536px] mx-auto flex flex-col md:flex-row-reverse gap-12 items-center">
         <div className="flex-1">
-          <h2 className="text-3xl font-semibold text-vinex-black mb-6">Nhân điều trắng - nền tảng của chuỗi giá trị</h2>
+          <h2 className="text-3xl text-vinex-black mb-6 font-semibold">Nhân điều trắng - nền tảng của chuỗi giá trị</h2>
           <p className="text-gray-600 mb-8">
             Sản phẩm đầu ra chính từ hoạt động bóc tách điều thô; phục vụ cung ứng và phát triển các dòng sản phẩm tiếp theo.
           </p>

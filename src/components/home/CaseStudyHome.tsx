@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from 'next/navigation';
 import { useDict } from '@/hooks/useDict';
+import { ArrowRight } from 'lucide-react';
 import { GlassButton } from '@/components/ui/glass';
 
 export const CaseStudyHome = () => {
@@ -13,7 +14,7 @@ export const CaseStudyHome = () => {
 
   return (
     <section className="py-12 lg:py-20 bg-vinex-ivory overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12">
         <div className="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-12">
 
           {/* Left: Image */}
@@ -33,11 +34,13 @@ export const CaseStudyHome = () => {
 
           {/* Right: Content */}
           <div className="flex-1 w-full">
-            <span className="text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-teal uppercase mb-4 font-semibold block">
-              {t.casestudy.label}
-            </span>
-            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-6"></div>
-            <h2 className="text-[32px] sm:text-[36px] md:text-[40px] lg:text-[44px] xl:text-[48px] font-marcellus text-vinex-teal leading-[1.1] mb-6 whitespace-normal sm:whitespace-nowrap">
+            <div className="flex items-center gap-4 mb-4">
+              <span className="font-marcellus uppercase text-[10px] md:text-[11px] tracking-[0.2em] text-vinex-teal">
+                {t.casestudy.label}
+              </span>
+              <div className="w-[40px] h-[1px] bg-vinex-gold"></div>
+            </div>
+            <h2 className="text-[32px] sm:text-[36px] md:text-[40px] lg:text-[44px] xl:text-[48px] text-vinex-teal leading-[1.1] mb-6 whitespace-normal sm:whitespace-nowrap font-semibold">
               {t.casestudy.headline}
             </h2>
             <p className="text-vinex-charcoal/70 text-[14px] md:text-[15px] mb-10 lg:mb-12 leading-relaxed max-w-lg">
@@ -74,10 +77,15 @@ export const CaseStudyHome = () => {
               </div>
             </div>
 
-            <Link href={`/${lang}/request-quote`}>
-              <GlassButton variant="primary" size="lg" className="w-full sm:w-auto" rightIcon={<span>&rarr;</span>}>
-                {t.casestudy.cta}
-              </GlassButton>
+            <Link 
+              href={`/${lang}/request-quote`}
+              className="group inline-flex flex-col items-start gap-1.5 text-[14px] font-bold text-[#074751] hover:text-[#0a5c68] transition-colors mt-2"
+            >
+              <div className="flex items-center gap-2">
+                <span className="uppercase tracking-wide">{t.casestudy.cta}</span>
+                <ArrowRight className="w-[18px] h-[18px] text-vinex-gold transition-transform duration-300 group-hover:translate-x-1" />
+              </div>
+              <div className="w-[60px] h-[2px] bg-vinex-gold/50 group-hover:w-full group-hover:bg-vinex-gold transition-all duration-500"></div>
             </Link>
           </div>
 

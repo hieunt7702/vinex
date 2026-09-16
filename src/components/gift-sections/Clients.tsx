@@ -34,8 +34,8 @@ export const Clients = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 bg-white">
-      <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-3xl md:text-5xl  font-semibold text-vinex-blue mb-4">Đối tác đồng hành</h2>
+      <div className="max-w-[1536px] mx-auto text-center">
+        <h2 className="text-3xl md:text-5xl text-vinex-blue mb-4 font-semibold">Đối tác đồng hành</h2>
         <p className="text-lg text-black/60  mb-16">Hơn 50+ tập đoàn, doanh nghiệp đã tin tưởng lựa chọn quà Tết Vinex.</p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">

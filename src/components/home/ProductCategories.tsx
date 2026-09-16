@@ -10,11 +10,11 @@ export const ProductCategories = () => {
   ];
 
   return (
-    <section id="san-pham" className="py-24 bg-white px-4">
-      <div className="max-w-7xl mx-auto">
+    <section id="san-pham" className="py-24  px-4">
+      <div className="max-w-[1536px] mx-auto">
         <div className="text-center mb-16">
           <span className="text-vinex-gold font-semibold text-sm tracking-widest uppercase block mb-4">Đang phát triển</span>
-          <h2 className="text-3xl font-semibold text-vinex-black mb-6">Từ nhân điều đến những trải nghiệm hương vị mới</h2>
+          <h2 className="text-3xl text-vinex-black mb-6 font-semibold">Từ nhân điều đến những trải nghiệm hương vị mới</h2>
           <p className="text-gray-600 max-w-2xl mx-auto font-light">
             Các dòng rang và tẩm vị mở rộng cách thưởng thức hạt điều cho bán lẻ, phân phối và quà tặng.
           </p>
@@ -30,7 +30,7 @@ export const ProductCategories = () => {
                     style={{ backgroundImage: `url('${cat.image}')` }}
                   />
                 </div>
-                <h3 className="font-semibold text-vinex-black mb-2 group-hover:text-vinex-teal transition-colors">{cat.title}</h3>
+                <h3 className="text-vinex-black mb-2 group-hover:text-vinex-teal transition-colors font-semibold">{cat.title}</h3>
                 <span className="text-vinex-teal text-sm font-medium">Xem danh mục &rarr;</span>
               </GlassCard>
             </Link>

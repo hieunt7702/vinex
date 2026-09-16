@@ -32,8 +32,8 @@ export const Ingredients = () => {
     <section ref={container} className="py-16 lg:py-20 bg-white text-vinex-black">
       <div className="max-w-[90rem] mx-auto px-6 md:px-12">
         <div className="text-center mb-20">
-          <h2 className="text-sm font-semibold tracking-widest text-vinex-blue uppercase mb-4">Inside the Gift</h2>
-          <h3 className="text-4xl md:text-6xl font-light mb-6">A Symphony of <span className="font-semibold text-vinex-blue">Flavors</span></h3>
+          <h2 className="text-sm tracking-widest text-vinex-blue uppercase mb-4 font-semibold">Inside the Gift</h2>
+          <h3 className="text-4xl md:text-6xl font-light mb-6 font-semibold">A Symphony of <span className="font-semibold text-vinex-blue">Flavors</span></h3>
           <div className="w-12 h-[1px] bg-vinex-yellow mx-auto"></div>
         </div>
 

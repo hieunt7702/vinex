@@ -31,8 +31,8 @@ export const Testimonials = () => {
       <div className="max-w-[90rem] mx-auto px-6 md:px-12 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
           <div>
-            <h2 className="text-sm font-semibold tracking-widest text-vinex-yellow uppercase mb-4">Testimonials</h2>
-            <h3 className="text-4xl md:text-6xl font-light text-white tracking-tight">Trusted by <span className="font-bold">Leaders</span></h3>
+            <h2 className="text-sm tracking-widest text-vinex-yellow uppercase mb-4 font-semibold">Testimonials</h2>
+            <h3 className="text-4xl md:text-6xl font-light text-white tracking-tight font-semibold">Trusted by <span className="font-bold">Leaders</span></h3>
           </div>
 
           <div className="flex items-center gap-6 opacity-60 grayscale">

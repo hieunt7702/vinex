@@ -37,7 +37,7 @@ export const Roadmap = () => {
   return (
     <section ref={container} className="h-screen bg-[#fafafa] overflow-hidden flex flex-col justify-center relative">
       <div className="absolute top-24 left-12 md:left-24 z-10">
-        <h2 className="text-4xl md:text-5xl  font-semibold text-vinex-blue">Lộ trình tổng thể</h2>
+        <h2 className="text-4xl md:text-5xl text-vinex-blue font-semibold">Lộ trình tổng thể</h2>
         <div className="w-16 h-1 bg-vinex-yellow mt-4"></div>
       </div>
 
@@ -55,7 +55,7 @@ export const Roadmap = () => {
               <div className="w-24 h-24 rounded-full bg-white border-[4px] border-vinex-indigo shadow-lg flex items-center justify-center text-3xl font-semibold text-vinex-indigo mb-6 relative z-10 transition-all duration-500 group-hover:bg-vinex-yellow group-hover:text-white group-hover:border-vinex-yellow group-hover:scale-110">
                 {step.num}
               </div>
-              <h3 className="text-2xl  font-semibold text-center text-vinex-teal group-hover:text-vinex-blue transition-colors duration-300">{step.title}</h3>
+              <h3 className="text-2xl text-center text-vinex-teal group-hover:text-vinex-blue transition-colors duration-300 font-semibold">{step.title}</h3>
               <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
             </div>
           </div>

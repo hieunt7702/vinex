@@ -24,7 +24,7 @@ export const MissWorldSection = () => {
               <span className="text-xl md:text-2xl font-semibold tracking-widest text-white">MISS WORLD 2026</span>
             </div>
 
-            <h2 className="text-4xl md:text-[44px] font-semibold mb-6 leading-tight">
+            <h2 className="text-4xl md:text-[44px] mb-6 leading-tight font-semibold">
               Tôn vinh vẻ đẹp <br />
               <span className="text-vinex-gold italic font-serif">& di sản Việt Nam</span>
             </h2>

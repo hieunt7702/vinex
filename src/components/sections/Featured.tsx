@@ -25,7 +25,7 @@ export const Featured = () => {
             <span className="text-sm font-semibold tracking-[0.2em] text-vinex-gold mb-2 block uppercase">
               Giải pháp
             </span>
-            <h2 className="text-3xl md:text-5xl font-marcellus text-vinex-teal tracking-tight leading-tight mb-4">
+            <h2 className="text-3xl md:text-5xl text-vinex-teal tracking-tight leading-tight mb-4 font-semibold">
               QUÀ TẶNG DOANH NGHIỆP
             </h2>
             <p className="text-sm text-vinex-charcoal/70 font-light max-w-xl">
@@ -47,8 +47,6 @@ export const Featured = () => {
               key={idx}
               variant="interactive"
               radius={14}
-              displacementScale={15}
-              blurAmount={0.06}
               className="group flex flex-col bg-white/80 border border-black/5 rounded-2xl transition-all overflow-hidden cursor-pointer shadow-sm hover:shadow-lg"
             >
               {/* Product Image Wrapper */}
@@ -65,7 +63,7 @@ export const Featured = () => {
               <div className="p-4 flex items-center justify-between bg-white/60 relative z-10">
                 <div>
                   <span className="text-[10px] tracking-widest text-vinex-charcoal/50 block font-semibold mb-0.5">BỘ SƯU TẬP</span>
-                  <h3 className="text-sm font-semibold text-vinex-teal tracking-wider uppercase group-hover:text-vinex-gold transition-colors duration-300">
+                  <h3 className="text-sm text-vinex-teal tracking-wider uppercase group-hover:text-vinex-gold transition-colors duration-300 font-semibold">
                     {col.title}
                   </h3>
                 </div>

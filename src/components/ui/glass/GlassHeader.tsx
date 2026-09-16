@@ -24,7 +24,7 @@ export const GlassHeader: React.FC<GlassHeaderProps> = ({
   saturation = 160,
   aberrationIntensity = 1.5,
   className = '',
-  maxWidth = 'max-w-[1400px]',
+  maxWidth = 'max-w-[1536px]',
   fixed = true,
   fallback,
   style = {},
@@ -39,10 +39,6 @@ export const GlassHeader: React.FC<GlassHeaderProps> = ({
         <div className="pointer-events-auto relative w-full h-[66px] md:h-[70px]">
           <Glass
             radius={radius}
-            displacementScale={displacementScale}
-            blurAmount={blurAmount}
-            saturation={saturation}
-            aberrationIntensity={aberrationIntensity}
             padding="0"
             className={`liquid-glass-header ${className}`}
             style={{ position: 'absolute', top: '50%', left: '50%', width: '100%', ...style }}

@@ -66,10 +66,10 @@ export const Showcase = () => {
 
   return (
     <section ref={container} className="py-16 md:py-16 lg:py-20 px-6 md:px-12 bg-vinex-black text-white relative overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1536px] mx-auto">
         <div className="flex justify-between items-end mb-16">
           <div>
-            <h2 className="text-4xl md:text-6xl  font-semibold text-white mb-4">Showcase</h2>
+            <h2 className="text-4xl md:text-6xl text-white mb-4 font-semibold">Showcase</h2>
             <div className="w-24 h-1 bg-vinex-yellow"></div>
           </div>
           <button className="hidden md:block text-vinex-yellow  uppercase tracking-widest text-sm hover:text-white transition-colors">
@@ -94,7 +94,7 @@ export const Showcase = () => {
 
               <div className="absolute bottom-0 left-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                 <p className="text-vinex-yellow  text-sm tracking-widest uppercase mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">{prod.subtitle}</p>
-                <h3 className="text-3xl  font-semibold text-white">{prod.title}</h3>
+                <h3 className="text-3xl text-white font-semibold">{prod.title}</h3>
               </div>
             </div>
           ))}

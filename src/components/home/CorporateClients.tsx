@@ -4,11 +4,11 @@ import { GlassCard } from "@/components/ui/glass";
 
 export const CorporateClients = () => {
   return (
-    <section className="py-24 bg-white px-4">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24  px-4">
+      <div className="max-w-[1536px] mx-auto">
         <div className="text-center mb-16">
           <span className="text-xs tracking-[0.2em] text-vinex-teal uppercase mb-4 font-semibold block">TRUSTED BY</span>
-          <h2 className="text-3xl font-semibold text-vinex-black mb-6">Khách hàng Doanh nghiệp</h2>
+          <h2 className="text-3xl text-vinex-black mb-6 font-semibold">Khách hàng Doanh nghiệp</h2>
           <p className="text-gray-500 max-w-2xl mx-auto font-light">
             VINEX tự hào là đối tác tin cậy, cung cấp giải pháp quà tặng cao cấp cho các tập đoàn và tổ chức hàng đầu.
           </p>

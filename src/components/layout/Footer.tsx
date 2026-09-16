@@ -14,7 +14,7 @@ export const Footer = () => {
   return (
     <footer className="bg-vinex-ivory text-vinex-charcoal pt-0 pb-8">
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-vinex-gold to-transparent opacity-50 mb-16"></div>
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 xl:px-12">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8 mb-12">
 
           {/* Brand Info (col 1-3) */}
@@ -39,14 +39,14 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* SẢN PHẨM (col 4-5) */}
-          <div className="lg:col-span-2">
-            <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_products}</h4>
+          {/* VINEX (col 4-6) */}
+          <div className="lg:col-span-3">
+            <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_vinex}</h4>
             <div className="w-8 h-[1px] bg-vinex-gold mb-4"></div>
             <ul className="space-y-3.5 text-[13px] font-normal text-vinex-charcoal/80">
-              {t.footer.links_products.map((link, idx) => (
+              {t.footer.links_vinex?.map((link: string, idx: number) => (
                 <li key={idx}>
-                  <Link href={`/${lang}/collections`} className="flex items-center gap-1.5 hover:text-vinex-teal transition-colors group">
+                  <Link href={`/${lang}/`} className="flex items-center gap-1.5 hover:text-vinex-teal transition-colors group">
                     <ChevronRight className="w-3.5 h-3.5 text-vinex-gold group-hover:translate-x-0.5 transition-transform" />
                     {link}
                   </Link>
@@ -55,30 +55,14 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* HỖ TRỢ (col 6-7) */}
-          <div className="lg:col-span-2">
-            <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_support}</h4>
+          {/* THÔNG TIN (col 7-9) */}
+          <div className="lg:col-span-3">
+            <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_info}</h4>
             <div className="w-8 h-[1px] bg-vinex-gold mb-4"></div>
             <ul className="space-y-3.5 text-[13px] font-normal text-vinex-charcoal/80">
-              {t.footer.links_support.map((link, idx) => (
+              {t.footer.links_info?.map((link: string, idx: number) => (
                 <li key={idx}>
-                  <Link href={`/${lang}/support`} className="flex items-center gap-1.5 hover:text-vinex-teal transition-colors group">
-                    <ChevronRight className="w-3.5 h-3.5 text-vinex-gold group-hover:translate-x-0.5 transition-transform" />
-                    {link}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* VỀ VINEX (col 8-9) */}
-          <div className="lg:col-span-2">
-            <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_about}</h4>
-            <div className="w-8 h-[1px] bg-vinex-gold mb-4"></div>
-            <ul className="space-y-3.5 text-[13px] font-normal text-vinex-charcoal/80">
-              {t.footer.links_about.map((link, idx) => (
-                <li key={idx}>
-                  <Link href={`/${lang}/about`} className="flex items-center gap-1.5 hover:text-vinex-teal transition-colors group">
+                  <Link href={`/${lang}/`} className="flex items-center gap-1.5 hover:text-vinex-teal transition-colors group">
                     <ChevronRight className="w-3.5 h-3.5 text-vinex-gold group-hover:translate-x-0.5 transition-transform" />
                     {link}
                   </Link>

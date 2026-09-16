@@ -38,10 +38,13 @@ export const WhyVinexHome: React.FC = () => {
 
           {/* Left: Badge & Headline */}
           <div className="flex flex-col items-start text-left">
-            <span className="inline-flex items-center px-3.5 py-1 rounded-full border border-[#0d5962]/40 bg-white/40 text-[#074751] text-[11px] sm:text-[11.5px] font-semibold tracking-wider uppercase mb-2.5 shadow-[0_2px_8px_rgba(7,71,81,0.03)]">
-              {t.why.badge || "TẠI SAO CHỌN VINEX?"}
-            </span>
-            <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-semibold text-[#074751] tracking-tight leading-tight">
+            <div className="flex items-center gap-3 mb-2.5">
+              <span className="font-marcellus uppercase inline-flex items-center px-3.5 py-1 rounded-full border border-[#0d5962]/40 bg-white/40 text-[#074751] text-[11px] sm:text-[11.5px] shadow-[0_2px_8px_rgba(7,71,81,0.03)]">
+                {t.why.badge || "TẠI SAO CHỌN VINEX?"}
+              </span>
+              <div className="w-[40px] h-[1px] bg-vinex-gold"></div>
+            </div>
+            <h2 className="text-[26px] sm:text-[32px] md:text-[36px] text-[#074751] tracking-tight leading-tight font-semibold">
               {t.why.headline || "Giá trị tạo nên sự khác biệt"}
             </h2>
           </div>
@@ -52,7 +55,7 @@ export const WhyVinexHome: React.FC = () => {
             className="group inline-flex items-center gap-2 px-5 py-2 sm:px-6 sm:py-2.5 rounded-full border border-[#074751]/30 hover:border-[#074751]/60 bg-white/60 hover:bg-white/90 text-[#074751] text-[13px] sm:text-[13.5px] font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xs self-start sm:self-auto shrink-0"
           >
             <span>{t.why.cta || "Xem tất cả"}</span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+            <ArrowRight className="w-[18px] h-[18px] text-vinex-gold transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
 

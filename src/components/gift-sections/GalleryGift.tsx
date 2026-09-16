@@ -47,8 +47,8 @@ export const GalleryGift = () => {
       <div className="max-w-[90rem] mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20">
           <div className="max-w-2xl">
-            <h2 className="text-sm font-semibold tracking-widest text-vinex-blue uppercase mb-4">Product Gallery</h2>
-            <h3 className="text-4xl md:text-6xl font-light text-vinex-black tracking-tight leading-none">Moments of <br /><span className="text-vinex-blue italic font-bold">Appreciation</span></h3>
+            <h2 className="text-sm tracking-widest text-vinex-blue uppercase mb-4 font-semibold">Product Gallery</h2>
+            <h3 className="text-4xl md:text-6xl font-light text-vinex-black tracking-tight leading-none font-semibold">Moments of <br /><span className="text-vinex-blue italic font-bold">Appreciation</span></h3>
           </div>
           <div className="hidden md:block w-32 h-[1px] bg-vinex-yellow mb-2"></div>
         </div>
@@ -79,7 +79,7 @@ export const GalleryGift = () => {
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12">
           <div className="absolute inset-0 bg-vinex-black/95 backdrop-blur-md cursor-pointer" onClick={() => setSelectedImg(null)}></div>
 
-          <div className="relative w-full max-w-7xl h-full flex items-center justify-center z-10">
+          <div className="relative w-full max-w-[1536px] h-full flex items-center justify-center z-10">
             <button className="absolute top-4 right-4 md:-top-8 md:-right-8 text-white/50 hover:text-white transition-colors p-2" onClick={() => setSelectedImg(null)}>
               <X size={40} strokeWidth={1} />
             </button>
@@ -94,7 +94,7 @@ export const GalleryGift = () => {
             </div>
 
             <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center">
-              <h3 className="text-2xl md:text-4xl font-light text-white drop-shadow-lg">{selectedImg.title}</h3>
+              <h3 className="text-2xl md:text-4xl font-light text-white drop-shadow-lg font-semibold">{selectedImg.title}</h3>
             </div>
           </div>
         </div>

@@ -30,8 +30,8 @@ export const FAQ = () => {
     <section ref={container} className="py-16 lg:py-20 bg-vinex-white text-vinex-black">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-sm font-semibold tracking-widest text-vinex-blue uppercase mb-4">FAQ</h2>
-          <h3 className="text-4xl md:text-5xl font-light mb-6">Common <span className="font-semibold text-vinex-blue">Inquiries</span></h3>
+          <h2 className="text-sm tracking-widest text-vinex-blue uppercase mb-4 font-semibold">FAQ</h2>
+          <h3 className="text-4xl md:text-5xl font-light mb-6 font-semibold">Common <span className="font-semibold text-vinex-blue">Inquiries</span></h3>
           <div className="w-12 h-[1px] bg-vinex-yellow mx-auto"></div>
         </div>
 

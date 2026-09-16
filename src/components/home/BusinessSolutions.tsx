@@ -1,9 +1,9 @@
 export const BusinessSolutions = () => {
   return (
     <section id="giai-phap" className="py-24 bg-vinex-white/50 px-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1536px] mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-semibold text-vinex-black mb-6">Phát triển sản phẩm theo nhu cầu doanh nghiệp</h2>
+          <h2 className="text-3xl text-vinex-black mb-6 font-semibold">Phát triển sản phẩm theo nhu cầu doanh nghiệp</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             VINEX phối hợp lựa chọn nhóm sản phẩm, xây dựng cơ cấu danh mục, định hướng quy cách và bao bì, hoàn thiện phương án triển khai.
           </p>

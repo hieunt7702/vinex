@@ -4,7 +4,7 @@ import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
-import { Montserrat, Marcellus } from 'next/font/google';
+import { Montserrat, Marcellus, Dancing_Script } from 'next/font/google';
 
 const montserrat = Montserrat({
   subsets: ['latin', 'vietnamese'],
@@ -16,6 +16,12 @@ const marcellus = Marcellus({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-marcellus',
+  display: 'swap',
+});
+
+const dancingScript = Dancing_Script({
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-script',
   display: 'swap',
 });
 
@@ -38,7 +44,7 @@ export default async function RootLayout({
   const { locale } = await params;
   
   return (
-    <html lang={locale} suppressHydrationWarning className={`${montserrat.variable} ${marcellus.variable}`}>
+    <html lang={locale} suppressHydrationWarning className={`${montserrat.variable} ${marcellus.variable} ${dancingScript.variable}`}>
       <body
         suppressHydrationWarning
         className={`min-h-screen flex flex-col bg-[#FAF8F2] text-[#24313A] font-sans antialiased relative overflow-x-hidden`}

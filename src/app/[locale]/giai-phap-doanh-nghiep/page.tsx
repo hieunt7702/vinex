@@ -19,7 +19,7 @@ export default function BusinessSolutionPage() {
 
   return (
     <SmoothScroll>
-      <main className="w-full flex flex-col min-h-screen bg-[#FAF8F2] text-vinex-black pt-[90px]">
+      <main className="w-full flex flex-col min-h-screen text-vinex-black pt-[90px]">
 
         {/* Section 1: Hero & 6 Steps */}
         <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto flex flex-col items-center text-center">

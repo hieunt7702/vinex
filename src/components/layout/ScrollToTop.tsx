@@ -32,16 +32,16 @@ export const ScrollToTop = () => {
   return (
     <button
       onClick={scrollToTop}
-      className="fixed bottom-8 right-8 z-50 group cursor-pointer transition-transform duration-300 hover:scale-110 active:scale-95"
+      className="fixed bottom-8 right-8 z-50 group cursor-pointer transition-transform duration-300 hover:scale-110 active:scale-95 w-12 h-12"
       aria-label="Scroll to top"
     >
       <Glass
         radius={999}
-        displacementScale={25}
-        blurAmount={0.06}
-        className="w-12 h-12 flex items-center justify-center text-vinex-teal bg-white/60 shadow-lg border border-white/40 group-hover:text-vinex-gold transition-colors"
+        className="w-full h-full text-vinex-teal bg-white/60 shadow-lg border border-white/40 group-hover:text-vinex-gold transition-colors"
       >
-        <ArrowUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
+        <div className="w-full h-full flex items-center justify-center">
+          <ArrowUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
+        </div>
       </Glass>
     </button>
   );

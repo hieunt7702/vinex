@@ -46,17 +46,12 @@ export const GlassModal: React.FC<GlassModalProps> = ({
       <div className={`relative z-10 w-full ${maxWidth} ${className}`}>
         <Glass
           radius={radius}
-          displacementScale={40}
-          blurAmount={0.1}
-          saturation={140}
-          aberrationIntensity={1.6}
-          elasticity={0.1}
           className="w-full shadow-2xl border border-white/30 overflow-hidden"
         >
           <div className="p-6 md:p-8 flex flex-col gap-5 text-[#074751] bg-white/40">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-black/5 pb-4">
-              {title && <h3 className="text-xl font-semibold tracking-tight">{title}</h3>}
+              {title && <h3 className="text-xl tracking-tight font-semibold">{title}</h3>}
               <button
                 type="button"
                 onClick={onClose}

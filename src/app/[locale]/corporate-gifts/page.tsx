@@ -18,10 +18,10 @@ export default function CorporateGiftsPage() {
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
 
   return (
-    <main className="w-full flex flex-col min-h-screen pt-[90px] bg-vinex-ivory">
+    <main className="w-full flex flex-col min-h-screen pt-[90px] ">
 
       {/* Header */}
-      <section className="py-16 lg:py-20 text-center px-4 bg-white/40 border-b border-black/5">
+      <section className="py-16 lg:py-20 text-center px-4  border-b border-black/5">
         <div className="max-w-4xl mx-auto">
           <span className="text-sm tracking-widest text-vinex-teal uppercase mb-4 font-semibold block">VINEX B2B SOLUTIONS</span>
           <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>
@@ -59,7 +59,7 @@ export default function CorporateGiftsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 lg:py-20 bg-white/40 text-center px-4 relative overflow-hidden border-t border-black/5">
+      <section className="py-16 lg:py-20  text-center px-4 relative overflow-hidden border-t border-black/5">
         <div className="max-w-3xl mx-auto relative z-10">
           <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Bạn cần tư vấn giải pháp quà tặng?</h2>
           <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>

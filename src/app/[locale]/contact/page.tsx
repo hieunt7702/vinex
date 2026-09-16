@@ -9,7 +9,7 @@ export default function ContactPage() {
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
 
   return (
-    <main className="w-full flex flex-col min-h-screen pt-[120px] pb-24 bg-vinex-ivory">
+    <main className="w-full flex flex-col min-h-screen pt-[120px] pb-24 ">
       <div className="max-w-7xl mx-auto px-4 w-full">
 
         <div className="text-center mb-10 md:mb-16">

@@ -17,16 +17,18 @@ export interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   contentClassName?: string;
+  /** Defaults to true. Renders an ultra-fast CSS-only glass card without a WebGL canvas to save GPU memory. */
+  pureCss?: boolean;
 }
 
 export const GlassCard: React.FC<GlassCardProps> = ({
   variant = 'default',
   size = 'md',
-  radius = 16,
-  displacementScale = 40,
-  blurAmount = 0.5,
+  radius,
+  displacementScale = 200,
+  blurAmount = 0.3,
   saturation = 140,
-  aberrationIntensity = 1.5,
+  aberrationIntensity = 2,
   elasticity = 0,
   overLight = false,
   mode = 'standard',
@@ -34,9 +36,10 @@ export const GlassCard: React.FC<GlassCardProps> = ({
   className = '',
   contentClassName,
   style = {},
+  pureCss = true,
   ...props
 }) => {
-  const defaultRadius = radius ?? 16;
+  const defaultRadius = radius;
 
   const variantStyles = {
     default: 'text-[#0c353b]',
@@ -47,6 +50,7 @@ export const GlassCard: React.FC<GlassCardProps> = ({
 
   return (
     <Glass
+      forceCss={pureCss}
       radius={defaultRadius}
       displacementScale={displacementScale}
       blurAmount={blurAmount}

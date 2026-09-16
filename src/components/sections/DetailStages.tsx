@@ -37,12 +37,12 @@ export const DetailStages = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 bg-white text-vinex-black">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[1536px] mx-auto px-6 md:px-12">
         {/* Stage 1 */}
         <div className="stage-block mb-32 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h3 className="text-xl  text-vinex-yellow font-semibold uppercase mb-2">Giai đoạn 1</h3>
-            <h2 className="text-4xl md:text-5xl  font-semibold text-vinex-blue mb-6">Xây dựng chiến lược</h2>
+            <h3 className="text-xl text-vinex-yellow uppercase mb-2 font-semibold">Giai đoạn 1</h3>
+            <h2 className="text-4xl md:text-5xl text-vinex-blue mb-6 font-semibold">Xây dựng chiến lược</h2>
             <ul className="space-y-4  text-lg text-black/70">
               <li className="flex gap-4">
                 <span className="w-2 h-2 mt-2 bg-vinex-red rounded-full flex-shrink-0"></span>
@@ -69,8 +69,8 @@ export const DetailStages = () => {
         {/* Stage 2 */}
         <div className="stage-block mb-32">
           <div className="text-center mb-16">
-            <h3 className="text-xl  text-vinex-yellow font-semibold uppercase mb-2">Giai đoạn 2</h3>
-            <h2 className="text-4xl md:text-5xl  font-semibold text-vinex-blue">Nhận diện thương hiệu</h2>
+            <h3 className="text-xl text-vinex-yellow uppercase mb-2 font-semibold">Giai đoạn 2</h3>
+            <h2 className="text-4xl md:text-5xl text-vinex-blue font-semibold">Nhận diện thương hiệu</h2>
           </div>
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
             {["Logo", "Namecard", "Catalogue", "Bao bì", "Đồng phục"].map((item, idx) => (
@@ -93,8 +93,8 @@ export const DetailStages = () => {
             ))}
           </div>
           <div className="order-1 md:order-2">
-            <h3 className="text-xl  text-vinex-yellow font-semibold uppercase mb-2">Giai đoạn 3</h3>
-            <h2 className="text-4xl md:text-5xl  font-semibold text-vinex-blue mb-6">Ra mắt & Phủ sóng</h2>
+            <h3 className="text-xl text-vinex-yellow uppercase mb-2 font-semibold">Giai đoạn 3</h3>
+            <h2 className="text-4xl md:text-5xl text-vinex-blue mb-6 font-semibold">Ra mắt & Phủ sóng</h2>
             <p className="text-lg text-black/70 ">Triển khai đồng loạt trên đa nền tảng, tạo hiệu ứng truyền thông mạnh mẽ để đưa thương hiệu đến gần hơn với công chúng mục tiêu.</p>
           </div>
         </div>
@@ -102,8 +102,8 @@ export const DetailStages = () => {
         {/* Stage 4 */}
         <div className="stage-block mb-32 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h3 className="text-xl  text-vinex-yellow font-semibold uppercase mb-2">Giai đoạn 4</h3>
-            <h2 className="text-4xl md:text-5xl  font-semibold text-vinex-blue mb-6">Bán hàng & Vận hành</h2>
+            <h3 className="text-xl text-vinex-yellow uppercase mb-2 font-semibold">Giai đoạn 4</h3>
+            <h2 className="text-4xl md:text-5xl text-vinex-blue mb-6 font-semibold">Bán hàng & Vận hành</h2>
             <p className="text-lg text-black/70  mb-6">Hệ thống hóa quy trình bán hàng bằng công nghệ, từ quản trị CRM, tự động hóa Email Marketing đến các chương trình Loyalty nuôi dưỡng khách hàng.</p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -122,8 +122,8 @@ export const DetailStages = () => {
 
           <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h3 className="text-xl  text-vinex-yellow font-semibold uppercase mb-2">Giai đoạn 5</h3>
-              <h2 className="text-4xl md:text-5xl  font-semibold mb-6">Đánh giá & Tối ưu</h2>
+              <h3 className="text-xl text-vinex-yellow uppercase mb-2 font-semibold">Giai đoạn 5</h3>
+              <h2 className="text-4xl md:text-5xl mb-6 font-semibold">Đánh giá & Tối ưu</h2>
               <p className="text-lg text-white/70 ">Theo dõi hiệu suất chiến dịch theo thời gian thực (Real-time). Cung cấp hệ thống Dashboard trực quan giúp ra quyết định nhanh chóng.</p>
             </div>
 

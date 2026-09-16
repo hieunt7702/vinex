@@ -6,3 +6,7 @@ export * from './GlassDropdown';
 export * from './GlassModal';
 export * from './GlassHeader';
 
+
+export * from './GlassSelect';
+
+export * from './GlassCheckbox';

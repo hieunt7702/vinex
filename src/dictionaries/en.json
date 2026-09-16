@@ -1,32 +1,29 @@
 {
   "nav": {
     "home": "Home",
+    "about": "About Us",
+    "capability": "Capabilities",
     "products": "Products",
-    "ecosystem": "Ecosystem",
-    "projects": "Projects",
-    "about": "About us",
-    "magazine": "Magazine",
-    "capability": "Capability",
-    "capability_story": "VINEX Story",
-    "capability_factory": "Cashew Factory",
+    "gifts": "Gifting",
+    "news": "News",
+    "contact": "Contact",
+    "capability_story": "About VINEX",
+    "capability_factory": "Cashew Processing Factory",
     "capability_cashew": "White Cashews",
     "products_cashew": "Flavored Cashews",
     "products_tea": "Tea & Coffee",
     "products_bakery": "Bakery & Sweets",
-    "products_agri": "Processed Agri",
-    "gifts": "Gifts",
-    "contact": "Contact",
-    "cta": "Contact"
+    "products_agri": "Processed Agri"
   },
   "hero": {
-    "badge": "FOR COMMUNITY HEALTH",
-    "title1": "Vietnam,",
-    "title2": "Masterpiece of Gifting.",
-    "subtitle": "From the finest Vietnamese agricultural produce to bespoke gifts crafted for your brand.",
-    "cta_primary": "Explore Gifts",
-    "cta_secondary": "Get Consultation",
-    "badge1": "PREMIUM CORPORATE GIFTS",
-    "badge2": "MADE IN VIETNAM",
+    "badge": "VINEX · THE ESSENCE CONTINUES",
+    "title1": "From cashew kernels to",
+    "title2": "Vietnamese agricultural values.",
+    "subtitle": "VINEX develops product lines from cashews and Vietnamese agriculture, perfecting the experience through packaging and corporate gifting options.",
+    "cta_primary": "Explore VINEX",
+    "cta_secondary": "Explore Products",
+    "badge1": "",
+    "badge2": "",
     "stat1_val": "30+",
     "stat1_lbl": "Strategic Partners",
     "stat2_val": "5+",
@@ -35,39 +32,46 @@
     "stat3_lbl": "Quality Products",
     "cat1_title": "Cashews",
     "cat1_sub": "& Products",
-    "cat2_title": "Dried Agri",
-    "cat2_sub": "Products",
+    "cat2_title": "Dried",
+    "cat2_sub": "Agriculture",
     "cat3_title": "Tropical",
     "cat3_sub": "Fruits",
     "cat4_title": "Processed",
     "cat4_sub": "Foods",
     "cat5_title": "Corporate",
-    "cat5_sub": "Gifting"
+    "cat5_sub": "Gifts"
   },
   "missworld": {
-    "badge": "VINEX X MISS WORLD 2026",
-    "title1": "Youth of Today",
-    "title2": "Shaping Tomorrow",
-    "desc": "VINEX partners with Miss World 2026 in community initiatives, sharing the essence of Vietnamese agriculture and sustainable beauty.",
-    "cta": "Learn more",
-    "partner": "Proud Partner",
-    "label": "Official Gift Partner",
-    "img_label": "Official Imagery",
-    "img_sub": "Miss World 2026 Sponsorship"
+    "badge": "BRAND MARK",
+    "title1": "VINEX × MISS WORLD 2026",
+    "title2": "",
+    "desc": "VINEX accompanies the program as a Sponsor, bringing products and gifts from Vietnamese agriculture to a special milestone in our brand journey.",
+    "cta": "Explore the Mark",
+    "partner": "",
+    "label": "",
+    "img_label": "Actual footage",
+    "img_sub": "Event"
   },
   "brand": {
-    "label": "MORE THAN A GIFT.",
-    "desc": "Every VINEX creation is more than the taste of nature—it is a heartfelt wish of wellness, prosperity, and enduring connection.",
-    "cta": "Explore gifts",
-    "headline": "A gift is not merely given. It represents appreciation, brand identity, and the story of the giver.",
-    "tag1": "PRODUCT",
-    "tag2": "CRAFT",
-    "tag3": "CULTURE",
-    "tag4": "CONNECTION"
+    "label": "VINEX",
+    "headline": "VALUES CONTINUED THROUGH EVERY PRODUCT LAYER.",
+    "desc": "",
+    "cta": "",
+    "tag1": "",
+    "tag2": "",
+    "tag3": "",
+    "tag4": "",
+    "val1_title": "CASHEWS",
+    "val1_desc": "White cashew kernels · Flavored cashews",
+    "val2_title": "VIETNAMESE AGRI",
+    "val2_desc": "Tea · Coffee · Bakery · Confectionery · Dried fruits",
+    "val3_title": "CORPORATE GIFTING",
+    "val3_desc": "Curated selections perfect for various gifting occasions"
   },
   "collections": {
-    "title1": "GIFT COLLECTIONS",
-    "title2": "Excellence in Every Detail",
+    "eyebrow": "GIFTING",
+    "title1": "GIFT COLLECTION",
+    "title2": "Excellence in every detail",
     "desc": "From sophisticated gift boxes to bespoke customizations, VINEX presents a diverse gift collection crafted for every special occasion.",
     "cta": "View all",
     "items": [
@@ -116,10 +120,26 @@
     "desc": "VINEX provides end-to-end design, manufacturing, and custom packaging printing solutions, helping your brand leave a unique impression in every product.",
     "cta": "Consult now",
     "features": [
-      { "id": "01", "title": "Bespoke Design", "icon": "palette" },
-      { "id": "02", "title": "Logo Printing", "icon": "printer" },
-      { "id": "03", "title": "Packaging Variety", "icon": "package" },
-      { "id": "04", "title": "Flexible Quantity", "icon": "sliders" }
+      {
+        "id": "01",
+        "title": "Bespoke Design",
+        "icon": "palette"
+      },
+      {
+        "id": "02",
+        "title": "Logo Printing",
+        "icon": "printer"
+      },
+      {
+        "id": "03",
+        "title": "Packaging Variety",
+        "icon": "package"
+      },
+      {
+        "id": "04",
+        "title": "Flexible Quantity",
+        "icon": "sliders"
+      }
     ],
     "headline": "ONE BRAND.\nMANY OCCASIONS.",
     "occasions": [
@@ -135,10 +155,26 @@
     "desc": "No two brands are alike.\nSo no two gifts should be either.",
     "cta": "CREATE YOUR GIFT SET",
     "steps": [
-      { "id": "01", "title": "CONSULT & CONCEPT", "desc": "Listen to your needs, budget and build a design concept aligned with your brand positioning." },
-      { "id": "02", "title": "DESIGN & SAMPLE", "desc": "Select box style, ribbon, logo, greeting card and proceed with physical mockup production." },
-      { "id": "03", "title": "PRODUCTION", "desc": "Mass production with strict quality control at every detail." },
-      { "id": "04", "title": "DELIVERY", "desc": "Safe packaging and delivery to your location on the committed timeline." }
+      {
+        "id": "01",
+        "title": "CONSULT & CONCEPT",
+        "desc": "Listen to your needs, budget and build a design concept aligned with your brand positioning."
+      },
+      {
+        "id": "02",
+        "title": "DESIGN & SAMPLE",
+        "desc": "Select box style, ribbon, logo, greeting card and proceed with physical mockup production."
+      },
+      {
+        "id": "03",
+        "title": "PRODUCTION",
+        "desc": "Mass production with strict quality control at every detail."
+      },
+      {
+        "id": "04",
+        "title": "DELIVERY",
+        "desc": "Safe packaging and delivery to your location on the committed timeline."
+      }
     ]
   },
   "vietnam": {
@@ -150,11 +186,26 @@
     "slogan_line2": "To The World",
     "label": "OUR STORY",
     "steps": [
-      { "title": "BASALT SOIL", "desc": "Fertile land" },
-      { "title": "VIETNAMESE PRODUCE", "desc": "Essence of nature" },
-      { "title": "CRAFTSMANSHIP", "desc": "Exquisite handcrafted details" },
-      { "title": "VINEX", "desc": "Premium gifts" },
-      { "title": "CONNECTION", "desc": "Delivering appreciation" }
+      {
+        "title": "BASALT SOIL",
+        "desc": "Fertile land"
+      },
+      {
+        "title": "VIETNAMESE PRODUCE",
+        "desc": "Essence of nature"
+      },
+      {
+        "title": "CRAFTSMANSHIP",
+        "desc": "Exquisite handcrafted details"
+      },
+      {
+        "title": "VINEX",
+        "desc": "Premium gifts"
+      },
+      {
+        "title": "CONNECTION",
+        "desc": "Delivering appreciation"
+      }
     ]
   },
   "why": {
@@ -200,9 +251,49 @@
       }
     ],
     "stats": [
-      { "number": "10+", "label": "YEARS OF\nEXPERIENCE" },
-      { "number": "50+", "label": "PARTNERS\nTRUST US" },
-      { "number": "100K+", "label": "GIFTS\nDELIVERED" }
+      {
+        "number": "10+",
+        "label": "YEARS OF\nEXPERIENCE"
+      },
+      {
+        "number": "50+",
+        "label": "PARTNERS\nTRUST US"
+      },
+      {
+        "number": "100K+",
+        "label": "GIFTS\nDELIVERED"
+      }
+    ]
+  },
+  "featured_projects": {
+    "badge": "FEATURED PROJECTS",
+    "headline": "Journey to Elevate Vietnamese Agriculture",
+    "cta": "View all",
+    "items": [
+      {
+        "id": "01",
+        "title": "Exporting Cashews to the European Union",
+        "date": "March, 2026",
+        "img": "/images/story1.png"
+      },
+      {
+        "id": "02",
+        "title": "Partnership with Miss World 2026",
+        "date": "March, 2026",
+        "img": "/images/missworld.png"
+      },
+      {
+        "id": "03",
+        "title": "Developing Binh Phuoc Material Growing Zone",
+        "date": "April, 2026",
+        "img": "/images/story2.png"
+      },
+      {
+        "id": "04",
+        "title": "High Value-Added Deep Processing Facility",
+        "date": "February, 2026",
+        "img": "/images/story4.png"
+      }
     ]
   },
   "casestudy": {
@@ -254,24 +345,32 @@
     "label": "VINEX JOURNAL"
   },
   "cta": {
-    "prefix": "LET'S CREATE",
-    "headline": "A LASTING IMPRESSION.",
-    "desc": "Partner with VINEX to craft enduring values.",
-    "btn": "Contact now",
-    "primary": "Contact now",
-    "secondary": "Get consultation"
+    "prefix": "CONNECT",
+    "headline": "WITH VINEX",
+    "desc": "For product information, partnerships, and corporate needs.",
+    "btn": "CONTACT VINEX",
+    "primary": "CONTACT VINEX",
+    "secondary": ""
   },
   "footer": {
-    "tagline": "Vinex brings quality, sustainable, and exquisite products, creating long-lasting value for life.",
-    "col_products": "PRODUCTS",
-    "col_support": "SUPPORT",
-    "col_about": "ABOUT VINEX",
+    "tagline": "VINEX develops product lines from cashews and Vietnamese agriculture, perfecting the experience through packaging and corporate gifting options.",
+    "col_vinex": "VINEX",
+    "col_info": "INFORMATION",
     "col_contact": "CONTACT",
-    "links_products": ["New Arrivals", "Best Sellers", "Product Catalog", "Collections"],
-    "links_support": ["Help Center", "Shopping Guide", "Shipping Policy", "FAQ"],
-    "links_about": ["About Us", "News", "Careers", "Contact Us"],
+    "links_vinex": [
+      "About Us",
+      "Factory",
+      "White Cashews",
+      "Products",
+      "Corporate Gifting"
+    ],
+    "links_info": [
+      "Brand Mark",
+      "News",
+      "Contact"
+    ],
     "contact_phone": "(+84) 966 967 966",
-    "contact_phone_sub": "(8:00 - 22:00, Mon - Sun)",
+    "contact_phone_sub": "(Mon-Fri: 08:00-17:30, Sat: 08:00-12:00)",
     "contact_email": "info@vinexgroup.vn",
     "contact_address_1": "Hanoi Office: Lobby 2B, Sun Grand City - 69B Thuy Khue - Hanoi",
     "contact_address_2": "Factory: Zone 6 Bang Doan, Bang Luan Commune, Phu Tho Province",
@@ -281,12 +380,12 @@
   },
   "pages": {
     "about": {
-      "hero_label": "ABOUT VINEX",
-      "hero_title": "We don't just make gifts.",
-      "hero_desc": "We craft stories worth telling and connections worth cherishing.",
-      "section1_title": "Value Chain Journey",
-      "section2_title": "Our Product & Packaging Philosophy",
-      "section3_title": "Developing Value from Vietnamese Cashews & Agriculture"
+      "hero_label": "WHO IS VINEX",
+      "hero_title": "DEVELOPING VALUES FROM CASHEWS AND VIETNAMESE AGRICULTURE",
+      "hero_desc": "VINEX develops from the foundation of cashews, expands into product lines from Vietnamese agriculture, and perfects the experience through packaging and corporate gifting.",
+      "section1_title": "FOUNDATION FROM CASHEWS",
+      "section2_title": "PRODUCT ECOSYSTEM EXPANSION",
+      "section3_title": "PERFECTING THE EXPERIENCE"
     },
     "contact": {
       "hero_label": "CONNECT",
@@ -300,9 +399,21 @@
       "form_consent": "I agree to the privacy policy and allow VINEX to contact me based on the information provided.",
       "form_submit": "SEND REQUEST",
       "solutions": [
-        { "id": "01", "title": "Corporate Gifts", "desc": "Bespoke gift sets designed specifically for businesses." },
-        { "id": "02", "title": "Custom Packaging Design", "desc": "Consultation and design for exclusive brand packaging." },
-        { "id": "03", "title": "Agricultural Import", "desc": "Supply of cashew kernels and processed agricultural products to export standards." }
+        {
+          "id": "01",
+          "title": "Product Information",
+          "desc": "Learn details about VINEX products."
+        },
+        {
+          "id": "02",
+          "title": "Business Partnership",
+          "desc": "Business opportunities and raw material area development."
+        },
+        {
+          "id": "03",
+          "title": "Corporate Gifting",
+          "desc": "Final gifting perfection solutions."
+        }
       ]
     },
     "products": {
@@ -321,10 +432,43 @@
       "hero_desc": "From VIP client gifts to large-scale event gifts — VINEX accompanies your brand.",
       "cta": "REQUEST A QUOTE"
     },
+    "home_factory": {
+      "eyebrow": "FOUNDATION FROM CASHEWS",
+      "h2": "WHERE VALUE IS FIRST FORMED.",
+      "body": "The raw cashew processing factory in Phu Tho is a foundational part of VINEX's cashew operations, where raw materials are received, shelled, cleaned, and sorted before being perfected into white cashew kernels.",
+      "labels": [
+        "Receiving",
+        "Processing & Shelling",
+        "Cleaning & Sorting",
+        "Finishing"
+      ],
+      "cta": "EXPLORE FACTORY"
+    },
+    "home_cashew": {
+      "eyebrow": "WHITE CASHEWS",
+      "h2": "FROM RAW MATERIALS TO FINISHED PRODUCTS.",
+      "body": "White cashews are a crucial connecting point in VINEX's cashew product chain, from the raw material foundation to roasted and flavored lines.",
+      "cta": "LEARN ABOUT WHITE CASHEWS"
+    },
+    "home_agri": {
+      "eyebrow": "EXPANDING FROM CASHEWS",
+      "h2": "AN ECOSYSTEM WITH VIETNAMESE FLAVORS.",
+      "body": "Besides cashews, VINEX expands its portfolio with tea, coffee, bakery, confectionery, and dried agricultural products.",
+      "labels": [
+        "TEA & COFFEE",
+        "BAKERY & SWEETS",
+        "DRIED AGRI"
+      ],
+      "descs": [
+        "Beverage group",
+        "Enjoyment group",
+        "Agri-based products"
+      ]
+    },
     "factory": {
       "hero_label": "FACTORY",
       "hero_title": "VINEX Cashew Processing Factory",
-      "hero_desc": "High-capacity processing with strict quality control from raw material sourcing to finished product.",
+      "hero_desc": "Large processing capacity, strict quality control process from raw materials to finished products.",
       "cta": "CONTACT FOR PARTNERSHIP"
     },
     "cashew": {

@@ -2,11 +2,11 @@ import { ScrollReveal } from "@/components/layout/ScrollReveal";
 
 export const GiftAndPackaging = () => {
   return (
-    <section id="qua-tang" className="py-24 bg-white px-4">
-      <div className="max-w-7xl mx-auto">
+    <section id="qua-tang" className="py-24  px-4">
+      <div className="max-w-[1536px] mx-auto">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-semibold text-vinex-black mb-6">Giải pháp quà tặng theo nhu cầu doanh nghiệp</h2>
+            <h2 className="text-3xl text-vinex-black mb-6 font-semibold">Giải pháp quà tặng theo nhu cầu doanh nghiệp</h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
               Một món quà cần phù hợp với người nhận, thể hiện đúng tinh thần thương hiệu và tạo trải nghiệm khi mở hộp.
             </p>
@@ -16,21 +16,21 @@ export const GiftAndPackaging = () => {
             <div className="border border-gray-100 rounded-lg p-6 bg-vinex-white/30 flex items-start gap-4">
               <div className="w-12 h-12 bg-vinex-yellow rounded-full flex items-center justify-center font-semibold flex-shrink-0">01</div>
               <div>
-                <h3 className="font-semibold text-vinex-black mb-2">Chất lượng sản phẩm</h3>
+                <h3 className="text-vinex-black mb-2 font-semibold">Chất lượng sản phẩm</h3>
                 <p className="text-sm text-gray-500">Lựa chọn phù hợp</p>
               </div>
             </div>
             <div className="border border-gray-100 rounded-lg p-6 bg-vinex-white/30 flex items-start gap-4">
               <div className="w-12 h-12 bg-vinex-yellow rounded-full flex items-center justify-center font-semibold flex-shrink-0">02</div>
               <div>
-                <h3 className="font-semibold text-vinex-black mb-2">Thẩm mỹ & câu chuyện</h3>
+                <h3 className="text-vinex-black mb-2 font-semibold">Thẩm mỹ & câu chuyện</h3>
                 <p className="text-sm text-gray-500">Bao bì có chủ đích</p>
               </div>
             </div>
             <div className="border border-gray-100 rounded-lg p-6 bg-vinex-white/30 flex items-start gap-4">
               <div className="w-12 h-12 bg-vinex-yellow rounded-full flex items-center justify-center font-semibold flex-shrink-0">03</div>
               <div>
-                <h3 className="font-semibold text-vinex-black mb-2">Ngân sách phù hợp</h3>
+                <h3 className="text-vinex-black mb-2 font-semibold">Ngân sách phù hợp</h3>
                 <p className="text-sm text-gray-500">Cơ cấu linh hoạt</p>
               </div>
             </div>

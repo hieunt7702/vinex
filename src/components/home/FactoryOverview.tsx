@@ -16,11 +16,11 @@ export const FactoryOverview = () => {
   ];
 
   return (
-    <section id="nha-may" className="py-24 bg-vinex-ivory px-4 overflow-hidden">
+    <section id="nha-may" className="py-24  px-4 overflow-hidden">
       <ScrollReveal>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+        <div className="max-w-[1536px] mx-auto flex flex-col md:flex-row gap-12 items-center">
           <div className="flex-1">
-            <h2 className="text-3xl md:text-4xl font-semibold text-vinex-blue mb-6">Nền tảng từ nhà máy bóc tách điều thô</h2>
+            <h2 className="text-3xl md:text-4xl text-vinex-blue mb-6 font-semibold">Nền tảng từ nhà máy bóc tách điều thô</h2>
             <p className="text-vinex-charcoal/80 mb-8 max-w-xl leading-relaxed">
               Điều thô được tiếp nhận, xử lý, bóc tách và phân loại để tạo ra nhân điều trắng phù hợp với yêu cầu cung ứng. Quy trình khép kín đảm bảo chất lượng hàng đầu.
             </p>

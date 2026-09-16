@@ -31,9 +31,9 @@ export const Personalization = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 px-6 md:px-12 bg-vinex-black text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1536px] mx-auto">
         <div className="text-center mb-20">
-          <h2 className="text-3xl md:text-5xl  font-semibold text-vinex-yellow mb-4">Dấu ấn độc bản</h2>
+          <h2 className="text-3xl md:text-5xl text-vinex-yellow mb-4 font-semibold">Dấu ấn độc bản</h2>
           <p className="text-lg text-white/70 ">Mỗi món quà đều mang đậm bản sắc thương hiệu của riêng bạn.</p>
         </div>
 
@@ -49,7 +49,7 @@ export const Personalization = () => {
                 <div className="w-24 h-24 rounded-full bg-[#1a1a1a] border border-white/10 flex items-center justify-center mb-6 relative z-10 group-hover:border-vinex-yellow transition-colors duration-500 group-hover:shadow-[0_0_30px_rgba(255,199,3,0.2)]">
                   <step.icon className="text-vinex-yellow" size={32} strokeWidth={1.5} />
                 </div>
-                <h3 className="text-sm md:text-base  font-semibold text-white group-hover:text-vinex-yellow transition-colors">{step.title}</h3>
+                <h3 className="text-sm md:text-base text-white group-hover:text-vinex-yellow transition-colors font-semibold">{step.title}</h3>
               </div>
             ))}
           </div>

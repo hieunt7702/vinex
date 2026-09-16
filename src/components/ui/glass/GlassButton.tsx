@@ -11,6 +11,9 @@ export interface GlassButtonProps extends React.ButtonHTMLAttributes<HTMLButtonE
   children: React.ReactNode;
   className?: string;
   overLight?: boolean;
+  as?: any;
+  blurAmount?: number;
+  displacementScale?: number;
 }
 
 export const GlassButton: React.FC<GlassButtonProps> = ({
@@ -23,12 +26,15 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
   className = '',
   disabled = false,
   overLight = false,
+  blurAmount = 0.3,
+  displacementScale = 200,
   type = 'button',
   onClick,
+  as: Component = 'button',
   ...props
 }) => {
-  // Default radius 12px for buttons
-  const defaultRadius = radius ?? 12;
+  // Default radius 9999 for pill-shaped buttons
+  const defaultRadius = radius ?? 9999;
 
   // Size padding and typography
   const sizeClasses = {
@@ -56,8 +62,8 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
   };
 
   return (
-    <button
-      type={type}
+    <Component
+      type={Component === 'button' ? type : undefined}
       disabled={disabled}
       onClick={onClick}
       className={`relative inline-flex items-center justify-center font-medium whitespace-nowrap select-none overflow-hidden transition-all duration-200 outline-none
@@ -82,7 +88,7 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
         <span>{children}</span>
         {rightIcon && <span className="flex-shrink-0 flex items-center justify-center">{rightIcon}</span>}
       </span>
-    </button>
+    </Component>
   );
 };
 

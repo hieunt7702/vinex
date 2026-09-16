@@ -47,13 +47,7 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(({
       >
         <Glass
           radius={radius}
-          displacementScale={15}
-          blurAmount={0.05}
-          saturation={120}
-          aberrationIntensity={1}
-          elasticity={0.08}
           className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{ position: 'absolute', top: '50%', left: '50%', width: '100%', height: '100%' }}
         >
           <div className="opacity-0 w-full h-full" />
         </Glass>
@@ -123,13 +117,7 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
       >
         <Glass
           radius={radius}
-          displacementScale={15}
-          blurAmount={0.05}
-          saturation={120}
-          aberrationIntensity={1}
-          elasticity={0.08}
           className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{ position: 'absolute', top: '50%', left: '50%', width: '100%', height: '100%' }}
         >
           <div className="opacity-0 w-full h-full" />
         </Glass>

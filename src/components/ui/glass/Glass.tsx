@@ -10,7 +10,7 @@ if (typeof window !== 'undefined') {
     .then((mod) => {
       CachedLiquidGlass = mod.default || mod;
     })
-    .catch(() => {});
+    .catch(() => { });
 }
 
 export interface GlassProps {
@@ -29,29 +29,33 @@ export interface GlassProps {
   onClick?: React.MouseEventHandler<HTMLElement>;
   /** Custom fallback element to display before hydration */
   fallback?: React.ReactNode;
+  /** Force rendering as pure CSS to save GPU memory on repeated elements */
+  forceCss?: boolean;
 }
 
 export const Glass: React.FC<GlassProps> = ({
   children,
   className = '',
-  radius = 16,
-  displacementScale = 40,
-  blurAmount = 0.5,
-  saturation = 140,
-  aberrationIntensity = 1.5,
+  radius,
+  displacementScale = 200,
+  blurAmount = 0.3,
+  saturation = 100,
+  aberrationIntensity = 2,
   elasticity = 0,
   padding = '0',
   overLight = false,
   mode = 'standard',
   style = {},
   onClick,
-  fallback
+  fallback,
+  forceCss = false
 }) => {
   // Always initialize to false and null so SSR and initial client hydration match 100%
   const [mounted, setMounted] = useState(false);
   const [LiquidComponent, setLiquidComponent] = useState<any>(null);
 
   useEffect(() => {
+    if (forceCss) return; // Skip loading WebGL entirely if forceCss is true
     setMounted(true);
     if (CachedLiquidGlass) {
       setLiquidComponent(() => CachedLiquidGlass);
@@ -62,18 +66,18 @@ export const Glass: React.FC<GlassProps> = ({
           CachedLiquidGlass = comp;
           setLiquidComponent(() => comp);
         })
-        .catch(() => {});
+        .catch(() => { });
     }
-  }, []);
+  }, [forceCss]);
 
   // Seamless instant CSS glass fallback (NEVER returns null, ZERO flicker, ZERO layout shift)
-  if (!mounted || !LiquidComponent) {
-    if (fallback) return <>{fallback}</>;
+  if (forceCss || !mounted || !LiquidComponent) {
+    if (fallback && !forceCss) return <>{fallback}</>;
     return (
       <div
         className={`glass-wrapper relative ${className}`}
         style={{
-          borderRadius: `${radius}px`,
+          ...(radius !== undefined ? { borderRadius: `${radius}px` } : {}),
           ...style
         }}
         onClick={onClick ? () => onClick({} as any) : undefined}
@@ -93,13 +97,13 @@ export const Glass: React.FC<GlassProps> = ({
     <div
       className={`glass-wrapper relative ${className}`}
       style={{
-        borderRadius: `${radius}px`,
+        ...(radius !== undefined ? { borderRadius: `${radius}px` } : {}),
         ...style
       }}
       onClick={onClick}
     >
       <LiquidComponent
-        cornerRadius={radius}
+        cornerRadius={radius ?? 16}
         displacementScale={displacementScale}
         blurAmount={blurAmount}
         saturation={saturation}

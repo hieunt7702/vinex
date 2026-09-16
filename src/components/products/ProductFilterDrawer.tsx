@@ -68,14 +68,14 @@ export function ProductFilterDrawer({
 
         {/* Drawer Content */}
         <aside className={`
-          absolute top-0 right-0 h-full w-[300px] max-w-[85vw] bg-white shadow-2xl flex flex-col overflow-hidden
-          transform transition-transform duration-300 ease-out
+          absolute top-0 right-0 h-full w-[300px] max-w-[85vw] bg-white/70 backdrop-blur-2xl shadow-2xl flex flex-col overflow-hidden border border-white/40
+          transform transition-transform duration-300 ease-out z-50
           ${isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"}
-          lg:static lg:h-auto lg:w-full lg:max-w-none lg:bg-transparent lg:shadow-none lg:overflow-visible
+          lg:static lg:h-auto lg:w-full lg:max-w-none lg:bg-white/40 lg:backdrop-blur-[24px] lg:saturate-[140%] lg:rounded-[24px] lg:shadow-[0_16px_40px_rgba(7,71,81,0.08),inset_0_1.5px_2px_rgba(255,255,255,0.7)] lg:border lg:border-white/45 lg:overflow-visible lg:p-6 lg:z-auto
         `}>
           {/* Header Mobile */}
           <div className="flex justify-between items-center p-6 pb-4 lg:hidden shrink-0 border-b border-gray-100">
-            <h3 className="font-semibold text-lg uppercase tracking-widest text-vinex-teal">Bộ lọc</h3>
+            <h3 className="text-lg uppercase tracking-widest text-vinex-teal font-semibold">Bộ lọc</h3>
             <button
               onClick={() => setIsOpen(false)}
               className="p-2 text-gray-500 hover:text-vinex-black transition-colors rounded-full hover:bg-gray-100"

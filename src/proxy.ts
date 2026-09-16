@@ -10,7 +10,7 @@ export function proxy(request: NextRequest) {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
 
-  if (pathnameHasLocale) return
+  if (pathnameHasLocale || pathname.startsWith('/admin')) return
 
   // Redirect if there is no locale
   request.nextUrl.pathname = `/${defaultLocale}${pathname}`
@@ -21,6 +21,6 @@ export const config = {
   matcher: [
     // Skip all internal paths (_next)
     // Skip all files with an extension (e.g. favicon.ico, .png, .css)
-    '/((?!api|_next/static|_next/image|favicon.ico|images|.*\\..*).*)',
+    '/((?!api|admin|_next/static|_next/image|favicon.ico|images|.*\\..*).*)',
   ],
 }
