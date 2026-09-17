@@ -39,18 +39,40 @@ export const WhiteCashewProof: React.FC = () => {
               <div className="w-[40px] h-[1px] bg-vinex-gold"></div>
             </div>
             <h2 className="text-[28px] sm:text-[34px] md:text-[40px] text-[#074751] uppercase tracking-tight leading-[1.2] mb-6 font-semibold">
-              {t.pages.home_cashew?.h2 || "TỪ NỀN TẢNG NGUYÊN LIỆU ĐẾN SẢN PHẨM HOÀN THIỆN."}
+              Nhân điều trắng
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#2b5963] leading-relaxed mb-10 max-w-[500px]">
-              {t.pages.home_cashew?.body || "Nhân điều trắng là điểm nối quan trọng trong chuỗi sản phẩm hạt điều của VINEX, từ nền tảng nguyên liệu đến các dòng rang và tẩm vị."}
+              Nguyên liệu được phân loại theo kích thước và hình thức, đáp ứng nhu cầu sản xuất chế biến hoặc cung ứng thương mại.
             </p>
+
+            <div className="flex flex-col gap-4 mb-10">
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-vinex-gold/20 flex items-center justify-center shrink-0">
+                      <div className="w-2 h-2 rounded-full bg-vinex-gold"></div>
+                    </div>
+                    <span className="text-[15px] font-semibold text-[#074751]">Chất lượng</span>
+                  </div>
+                  <p className="text-[14px] text-[#2b5963] ml-9">Hạt điều nguyên vẹn, màu sắc tự nhiên, đáp ứng yêu cầu thẩm mỹ và giá trị sử dụng.</p>
+                </div>
+                
+                <div className="flex flex-col gap-1 mt-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-vinex-gold/20 flex items-center justify-center shrink-0">
+                      <div className="w-2 h-2 rounded-full bg-vinex-gold"></div>
+                    </div>
+                    <span className="text-[15px] font-semibold text-[#074751]">Phân loại</span>
+                  </div>
+                  <p className="text-[14px] text-[#2b5963] ml-9">Các dòng nguyên hạt (W) và hạt vỡ (S/B), cung cấp lựa chọn phù hợp cho từng nhu cầu.</p>
+                </div>
+            </div>
 
             <Link
               href={`/${lang}/nhan-dieu-trang`}
               className="group inline-flex flex-col items-start gap-1.5 text-[14px] font-bold text-[#074751] hover:text-[#0a5c68] transition-colors mt-2"
             >
               <div className="flex items-center gap-2">
-                <span className="uppercase tracking-wide">{t.pages.home_cashew?.cta || "TÌM HIỂU NHÂN ĐIỀU TRẮNG"}</span>
+                <span className="uppercase tracking-wide">Tìm hiểu nhân điều trắng</span>
                 <ArrowRight className="w-[18px] h-[18px] text-vinex-gold transition-transform duration-300 group-hover:translate-x-1" />
               </div>
               <div className="w-[60px] h-[2px] bg-vinex-gold/50 group-hover:w-full group-hover:bg-vinex-gold transition-all duration-500"></div>

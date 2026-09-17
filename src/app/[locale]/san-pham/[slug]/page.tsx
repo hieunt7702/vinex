@@ -71,15 +71,15 @@ export default async function ProductDetailPage({ params }: Props) {
                   <div className="mb-12 border-b border-vinex-charcoal/10 pb-10">
                      <h1 className="text-[40px] sm:text-[48px] font-marcellus text-vinex-charcoal leading-[1.1] mb-6 capitalize">{product.name}</h1>
                      <p className="text-[15px] text-vinex-charcoal/70 leading-relaxed max-w-xl">
-                        Mô tả ngắn về đặc điểm sản phẩm, ứng dụng và hình thức bao bì. (Ví dụ: Sự kết hợp giữa vị béo tự nhiên của hạt điều và những công thức hương vị hiện đại tạo nên sản phẩm phù hợp với nhu cầu ăn nhẹ, bán lẻ, phân phối và quà tặng).
+                        {product.desc}
                      </p>
                   </div>
 
                   {/* Thông số CMS */}
                   <div className="grid grid-cols-2 gap-6 mb-16">
                      <div className="p-6 bg-white/40 backdrop-blur-md border border-white/40 hover:bg-white/60 transition-colors group rounded-[16px] shadow-sm">
-                        <span className="block text-[10px] text-vinex-teal font-semibold uppercase tracking-widest mb-3">Nhóm</span>
-                        <span className="font-marcellus text-xl text-vinex-charcoal group-hover:text-vinex-teal transition-colors">Hạt điều tẩm vị</span>
+                        <span className="block text-[10px] text-vinex-teal font-semibold uppercase tracking-widest mb-3">Danh mục</span>
+                        <span className="font-marcellus text-xl text-vinex-charcoal group-hover:text-vinex-teal transition-colors">{product.category}</span>
                      </div>
                      <div className="p-6 bg-white/40 backdrop-blur-md border border-white/40 hover:bg-white/60 transition-colors group rounded-[16px] shadow-sm">
                         <span className="block text-[10px] text-vinex-teal font-semibold uppercase tracking-widest mb-3">Quy cách</span>
@@ -102,7 +102,7 @@ export default async function ProductDetailPage({ params }: Props) {
                         <h3 className="text-2xl font-marcellus mb-4">Quan tâm sản phẩm này?</h3>
                         <p className="text-white/80 mb-8 text-[14px] leading-relaxed max-w-sm">Để lại thông tin để nhận mẫu thử và báo giá chi tiết cho doanh nghiệp.</p>
                         <Link href="/vi/lien-he" className="inline-block px-8 py-4 bg-transparent border border-vinex-gold text-vinex-gold font-semibold uppercase tracking-widest text-[11px] hover:bg-vinex-gold hover:text-vinex-charcoal transition-colors text-center rounded-full">
-                           Gửi yêu cầu
+                           Liên hệ nhận báo giá
                         </Link>
                      </div>
                   </div>

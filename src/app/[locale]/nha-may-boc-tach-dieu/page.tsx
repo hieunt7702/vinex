@@ -4,7 +4,6 @@ import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
 import { getDictionary } from '@/dictionaries';
 import type { Locale } from '@/dictionaries';
-import { GlassButton, GlassCard } from '@/components/ui/glass';
 
 export const metadata: Metadata = {
   title: "Nhà máy bóc tách điều thô VINEX",
@@ -15,17 +14,6 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
   const { locale } = await params;
   const t = getDictionary(locale as Locale);
   const pg = t.pages.factory;
-
-  const steps = [
-    { id: '1', title: 'Tiếp nhận điều thô' },
-    { id: '2', title: 'Sàng lọc tạp chất' },
-    { id: '3', title: 'Xử lý nguyên liệu' },
-    { id: '4', title: 'Chẻ tách vỏ' },
-    { id: '5', title: 'Sấy và bóc lụa' },
-    { id: '6', title: 'Phân loại kích cỡ & màu' },
-    { id: '7', title: 'Kiểm tra' },
-    { id: '8', title: 'Đóng gói' },
-  ];
 
   return (
     <SmoothScroll>
@@ -38,52 +26,37 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
         </div>
 
         <div className="relative z-10">
-        {/* Section 1: Hero ảnh nhà máy thật & Mô tả */}
-        <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">{pg.hero_title}</h1>
-          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
-          <p className="text-lg text-gray-600 max-w-3xl mb-16 font-light leading-relaxed">
-            Nền tảng vững chắc của VINEX, nơi tiếp nhận điều thô nguyên bản và trải qua quy trình chế biến khép kín để tạo ra nhân điều trắng đáp ứng tiêu chuẩn xuất khẩu.
-          </p>
-          <div className="w-full aspect-[16/9] md:aspect-[21/9] rounded-[24px] overflow-hidden relative shadow-xl border border-[#E8E4D9]">
-            <Image
-              src="/images/banner/nha_may_boc_tach.png"
-              alt="Nhà máy bóc tách điều VINEX"
-              fill
-              className="object-cover object-center"
-              priority
-            />
-          </div>
-        </section>
-
-        {/* Section 2: Quy trình 8 bước */}
-        <section className="px-4 py-16 lg:py-20">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Quy trình 8 bước</h2>
-              <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto"></div>
+          {/* Section 1: Hero ảnh nhà máy thật & Mô tả */}
+          <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto flex flex-col items-center text-center">
+            <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">{pg.hero_title}</h1>
+            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
+            <p className="text-lg text-gray-600 max-w-3xl mb-16 font-light leading-relaxed">
+              {pg.hero_desc}
+            </p>
+            <div className="w-full aspect-[16/9] md:aspect-[21/9] rounded-[24px] overflow-hidden relative shadow-xl border border-[#E8E4D9]">
+              <Image
+                src="/images/banner/nha_may_boc_tach.png"
+                alt="Nhà máy bóc tách điều VINEX"
+                fill
+                className="object-cover object-center"
+                priority
+              />
             </div>
+          </section>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-              {steps.map((step) => (
-                <GlassCard key={step.id} variant="interactive" className="p-6 text-center flex flex-col items-center justify-center">
-                  <span className="text-vinex-gold font-marcellus text-2xl mb-2">{step.id}.</span>
-                  <span className="font-semibold text-vinex-teal text-xs md:text-sm uppercase tracking-wide leading-tight">{step.title}</span>
-                </GlassCard>
-              ))}
+          {/* Section 2: Tập trung bóc tách và phân loại */}
+          <section className="px-4 py-16 lg:py-20 bg-white/40">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">{pg.section2_title}</h2>
+              <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
+              <p className="text-[15px] text-gray-600 mb-12 font-light leading-relaxed">
+                {pg.section2_desc}
+              </p>
             </div>
-          </div>
-        </section>
-
-        {/* Section 3: Gallery khu vực nhà máy */}
-        <section className="px-4 py-16 lg:py-20 ">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Hình ảnh khu vực sản xuất</h2>
-              <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto"></div>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {[2, 3, 4, 5, 6, 7].map((num) => (
+            
+            {/* Khối ảnh grid (3 ảnh) */}
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[2, 3, 4].map((num) => (
                 <div key={num} className="aspect-[4/3] rounded-[18px] border border-[#E8E4D9] overflow-hidden group relative">
                   <Image
                     src={`/images/banner/nha_may${num}.png`}
@@ -94,36 +67,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Section 4: Nguyên tắc kiểm tra và đóng gói */}
-        <section className="px-4 py-16 lg:py-20">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-6">Nguyên tắc kiểm tra & đóng gói</h2>
-            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
-            <p className="text-[15px] text-gray-600 mb-8 font-light leading-relaxed">
-              Kiểm soát tỷ lệ vỡ và các tiêu chuẩn ở bước cuối cùng đảm bảo độ ẩm, màu sắc và kích thước hạt đồng đều. Bao bì chuyên dụng giúp bảo quản tối đa hương vị tự nhiên của hạt điều, đáp ứng vòng đời lưu kho an toàn.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 5: CTA */}
-        <section className="px-4 py-16 lg:py-20 bg-vinex-teal text-white text-center border-t border-white/10">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-[40px] font-marcellus text-vinex-gold mb-6">Trao đổi nhu cầu cung ứng</h2>
-            <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
-            <p className="text-lg text-white/80 mb-12 font-light">
-              Liên hệ ngay để nhận thông tin chi tiết về năng lực sản xuất và báo giá theo tiêu chuẩn.
-            </p>
-            <Link href="/vi/lien-he">
-              <GlassButton variant="gold" size="lg">
-                Nhận tư vấn ngay
-              </GlassButton>
-            </Link>
-          </div>
-        </section>
-
+          </section>
         </div>
       </main>
     </SmoothScroll>

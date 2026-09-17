@@ -205,7 +205,7 @@ export const Header = () => {
           className="text-[12.5px] px-3 py-1.5 font-semibold"
           aria-label="Switch Language"
         >
-          <span className="uppercase tracking-wide">{lang}</span>
+          <span className="uppercase tracking-wide">{lang === 'vi' ? 'Tiếng Việt' : 'English'}</span>
         </GlassButton>
 
         {/* CTA Contact Button */}

@@ -23,6 +23,27 @@ export interface Article {
 
 export const articles: Article[] = [
   {
+    slug: 'vinex-miss-world',
+    title: 'VINEX đồng hành cùng Miss World Vietnam',
+    desc: 'VINEX tham gia hoạt động tài trợ với những bộ quà được thiết kế riêng. Sự kiện là cơ hội giới thiệu giá trị nông sản và văn hóa Việt Nam thông qua những phần quà được trao tặng trong chương trình.',
+    category: 'Tin tức VINEX',
+    author: 'Truyền thông VINEX',
+    date: '17 tháng 09, 2026',
+    views: 0,
+    badge: 'SỰ KIỆN',
+    bg: 'from-[#074751] to-[#04282D]',
+    coverImg: '/images/banner/Missworld1.png',
+    abstract: 'VINEX tham gia hoạt động tài trợ với những bộ quà được thiết kế riêng. Sự kiện là cơ hội giới thiệu giá trị nông sản và văn hóa Việt Nam thông qua những phần quà được trao tặng trong chương trình.',
+    content: `
+      <p>VINEX tham gia hoạt động tài trợ với những bộ quà được thiết kế riêng. Sự kiện là cơ hội giới thiệu giá trị nông sản và văn hóa Việt Nam thông qua những phần quà được trao tặng trong chương trình.</p>
+      <div style="margin: 2rem 0; text-align: center;">
+         <img src="/images/banner/Missworld2.png" alt="VINEX đồng hành Miss World" style="border-radius: 12px; max-width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.1);" />
+      </div>
+      <p>Với tinh thần tôn vinh sắc đẹp và trí tuệ, VINEX mong muốn mang đến những sản phẩm nông sản chất lượng cao, góp phần quảng bá hình ảnh Việt Nam đến bạn bè quốc tế.</p>
+    `,
+    tags: ['Miss World', 'Sự kiện', 'Quà tặng'],
+  },
+  {
     slug: 'sai-lam-thuong-gap-khi-xay-dung-qua-tang',
     title: '5 SAI LẦM THƯỜNG GẶP KHI XÂY DỰNG BỘ QUÀ TẶNG DOANH NGHIỆP',
     desc: 'Bài viết tổng hợp những rủi ro và sai lầm phổ biến khiến doanh nghiệp tốn kém chi phí và thời gian khi tự chuẩn bị quà tặng.',

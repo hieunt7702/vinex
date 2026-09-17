@@ -12,11 +12,9 @@ export const FlavoredCashewsHome: React.FC = () => {
   const pathname = usePathname();
   const lang = pathname.startsWith("/en") ? "en" : "vi";
   
-  const title = lang === "en" ? "FROM NATURAL CASHEW TO NEW FLAVOR SHADES." : "TỪ VỊ ĐIỀU TỰ NHIÊN ĐẾN NHỮNG SẮC VỊ MỚI.";
-  const desc = lang === "en" 
-    ? "From cashews, VINEX develops diverse flavor options, suitable for many tasting experiences." 
-    : "Từ hạt điều, VINEX phát triển những lựa chọn hương vị đa dạng, phù hợp với nhiều trải nghiệm thưởng thức.";
-  const cta = lang === "en" ? "EXPLORE FLAVORED CASHEWS" : "KHÁM PHÁ HẠT ĐIỀU";
+  const title = "Hạt điều tẩm vị";
+  const desc = "Khám phá các dòng hạt điều tẩm vị trong danh mục VINEX. Hình ảnh giới thiệu các lựa chọn sản phẩm và bao bì cho nhu cầu thưởng thức hoặc kết hợp trong bộ quà.";
+  const cta = "Xem sản phẩm hạt điều";
 
   // Placeholder SKUs
   const skus = [1, 2, 3, 4, 5, 6];
@@ -29,7 +27,7 @@ export const FlavoredCashewsHome: React.FC = () => {
           <div className="flex items-center justify-center gap-4 mb-4">
             <div className="w-[40px] h-[1px] bg-vinex-gold"></div>
             <span className="font-marcellus uppercase text-vinex-teal text-[13px]">
-              {lang === "en" ? "FLAVORED CASHEWS" : "HẠT ĐIỀU TẨM VỊ"}
+              HẠT ĐIỀU TẨM VỊ
             </span>
             <div className="w-[40px] h-[1px] bg-vinex-gold"></div>
           </div>

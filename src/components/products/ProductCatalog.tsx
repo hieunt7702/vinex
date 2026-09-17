@@ -10,10 +10,6 @@ import { GlassCard, GlassButton, Glass } from '@/components/ui/glass';
 export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
-  // optional future filters
-  const [selectedPackages, setSelectedPackages] = useState<string[]>([]);
-  const [selectedPurposes, setSelectedPurposes] = useState<string[]>([]);
 
   // Derived state
   const activeTab = selectedCategories.length === 1 ? selectedCategories[0] : (selectedCategories.length === 0 ? "Tất cả" : "");
@@ -32,24 +28,17 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedCategories([]);
-    setSelectedStatuses([]);
-    setSelectedPackages([]);
-    setSelectedPurposes([]);
   };
 
   const filteredProducts = useMemo(() => {
     return initialProducts.filter(p => {
       if (searchQuery && !p.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
       if (selectedCategories.length > 0 && !selectedCategories.includes(p.category)) return false;
-      if (selectedStatuses.length > 0 && !selectedStatuses.includes(p.status)) return false;
       return true;
     });
-  }, [initialProducts, searchQuery, selectedCategories, selectedStatuses]);
+  }, [initialProducts, searchQuery, selectedCategories]);
 
-  const categoriesList = ["Hạt & sản phẩm từ hạt", "Trà & cà phê", "Bánh & kẹo", "Nông sản chế biến", "Quà tặng"];
-  const statusesList = ["Đang phát triển", "Sẵn sàng cung ứng", "Phát triển theo yêu cầu"];
-  const packagesList = ["Hộp giấy cao cấp", "Túi zip / Bao bì mềm", "Lọ / Hũ"];
-  const purposesList = ["Bán lẻ", "Đóng bộ quà"];
+  const categoriesList = ["Hạt điều tẩm vị", "Trà", "Cà phê", "Bánh kẹo", "Nấm", "Trái cây sấy"];
 
   return (
     <section className="px-4 md:px-8 xl:px-12 pb-16 lg:pb-20 max-w-[1536px] mx-auto flex flex-col lg:flex-row lg:items-start gap-8 lg:gap-12">
@@ -70,45 +59,6 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
                   label={cat}
                   checked={selectedCategories.includes(cat)}
                   onChange={() => handleToggleCategory(cat)}
-                />
-              ))}
-            </div>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-vinex-black text-[15px]">Trạng thái</h4>
-            <div className="space-y-3">
-              {statusesList.map(status => (
-                <Checkbox
-                  key={status}
-                  label={status}
-                  checked={selectedStatuses.includes(status)}
-                  onChange={() => handleToggleStatus(status)}
-                />
-              ))}
-            </div>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-vinex-black text-[15px]">Hình thức bao bì</h4>
-            <div className="space-y-3">
-              {packagesList.map(pkg => (
-                <Checkbox
-                  key={pkg}
-                  label={pkg}
-                  checked={selectedPackages.includes(pkg)}
-                  onChange={() => setSelectedPackages(prev => prev.includes(pkg) ? prev.filter(p => p !== pkg) : [...prev, pkg])}
-                />
-              ))}
-            </div>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-vinex-black text-[15px]">Mục đích</h4>
-            <div className="space-y-3">
-              {purposesList.map(purp => (
-                <Checkbox
-                  key={purp}
-                  label={purp}
-                  checked={selectedPurposes.includes(purp)}
-                  onChange={() => setSelectedPurposes(prev => prev.includes(purp) ? prev.filter(p => p !== purp) : [...prev, purp])}
                 />
               ))}
             </div>

@@ -74,11 +74,11 @@ export const MissWorldIntro: React.FC = () => {
 
             {/* CTA Link */}
             <Link
-              href={`/${lang}/miss-world-2026`}
+              href={`/${lang}/tin-tuc/vinex-miss-world`}
               className="group inline-flex flex-col items-start gap-1.5 text-[14px] font-bold text-white hover:text-vinex-gold transition-colors mt-2"
             >
               <div className="flex items-center gap-2">
-                <span className="uppercase tracking-wide">{t.missworld?.cta || 'Tìm hiểu thêm'}</span>
+                <span className="uppercase tracking-wide">{t.missworld?.cta || 'Xem chi tiết'}</span>
                 <ArrowRight className="w-[18px] h-[18px] text-vinex-gold transition-transform duration-300 group-hover:translate-x-1" />
               </div>
               <div className="w-[60px] h-[2px] bg-vinex-gold/50 group-hover:w-full group-hover:bg-vinex-gold transition-all duration-500"></div>
@@ -116,9 +116,9 @@ export const MissWorldIntro: React.FC = () => {
                 </div>
               </div>
 
-              {/* Title: MISS WORLD 2026 */}
+              {/* Title: MISS WORLD VIETNAM */}
               <span className="font-marcellus uppercase relative z-10 text-[14.5px] sm:text-[16px] tracking-[0.24em] text-white text-center drop-shadow-xs">
-                MISS WORLD 2026
+                MISS WORLD VIETNAM
               </span>
 
               {/* Subtle Elegant Divider */}

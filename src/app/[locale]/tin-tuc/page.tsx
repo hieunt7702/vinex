@@ -16,16 +16,15 @@ export const metadata: Metadata = {
 export default async function KnowledgePage({ params }: { params: Promise<{ locale: string }> }) {
    const { locale } = await params;
    const t = getDictionary(locale as Locale);
-   const pg = t.pages.knowledge;
+   const pg = t.pages.news;
 
    const topPost = dataArticles[0];
    const articlesList = dataArticles.slice(1);
 
    const categories = [
-      { name: 'Toàn bộ bài viết', count: 12 },
-      { name: 'Kiến thức nông sản', count: 5 },
-      { name: 'Kinh nghiệm quà tặng', count: 4 },
-      { name: 'Tin tức VINEX', count: 3 }
+      { name: 'Tất cả', count: 5 },
+      { name: 'Kiến thức nông sản', count: 2 },
+      { name: 'Tin tức VINEX', count: 2 }
    ];
 
    return (
@@ -40,6 +39,10 @@ export default async function KnowledgePage({ params }: { params: Promise<{ loca
             </div>
 
             <section className="relative z-10 px-4 py-8 lg:py-12 max-w-[1300px] mx-auto w-full">
+               <div className="text-center mb-12">
+                  <h1 className="text-4xl md:text-5xl font-marcellus text-[#074751] mb-4">{pg.hero_title}</h1>
+                  <p className="text-[#074751]/80 max-w-2xl mx-auto">{pg.hero_desc}</p>
+               </div>
                
                {/* --- Top Layout: Single Featured Post --- */}
                <div className="mb-16 h-auto lg:h-[500px]">
@@ -70,10 +73,6 @@ export default async function KnowledgePage({ params }: { params: Promise<{ loca
                            <div className="flex items-center gap-1.5">
                               <Clock className="w-3.5 h-3.5" />
                               <span>{topPost.date}</span>
-                           </div>
-                           <div className="flex items-center gap-1.5">
-                              <Eye className="w-3.5 h-3.5" />
-                              <span>{topPost.views} lượt xem</span>
                            </div>
                         </div>
                      </div>

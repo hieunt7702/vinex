@@ -43,10 +43,10 @@ export const ValueLayers: React.FC = () => {
             </div>
             
             <h2 className="text-[34px] md:text-[40px] lg:text-[44px] text-[#074751] leading-[1.15] font-semibold mb-6">
-              Giá trị được tiếp nối<br/>qua từng lớp sản phẩm.
+              Các lĩnh vực hoạt động
             </h2>
             <p className="text-[15px] md:text-[16px] text-[#2b5963] leading-relaxed max-w-[400px] font-medium">
-              Từ những nguyên liệu tinh tuyển đến những sản phẩm mang câu chuyện Việt Nam.
+              Các nhóm sản phẩm và quà tặng trong danh mục VINEX.
             </p>
           </div>
 
@@ -74,10 +74,10 @@ export const ValueLayers: React.FC = () => {
                   <span className="opacity-40">0</span>1
                 </span>
                 <h3 className="text-[24px] text-[#074751] font-semibold mb-2">Hạt điều</h3>
-                <p className="text-[14px] text-[#5c858e] font-medium mb-6">Nhân điều trắng - Hạt điều tẩm vị</p>
+                <p className="text-[14px] text-[#5c858e] font-medium mb-6">Nhân điều trắng và các dòng hạt điều tẩm vị trong danh mục VINEX.</p>
                 
                 <Link href={`/${lang}/nhan-dieu-trang`} className="mt-auto inline-flex items-center gap-2 text-[13px] font-bold text-[#074751] uppercase tracking-wider group-hover:text-[#0a6673] transition-colors">
-                  Khám phá sản phẩm <ArrowRight className="w-4 h-4 text-[#F2B719]" />
+                  Tìm hiểu hạt điều <ArrowRight className="w-4 h-4 text-[#F2B719]" />
                 </Link>
               </div>
             </GlassCard>
@@ -100,10 +100,10 @@ export const ValueLayers: React.FC = () => {
                   <div className="h-[1px] w-12 bg-[#F2B719]/40"></div>
                 </div>
                 <h3 className="text-[20px] text-[#074751] font-semibold mb-2">Nông sản Việt</h3>
-                <p className="text-[13px] text-[#5c858e] font-medium mb-5 leading-relaxed">Trà - Cà phê - Bánh - Kẹo - Trái cây sấy</p>
+                <p className="text-[13px] text-[#5c858e] font-medium mb-5 leading-relaxed">Trà, cà phê, bánh kẹo, nấm và trái cây sấy cho nhiều lựa chọn thưởng thức.</p>
                 
-                <Link href={`/${lang}/san-pham?category=nong-san`} className="mt-auto inline-flex items-center gap-2 text-[12px] font-bold text-[#074751] uppercase tracking-wider group-hover:text-[#0a6673] transition-colors">
-                  Khám phá sản phẩm <ArrowRight className="w-3.5 h-3.5 text-[#F2B719]" />
+                <Link href={`/${lang}/san-pham`} className="mt-auto inline-flex items-center gap-2 text-[12px] font-bold text-[#074751] uppercase tracking-wider group-hover:text-[#0a6673] transition-colors">
+                  Xem danh mục sản phẩm <ArrowRight className="w-3.5 h-3.5 text-[#F2B719]" />
                 </Link>
               </div>
             </GlassCard>
@@ -126,10 +126,10 @@ export const ValueLayers: React.FC = () => {
                   <div className="h-[1px] w-12 bg-[#F2B719]/40"></div>
                 </div>
                 <h3 className="text-[20px] text-[#074751] font-semibold mb-2">Quà tặng doanh nghiệp</h3>
-                <p className="text-[13px] text-[#5c858e] font-medium mb-5 leading-relaxed">Những lựa chọn được hoàn thiện cho nhiều dịp trao tặng</p>
+                <p className="text-[13px] text-[#5c858e] font-medium mb-5 leading-relaxed">Kết hợp sản phẩm và bao bì thành những bộ quà phù hợp với từng dịp trao tặng.</p>
                 
                 <Link href={`/${lang}/qua-tang-doanh-nghiep`} className="mt-auto inline-flex items-center gap-2 text-[12px] font-bold text-[#074751] uppercase tracking-wider group-hover:text-[#0a6673] transition-colors">
-                  Khám phá sản phẩm <ArrowRight className="w-3.5 h-3.5 text-[#F2B719]" />
+                  Khám phá quà tặng <ArrowRight className="w-3.5 h-3.5 text-[#F2B719]" />
                 </Link>
               </div>
             </GlassCard>

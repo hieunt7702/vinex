@@ -44,11 +44,11 @@ export const Footer = () => {
             <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_vinex}</h4>
             <div className="w-8 h-[1px] bg-vinex-gold mb-4"></div>
             <ul className="space-y-3.5 text-[13px] font-normal text-vinex-charcoal/80">
-              {t.footer.links_vinex?.map((link: string, idx: number) => (
+              {t.footer.links_vinex?.map((link: { label: string; href: string }, idx: number) => (
                 <li key={idx}>
-                  <Link href={`/${lang}/`} className="flex items-center gap-1.5 hover:text-vinex-teal transition-colors group">
+                  <Link href={`/${lang}${link.href}`} className="flex items-center gap-1.5 hover:text-vinex-teal transition-colors group">
                     <ChevronRight className="w-3.5 h-3.5 text-vinex-gold group-hover:translate-x-0.5 transition-transform" />
-                    {link}
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -60,11 +60,11 @@ export const Footer = () => {
             <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_info}</h4>
             <div className="w-8 h-[1px] bg-vinex-gold mb-4"></div>
             <ul className="space-y-3.5 text-[13px] font-normal text-vinex-charcoal/80">
-              {t.footer.links_info?.map((link: string, idx: number) => (
+              {t.footer.links_info?.map((link: { label: string; href: string }, idx: number) => (
                 <li key={idx}>
-                  <Link href={`/${lang}/`} className="flex items-center gap-1.5 hover:text-vinex-teal transition-colors group">
+                  <Link href={`/${lang}${link.href}`} className="flex items-center gap-1.5 hover:text-vinex-teal transition-colors group">
                     <ChevronRight className="w-3.5 h-3.5 text-vinex-gold group-hover:translate-x-0.5 transition-transform" />
-                    {link}
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -76,6 +76,7 @@ export const Footer = () => {
             <h4 className="text-[13px] font-semibold text-vinex-teal uppercase mb-4">{t.footer.col_contact}</h4>
             <div className="w-8 h-[1px] bg-vinex-gold mb-4"></div>
             <ul className="space-y-4 text-[13px] text-vinex-charcoal/80">
+              {/* Hidden until verified
               <li className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-[#f2e9dc] flex items-center justify-center shrink-0">
                   <Phone className="w-4 h-4 text-vinex-gold" />
@@ -85,11 +86,14 @@ export const Footer = () => {
                   <div className="text-[11px] text-vinex-charcoal/60">{t.footer.contact_phone_sub}</div>
                 </div>
               </li>
+              */}
               <li className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-[#f2e9dc] flex items-center justify-center shrink-0">
                   <Mail className="w-4 h-4 text-vinex-gold" />
                 </div>
-                <div className="pt-1.5">{t.footer.contact_email}</div>
+                <div className="pt-1.5">
+                  <a href={`mailto:${t.footer.contact_email}`} className="hover:text-vinex-teal transition-colors">{t.footer.contact_email}</a>
+                </div>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-[#f2e9dc] flex items-center justify-center shrink-0">
@@ -112,7 +116,7 @@ export const Footer = () => {
           <p className="text-[12px] text-vinex-charcoal/60">
             &copy; {new Date().getFullYear()} {t.footer.copyright}
           </p>
-          <div className="flex items-center gap-6 text-[12px] text-vinex-charcoal/60">
+          <div className="hidden items-center gap-6 text-[12px] text-vinex-charcoal/60">
             <Link href={`/${lang}/privacy`} className="hover:text-vinex-teal transition-colors">{t.footer.privacy}</Link>
             <Link href={`/${lang}/terms`} className="hover:text-vinex-teal transition-colors">{t.footer.terms}</Link>
           </div>

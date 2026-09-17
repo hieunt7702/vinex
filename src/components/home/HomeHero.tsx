@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Play, ShieldCheck, Nut, Wheat, Citrus, Package, Headset } from 'lucide-react';
 import { useDict } from '@/hooks/useDict';
 import { Glass, GlassCard, GlassButton } from '@/components/ui/glass';
 
@@ -85,22 +85,7 @@ export const HomeHero = () => {
                 {t.hero?.title1 || 'Việt Nam,'}
               </span>
               <span className="block font-normal italic mt-1 sm:mt-1.5 drop-shadow-xs font-serif sm:font-sans leading-[1.3] pb-2">
-                {(() => {
-                  const title2 = t.hero?.title2 || 'Tuyệt tác Quà tặng.';
-                  if (title2.includes('Những giá trị')) {
-                    const parts = title2.split('Những giá trị');
-                    return (
-                      <>
-                        {parts[0] && <span className="text-[#0c616d]">{parts[0]}</span>}
-                        <span className="text-vinex-gold">
-                          Những giá trị
-                        </span>
-                        {parts[1] && <span className="text-[#0c616d]">{parts[1]}</span>}
-                      </>
-                    );
-                  }
-                  return <span className="text-[#0c616d]">{title2}</span>;
-                })()}
+                <span className="text-[#0c616d]">{t.hero?.title2}</span>
               </span>
             </h1>
 
@@ -110,7 +95,7 @@ export const HomeHero = () => {
             </p>
 
             {/* Action Buttons: Khám phá quà tặng & Nhận tư vấn */}
-            <div className="flex flex-row items-center justify-center sm:justify-start gap-3 sm:gap-5 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center sm:justify-start gap-3.5 sm:gap-5 w-full sm:w-auto px-4 sm:px-0">
 
               {/* Primary Button with glowing cyan-teal ambient aura */}
               <div className="relative group flex-1 sm:flex-none w-full sm:w-auto">
@@ -118,7 +103,7 @@ export const HomeHero = () => {
                   className="absolute -inset-1 rounded-full bg-gradient-to-r from-teal-400/50 to-cyan-400/40 blur-md opacity-70 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                   aria-hidden="true"
                 />
-                <Link href={`/${lang}/qua-tang-doanh-nghiep`} className="relative z-10 block w-full sm:w-auto">
+                <Link href={`/${lang}/gioi-thieu`} className="relative z-10 block w-full sm:w-auto">
                   <GlassButton
                     as="div"
                     variant="primary"
@@ -126,25 +111,21 @@ export const HomeHero = () => {
                     rightIcon={<ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />}
                     className="text-[12.5px] sm:text-[14px] px-3 sm:px-6 py-3 sm:py-3.5 font-semibold shadow-[0_8px_20px_rgba(7,71,81,0.3)] w-full sm:w-auto"
                   >
-                    {t.hero?.cta_primary || 'Khám phá quà tặng'}
+                    {t.hero?.cta_primary}
                   </GlassButton>
                 </Link>
               </div>
 
-              {/* Secondary Liquid Glass Button with Play Badge */}
-              <Link href={`/${lang}/lien-he`} className="flex-1 sm:flex-none w-full sm:w-auto">
+              {/* Secondary Liquid Glass Button */}
+              <Link href={`/${lang}/san-pham`} className="flex-1 sm:flex-none w-full sm:w-auto">
                 <GlassButton
                   as="div"
                   variant="secondary"
                   size="md"
-                  rightIcon={
-                    <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white flex items-center justify-center shadow-[0_1px_3px_rgba(0,0,0,0.1)] flex-shrink-0 lg:group-hover:scale-105 transition-transform duration-200">
-                      <Play className="w-3 h-3 text-[#074751]" fill="currentColor" strokeWidth={0} style={{ marginLeft: '2px' }} />
-                    </span>
-                  }
+                  rightIcon={<ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />}
                   className="text-[12.5px] sm:text-[14px] px-3 sm:px-6 py-3 sm:py-3.5 font-semibold text-[#074751] w-full sm:w-auto"
                 >
-                  {t.hero?.cta_secondary || 'Nhận tư vấn'}
+                  {t.hero?.cta_secondary}
                 </GlassButton>
               </Link>
             </div>
@@ -178,10 +159,7 @@ export const HomeHero = () => {
             >
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-gradient-to-br from-[#0D6370]/50 via-[#074751]/65 to-[#04282D]/75 flex items-center justify-center border border-white/50 shadow-[inset_0_1.5px_2.5px_rgba(255,255,255,0.75),inset_0_-1px_2px_rgba(0,0,0,0.25),0_6px_14px_rgba(7,71,81,0.25)] flex-shrink-0 lg:group-hover:scale-105 transition-all duration-300">
                 <span className="absolute inset-0 rounded-[inherit] bg-gradient-to-b from-white/35 via-white/5 to-transparent pointer-events-none" />
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                  <path d="M8 12l3 3 5-6" />
-                </svg>
+                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" strokeWidth={1.8} />
               </div>
               <div className="flex flex-col text-center lg:text-left">
                 <span className="text-[12px] sm:text-[13.5px] font-semibold text-white tracking-tight leading-[1.2] lg:group-hover:text-vinex-gold transition-colors drop-shadow-xs">
@@ -200,10 +178,7 @@ export const HomeHero = () => {
             >
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-gradient-to-br from-[#0D6370]/50 via-[#074751]/65 to-[#04282D]/75 flex items-center justify-center border border-white/50 shadow-[inset_0_1.5px_2.5px_rgba(255,255,255,0.75),inset_0_-1px_2px_rgba(0,0,0,0.25),0_6px_14px_rgba(7,71,81,0.25)] flex-shrink-0 lg:group-hover:scale-105 transition-all duration-300">
                 <span className="absolute inset-0 rounded-[inherit] bg-gradient-to-b from-white/35 via-white/5 to-transparent pointer-events-none" />
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M8 4c-3 3-4 8-1 12s9 5 12 2c3-3 2-8-1-10-2-1.5-4-1.5-6 0-1.5 1-2.5 1-4-1-.5-.7-.7-1.7 0-3z" />
-                  <path d="M11 11c1.5 2 4 2.5 6 1" />
-                </svg>
+                <Nut className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" strokeWidth={1.8} />
               </div>
               <div className="flex flex-col text-center lg:text-left">
                 <span className="text-[12px] sm:text-[13.5px] font-semibold text-white tracking-tight leading-[1.2] lg:group-hover:text-vinex-gold transition-colors drop-shadow-xs">
@@ -222,10 +197,7 @@ export const HomeHero = () => {
             >
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-gradient-to-br from-[#0D6370]/50 via-[#074751]/65 to-[#04282D]/75 flex items-center justify-center border border-white/50 shadow-[inset_0_1.5px_2.5px_rgba(255,255,255,0.75),inset_0_-1px_2px_rgba(0,0,0,0.25),0_6px_14px_rgba(7,71,81,0.25)] flex-shrink-0 lg:group-hover:scale-105 transition-all duration-300">
                 <span className="absolute inset-0 rounded-[inherit] bg-gradient-to-b from-white/35 via-white/5 to-transparent pointer-events-none" />
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="5" y="5" width="14" height="14" rx="3" transform="rotate(45 12 12)" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
+                <Wheat className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" strokeWidth={1.8} />
               </div>
               <div className="flex flex-col text-center lg:text-left">
                 <span className="text-[12px] sm:text-[13.5px] font-semibold text-white tracking-tight leading-[1.2] lg:group-hover:text-vinex-gold transition-colors drop-shadow-xs">
@@ -244,10 +216,7 @@ export const HomeHero = () => {
             >
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-gradient-to-br from-[#0D6370]/50 via-[#074751]/65 to-[#04282D]/75 flex items-center justify-center border border-white/50 shadow-[inset_0_1.5px_2.5px_rgba(255,255,255,0.75),inset_0_-1px_2px_rgba(0,0,0,0.25),0_6px_14px_rgba(7,71,81,0.25)] flex-shrink-0 lg:group-hover:scale-105 transition-all duration-300">
                 <span className="absolute inset-0 rounded-[inherit] bg-gradient-to-b from-white/35 via-white/5 to-transparent pointer-events-none" />
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 3a9 9 0 0 0-9 9c0 5 4 9 9 9s9-4 9-9c0-6-9-9-9-9z" />
-                  <path d="M12 8v8" />
-                </svg>
+                <Citrus className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" strokeWidth={1.8} />
               </div>
               <div className="flex flex-col text-center lg:text-left">
                 <span className="text-[12px] sm:text-[13.5px] font-semibold text-white tracking-tight leading-[1.2] lg:group-hover:text-vinex-gold transition-colors drop-shadow-xs">
@@ -266,10 +235,7 @@ export const HomeHero = () => {
             >
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-gradient-to-br from-[#0D6370]/50 via-[#074751]/65 to-[#04282D]/75 flex items-center justify-center border border-white/50 shadow-[inset_0_1.5px_2.5px_rgba(255,255,255,0.75),inset_0_-1px_2px_rgba(0,0,0,0.25),0_6px_14px_rgba(7,71,81,0.25)] flex-shrink-0 lg:group-hover:scale-105 transition-all duration-300">
                 <span className="absolute inset-0 rounded-[inherit] bg-gradient-to-b from-white/35 via-white/5 to-transparent pointer-events-none" />
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-vinex-gold relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10z" />
-                  <circle cx="12" cy="14" r="3" />
-                </svg>
+                <Package className="w-4 h-4 sm:w-5 sm:h-5 text-vinex-gold relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" strokeWidth={1.8} />
               </div>
               <div className="flex flex-col text-center lg:text-left">
                 <span className="text-[12px] sm:text-[13.5px] font-semibold text-white tracking-tight leading-[1.2] lg:group-hover:text-vinex-gold transition-colors drop-shadow-xs">
@@ -287,9 +253,7 @@ export const HomeHero = () => {
             >
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-gradient-to-br from-[#0D6370]/50 via-[#074751]/65 to-[#04282D]/75 flex items-center justify-center border border-white/50 shadow-[inset_0_1.5px_2.5px_rgba(255,255,255,0.75),inset_0_-1px_2px_rgba(0,0,0,0.25),0_6px_14px_rgba(7,71,81,0.25)] flex-shrink-0 lg:group-hover:scale-105 transition-all duration-300">
                 <span className="absolute inset-0 rounded-[inherit] bg-gradient-to-b from-white/35 via-white/5 to-transparent pointer-events-none" />
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
+                <Headset className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] lg:group-hover:text-vinex-gold transition-colors" strokeWidth={1.8} />
               </div>
               <div className="flex flex-col text-center lg:text-left">
                 <span className="text-[12px] sm:text-[13.5px] font-semibold text-white tracking-tight leading-[1.2] lg:group-hover:text-vinex-gold transition-colors drop-shadow-xs">

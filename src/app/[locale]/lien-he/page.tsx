@@ -30,7 +30,8 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
                {/* Form Section */}
                <div className="flex-1 bg-white/40 backdrop-blur-xl p-8 sm:p-10 md:p-14 border border-white/40 shadow-[0_16px_40px_rgba(7,71,81,0.06)] rounded-[24px]">
-                  <h2 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-4 md:mb-6">{pg.form_title}</h2>
+                  <h1 className="text-3xl md:text-4xl font-marcellus text-vinex-teal mb-4 md:mb-6">{pg.form_title}</h1>
+                  <p className="text-[15px] text-vinex-charcoal/80 mb-6 font-light leading-relaxed">Gửi yêu cầu tư vấn, nhận báo giá hoặc để lại lời nhắn để đội ngũ VINEX hỗ trợ nhanh nhất.</p>
                   <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-10"></div>
 
                   <form className="space-y-6 md:space-y-8 relative z-20">
@@ -55,10 +56,9 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                            name="nhu_cau"
                            placeholder="Chọn nhu cầu..."
                            options={[
-                             { value: "cung-ung", label: "Cung ứng thương mại" },
-                             { value: "san-pham", label: "Sản phẩm bán lẻ" },
-                             { value: "bao-bi", label: "Sản xuất bao bì" },
-                             { value: "qua-tang", label: "Bộ quà tặng doanh nghiệp" }
+                             { value: "cung-ung", label: "Cung ứng nguyên liệu" },
+                             { value: "qua-tang", label: "Tư vấn quà tặng doanh nghiệp" },
+                             { value: "hop-tac", label: "Hợp tác thương mại" }
                            ]}
                         />
                      </div>
@@ -68,7 +68,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                         <textarea rows={5} placeholder="Mô tả cụ thể về nhu cầu hợp tác của bạn..." className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-4 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)] resize-none"></textarea>
                      </div>
 
-                     <div className="flex items-start gap-4">
+                     <div className="hidden items-start gap-4">
                         <GlassCheckbox id="consent" label={pg.form_consent} />
                      </div>
 

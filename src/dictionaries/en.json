@@ -314,41 +314,49 @@
     "cta": "View all",
     "articles": [
       {
-        "id": "01",
-        "title": "Value of Vietnamese Cashews & Export Opportunities",
-        "date": "May 2026",
-        "img": "/images/article_1.png",
-        "category": "VIETNAMESE PRODUCE"
+        "id": "art1",
+        "slug": "vinex-miss-world",
+        "title": "VINEX đồng hành cùng Miss World Vietnam",
+        "date": "17.09.2026"
       },
       {
-        "id": "02",
-        "title": "Trends in Premium Corporate Gifting for 2026",
-        "date": "May 2026",
-        "img": "/images/article_2.png",
-        "category": "TRENDS"
+        "id": "art2",
+        "slug": "sai-lam-thuong-gap-khi-xay-dung-qua-tang",
+        "title": "5 sai lầm thường gặp khi xây dựng bộ quà tặng doanh nghiệp",
+        "date": "31.08.2026"
       },
       {
-        "id": "03",
-        "title": "Journey from Pristine Farm to Global Market",
-        "date": "April 2026",
-        "img": "/images/article_3.png",
-        "category": "STORIES"
+        "id": "art3",
+        "slug": "bao-quan-nhan-dieu-trang",
+        "title": "Bảo quản nhân điều trắng sao cho đúng cách?",
+        "date": "25.08.2026"
       },
       {
-        "id": "04",
-        "title": "VINEX at the International Food & Beverage Expo 2026",
-        "date": "March 2026",
-        "img": "/images/article_4.png",
-        "category": "EVENTS"
+        "id": "art4",
+        "slug": "quy-trinh-boc-tach-dieu",
+        "title": "Quy trình 8 bước từ điều thô đến nhân điều trắng đạt chuẩn",
+        "date": "31.08.2026"
+      },
+      {
+        "id": "art5",
+        "slug": "xu-huong-tieu-dung-nong-san",
+        "title": "Xu hướng tiêu dùng nông sản xanh năm 2026",
+        "date": "25.08.2026"
+      },
+      {
+        "id": "art6",
+        "slug": "bi-quyet-bao-quan-hat-dieu-tam-vi",
+        "title": "Bí quyết bảo quản hạt điều tẩm vị giữ trọn độ giòn",
+        "date": "20.08.2026"
       }
     ],
     "label": "VINEX JOURNAL"
   },
   "cta": {
-    "prefix": "CONNECT",
-    "headline": "WITH VINEX",
-    "desc": "For product information, partnerships, and corporate needs.",
-    "btn": "CONTACT VINEX",
+    "prefix": "PARTNERSHIP",
+    "headline": "Ready to connect?",
+    "desc": "Contact us.",
+    "btn": "GET IN TOUCH",
     "primary": "CONTACT VINEX",
     "secondary": ""
   },
@@ -428,9 +436,13 @@
     },
     "gifts": {
       "hero_label": "CORPORATE GIFTS",
-      "hero_title": "Premium gifts exclusively for businesses.",
-      "hero_desc": "From VIP client gifts to large-scale event gifts — VINEX accompanies your brand.",
-      "cta": "REQUEST A QUOTE"
+      "hero_title": "Corporate Gifts",
+      "hero_desc": "VINEX mang đến giải pháp quà tặng doanh nghiệp kết hợp giữa nông sản Việt Nam và các bộ bao bì đa dạng. Chúng tôi thực hiện thiết kế, đóng gói và cung ứng trọn gói cho từng sự kiện và nhu cầu của khách hàng.",
+      "cta": "REQUEST A QUOTE",
+      "design_service_title": "Dịch vụ thiết kế riêng",
+      "design_service_desc": "Trình bày quy trình từ ý tưởng đến thành phẩm cuối cùng.",
+      "collections_title": "Thư viện hộp quà",
+      "collections_desc": "Tập trung hiển thị mẫu hộp, cách phối màu và kiểu dáng."
     },
     "home_factory": {
       "eyebrow": "FOUNDATION FROM CASHEWS",
@@ -468,14 +480,18 @@
     "factory": {
       "hero_label": "FACTORY",
       "hero_title": "VINEX Cashew Processing Factory",
-      "hero_desc": "Large processing capacity, strict quality control process from raw materials to finished products.",
-      "cta": "CONTACT FOR PARTNERSHIP"
+      "hero_desc": "Đặt tại Phú Thọ, nhà máy bóc tách điều thô thực hiện bóc tách, làm sạch và phân loại, cung cấp nguồn nhân điều trắng đồng nhất cho các hoạt động tiếp theo.",
+      "cta": "CONTACT FOR PARTNERSHIP",
+      "section2_title": "Tập trung bóc tách và phân loại",
+      "section2_desc": "Mỗi lô nguyên liệu được xử lý qua quy trình đánh giá và bóc tách cơ học kết hợp thủ công. Quá trình này giúp giữ nguyên cấu trúc hạt và duy trì tiêu chuẩn chất lượng của VINEX trước khi chuyển sang đóng gói hoặc lưu kho."
     },
     "cashew": {
       "hero_label": "PRODUCTS",
       "hero_title": "VINEX White Cashew Kernels",
-      "hero_desc": "High-quality cashew kernels meeting international export standards, suitable for food processing and gifting.",
-      "cta": "REQUEST A QUOTE"
+      "hero_desc": "Nhân điều trắng là dòng nguyên liệu đáp ứng nhu cầu sản xuất chế biến và cung ứng thương mại. Sản phẩm được phân loại theo cấu trúc nguyên hạt và hạt vỡ.",
+      "cta": "REQUEST A QUOTE",
+      "section2_title": "Mô tả chi tiết",
+      "section2_desc": "Dòng nguyên hạt (W) giữ thẩm mỹ tự nhiên, phù hợp để rang tẩm hoặc làm quà tặng. Dòng hạt vỡ (S/B) là lựa chọn kinh tế cho nhu cầu chế biến phụ trợ. Tất cả nguyên liệu được bóc tách từ nhà máy Phú Thọ."
     },
     "request_quote": {
       "hero_label": "GET A QUOTE",
@@ -504,6 +520,10 @@
     "packaging": {
       "hero_title": "Packaging for Every Product",
       "hero_desc": "Focusing on solid structure, exquisite unboxing experience, and flexible customization according to brand positioning."
+    },
+    "news": {
+      "hero_title": "News & Stories",
+      "hero_desc": "Không gian cập nhật các hoạt động mới nhất, kiến thức nông sản và câu chuyện thương hiệu của VINEX."
     }
   }
 }

@@ -38,9 +38,12 @@ export const LatestArticles: React.FC = () => {
               </span>
               <div className="w-[40px] h-[1px] bg-vinex-gold"></div>
             </div>
-            <h2 className="text-[26px] sm:text-[32px] md:text-[36px] text-[#074751] tracking-tight leading-tight font-semibold">
+            <h2 className="text-[26px] sm:text-[32px] md:text-[36px] text-[#074751] tracking-tight leading-tight font-semibold mb-3">
               {t.journal.headline || "Kiến thức - Xu hướng - Câu chuyện nông sản"}
             </h2>
+            <p className="text-[14px] sm:text-[15px] text-[#2b5963] max-w-[500px]">
+              {t.journal.desc || "Tìm hiểu về hạt điều, sản phẩm trong danh mục và cách lựa chọn quà tặng doanh nghiệp."}
+            </p>
           </div>
 
           {/* Right: Outlined Pill Button (matching Screenshot) */}

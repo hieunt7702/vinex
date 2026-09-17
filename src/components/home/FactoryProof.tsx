@@ -26,21 +26,32 @@ export const FactoryProof: React.FC = () => {
               <div className="w-[40px] h-[1px] bg-vinex-gold"></div>
             </div>
             <h2 className="text-[28px] sm:text-[34px] md:text-[40px] text-[#074751] uppercase tracking-tight leading-[1.2] mb-6 font-semibold">
-              {t.pages.home_factory?.h2 || "NƠI GIÁ TRỊ ĐẦU TIÊN ĐƯỢC HÌNH THÀNH."}
+              Nhà máy bóc tách điều thô
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#2b5963] leading-relaxed mb-10 max-w-[500px]">
-              {t.pages.home_factory?.body || "Nhà máy bóc tách điều thô tại Phú Thọ là một phần nền tảng trong hoạt động hạt điều của VINEX, nơi nguyên liệu được xử lý, bóc tách, làm sạch và phân loại trước khi hoàn thiện thành nhân điều trắng."}
+              VINEX vận hành nhà máy sản xuất tại Phú Thọ, đảm bảo quy trình bóc tách và phân loại hạt điều theo tiêu chuẩn chất lượng đồng nhất.
             </p>
             
             <div className="flex flex-col gap-4 mb-10">
-              {t.pages.home_factory?.labels?.map((label: string, idx: number) => (
-                <div key={idx} className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-vinex-gold/20 flex items-center justify-center shrink-0">
-                    <div className="w-2 h-2 rounded-full bg-vinex-gold"></div>
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-vinex-gold/20 flex items-center justify-center shrink-0">
+                      <div className="w-2 h-2 rounded-full bg-vinex-gold"></div>
+                    </div>
+                    <span className="text-[15px] font-semibold text-[#074751]">Năng lực sản xuất</span>
                   </div>
-                  <span className="text-[15px] font-semibold text-[#074751]">{label}</span>
+                  <p className="text-[14px] text-[#2b5963] ml-9">Nhà máy VINEX được đầu tư đồng bộ, đáp ứng nhu cầu cung ứng hạt điều nguyên liệu cho các đối tác thương mại.</p>
                 </div>
-              ))}
+                
+                <div className="flex flex-col gap-1 mt-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-vinex-gold/20 flex items-center justify-center shrink-0">
+                      <div className="w-2 h-2 rounded-full bg-vinex-gold"></div>
+                    </div>
+                    <span className="text-[15px] font-semibold text-[#074751]">Quy trình kiểm soát</span>
+                  </div>
+                  <p className="text-[14px] text-[#2b5963] ml-9">Mỗi mẻ điều thô đều trải qua các bước đánh giá chất lượng trước khi đưa vào sản xuất và đóng gói.</p>
+                </div>
             </div>
 
             <Link
@@ -48,7 +59,7 @@ export const FactoryProof: React.FC = () => {
               className="group inline-flex flex-col items-start gap-1.5 text-[14px] font-bold text-[#074751] hover:text-[#0a5c68] transition-colors mt-2"
             >
               <div className="flex items-center gap-2">
-                <span className="uppercase tracking-wide">{t.pages.home_factory?.cta || "TÌM HIỂU NHÀ MÁY"}</span>
+                <span className="uppercase tracking-wide">Tìm hiểu nhà máy</span>
                 <ArrowRight className="w-[18px] h-[18px] text-vinex-gold transition-transform duration-300 group-hover:translate-x-1" />
               </div>
               <div className="w-[60px] h-[2px] bg-vinex-gold/50 group-hover:w-full group-hover:bg-vinex-gold transition-all duration-500"></div>
