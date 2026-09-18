@@ -19,11 +19,7 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
       prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
     );
   };
-  const handleToggleStatus = (status: string) => {
-    setSelectedStatuses(prev =>
-      prev.includes(status) ? prev.filter(s => s !== status) : [...prev, status]
-    );
-  };
+
 
   const clearFilters = () => {
     setSearchQuery("");

@@ -350,7 +350,7 @@
         "date": "20.08.2026"
       }
     ],
-    "label": "VINEX JOURNAL"
+    "desc": "VINEX JOURNAL"
   },
   "cta": {
     "prefix": "PARTNERSHIP",
@@ -366,16 +366,40 @@
     "col_info": "INFORMATION",
     "col_contact": "CONTACT",
     "links_vinex": [
-      "About Us",
-      "Factory",
-      "White Cashews",
-      "Products",
-      "Corporate Gifting"
+      {
+        "label": "About Us",
+        "href": "/gioi-thieu"
+      },
+      {
+        "label": "Factory",
+        "href": "/nha-may-boc-tach-dieu"
+      },
+      {
+        "label": "White Cashews",
+        "href": "/nhan-dieu-trang"
+      },
+      {
+        "label": "Products",
+        "href": "/san-pham"
+      },
+      {
+        "label": "Corporate Gifting",
+        "href": "/qua-tang-doanh-nghiep"
+      }
     ],
     "links_info": [
-      "Brand Mark",
-      "News",
-      "Contact"
+      {
+        "label": "Brand Mark",
+        "href": "/miss-world-2026"
+      },
+      {
+        "label": "News",
+        "href": "/tin-tuc"
+      },
+      {
+        "label": "Contact",
+        "href": "/lien-he"
+      }
     ],
     "contact_phone": "(+84) 966 967 966",
     "contact_phone_sub": "(Mon-Fri: 08:00-17:30, Sat: 08:00-12:00)",
