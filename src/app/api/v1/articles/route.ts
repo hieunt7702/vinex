@@ -42,21 +42,15 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const newId = store.articles.length > 0 ? Math.max(...store.articles.map(a => Number(a.id) || 0)) + 1 : 1;
-    const newArticle = {
-      ...data,
-      id: newId,
-      isFeatured: Boolean(data.isFeatured),
-      createdAt: new Date().toISOString()
-    };
+    let createdArticle: any = null;
 
     if (process.env.DATABASE_URL) {
       try {
-        await prisma.article.create({
+        const genSlug = data.slug || `bai-viet-${Date.now()}`;
+        createdArticle = await prisma.article.create({
           data: {
-            id: newId,
             title: data.title,
-            slug: data.slug || `bai-viet-${newId}`,
+            slug: genSlug,
             category: data.category || 'Tin tức VINEX',
             author: data.author || 'Truyền thông VINEX',
             summary: data.summary || '',
@@ -70,19 +64,26 @@ export async function POST(request: Request) {
           }
         });
       } catch (dbErr) {
-        console.warn('Prisma article create error (fallback to store):', dbErr);
+        console.error('Prisma article create error (fallback to store):', dbErr);
       }
     }
 
-    store.articles.push(newArticle);
+    const finalArticle = createdArticle || {
+      ...data,
+      id: store.articles.length > 0 ? Math.max(...store.articles.map(a => Number(a.id) || 0)) + 1 : 1,
+      isFeatured: Boolean(data.isFeatured),
+      createdAt: new Date().toISOString()
+    };
+
+    store.articles.unshift(finalArticle);
     savePersistedData();
 
     if (store.stats) {
       store.stats.totalArticles++;
-      if (newArticle.status === 'PUBLISHED') store.stats.publishedArticles++;
+      if (finalArticle.status === 'PUBLISHED') store.stats.publishedArticles++;
     }
     
-    return NextResponse.json(newArticle, { status: 201 });
+    return NextResponse.json(finalArticle, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: 'Lỗi dữ liệu đầu vào' }, { status: 400 });
   }

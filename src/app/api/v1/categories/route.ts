@@ -39,36 +39,37 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const newId = store.categories.length > 0 ? Math.max(...store.categories.map(c => Number(c.id) || 0)) + 1 : 1;
-    const newCategory = {
-      ...data,
-      id: newId,
-      status: data.status || 'ACTIVE'
-    };
+    let createdCategory: any = null;
 
     if (process.env.DATABASE_URL) {
       try {
-        await prisma.category.create({
+        const genSlug = data.slug || `danh-muc-${Date.now()}`;
+        createdCategory = await prisma.category.create({
           data: {
-            id: newId,
             name: data.name,
-            slug: data.slug || `danh-muc-${newId}`,
+            slug: genSlug,
             type: data.type || 'Sản phẩm',
             parentId: data.parentId ? Number(data.parentId) : null,
             description: data.description || '',
             status: data.status || 'ACTIVE',
-            attributes: data.attributes ? JSON.stringify(data.attributes) : undefined
+            attributes: data.attributes ? (typeof data.attributes === 'string' ? JSON.parse(data.attributes) : data.attributes) : undefined
           }
         });
       } catch (dbErr) {
-        console.warn('Prisma category create error (fallback to store):', dbErr);
+        console.error('Prisma category create error (fallback to store):', dbErr);
       }
     }
 
-    store.categories.push(newCategory);
+    const finalCategory = createdCategory || {
+      ...data,
+      id: store.categories.length > 0 ? Math.max(...store.categories.map(c => Number(c.id) || 0)) + 1 : 1,
+      status: data.status || 'ACTIVE'
+    };
+
+    store.categories.push(finalCategory);
     savePersistedData();
     
-    return NextResponse.json(newCategory, { status: 201 });
+    return NextResponse.json(finalCategory, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: 'Lỗi dữ liệu đầu vào' }, { status: 400 });
   }

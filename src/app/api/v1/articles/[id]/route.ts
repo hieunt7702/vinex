@@ -13,7 +13,8 @@ export async function OPTIONS(request: Request) {
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const articleId = parseInt(id, 10);
+  const decodedId = decodeURIComponent(id).toLowerCase().trim();
+  const articleId = parseInt(decodedId, 10);
 
   if (process.env.DATABASE_URL) {
     try {
@@ -21,7 +22,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
         where: {
           OR: [
             ...(!isNaN(articleId) ? [{ id: articleId }] : []),
-            { slug: id }
+            { slug: decodedId }
           ]
         }
       });
@@ -33,10 +34,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     }
   }
   
-  const article = store.articles.find(a => 
+  const article = store?.articles?.find(a => 
     (!isNaN(articleId) && a.id === articleId) || 
-    String(a.id) === String(id) || 
-    a.slug === id
+    String(a.id) === decodedId || 
+    (a.slug && a.slug.toLowerCase().trim() === decodedId)
   );
 
   if (!article) {
@@ -48,55 +49,81 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const articleId = parseInt(id, 10);
-  
-  const index = store.articles.findIndex(a => 
-    (!isNaN(articleId) && a.id === articleId) || 
-    String(a.id) === String(id) || 
-    a.slug === id
-  );
-
-  if (index === -1 && !process.env.DATABASE_URL) {
-    return NextResponse.json({ message: 'Tin tức không tồn tại' }, { status: 404 });
-  }
+  const decodedId = decodeURIComponent(id).toLowerCase().trim();
+  const articleId = parseInt(decodedId, 10);
 
   try {
     const data = await request.json();
+    let updatedArticle: any = null;
 
-    if (process.env.DATABASE_URL && !isNaN(articleId)) {
+    if (process.env.DATABASE_URL) {
       try {
-        await prisma.article.update({
-          where: { id: articleId },
-          data: {
-            ...(data.title !== undefined ? { title: data.title } : {}),
-            ...(data.slug !== undefined ? { slug: data.slug } : {}),
-            ...(data.category !== undefined ? { category: data.category } : {}),
-            ...(data.author !== undefined ? { author: data.author } : {}),
-            ...(data.summary !== undefined ? { summary: data.summary } : {}),
-            ...(data.content !== undefined ? { content: data.content } : {}),
-            ...(data.thumbnail !== undefined ? { thumbnail: data.thumbnail } : {}),
-            ...(data.views !== undefined ? { views: Number(data.views) || 0 } : {}),
-            ...(data.status !== undefined ? { status: data.status } : {}),
-            ...(data.isFeatured !== undefined ? { isFeatured: Boolean(data.isFeatured) } : {}),
-            ...(data.publishedAt !== undefined ? { publishedAt: data.publishedAt } : {}),
+        const existing = await prisma.article.findFirst({
+          where: {
+            OR: [
+              ...(!isNaN(articleId) ? [{ id: articleId }] : []),
+              { slug: decodedId }
+            ]
           }
         });
+
+        if (existing) {
+          const { id: _id, ...cleanData } = data;
+          updatedArticle = await prisma.article.update({
+            where: { id: existing.id },
+            data: {
+              ...(cleanData.title !== undefined ? { title: cleanData.title } : {}),
+              ...(cleanData.slug !== undefined ? { slug: cleanData.slug } : {}),
+              ...(cleanData.category !== undefined ? { category: cleanData.category } : {}),
+              ...(cleanData.author !== undefined ? { author: cleanData.author } : {}),
+              ...(cleanData.summary !== undefined ? { summary: cleanData.summary } : {}),
+              ...(cleanData.content !== undefined ? { content: cleanData.content } : {}),
+              ...(cleanData.thumbnail !== undefined ? { thumbnail: cleanData.thumbnail || cleanData.coverImg } : {}),
+              ...(cleanData.views !== undefined ? { views: Number(cleanData.views) || 0 } : {}),
+              ...(cleanData.status !== undefined ? { status: cleanData.status } : {}),
+              ...(cleanData.isFeatured !== undefined ? { isFeatured: Boolean(cleanData.isFeatured) } : {}),
+              ...(cleanData.tags !== undefined ? { tags: typeof cleanData.tags === 'string' ? cleanData.tags : (Array.isArray(cleanData.tags) ? cleanData.tags.join(', ') : '') } : {}),
+              ...(cleanData.publishedAt !== undefined ? { publishedAt: cleanData.publishedAt } : {}),
+            }
+          });
+        }
       } catch (dbErr) {
         console.warn('Prisma article update notice:', dbErr);
       }
     }
 
-    if (index !== -1) {
-      store.articles[index] = { 
-        ...store.articles[index], 
-        ...data,
-        ...(data.isFeatured !== undefined ? { isFeatured: Boolean(data.isFeatured) } : {})
-      };
-      savePersistedData();
-      return NextResponse.json(store.articles[index]);
+    if (store?.articles) {
+      const index = store.articles.findIndex(a => 
+        (!isNaN(articleId) && a.id === articleId) || 
+        String(a.id) === decodedId || 
+        (a.slug && a.slug.toLowerCase().trim() === decodedId)
+      );
+
+      if (index !== -1) {
+        store.articles[index] = { 
+          ...store.articles[index], 
+          ...data,
+          ...(updatedArticle || {})
+        };
+        savePersistedData();
+      }
     }
 
-    return NextResponse.json({ success: true, ...data });
+    if (updatedArticle) {
+      return NextResponse.json(updatedArticle);
+    }
+
+    const storeArt = store?.articles?.find(a => 
+      (!isNaN(articleId) && a.id === articleId) || 
+      String(a.id) === decodedId || 
+      (a.slug && a.slug.toLowerCase().trim() === decodedId)
+    );
+
+    if (storeArt) {
+      return NextResponse.json(storeArt);
+    }
+
+    return NextResponse.json({ message: 'Tin tức không tồn tại' }, { status: 404 });
   } catch (error) {
     return NextResponse.json({ message: 'Dữ liệu không hợp lệ' }, { status: 400 });
   }
@@ -104,31 +131,44 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const articleId = parseInt(id, 10);
+  const decodedId = decodeURIComponent(id).toLowerCase().trim();
+  const articleId = parseInt(decodedId, 10);
 
-  if (process.env.DATABASE_URL && !isNaN(articleId)) {
+  if (process.env.DATABASE_URL) {
     try {
-      await prisma.article.delete({ where: { id: articleId } });
+      const existing = await prisma.article.findFirst({
+        where: {
+          OR: [
+            ...(!isNaN(articleId) ? [{ id: articleId }] : []),
+            { slug: decodedId }
+          ]
+        }
+      });
+      if (existing) {
+        await prisma.article.delete({ where: { id: existing.id } });
+      }
     } catch (e) {
       console.warn('Prisma article delete notice:', e);
     }
   }
   
-  const index = store.articles.findIndex(a => 
-    (!isNaN(articleId) && a.id === articleId) || 
-    String(a.id) === String(id) || 
-    a.slug === id
-  );
+  if (store?.articles) {
+    const index = store.articles.findIndex(a => 
+      (!isNaN(articleId) && a.id === articleId) || 
+      String(a.id) === decodedId || 
+      (a.slug && a.slug.toLowerCase().trim() === decodedId)
+    );
 
-  if (index !== -1) {
-    const deleted = store.articles.splice(index, 1)[0];
-    if (store.stats) {
-      store.stats.totalArticles = Math.max(0, store.stats.totalArticles - 1);
-      if (deleted?.status === 'PUBLISHED') {
-        store.stats.publishedArticles = Math.max(0, store.stats.publishedArticles - 1);
+    if (index !== -1) {
+      const deleted = store.articles.splice(index, 1)[0];
+      if (store.stats) {
+        store.stats.totalArticles = Math.max(0, store.stats.totalArticles - 1);
+        if (deleted?.status === 'PUBLISHED') {
+          store.stats.publishedArticles = Math.max(0, store.stats.publishedArticles - 1);
+        }
       }
+      savePersistedData();
     }
-    savePersistedData();
   }
 
   return NextResponse.json({ message: 'Xóa thành công' });

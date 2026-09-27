@@ -562,20 +562,13 @@ async function main() {
     // This means running this seed again NEVER deletes user-created records.
     // Only the initial seed data rows are created/updated; user additions are untouched.
 
-    console.log('Upserting Categories...');
+    console.log('Upserting Categories (preserving existing)...');
     // Seed Parent Categories first
     const parentCats = categoriesData.filter(c => c.parentId === null);
     for (const c of parentCats) {
       await prisma.category.upsert({
         where: { id: c.id },
-        update: {
-          name: c.name,
-          slug: c.slug,
-          type: c.type,
-          status: c.status,
-          description: c.description,
-          attributes: c.attributes ? JSON.stringify(c.attributes) : undefined
-        },
+        update: {}, // NEVER overwrite existing category if already present!
         create: {
           id: c.id,
           name: c.name,
@@ -593,15 +586,7 @@ async function main() {
     for (const c of childCats) {
       await prisma.category.upsert({
         where: { id: c.id },
-        update: {
-          parentId: c.parentId,
-          name: c.name,
-          slug: c.slug,
-          type: c.type,
-          status: c.status,
-          description: c.description,
-          attributes: c.attributes ? JSON.stringify(c.attributes) : undefined
-        },
+        update: {}, // NEVER overwrite existing category if already present!
         create: {
           id: c.id,
           parentId: c.parentId,
@@ -615,31 +600,12 @@ async function main() {
       });
     }
 
-    console.log('Upserting Products...');
+    console.log('Upserting Products (preserving existing)...');
     for (const p of productsData) {
       const { categoryIds, ...rest } = p;
       await prisma.product.upsert({
         where: { id: rest.id },
-        update: {
-          productId: rest.productId,
-          sku: rest.sku,
-          name: rest.name,
-          slug: rest.slug,
-          segment: rest.segment,
-          price: rest.price,
-          promotionalPrice: rest.promotionalPrice,
-          stockQuantity: rest.stockQuantity,
-          stockStatus: rest.stockStatus,
-          lowStockThreshold: rest.lowStockThreshold,
-          shortDescription: rest.shortDescription,
-          description: rest.description,
-          status: rest.status,
-          images: rest.images,
-          attributes: rest.attributes,
-          categories: {
-            set: categoryIds.map(cid => ({ id: cid }))
-          }
-        },
+        update: {}, // NEVER overwrite existing user product edits!
         create: {
           id: rest.id,
           productId: rest.productId,
@@ -664,25 +630,11 @@ async function main() {
       });
     }
 
-    console.log('Upserting Articles...');
+    console.log('Upserting Articles (preserving existing)...');
     for (const a of articlesData) {
       await prisma.article.upsert({
         where: { id: a.id },
-        update: {
-          title: a.title,
-          slug: a.slug,
-          category: a.category,
-          author: a.author,
-          summary: a.summary,
-          content: a.content,
-          thumbnail: a.thumbnail,
-          views: a.views,
-          status: a.status,
-          tags: a.tags,
-          metaTitle: a.metaTitle,
-          metaDescription: a.metaDescription,
-          publishedAt: a.publishedAt
-        },
+        update: {}, // NEVER overwrite existing user article edits!
         create: {
           id: a.id,
           title: a.title,
@@ -702,10 +654,10 @@ async function main() {
       });
     }
 
-    console.log('Upserting Settings...');
+    console.log('Upserting Settings (preserving existing)...');
     await prisma.setting.upsert({
       where: { key: 'GLOBAL_SETTINGS' },
-      update: { value: JSON.stringify(globalSettingsData) },
+      update: {}, // NEVER overwrite existing settings!
       create: {
         key: 'GLOBAL_SETTINGS',
         value: JSON.stringify(globalSettingsData)
@@ -716,7 +668,7 @@ async function main() {
     for (const l of leadsData) {
       await prisma.lead.upsert({
         where: { id: l.id },
-        update: l,
+        update: {},
         create: l
       });
     }
@@ -725,51 +677,32 @@ async function main() {
     for (const c of customersData) {
       await prisma.customer.upsert({
         where: { id: c.id },
-        update: c,
+        update: {},
         create: c
       });
     }
 
-    console.log('PostgreSQL database seeded successfully (upsert — existing user data preserved)!');
+    // ─── SYNCHRONIZE POSTGRESQL SERIAL SEQUENCES ─────────────────────────────
+    // Vital: After seeding with explicit IDs, Postgres sequences must be advanced
+    // to max(id) so subsequent auto-increment inserts will not collide or fail!
+    console.log('Synchronizing PostgreSQL serial sequences...');
+    const tables = ['Category', 'Product', 'Article', 'Lead', 'Customer', 'Setting', 'Media', 'SeoPage'];
+    for (const table of tables) {
+      try {
+        await prisma.$executeRawUnsafe(
+          `SELECT setval(pg_get_serial_sequence('"${table}"', 'id'), coalesce(max(id), 1)) FROM "${table}";`
+        );
+      } catch (seqErr: any) {
+        // Sequence may not exist or not PostgreSQL, ignore safely
+      }
+    }
+    console.log('PostgreSQL sequences synchronized successfully! ✅');
+
+    console.log('PostgreSQL database seeded safely (no user edits overwritten)!');
   } catch (dbErr) {
-    console.warn('Note: Could not complete PostgreSQL seed directly (DB may be offline or initializing on Railway):', dbErr);
+    console.warn('Note: Could not complete PostgreSQL seed directly (DB may be offline):', dbErr);
   } finally {
     await prisma.$disconnect();
-  }
-
-  // ALWAYS SYNC TO src/data/db.json AS FALLBACK TO GUARANTEE ZERO 404s
-  console.log('Syncing seed data to src/data/db.json for offline & edge fallback...');
-  try {
-    const dbPath = path.join(process.cwd(), 'src', 'data', 'db.json');
-    const enrichedProducts = productsData.map(p => {
-      const matchedCats = categoriesData.filter(c => p.categoryIds.includes(c.id));
-      return {
-        ...p,
-        categories: matchedCats,
-        createdAt: new Date().toISOString()
-      };
-    });
-
-    const dbPayload = {
-      products: enrichedProducts,
-      categories: categoriesData,
-      articles: articlesData,
-      settings: [
-        {
-          id: 1,
-          key: 'GLOBAL_SETTINGS',
-          value: JSON.stringify(globalSettingsData),
-          updatedAt: new Date().toISOString()
-        }
-      ],
-      leads: leadsData,
-      customers: customersData
-    };
-
-    fs.writeFileSync(dbPath, JSON.stringify(dbPayload, null, 2), 'utf-8');
-    console.log('src/data/db.json successfully populated with all seed products, categories, and articles!');
-  } catch (fileErr) {
-    console.error('Failed to sync to db.json:', fileErr);
   }
 
   console.log('--- VINEX DATABASE SEED FINISHED ---');

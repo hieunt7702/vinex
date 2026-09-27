@@ -121,55 +121,74 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const newId = store.products.length > 0 ? Math.max(...store.products.map(p => Number(p.id) || 0)) + 1 : 1;
-    const newProduct = {
+    let createdProduct: any = null;
+
+    if (process.env.DATABASE_URL) {
+      try {
+        let categoryConnect: any = undefined;
+        if (Array.isArray(data.categoryIds) && data.categoryIds.length > 0) {
+          const numIds = data.categoryIds.map((cid: any) => Number(cid)).filter((n: number) => !isNaN(n));
+          if (numIds.length > 0) {
+            const validCats = await prisma.category.findMany({
+              where: { id: { in: numIds } },
+              select: { id: true }
+            });
+            if (validCats.length > 0) {
+              categoryConnect = { connect: validCats.map(c => ({ id: c.id })) };
+            }
+          }
+        }
+
+        const genSlug = data.slug || `san-pham-${Date.now()}`;
+        const genSku = data.sku || `VNX-SKU-${Math.floor(1000 + Math.random() * 9000)}`;
+        const genProductId = data.productId || `VNX-${Math.floor(100 + Math.random() * 900)}`;
+
+        createdProduct = await prisma.product.create({
+          data: {
+            productId: genProductId,
+            sku: genSku,
+            name: data.name,
+            slug: genSlug,
+            segment: data.segment || 'cao-cap',
+            price: data.price !== undefined ? Number(data.price) : 0,
+            promotionalPrice: data.promotionalPrice !== undefined ? Number(data.promotionalPrice) : 0,
+            stockQuantity: data.stockQuantity !== undefined ? Number(data.stockQuantity) : 100,
+            stockStatus: data.stockStatus || 'IN_STOCK',
+            lowStockThreshold: data.lowStockThreshold !== undefined ? Number(data.lowStockThreshold) : 10,
+            shortDescription: data.shortDescription || '',
+            description: data.description || '',
+            status: data.status || 'ACTIVE',
+            images: Array.isArray(data.images) ? data.images : (data.img ? [data.img] : []),
+            attributes: Array.isArray(data.attributes) ? data.attributes : [],
+            categories: categoryConnect
+          },
+          include: { categories: true }
+        });
+      } catch (dbErr) {
+        console.error('Prisma DB product create error (fallback to store):', dbErr);
+      }
+    }
+
+    const finalProduct = createdProduct ? {
+      ...createdProduct,
+      categoryIds: createdProduct.categories?.map((c: any) => c.id) || data.categoryIds || []
+    } : {
       ...data,
-      id: newId,
+      id: store.products.length > 0 ? Math.max(...store.products.map(p => Number(p.id) || 0)) + 1 : 1,
       status: data.status || 'ACTIVE',
       createdAt: new Date().toISOString()
     };
 
-    // Try Prisma DB save
-    if (process.env.DATABASE_URL) {
-      try {
-        await prisma.product.create({
-          data: {
-            id: newId,
-            productId: data.productId || `VNX-${newId}`,
-            sku: data.sku || `VNX-SKU-${newId}`,
-            name: data.name,
-            slug: data.slug || `san-pham-${newId}`,
-            segment: data.segment || 'cao-cap',
-            price: Number(data.price) || 0,
-            promotionalPrice: Number(data.promotionalPrice) || 0,
-            stockQuantity: Number(data.stockQuantity) || 100,
-            stockStatus: data.stockStatus || 'IN_STOCK',
-            lowStockThreshold: Number(data.lowStockThreshold) || 10,
-            shortDescription: data.shortDescription || '',
-            description: data.description || '',
-            status: data.status || 'ACTIVE',
-            images: data.images || [],
-            attributes: data.attributes || [],
-            categories: Array.isArray(data.categoryIds) && data.categoryIds.length > 0
-              ? { connect: data.categoryIds.map((cid: number) => ({ id: Number(cid) })) }
-              : undefined
-          }
-        });
-      } catch (dbErr) {
-        console.warn('Prisma DB product create error (fallback to store):', dbErr);
-      }
-    }
-
-    store.products.push(newProduct);
+    store.products.unshift(finalProduct);
     savePersistedData();
     
     // update stats
     if (store.stats) {
       store.stats.totalProducts++;
-      store.stats.activeProducts++;
+      if (finalProduct.status === 'ACTIVE') store.stats.activeProducts++;
     }
 
-    return NextResponse.json(newProduct, { status: 201 });
+    return NextResponse.json(finalProduct, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: 'Lỗi dữ liệu đầu vào' }, { status: 400 });
   }
