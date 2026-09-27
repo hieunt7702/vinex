@@ -38,6 +38,7 @@ export const mockCategories = [
     parentId: null, 
     slug: 'hat-dieu-tam-vi', 
     type: 'Sản phẩm', 
+    status: 'ACTIVE',
     description: 'Các dòng hạt điều Bình Phước rang giòn tẩm vị hảo hạng, chuẩn vị xuất khẩu',
     attributes: [
       { name: 'Quy cách', values: ['Hũ nắp nhôm 250g', 'Hộp quà cao cấp', 'Túi zip 500g'] },
@@ -52,6 +53,7 @@ export const mockCategories = [
     parentId: null, 
     slug: 'tra-va-ca-phe', 
     type: 'Sản phẩm', 
+    status: 'ACTIVE',
     description: 'Trà Ô Long và cà phê nguyên chất thượng hạng từ vùng nguyên liệu tuyển chọn',
     attributes: [
       { name: 'Quy cách', values: ['Lon thiếc 150g', 'Túi zipper 250g', 'Hộp quà đôi'] },
@@ -65,6 +67,7 @@ export const mockCategories = [
     parentId: null, 
     slug: 'banh-keo', 
     type: 'Sản phẩm', 
+    status: 'ACTIVE',
     description: 'Bánh ngói hạnh nhân, kẹo hạt điều và granola dinh dưỡng từ nông sản sạch',
     attributes: [
       { name: 'Quy cách', values: ['Hộp giấy mỹ thuật 200g', 'Hũ nắp nhôm 300g'] },
@@ -78,6 +81,7 @@ export const mockCategories = [
     parentId: null, 
     slug: 'nong-san-say', 
     type: 'Sản phẩm', 
+    status: 'ACTIVE',
     description: 'Trái cây sấy dẻo tự nhiên và nông sản sấy thăng hoa giữ trọn hương vị tươi ngon',
     attributes: [
       { name: 'Quy cách', values: ['Hũ 200g', 'Túi zip 500g', 'Khay hút chân không'] },
@@ -87,30 +91,30 @@ export const mockCategories = [
   },
 
   // Danh mục con (Cấp 2)
-  { id: 11, name: 'Hạt điều trứng muối & phô mai', parentId: 1, slug: 'hat-dieu-trung-muoi-pho-mai', type: 'Sản phẩm', description: 'Hũ nhôm cao cấp 250g, béo bùi giòn rụm' },
-  { id: 12, name: 'Hạt điều vị cay Tomyum & Tứ Xuyên', parentId: 1, slug: 'hat-dieu-cay-tomyum-tu-xuyen', type: 'Sản phẩm', description: 'Vị cay nồng kích thích vị giác' },
-  { id: 13, name: 'Hạt điều rang củi Bình Phước W240', parentId: 1, slug: 'hat-dieu-rang-cui-binh-phuoc', type: 'Sản phẩm', description: 'Rang củi thủ công giữ trọn vị mộc' },
+  { id: 11, name: 'Hạt điều trứng muối & phô mai', parentId: 1, slug: 'hat-dieu-trung-muoi-pho-mai', type: 'Sản phẩm', status: 'ACTIVE', description: 'Hũ nhôm cao cấp 250g, béo bùi giòn rụm' },
+  { id: 12, name: 'Hạt điều vị cay Tomyum & Tứ Xuyên', parentId: 1, slug: 'hat-dieu-cay-tomyum-tu-xuyen', type: 'Sản phẩm', status: 'ACTIVE', description: 'Vị cay nồng kích thích vị giác' },
+  { id: 13, name: 'Hạt điều rang củi Bình Phước W240', parentId: 1, slug: 'hat-dieu-rang-cui-binh-phuoc', type: 'Sản phẩm', status: 'ACTIVE', description: 'Rang củi thủ công giữ trọn vị mộc' },
 
-  { id: 21, name: 'Trà Ô Long & Trà thảo mộc', parentId: 2, slug: 'tra-o-long-thao-moc', type: 'Sản phẩm', description: 'Búp trà tươi tuyển chọn lên men tự nhiên' },
-  { id: 22, name: 'Cà phê Robusta & Arabica rang mộc', parentId: 2, slug: 'ca-phe-robusta-arabica', type: 'Sản phẩm', description: 'Hạt cà phê đậm đà thơm ngát' },
+  { id: 21, name: 'Trà Ô Long & Trà thảo mộc', parentId: 2, slug: 'tra-o-long-thao-moc', type: 'Sản phẩm', status: 'ACTIVE', description: 'Búp trà tươi tuyển chọn lên men tự nhiên' },
+  { id: 22, name: 'Cà phê Robusta & Arabica rang mộc', parentId: 2, slug: 'ca-phe-robusta-arabica', type: 'Sản phẩm', status: 'ACTIVE', description: 'Hạt cà phê đậm đà thơm ngát' },
 
-  { id: 31, name: 'Bánh ngói hạt điều hạnh nhân', parentId: 3, slug: 'banh-ngoi-hat-dieu', type: 'Sản phẩm', description: 'Bánh ngói giòn tan thơm béo' },
-  { id: 32, name: 'Granola hạt dinh dưỡng cao cấp', parentId: 3, slug: 'granola-hat-dinh-duong', type: 'Sản phẩm', description: 'Yến mạch nướng mật ong và hạt tuyển chọn' },
+  { id: 31, name: 'Bánh ngói hạt điều hạnh nhân', parentId: 3, slug: 'banh-ngoi-hat-dieu', type: 'Sản phẩm', status: 'ACTIVE', description: 'Bánh ngói giòn tan thơm béo' },
+  { id: 32, name: 'Granola hạt dinh dưỡng cao cấp', parentId: 3, slug: 'granola-hat-dinh-duong', type: 'Sản phẩm', status: 'ACTIVE', description: 'Yến mạch nướng mật ong và hạt tuyển chọn' },
 
-  { id: 41, name: 'Trái cây sấy dẻo tự nhiên (Xoài, Dứa, Mít)', parentId: 4, slug: 'trai-cay-say-deo', type: 'Sản phẩm', description: 'Xoài cát sấy dẻo công nghệ lạnh' },
-  { id: 42, name: 'Nấm & Rau củ sấy thăng hoa', parentId: 4, slug: 'nam-rau-cu-say', type: 'Sản phẩm', description: 'Giòn xốp tự nhiên, nguyên vẹn dưỡng chất' },
+  { id: 41, name: 'Trái cây sấy dẻo tự nhiên (Xoài, Dứa, Mít)', parentId: 4, slug: 'trai-cay-say-deo', type: 'Sản phẩm', status: 'ACTIVE', description: 'Xoài cát sấy dẻo công nghệ lạnh' },
+  { id: 42, name: 'Nấm & Rau củ sấy thăng hoa', parentId: 4, slug: 'nam-rau-cu-say', type: 'Sản phẩm', status: 'ACTIVE', description: 'Giòn xốp tự nhiên, nguyên vẹn dưỡng chất' },
 
   // Danh mục Hộp quà tặng B2B
-  { id: 50, name: 'Quà tặng doanh nghiệp', parentId: null, slug: 'qua-tang-doanh-nghiep', type: 'Sản phẩm', description: 'Giải pháp quà tặng B2B đẳng cấp' },
-  { id: 51, name: 'Hộp quà Tết Hoàng Gia', parentId: 50, slug: 'hop-qua-tet-hoang-gia', type: 'Sản phẩm', description: 'Set quà cao cấp sơn mài & da' },
-  { id: 52, name: 'Quà tặng theo yêu cầu (Custom B2B)', parentId: 50, slug: 'qua-tang-custom', type: 'Sản phẩm', description: 'Khắc logo, thiết kế độc quyền' },
+  { id: 50, name: 'Quà tặng doanh nghiệp', parentId: null, slug: 'qua-tang-doanh-nghiep', type: 'Sản phẩm', status: 'ACTIVE', description: 'Giải pháp quà tặng B2B đẳng cấp' },
+  { id: 51, name: 'Hộp quà Tết Hoàng Gia', parentId: 50, slug: 'hop-qua-tet-hoang-gia', type: 'Sản phẩm', status: 'ACTIVE', description: 'Set quà cao cấp sơn mài & da' },
+  { id: 52, name: 'Quà tặng theo yêu cầu (Custom B2B)', parentId: 50, slug: 'qua-tang-custom', type: 'Sản phẩm', status: 'ACTIVE', description: 'Khắc logo, thiết kế độc quyền' },
   
   // Danh mục Bài viết
-  { id: 101, name: 'Tin tức VINEX', parentId: null, slug: 'tin-tuc-vinex', type: 'Bài viết', description: 'Thông tin hoạt động và sự kiện VINEX' },
-  { id: 102, name: 'Kiến thức nông sản', parentId: null, slug: 'kien-thuc-nong-san', type: 'Bài viết', description: 'Bí quyết dinh dưỡng và nông sản sạch' },
-  { id: 103, name: 'Kinh nghiệm quà tặng', parentId: null, slug: 'kinh-nghiem-qua-tang', type: 'Bài viết', description: 'Cẩm nang chọn quà tặng đối tác doanh nghiệp' },
-  { id: 104, name: 'Sự kiện & Hoạt động', parentId: null, slug: 'su-kien-hoat-dong', type: 'Bài viết', description: 'Hội chợ, xúc tiến thương mại' },
-  { id: 105, name: 'Quy trình sản xuất', parentId: null, slug: 'quy-trinh-san-xuat', type: 'Bài viết', description: 'Tiêu chuẩn ISO, HACCP nhà máy' }
+  { id: 101, name: 'Tin tức VINEX', parentId: null, slug: 'tin-tuc-vinex', type: 'Bài viết', status: 'ACTIVE', description: 'Thông tin hoạt động và sự kiện VINEX' },
+  { id: 102, name: 'Kiến thức nông sản', parentId: null, slug: 'kien-thuc-nong-san', type: 'Bài viết', status: 'ACTIVE', description: 'Bí quyết dinh dưỡng và nông sản sạch' },
+  { id: 103, name: 'Kinh nghiệm quà tặng', parentId: null, slug: 'kinh-nghiem-qua-tang', type: 'Bài viết', status: 'ACTIVE', description: 'Cẩm nang chọn quà tặng đối tác doanh nghiệp' },
+  { id: 104, name: 'Sự kiện & Hoạt động', parentId: null, slug: 'su-kien-hoat-dong', type: 'Bài viết', status: 'ACTIVE', description: 'Hội chợ, xúc tiến thương mại' },
+  { id: 105, name: 'Quy trình sản xuất', parentId: null, slug: 'quy-trinh-san-xuat', type: 'Bài viết', status: 'ACTIVE', description: 'Tiêu chuẩn ISO, HACCP nhà máy' }
 ];
 
 export const mockProducts = [

@@ -252,7 +252,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                   <PanelLeftOpen className="w-[18px] h-[18px]" />
                 </button>
               )}
-              <div className="w-10 h-10 rounded-[6px] bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 flex items-center justify-center shrink-0 shadow-xs text-[#5865f2] dark:text-[#a59ffd]">
+              <div className="w-10 h-10 rounded-[8px] bg-gradient-to-br from-[#5865f2] to-[#4338ca] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#5865f2]/25">
                 <NavIcon className="w-5 h-5" strokeWidth={2} />
               </div>
               <div className="flex flex-col min-w-0">

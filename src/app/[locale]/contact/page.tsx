@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { GlassCard, GlassButton, GlassInput, GlassTextarea } from "@/components/ui/glass";
 import { toast } from 'sonner';
 import { useGlobalSettings } from '@/hooks/useGlobalSettings';
+import { getApiUrl } from '@/lib/apiConfig';
 
 export default function ContactPage() {
   const pathname = usePathname();
@@ -49,7 +50,7 @@ export default function ContactPage() {
         leadClassification: 'WARM'
       };
 
-      const res = await fetch('/api/v1/leads', {
+      const res = await fetch(getApiUrl('/leads'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

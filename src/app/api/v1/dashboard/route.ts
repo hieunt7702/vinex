@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
 import { store } from '../store';
-import { mockDashboardChartData } from '@/admin-utils/mockData';
 
 export async function GET() {
-  // Compute real-time stats from store
   const totalProducts = store.products.length;
   const activeProducts = store.products.filter(p => p.status === 'ACTIVE').length;
   const pendingProducts = store.products.filter(p => p.status === 'PENDING').length;
@@ -35,9 +33,21 @@ export async function GET() {
     completedLeads
   };
 
+  // Generate dynamic chart data for the last 7 days
+  const chartData = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (6 - i));
+    const dayStr = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+    return {
+      date: dayStr,
+      leads: store.leads.filter((l: any) => l.createdAt && l.createdAt.startsWith(d.toISOString().slice(0, 10))).length,
+      views: Math.floor(totalArticleViews / 7) || 0
+    };
+  });
+
   return NextResponse.json({
     stats: computedStats,
-    chartData: mockDashboardChartData,
+    chartData,
     recentLeads: store.leads.slice(0, 10)
   });
 }

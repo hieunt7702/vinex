@@ -14,6 +14,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { PublicArticle } from '@/lib/dataService';
+import { getApiUrl } from '@/lib/apiConfig';
 
 interface NewsListingProps {
   initialArticles: PublicArticle[];
@@ -41,8 +42,8 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
     async function fetchLiveNews() {
       try {
         const [resArts, resCats] = await Promise.all([
-          fetch('/api/v1/articles', { cache: 'no-store' }),
-          fetch('/api/v1/categories', { cache: 'no-store' })
+          fetch(getApiUrl('/articles'), { cache: 'no-store' }),
+          fetch(getApiUrl('/categories'), { cache: 'no-store' })
         ]);
 
         if (resArts.ok && isSubscribed) {

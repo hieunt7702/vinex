@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { GlobalSettings } from '@/lib/dataService';
 import { defaultGlobalSettings } from '@/lib/dataService';
+import { getApiUrl } from '@/lib/apiConfig';
 
 export type { GlobalSettings };
 
@@ -13,7 +14,7 @@ export function useGlobalSettings() {
   const fetchSettings = useCallback(async () => {
     try {
       setIsLoading(true);
-      const res = await fetch('/api/v1/settings', { cache: 'no-store' });
+      const res = await fetch(getApiUrl('/settings'), { cache: 'no-store' });
       if (!res.ok) return;
       const data = await res.json();
       const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : (data ? [data] : []));

@@ -1,0 +1,39 @@
+{
+  "products": [
+    {
+      "productId": "VNX-334",
+      "sku": "VNX-CAS-250",
+      "name": "Hạt điều tẩm vị phomai hũ 150g",
+      "slug": "hat-dieu-tam-vi-phomai-hu-150g",
+      "segment": "trung-cap",
+      "price": 1500000,
+      "promotionalPrice": 1200000,
+      "stockQuantity": 100,
+      "stockStatus": "IN_STOCK",
+      "lowStockThreshold": 10,
+      "status": "ACTIVE",
+      "shortDescription": "Hạt điều tẩm vị phô mai hũ 150g – hạt điều giòn bùi, béo thơm kết hợp cùng vị phô mai đậm đà, thơm ngon khó cưỡng. Đóng hũ tiện lợi, phù hợp ăn vặt, thưởng thức tại nhà hoặc làm quà tặng.",
+      "description": "<h1>Hạt Điều Tẩm Vị Phô Mai Hũ 150g – Giòn Bùi, Béo Thơm, Đậm Vị</h1><p><strong>Hạt điều tẩm vị phô mai 150g</strong> là món ăn vặt hấp dẫn dành cho những ai yêu thích vị béo bùi của hạt điều kết hợp cùng hương phô mai thơm ngon, đậm đà. Hạt điều được tuyển chọn, rang giòn và phủ lớp gia vị phô mai vừa miệng, tạo nên hương vị thơm béo và giòn ngon trong từng hạt.</p><h3>Điểm nổi bật</h3><ul><li><p><strong>Hạt điều giòn bùi:</strong> Hạt điều có vị béo tự nhiên, kết cấu giòn ngon, dễ ăn.</p></li><li><p><strong>Vị phô mai thơm béo:</strong> Lớp gia vị phô mai giúp tăng thêm độ thơm và đậm đà cho hạt điều.</p></li><li><p><strong>Đóng hũ 150g tiện lợi:</strong> Dễ bảo quản, dễ mang theo khi đi làm, đi học, du lịch hoặc dùng làm món ăn vặt tại nhà.</p></li><li><p><strong>Phù hợp nhiều dịp:</strong> Có thể dùng để ăn vặt, nhâm nhi cùng gia đình, tiếp khách hoặc làm quà tặng.</p></li></ul><h3>Hương vị thơm ngon khó cưỡng</h3><p>Sự kết hợp giữa <strong>hạt điều rang giòn</strong> và <strong>vị phô mai béo thơm</strong> tạo nên món snack vừa giòn vừa đậm vị. Mỗi lần mở nắp là cảm nhận được hương thơm hấp dẫn, thích hợp thưởng thức trực tiếp mà không cần chế biến.</p><h3>Thông tin sản phẩm</h3><ul><li><p><strong>Tên sản phẩm:</strong> Hạt điều tẩm vị phô mai</p></li><li><p><strong>Khối lượng:</strong> 150g/hũ</p></li><li><p><strong>Hương vị:</strong> Phô mai</p></li><li><p><strong>Dạng sản phẩm:</strong> Hạt điều rang tẩm gia vị</p></li><li><p><strong>Quy cách:</strong> Hũ đóng kín, tiện lợi bảo quản</p></li></ul><h3>Cách sử dụng và bảo quản</h3><p>Dùng trực tiếp sau khi mở nắp. Sau khi sử dụng, đậy kín nắp để hạn chế không khí và độ ẩm lọt vào, giúp hạt giữ được độ giòn và hương vị thơm ngon lâu hơn. Bảo quản sản phẩm ở nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp.</p><p><strong>Hạt điều tẩm vị phô mai 150g</strong> là lựa chọn phù hợp cho những buổi xem phim, làm việc, trò chuyện cùng bạn bè hoặc đơn giản là một món ăn vặt thơm ngon để thưởng thức mỗi ngày.</p>",
+      "images": [
+        "/images/product/Cashew2.png",
+        "/images/product/ca phe nguyen hat 1.png"
+      ],
+      "categoryIds": [12],
+      "attributes": [],
+      "seoTitle": "Hạt điều tẩm vị phomai hũ 150g | Nông Sản VINEX",
+      "metaDescription": "",
+      "categories": [
+        {
+          "id": 12,
+          "name": "Hạt điều vị cay Tomyum & Tứ Xuyên",
+          "parentId": 1,
+          "slug": "hat-dieu-cay-tomyum-tu-xuyen",
+          "type": "Sản phẩm",
+          "description": "Vị cay nồng kích thích vị giác"
+        }
+      ],
+      "id": 1,
+      "createdAt": "2026-09-27T14:40:48.991Z"
+    }
+  ]
+}

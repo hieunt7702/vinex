@@ -6,6 +6,7 @@ import { useDict } from '@/hooks/useDict';
 import { GlassCard, GlassButton, GlassInput, GlassTextarea } from '@/components/ui/glass';
 import { CheckCircle2, Loader2, Send } from 'lucide-react';
 import { toast } from 'sonner';
+import { getApiUrl } from '@/lib/apiConfig';
 
 export default function RequestQuotePage() {
   const pathname = usePathname();
@@ -70,7 +71,7 @@ export default function RequestQuotePage() {
         status: 'NEW'
       };
 
-      const res = await fetch('/api/v1/leads', {
+      const res = await fetch(getApiUrl('/leads'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

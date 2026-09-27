@@ -20,6 +20,7 @@ import {
   Check
 } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass';
+import { getApiUrl } from '@/lib/apiConfig';
 
 // Custom Botanical & Food Icons matching VINEX brand
 const CashewIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
@@ -88,8 +89,8 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
     async function fetchLiveCatalog() {
       try {
         const [resProds, resCats] = await Promise.all([
-          fetch('/api/v1/products', { cache: 'no-store' }),
-          fetch('/api/v1/categories', { cache: 'no-store' })
+          fetch(getApiUrl('/products'), { cache: 'no-store' }),
+          fetch(getApiUrl('/categories'), { cache: 'no-store' })
         ]);
 
         if (resProds.ok && isSubscribed) {
@@ -97,7 +98,7 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
           const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
           if (list.length > 0) {
             const mapped = list
-              .filter((p: any) => p.status === 'ACTIVE')
+              .filter((p: any) => p.status === 'ACTIVE' || !p.status || p.status === 'active' || p.status === 'Sẵn sàng cung ứng')
               .map((p: any) => ({
                 id: p.id,
                 name: p.name,

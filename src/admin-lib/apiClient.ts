@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { toast } from 'sonner';
+import { getApiBaseUrl } from '@/lib/apiConfig';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api/v1';
+const API_URL = getApiBaseUrl();
 
 export const apiClient = axios.create({
   baseURL: API_URL,
+  timeout: 15000,
   headers: {
     'Content-Type': 'application/json',
   },

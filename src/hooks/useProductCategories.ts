@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
+import { getApiUrl } from '@/lib/apiConfig';
 
 export interface ProductCategoryItem {
   id: number | string;
@@ -49,7 +50,7 @@ export function useProductCategories() {
   const fetchCategories = useCallback(async () => {
     try {
       setIsLoading(true);
-      const res = await fetch('/api/v1/categories', { cache: 'no-store' });
+      const res = await fetch(getApiUrl('/categories'), { cache: 'no-store' });
       if (!res.ok) return;
       const data = await res.json();
       const list: any[] = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);

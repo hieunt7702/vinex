@@ -14,7 +14,7 @@ export async function generateMetadata(
    { params }: Props
 ): Promise<Metadata> {
    const { slug } = await params;
-   const product = getProductBySlug(slug) || getPublicProducts()[0];
+   const product = (await getProductBySlug(slug)) || (await getPublicProducts())[0];
    if (!product) {
       return { title: 'Sản phẩm VINEX | Nông sản Việt' };
    }
@@ -26,16 +26,16 @@ export async function generateMetadata(
 
 export default async function ProductDetailPage({ params }: Props) {
    const { slug, locale } = await params;
-   const product = getProductBySlug(slug);
+   const product = await getProductBySlug(slug);
 
    if (!product) {
       notFound();
    }
 
-   const allProducts = getPublicProducts();
+   const allProducts = await getPublicProducts();
    // Related products: priority to same category, fallback to others, excluding current product
    const relatedProducts = allProducts
-      .filter(p => p.slug !== slug)
+      .filter(p => p.slug !== product.slug && p.slug !== slug)
       .sort((a, b) => (a.category === product.category ? -1 : 1))
       .slice(0, 3);
 

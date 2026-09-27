@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { 
   Search, Plus, Filter, Edit, Trash2, Package, X, ChevronLeft, ChevronRight, 
   Check, ArrowUpDown, ChevronDown, ChevronUp, Loader2, FolderOpen, 
-  Layers, Barcode, AlertTriangle, Star, Image as ImageIcon, ShieldAlert, Sparkles
+  Layers, Barcode, AlertTriangle, Star, Image as ImageIcon, ShieldAlert, Sparkles, ExternalLink
 } from 'lucide-react';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ProductImageGallery } from '@/admin-components/ui/ProductImageGallery';
@@ -229,20 +229,20 @@ export default function ProductsPage() {
         const { id, ...createData } = formData;
         if (!createData.productId) createData.productId = `VNX-${Math.floor(100 + Math.random() * 900)}`;
         if (!createData.sku) createData.sku = `VNX-SKU-${Math.floor(1000 + Math.random() * 9000)}`;
-        if (!createData.slug) createData.slug = createData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 1000);
+        if (!createData.slug) createData.slug = generateSlug(createData.name);
         
         // Attach category objects
         const selectedCategories = categories.filter((c: any) => createData.categoryIds?.includes(c.id));
-        const payload = { ...createData, stockStatus, categories: selectedCategories };
+        const payload = { ...createData, status: createData.status || 'ACTIVE', stockStatus, categories: selectedCategories };
 
         await apiClient.post('/products', payload);
         toast.success('Thêm sản phẩm thành công!');
       } else {
         const { id, ...updateData } = formData;
-        if (!updateData.slug) updateData.slug = updateData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 1000);
+        if (!updateData.slug) updateData.slug = generateSlug(updateData.name);
         
         const selectedCategories = categories.filter((c: any) => updateData.categoryIds?.includes(c.id));
-        const payload = { ...updateData, stockStatus, categories: selectedCategories };
+        const payload = { ...updateData, status: updateData.status || 'ACTIVE', stockStatus, categories: selectedCategories };
 
         await apiClient.patch(`/products/${id}`, payload);
         toast.success('Cập nhật sản phẩm thành công!');
@@ -630,7 +630,15 @@ export default function ProductsPage() {
                             )}
                           </div>
                           <div className="min-w-0">
-                            <div className="text-sm font-semibold text-gray-900 dark:text-white truncate">{prod.name}</div>
+                            <a 
+                              href={`/vi/san-pham/${prod.slug}`} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-sm font-semibold text-gray-900 dark:text-white hover:text-[#5865f2] transition-colors truncate block"
+                              title="Xem chi tiết sản phẩm trên website"
+                            >
+                              {prod.name}
+                            </a>
                             <div className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1">{prod.shortDescription}</div>
                             {prod.images && prod.images.length > 0 && (
                               <div className="flex items-center gap-1 text-[10px] text-gray-400 mt-0.5">
@@ -700,6 +708,13 @@ export default function ProductsPage() {
                         <div className="flex items-center justify-center">
                           <ActionMenu
                             items={[
+                              {
+                                label: 'Xem trên Website',
+                                icon: ExternalLink,
+                                onClick: () => {
+                                  window.open(`/vi/san-pham/${prod.slug}`, '_blank');
+                                }
+                              },
                               {
                                 label: 'Chỉnh sửa', icon: Edit, onClick: () => {
                                   setIsSlugManual(true);

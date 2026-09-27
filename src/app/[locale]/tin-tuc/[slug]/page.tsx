@@ -19,7 +19,7 @@ export async function generateMetadata(
    { params }: Props
 ): Promise<Metadata> {
    const { slug } = await params;
-   const article = getArticleBySlug(slug);
+   const article = await getArticleBySlug(slug);
    if (!article) {
       return { title: 'Bài viết | VINEX' };
    }
@@ -33,12 +33,12 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
    const { locale, slug } = await params;
    const t = getDictionary(locale as Locale);
 
-   const article = getArticleBySlug(slug);
+   const article = await getArticleBySlug(slug);
    if (!article) {
       notFound();
    }
 
-   const allArticles = getPublicArticles();
+   const allArticles = await getPublicArticles();
    const relatedArticles = allArticles.filter(a => a.slug !== slug).slice(0, 3);
 
    return (

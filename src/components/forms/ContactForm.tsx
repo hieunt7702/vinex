@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { GlassButton, GlassSelect } from '@/components/ui/glass';
 import { CheckCircle2, Loader2, Send } from 'lucide-react';
 import { toast } from 'sonner';
+import { getApiUrl } from '@/lib/apiConfig';
 
 interface ContactFormProps {
   submitText?: string;
@@ -53,7 +54,7 @@ export function ContactForm({ submitText = 'Gửi Yêu Cầu Tư Vấn' }: Conta
         leadClassification: 'WARM'
       };
 
-      const res = await fetch('/api/v1/leads', {
+      const res = await fetch(getApiUrl('/leads'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

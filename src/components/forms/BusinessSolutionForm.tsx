@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { GlassButton, GlassCard, GlassInput, GlassTextarea } from '@/components/ui/glass';
 import { CheckCircle2, Loader2, Send } from 'lucide-react';
 import { toast } from 'sonner';
+import { getApiUrl } from '@/lib/apiConfig';
 
 export function BusinessSolutionForm() {
   const [formData, setFormData] = useState({
@@ -48,7 +49,7 @@ export function BusinessSolutionForm() {
         status: 'NEW'
       };
 
-      const res = await fetch('/api/v1/leads', {
+      const res = await fetch(getApiUrl('/leads'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

@@ -30,7 +30,7 @@ const dancingScript = Dancing_Script({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = getPublicSettings();
+  const settings = await getPublicSettings();
   return {
     title: settings.globalMetaTitle || settings.siteName || "VINEX | Tiếp nối tinh hoa",
     description: settings.globalMetaDesc || "VINEX phát triển từ nhà máy bóc tách điều thô, nhân điều trắng, sản phẩm từ nông sản Việt đến bao bì và quà tặng doanh nghiệp.",
@@ -49,7 +49,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  const settings = getPublicSettings();
+  const settings = await getPublicSettings();
   
   const hasGA = settings.googleAnalytics && 
     settings.googleAnalytics.startsWith('G-') && 

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { Search, Filter, Tags, Plus, Edit, Trash2, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, Type, Link, Settings2, RotateCcw, Loader2, FolderOpen, Pin } from 'lucide-react';
+import { Search, Filter, Tags, Plus, Edit, Trash2, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, Type, Link, Settings2, RotateCcw, Loader2, FolderOpen, Pin, Eye, EyeOff } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
@@ -17,8 +17,8 @@ const TYPE_COLOR_MAP: Record<string, string> = {
 };
 
 const STATUS_MAP: Record<string, string> = {
-  'ACTIVE': 'Hoạt động',
-  'HIDDEN': 'Ẩn'
+  'ACTIVE': 'Hiển thị',
+  'HIDDEN': 'Đang ẩn'
 };
 
 export default function CategoriesPage() {
@@ -116,9 +116,11 @@ export default function CategoriesPage() {
   const currentData = treeData.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
 
   const summary = {
-    totalItems: filteredData.length,
-    productCount: filteredData.filter(d => d.type === 'Sản phẩm' || !d.type).length,
-    articleCount: filteredData.filter(d => d.type === 'Bài viết').length
+    totalItems: data.length,
+    productCount: data.filter(d => d.type === 'Sản phẩm' || !d.type).length,
+    articleCount: data.filter(d => d.type === 'Bài viết').length,
+    activeCount: data.filter(d => d.status !== 'HIDDEN').length,
+    hiddenCount: data.filter(d => d.status === 'HIDDEN').length,
   };
 
   const toggleSelectAll = () => {
@@ -180,6 +182,26 @@ export default function CategoriesPage() {
     }
   };
 
+  const handleToggleStatus = async (category: any) => {
+    const isHidden = category.status === 'HIDDEN';
+    const nextStatus = isHidden ? 'ACTIVE' : 'HIDDEN';
+    const label = isHidden ? 'Hiển thị' : 'Đang ẩn';
+
+    try {
+      setData(prev => prev.map(c => c.id === category.id ? { ...c, status: nextStatus } : c));
+      await apiClient.patch(`/categories/${category.id}`, { status: nextStatus });
+      toast.success(`Đã chuyển trạng thái sang "${label}"`);
+      await fetchCategories();
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('vinex_categories_updated'));
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Có lỗi xảy ra khi đổi trạng thái');
+      await fetchCategories();
+    }
+  };
+
   const handleDelete = (id: number) => {
     setConfirmModal({
       isOpen: true,
@@ -187,15 +209,17 @@ export default function CategoriesPage() {
       desc: 'Bạn có chắc chắn muốn xóa danh mục này? Hành động này không thể hoàn tác.',
       onConfirm: async () => {
         try {
+          setData(prev => prev.filter(c => c.id !== id));
           await apiClient.delete(`/categories/${id}`);
           toast.success('Xóa danh mục thành công');
-          fetchCategories();
+          await fetchCategories();
           if (typeof window !== 'undefined') {
             window.dispatchEvent(new Event('vinex_categories_updated'));
           }
         } catch (error) {
           console.error(error);
           toast.error('Có lỗi xảy ra khi xóa');
+          await fetchCategories();
         } finally {
           setConfirmModal(prev => ({ ...prev, isOpen: false }));
         }
@@ -210,16 +234,19 @@ export default function CategoriesPage() {
       desc: `Bạn có chắc chắn muốn xóa ${selectedIds.length} danh mục đã chọn? Hành động này không thể hoàn tác.`,
       onConfirm: async () => {
         try {
-          await Promise.all(selectedIds.map(id => apiClient.delete(`/categories/${id}`)));
-          toast.success(`Đã xóa ${selectedIds.length} danh mục thành công`);
+          const idsToDelete = [...selectedIds];
           setSelectedIds([]);
-          fetchCategories();
+          setData(prev => prev.filter(c => !idsToDelete.includes(c.id)));
+          await Promise.all(idsToDelete.map(id => apiClient.delete(`/categories/${id}`)));
+          toast.success(`Đã xóa ${idsToDelete.length} danh mục thành công`);
+          await fetchCategories();
           if (typeof window !== 'undefined') {
             window.dispatchEvent(new Event('vinex_categories_updated'));
           }
         } catch (error) {
           console.error('Bulk delete error:', error);
           toast.error('Lỗi khi xóa hàng loạt');
+          await fetchCategories();
         } finally {
           setConfirmModal(prev => ({ ...prev, isOpen: false }));
         }
@@ -304,18 +331,86 @@ export default function CategoriesPage() {
         )}
       </div>
 
-{/* Quick Summary Pill Bar */}
-        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 overflow-x-auto pb-1">
-          <span className="px-2.5 py-1 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px]">
-            Tổng: <strong className="text-gray-900 dark:text-white">{summary.totalItems}</strong>
-          </span>
-          <span className="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/30 rounded-[4px]">
-            Danh mục Sản phẩm: <strong>{summary.productCount}</strong>
-          </span>
-          <span className="px-2.5 py-1 bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800/30 rounded-[4px]">
-            Chuyên mục Bài viết: <strong>{summary.articleCount}</strong>
-          </span>
+      {/* Dashboard / Summary Card (Thiết kế đồng bộ như màn sản phẩm) */}
+      <div className="rounded-[4px] border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] flex-shrink-0 transition-all duration-300 shadow-xs">
+        <div className={`p-4 ${isSummaryCollapsed ? 'pb-4' : 'sm:p-5 sm:pb-5'}`}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <h3 className="font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Danh Mục & Phân Loại</h3>
+              {!isSummaryCollapsed && (
+                <span className="text-xs text-gray-500 dark:text-gray-400">{summary.totalItems} danh mục</span>
+              )}
+            </div>
+
+            {isSummaryCollapsed && (
+              <div className="flex-1 flex items-center justify-end px-6 gap-5">
+                <div className="flex items-center gap-3 text-sm font-medium">
+                  <span className="text-blue-600 dark:text-blue-400">{summary.totalItems} Danh mục</span>
+                  <span className="text-emerald-600 dark:text-emerald-400">{summary.productCount} Sản phẩm</span>
+                  <span className="text-purple-600 dark:text-purple-400">{summary.articleCount} Bài viết</span>
+                  <span className="text-teal-600 dark:text-teal-400">{summary.activeCount} Đang hiện</span>
+                </div>
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={() => setIsSummaryCollapsed(!isSummaryCollapsed)}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[4px] text-xs font-medium cursor-pointer"
+            >
+              {isSummaryCollapsed ? 'Mở rộng' : 'Thu gọn'}
+              {isSummaryCollapsed ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+
+          {!isSummaryCollapsed && (
+            <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="p-3.5 rounded-[4px] border border-blue-100 dark:border-blue-500/20 bg-blue-50/50 dark:bg-blue-500/10">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-2 h-2 bg-blue-500 rounded-[4px]"></div>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Tổng danh mục</span>
+                </div>
+                <div className="text-2xl font-medium text-blue-700 dark:text-blue-400">
+                  {summary.totalItems} <span className="text-xs font-normal text-gray-500">nhóm</span>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-[4px] border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-500/10">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-[4px]"></div>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Danh mục Sản phẩm</span>
+                </div>
+                <div className="text-2xl font-medium text-emerald-700 dark:text-emerald-400">
+                  {summary.productCount} <span className="text-xs font-normal text-gray-500">danh mục</span>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-[4px] border border-purple-100 dark:border-purple-900/30 bg-purple-50/50 dark:bg-purple-500/10">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-2 h-2 bg-purple-500 rounded-[4px]"></div>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Chuyên mục Bài viết</span>
+                </div>
+                <div className="text-2xl font-medium text-purple-700 dark:text-purple-400">
+                  {summary.articleCount} <span className="text-xs font-normal text-gray-500">chuyên mục</span>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-[4px] border border-teal-100 dark:border-teal-900/30 bg-teal-50/50 dark:bg-teal-500/10">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-2 h-2 bg-teal-500 rounded-[4px]"></div>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Trạng thái hiển thị</span>
+                </div>
+                <div className="text-2xl font-medium text-teal-700 dark:text-teal-400 flex items-baseline gap-2">
+                  <span>{summary.activeCount} <span className="text-xs font-normal text-gray-500">hiện</span></span>
+                  {summary.hiddenCount > 0 && (
+                    <span className="text-sm font-normal text-amber-600 dark:text-amber-400">/ {summary.hiddenCount} ẩn</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
+      </div>
 
       {/* Data Table */}
       <div className="flex-1 flex flex-col min-h-0 rounded-[4px] border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] overflow-hidden shadow-sm">
@@ -424,9 +519,19 @@ export default function CategoriesPage() {
                       </span>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-[4px] text-xs font-medium ${c.status === 'ACTIVE' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700'}`}>
-                        {STATUS_MAP[c.status] || c.status}
-                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleToggleStatus(c)}
+                        title={`Click để chuyển sang ${c.status === 'HIDDEN' ? 'Hiển thị' : 'Ẩn'}`}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] text-xs font-medium transition-all hover:scale-105 cursor-pointer whitespace-nowrap ${
+                          c.status !== 'HIDDEN'
+                            ? 'bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20'
+                            : 'bg-amber-50 hover:bg-amber-100 dark:bg-amber-500/10 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20'
+                        }`}
+                      >
+                        <span className={`w-1.5 h-1.5 rounded-full ${c.status !== 'HIDDEN' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                        {c.status !== 'HIDDEN' ? 'Hiển thị' : 'Đang ẩn'}
+                      </button>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800 text-center">
                       <div className="flex items-center justify-center">
@@ -443,10 +548,15 @@ export default function CategoriesPage() {
                             {
                               label: 'Chỉnh sửa', icon: Edit, onClick: () => {
                                 setModalMode('edit');
-                                setFormData(c);
+                                setFormData({ ...c, status: c.status || 'ACTIVE' });
                                 setErrors({});
                                 setIsDrawerOpen(true);
                               }
+                            },
+                            {
+                              label: c.status === 'HIDDEN' ? 'Hiển thị danh mục' : 'Ẩn danh mục',
+                              icon: c.status === 'HIDDEN' ? Eye : EyeOff,
+                              onClick: () => handleToggleStatus(c)
                             },
                             { label: 'Xóa danh mục', icon: Trash2, variant: 'danger', onClick: () => handleDelete(c.id) }
                           ]}
@@ -582,8 +692,8 @@ export default function CategoriesPage() {
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Trạng thái</label>
                       <CustomDropdown
                         className="w-full"
-                        options={[{ value: 'ACTIVE', label: 'Hoạt động', color: 'green' }, { value: 'HIDDEN', label: 'Ẩn' }]}
-                        value={formData.status}
+                        options={[{ value: 'ACTIVE', label: 'Hiển thị (Hiện)', color: 'green' }, { value: 'HIDDEN', label: 'Đang ẩn (Ẩn)', color: 'yellow' }]}
+                        value={formData.status || 'ACTIVE'}
                         onChange={val => setFormData({ ...formData, status: val as any })}
                       />
                     </div>

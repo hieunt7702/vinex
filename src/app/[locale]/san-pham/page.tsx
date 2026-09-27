@@ -17,7 +17,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
   const { locale } = await params;
   const t = getDictionary(locale as Locale);
   const pg = t.pages.products;
-  const liveProducts = getPublicProducts();
+  const liveProducts = await getPublicProducts();
 
   return (
     <SmoothScroll>

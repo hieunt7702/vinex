@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronRight, ChevronLeft, Calendar } from "lucide-react";
 import { useDict } from "@/hooks/useDict";
 import { GlassCard } from "@/components/ui/glass";
+import { getApiUrl } from "@/lib/apiConfig";
 
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -27,7 +28,7 @@ export const LatestArticles: React.FC = () => {
   React.useEffect(() => {
     async function fetchLatest() {
       try {
-        const res = await fetch('/api/v1/articles', { cache: 'no-store' });
+        const res = await fetch(getApiUrl('/articles'), { cache: 'no-store' });
         if (!res.ok) return;
         const data = await res.json();
         const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);

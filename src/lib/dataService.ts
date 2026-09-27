@@ -1,6 +1,4 @@
-import { store } from '@/app/api/v1/store';
-import { products as staticProducts } from '@/data/products';
-import { articles as staticArticles } from '@/data/articles';
+import { getApiUrl } from '@/lib/apiConfig';
 
 export interface PublicProduct {
   id: number | string;
@@ -70,157 +68,227 @@ export const defaultGlobalSettings: GlobalSettings = {
   facebookPixel: ''
 };
 
-export function getPublicSettings(): GlobalSettings {
-  if (store.settings && Array.isArray(store.settings)) {
-    const found = store.settings.find((s: any) => s && s.key === 'GLOBAL_SETTINGS');
-    if (found && found.value) {
-      try {
+export async function getPublicSettings(): Promise<GlobalSettings> {
+  try {
+    const res = await fetch(getApiUrl('/settings'), { 
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : (data ? [data] : []));
+      const found = list.find((s: any) => s && s.key === 'GLOBAL_SETTINGS');
+      if (found && found.value) {
         const parsed = typeof found.value === 'string' ? JSON.parse(found.value) : found.value;
         return { ...defaultGlobalSettings, ...parsed };
-      } catch (e) {
-        console.error('Failed to parse public settings', e);
       }
     }
+  } catch (e) {
+    console.warn('API getPublicSettings failed:', e);
   }
+
   return defaultGlobalSettings;
 }
 
-export function getPublicCategories(type?: 'Sản phẩm' | 'Bài viết'): PublicCategory[] {
-  if (store.categories && store.categories.length > 0) {
-    if (type) {
-      return store.categories.filter((c: any) => c.type === type);
+export async function getPublicCategories(type?: 'Sản phẩm' | 'Bài viết'): Promise<PublicCategory[]> {
+  try {
+    const res = await fetch(getApiUrl('/categories'), { 
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
+      if (list.length > 0) {
+        if (type) {
+          return list.filter((c: any) => c.type === type);
+        }
+        return list;
+      }
     }
-    return store.categories;
+  } catch (e) {
+    console.warn('API getPublicCategories failed:', e);
   }
+
   return [];
 }
 
-export function getPublicProducts(): PublicProduct[] {
-  if (store.products && store.products.length > 0) {
-    return [...store.products]
-      .filter((p: any) => p.status === 'ACTIVE')
-      .sort((a: any, b: any) => {
-        if (a.createdAt && b.createdAt) {
-          const diff = new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-          if (diff !== 0) return diff;
-        }
-        return (Number(b.id) || 0) - (Number(a.id) || 0);
-      })
-      .map((p: any) => ({
-        id: p.id,
-        name: p.name,
-        slug: p.slug,
-        category: p.categories?.[0]?.name || p.category || 'Nông sản VINEX',
-        status: 'Sẵn sàng cung ứng',
-        desc: p.shortDescription || p.desc || '',
-        img: (Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : (p.img || '/images/placeholder.jpg')),
-        images: (Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.img ? [p.img] : [])),
-        price: p.price,
-        promotionalPrice: p.promotionalPrice,
-        description: p.description,
-        attributes: p.attributes || []
-      }));
+export async function getPublicProducts(): Promise<PublicProduct[]> {
+  try {
+    const res = await fetch(getApiUrl('/products'), { 
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
+      if (list.length > 0) {
+        return list
+          .filter((p: any) => p.status === 'ACTIVE' || !p.status || p.status === 'active' || p.status === 'Sẵn sàng cung ứng')
+          .sort((a: any, b: any) => {
+            if (a.createdAt && b.createdAt) {
+              const diff = new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+              if (diff !== 0) return diff;
+            }
+            return (Number(b.id) || 0) - (Number(a.id) || 0);
+          })
+          .map((p: any) => ({
+            id: p.id,
+            name: p.name,
+            slug: p.slug,
+            category: p.categories?.[0]?.name || p.category || (typeof p.categoryName === 'string' ? p.categoryName : 'Nông sản VINEX'),
+            status: 'Sẵn sàng cung ứng',
+            desc: p.shortDescription || p.desc || '',
+            img: (Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : (p.img || '/images/placeholder.jpg')),
+            images: (Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.img ? [p.img] : [])),
+            price: p.price,
+            promotionalPrice: p.promotionalPrice,
+            description: p.description,
+            attributes: p.attributes || []
+          }));
+      }
+    }
+  } catch (e) {
+    console.warn('API getPublicProducts failed:', e);
   }
-  return staticProducts.map((p: any) => ({
-    id: p.id,
-    name: p.name,
-    slug: p.slug,
-    category: p.category,
-    status: p.status,
-    desc: p.desc,
-    img: p.img,
-    images: [p.img]
-  }));
+
+  return [];
 }
 
-export function getProductBySlug(slug: string): PublicProduct | undefined {
-  const all = getPublicProducts();
-  const found = all.find(p => p.slug === slug);
-  if (found) return found;
+export async function getProductBySlug(slug: string): Promise<PublicProduct | undefined> {
+  const normalizedSlug = decodeURIComponent(slug || '').toLowerCase().trim();
 
-  const staticFound = staticProducts.find(p => p.slug === slug);
-  if (staticFound) {
-    return {
-      id: staticFound.id,
-      name: staticFound.name,
-      slug: staticFound.slug,
-      category: staticFound.category,
-      status: staticFound.status,
-      desc: staticFound.desc,
-      img: staticFound.img
-    };
+  try {
+    const res = await fetch(getApiUrl('/products'), { 
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
+      
+      // 1. Match exact slug
+      let found = list.find((p: any) => {
+        const pSlug = decodeURIComponent(p.slug || '').toLowerCase().trim();
+        return pSlug === normalizedSlug;
+      });
+
+      // 2. Match base slug (e.g. hat-dieu-tam-vi-phomai-hu-100g matches hat-dieu-tam-vi-phomai-hu-150g)
+      if (!found) {
+        const cleanSlug = normalizedSlug.replace(/-\d+g$/i, '').replace(/-\d+$/i, '');
+        found = list.find((p: any) => {
+          const pSlug = decodeURIComponent(p.slug || '').toLowerCase().trim();
+          const cleanPSlug = pSlug.replace(/-\d+g$/i, '').replace(/-\d+$/i, '');
+          return cleanPSlug === cleanSlug || pSlug.startsWith(cleanSlug) || String(p.id) === normalizedSlug;
+        });
+      }
+
+      if (found) {
+        return {
+          id: found.id,
+          name: found.name,
+          slug: found.slug,
+          category: found.categories?.[0]?.name || found.category || (typeof found.categoryName === 'string' ? found.categoryName : 'Nông sản VINEX'),
+          status: 'Sẵn sàng cung ứng',
+          desc: found.shortDescription || found.desc || '',
+          img: (Array.isArray(found.images) && found.images.length > 0 ? found.images[0] : (found.img || '/images/placeholder.jpg')),
+          images: (Array.isArray(found.images) && found.images.length > 0 ? found.images : (found.img ? [found.img] : [])),
+          price: found.price,
+          promotionalPrice: found.promotionalPrice,
+          description: found.description,
+          attributes: found.attributes || []
+        };
+      }
+    }
+  } catch (e) {
+    console.error('API getProductBySlug failed:', e);
   }
+
   return undefined;
 }
 
-export function getPublicArticles(): PublicArticle[] {
-  if (store.articles && store.articles.length > 0) {
-    return [...store.articles]
-      .filter((a: any) => a.status === 'PUBLISHED')
-      .sort((a: any, b: any) => {
-        const timeA = new Date(a.publishedAt || a.createdAt || 0).getTime();
-        const timeB = new Date(b.publishedAt || b.createdAt || 0).getTime();
-        if (timeA && timeB && timeA !== timeB) return timeB - timeA;
-        return (Number(b.id) || 0) - (Number(a.id) || 0);
-      })
-      .map((a: any) => ({
-        id: a.id,
-        title: a.title,
-        slug: a.slug,
-        desc: a.summary || a.desc || '',
-        category: a.category || 'Tin tức VINEX',
-        author: a.author || 'Truyền thông VINEX',
-        date: a.publishedAt ? (() => {
-          const d = new Date(a.publishedAt);
-          return isNaN(d.getTime()) ? (a.date || 'Gần đây') : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
-        })() : (a.date || 'Gần đây'),
-        views: a.views || 0,
-        badge: a.category || 'NỔI BẬT',
-        coverImg: (typeof a.thumbnail === 'string' && a.thumbnail) ? a.thumbnail : (a.coverImg || '/images/placeholder.jpg'),
-        content: a.content || '',
-        tags: Array.isArray(a.tags) ? a.tags : (typeof a.tags === 'string' && a.tags ? a.tags.split(',').map((t: string) => t.trim()) : [])
-      }));
+export async function getPublicArticles(): Promise<PublicArticle[]> {
+  try {
+    const res = await fetch(getApiUrl('/articles'), { 
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
+      if (list.length > 0) {
+        return list
+          .filter((a: any) => a.status === 'PUBLISHED' || !a.status || a.status === 'published')
+          .sort((a: any, b: any) => {
+            const timeA = new Date(a.publishedAt || a.createdAt || 0).getTime();
+            const timeB = new Date(b.publishedAt || b.createdAt || 0).getTime();
+            if (timeA && timeB && timeA !== timeB) return timeB - timeA;
+            return (Number(b.id) || 0) - (Number(a.id) || 0);
+          })
+          .map((a: any) => ({
+            id: a.id,
+            title: a.title,
+            slug: a.slug,
+            desc: a.summary || a.desc || '',
+            category: a.category || 'Tin tức VINEX',
+            author: a.author || 'Truyền thông VINEX',
+            date: a.publishedAt ? (() => {
+              const d = new Date(a.publishedAt);
+              return isNaN(d.getTime()) ? (a.date || 'Gần đây') : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+            })() : (a.date || 'Gần đây'),
+            views: a.views || 0,
+            badge: a.category || 'NỔI BẬT',
+            coverImg: (typeof a.thumbnail === 'string' && a.thumbnail) ? a.thumbnail : (a.coverImg || '/images/placeholder.jpg'),
+            content: a.content || '',
+            tags: Array.isArray(a.tags) ? a.tags : (typeof a.tags === 'string' && a.tags ? a.tags.split(',').map((t: string) => t.trim()) : [])
+          }));
+      }
+    }
+  } catch (e) {
+    console.warn('API getPublicArticles failed:', e);
   }
-  return staticArticles.map((a: any) => ({
-    id: a.slug,
-    title: a.title,
-    slug: a.slug,
-    desc: a.desc,
-    category: a.category,
-    author: a.author,
-    date: a.date,
-    views: a.views,
-    badge: a.badge,
-    bg: a.bg,
-    coverImg: a.coverImg,
-    content: a.content,
-    tags: a.tags
-  }));
+
+  return [];
 }
 
-export function getArticleBySlug(slug: string): PublicArticle | undefined {
-  const all = getPublicArticles();
-  const found = all.find(a => a.slug === slug || (slug === 'vinex-miss-world' && a.slug.startsWith('vinex-miss-world')));
-  if (found) return found;
+export async function getArticleBySlug(slug: string): Promise<PublicArticle | undefined> {
+  const normalizedSlug = decodeURIComponent(slug || '').toLowerCase().trim();
 
-  const staticFound = staticArticles.find(a => a.slug === slug);
-  if (staticFound) {
-    return {
-      id: staticFound.slug,
-      title: staticFound.title,
-      slug: staticFound.slug,
-      desc: staticFound.desc,
-      category: staticFound.category,
-      author: staticFound.author,
-      date: staticFound.date,
-      views: staticFound.views,
-      badge: staticFound.badge,
-      bg: staticFound.bg,
-      coverImg: staticFound.coverImg,
-      content: staticFound.content,
-      tags: staticFound.tags
-    };
+  try {
+    const res = await fetch(getApiUrl('/articles'), { 
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
+      const found = list.find((a: any) => {
+        const aSlug = decodeURIComponent(a.slug || '').toLowerCase().trim();
+        return aSlug === normalizedSlug || (normalizedSlug === 'vinex-miss-world' && aSlug.startsWith('vinex-miss-world'));
+      });
+      if (found) {
+        return {
+          id: found.id,
+          title: found.title,
+          slug: found.slug,
+          desc: found.summary || found.desc || '',
+          category: found.category || 'Tin tức VINEX',
+          author: found.author || 'Truyền thông VINEX',
+          date: found.publishedAt ? (() => {
+            const d = new Date(found.publishedAt);
+            return isNaN(d.getTime()) ? (found.date || 'Gần đây') : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+          })() : (found.date || 'Gần đây'),
+          views: found.views || 0,
+          badge: found.category || 'NỔI BẬT',
+          coverImg: (typeof found.thumbnail === 'string' && found.thumbnail) ? found.thumbnail : (found.coverImg || '/images/placeholder.jpg'),
+          content: found.content || '',
+          tags: Array.isArray(found.tags) ? found.tags : (typeof found.tags === 'string' && found.tags ? found.tags.split(',').map((t: string) => t.trim()) : [])
+        };
+      }
+    }
+  } catch (e) {
+    console.warn('API getArticleBySlug failed:', e);
   }
+
   return undefined;
 }
-

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function KnowledgePage({ params }: { params: Promise<{ locale: string }> }) {
    const { locale } = await params;
-   const liveArticles = getPublicArticles();
+   const liveArticles = await getPublicArticles();
 
    return (
       <SmoothScroll>

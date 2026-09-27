@@ -81,10 +81,6 @@ export default function ArticlesPage() {
   const [isFiltersExpanded, setIsFiltersExpanded] = useState(false);
   const [isSummaryCollapsed, setIsSummaryCollapsed] = useState(false);
 
-  const [confirmModal, setConfirmModal] = useState({
-    isOpen: false, title: '', desc: '', onConfirm: () => {}
-  });
-
   const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' } | null>(null);
 
   const activeFiltersCount = (categoryFilter.length > 0 ? 1 : 0) + (statusFilter.length > 0 ? 1 : 0);
@@ -291,15 +287,18 @@ export default function ArticlesPage() {
       variant: 'danger',
       onConfirm: async () => {
         try {
+          // Optimistic local state update for instant UI response
+          setData(prev => prev.filter(a => String(a.id) !== String(article.id)));
           await apiClient.delete(`/articles/${article.id}`);
           toast.success('Xóa bài viết thành công!');
-          fetchArticles();
+          await fetchArticles();
           if (typeof window !== 'undefined') {
             window.dispatchEvent(new Event('vinex_articles_updated'));
           }
         } catch (error) {
           console.error('Failed to delete article:', error);
           toast.error('Có lỗi xảy ra khi xóa bài viết');
+          await fetchArticles();
         }
       }
     });
@@ -347,16 +346,20 @@ export default function ArticlesPage() {
       variant: 'danger',
       onConfirm: async () => {
         try {
-          await Promise.all(selectedIds.map(id => apiClient.delete(`/articles/${id}`)));
+          const idsToDelete = [...selectedIds];
           setSelectedIds([]);
-          fetchArticles();
+          // Optimistic local state update
+          setData(prev => prev.filter(a => !idsToDelete.includes(String(a.id))));
+          await Promise.all(idsToDelete.map(id => apiClient.delete(`/articles/${id}`)));
+          toast.success('Đã xóa các bài viết đã chọn thành công!');
+          await fetchArticles();
           if (typeof window !== 'undefined') {
             window.dispatchEvent(new Event('vinex_articles_updated'));
           }
-          toast.success('Đã xóa các bài viết đã chọn thành công!');
         } catch (error) {
           console.error('Failed to delete articles:', error);
           toast.error('Lỗi khi xóa bài viết');
+          await fetchArticles();
         }
       }
     });
@@ -1054,14 +1057,6 @@ export default function ArticlesPage() {
           </div>
         </div>
       )}
-
-      <ConfirmModal
-        isOpen={confirmModal.isOpen}
-        onClose={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
-        onConfirm={confirmModal.onConfirm}
-        title={confirmModal.title}
-        description={confirmModal.desc}
-      />
     </div>
   );
 }

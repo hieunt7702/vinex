@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { useDict } from "@/hooks/useDict";
 import { GlassCard } from "@/components/ui/glass";
+import { getApiUrl } from "@/lib/apiConfig";
 
 export const FlavoredCashewsHome: React.FC = () => {
   const pathname = usePathname();
@@ -29,11 +30,11 @@ export const FlavoredCashewsHome: React.FC = () => {
   React.useEffect(() => {
     async function fetchCashews() {
       try {
-        const res = await fetch('/api/v1/products', { cache: 'no-store' });
+        const res = await fetch(getApiUrl('/products'), { cache: 'no-store' });
         if (!res.ok) return;
         const data = await res.json();
         const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
-        const active = list.filter((p: any) => p.status === 'ACTIVE');
+        const active = list.filter((p: any) => p.status === 'ACTIVE' || !p.status || p.status === 'active' || p.status === 'Sẵn sàng cung ứng');
         const cashews = active.filter((p: any) => 
           (p.categories?.[0]?.name || p.category || p.name || '').toLowerCase().includes('điều') ||
           (p.name || '').toLowerCase().includes('điều')

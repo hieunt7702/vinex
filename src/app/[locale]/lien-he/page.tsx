@@ -16,7 +16,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
    const { locale } = await params;
    const t = getDictionary(locale as Locale);
    const pg = t.pages.contact;
-   const settings = getPublicSettings();
+   const settings = await getPublicSettings();
 
    return (
       <SmoothScroll>
