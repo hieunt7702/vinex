@@ -46,13 +46,23 @@ export function normalizeImageUrl(
       return clean;
     }
 
-    // Local public path with leading slash
-    if (clean.startsWith('/')) {
-      return clean;
+    // Ensure leading slash
+    if (!clean.startsWith('/')) {
+      clean = `/${clean}`;
     }
 
-    // Missing leading slash
-    return `/${clean}`;
+    // Normalize known legacy/corrupted aliases
+    if (clean.includes('xoa`i') || clean.includes('xoai say deo') || clean.includes('xoai-say-deo')) {
+      return '/images/product/Xoai say deo 1.png';
+    }
+    if (clean.includes('Tra` premium Essiora 1') || clean.includes("Tra' premium Essiora 1")) {
+      return '/images/product/Tra 1.png';
+    }
+    if (clean.includes('Tra` premium Essiora 2') || clean.includes("Tra' premium Essiora 2")) {
+      return '/images/product/Tra 2.png';
+    }
+
+    return clean;
   }
 
   return fallback;

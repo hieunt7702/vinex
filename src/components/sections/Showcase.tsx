@@ -59,7 +59,7 @@ export const Showcase = () => {
 
   const products = [
     { title: "Premium Coffee", subtitle: "F&B Brand Identity", img: "/images/product/ca phe nguyen hat 1.png" },
-    { title: "Premium Tea", subtitle: "Packaging Design", img: "/images/product/Tra` premium Essiora 1.png" },
+    { title: "Premium Tea", subtitle: "Packaging Design", img: "/images/product/Tra 1.png" },
     { title: "Gift Box", subtitle: "Luxury Collection", img: "/images/product/Collection 10.png" },
     { title: "Healthy Food", subtitle: "Brand Strategy", img: "/images/product/Orchard nuts 1.png" },
   ];
