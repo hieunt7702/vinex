@@ -32,7 +32,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
       if (dbProd) {
         return NextResponse.json({
           ...dbProd,
-          categoryIds: dbProd.categories.map(c => c.id)
+          categoryIds: dbProd.categories.map((c: any) => c.id)
         });
       }
     } catch (e) {
@@ -41,7 +41,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
   }
 
   // 2. Fallback to in-memory store
-  const product = store?.products?.find(p => 
+  const product = store?.products?.find((p: any) => 
     String(p.id) === decodedId || 
     (p.slug && decodeURIComponent(p.slug).toLowerCase().trim() === decodedId) ||
     (p.productId && p.productId.toLowerCase().trim() === decodedId)
@@ -84,7 +84,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
               where: { id: { in: numIds } },
               select: { id: true }
             });
-            categorySet = { set: validCats.map(c => ({ id: c.id })) };
+            categorySet = { set: validCats.map((c: any) => ({ id: c.id })) };
           }
 
           const { categoryIds, categories, id: _id, ...cleanData } = data;
@@ -117,7 +117,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
     // 2. Also update in-memory store
     if (store?.products) {
-      const index = store.products.findIndex(p => 
+      const index = store.products.findIndex((p: any) => 
         String(p.id) === decodedId || 
         (p.slug && decodeURIComponent(p.slug).toLowerCase().trim() === decodedId) ||
         (p.productId && p.productId.toLowerCase().trim() === decodedId)
@@ -144,7 +144,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     }
 
     // Fallback response from store if DB was offline
-    const storeProd = store?.products?.find(p => 
+    const storeProd = store?.products?.find((p: any) => 
       String(p.id) === decodedId || 
       (p.slug && decodeURIComponent(p.slug).toLowerCase().trim() === decodedId) ||
       (p.productId && p.productId.toLowerCase().trim() === decodedId)
@@ -187,7 +187,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
 
   // 2. Delete from in-memory store
   if (store?.products) {
-    const index = store.products.findIndex(p => 
+    const index = store.products.findIndex((p: any) => 
       String(p.id) === decodedId || 
       (p.slug && decodeURIComponent(p.slug).toLowerCase().trim() === decodedId) ||
       (p.productId && p.productId.toLowerCase().trim() === decodedId)

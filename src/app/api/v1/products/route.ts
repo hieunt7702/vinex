@@ -36,7 +36,7 @@ export async function GET(request: Request) {
           if (dbProd) {
             return NextResponse.json({
               ...dbProd,
-              categoryIds: dbProd.categories.map(c => c.id)
+              categoryIds: dbProd.categories.map((c: any) => c.id)
             });
           }
         } else if (id) {
@@ -53,7 +53,7 @@ export async function GET(request: Request) {
           if (dbProd) {
             return NextResponse.json({
               ...dbProd,
-              categoryIds: dbProd.categories.map(c => c.id)
+              categoryIds: dbProd.categories.map((c: any) => c.id)
             });
           }
         } else {
@@ -62,9 +62,9 @@ export async function GET(request: Request) {
             orderBy: { id: 'asc' }
           });
           if (dbProds && dbProds.length > 0) {
-            return NextResponse.json(dbProds.map(p => ({
+            return NextResponse.json(dbProds.map((p: any) => ({
               ...p,
-              categoryIds: p.categories.map(c => c.id)
+              categoryIds: p.categories.map((c: any) => c.id)
             })));
           }
         }
