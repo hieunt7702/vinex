@@ -6,15 +6,10 @@ import { sortArticlesNewestFirst } from '@/lib/imageUtils';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
-    },
-  });
+import { handleCorsPreflight } from '@/lib/cors';
+
+export async function OPTIONS(request: Request) {
+  return handleCorsPreflight(request);
 }
 
 export async function GET() {
