@@ -525,22 +525,26 @@ async function main() {
     await prisma.$connect();
     console.log('Connected to PostgreSQL successfully.');
 
-    console.log('Clearing old database records...');
-    await prisma.product.deleteMany({});
-    await prisma.category.deleteMany({});
-    await prisma.article.deleteMany({});
-    await prisma.lead.deleteMany({});
-    await prisma.customer.deleteMany({});
-    await prisma.setting.deleteMany({});
-    await prisma.seoPage.deleteMany({});
-    await prisma.media.deleteMany({});
+    // ─── SAFE UPSERT PATTERN ──────────────────────────────────────────────────
+    // We use upsert (create-or-update) instead of deleteMany+create.
+    // This means running this seed again NEVER deletes user-created records.
+    // Only the initial seed data rows are created/updated; user additions are untouched.
 
-    console.log('Seeding Categories...');
+    console.log('Upserting Categories...');
     // Seed Parent Categories first
     const parentCats = categoriesData.filter(c => c.parentId === null);
     for (const c of parentCats) {
-      await prisma.category.create({
-        data: {
+      await prisma.category.upsert({
+        where: { id: c.id },
+        update: {
+          name: c.name,
+          slug: c.slug,
+          type: c.type,
+          status: c.status,
+          description: c.description,
+          attributes: c.attributes ? JSON.stringify(c.attributes) : undefined
+        },
+        create: {
           id: c.id,
           name: c.name,
           slug: c.slug,
@@ -555,8 +559,18 @@ async function main() {
     // Seed Child Categories
     const childCats = categoriesData.filter(c => c.parentId !== null);
     for (const c of childCats) {
-      await prisma.category.create({
-        data: {
+      await prisma.category.upsert({
+        where: { id: c.id },
+        update: {
+          parentId: c.parentId,
+          name: c.name,
+          slug: c.slug,
+          type: c.type,
+          status: c.status,
+          description: c.description,
+          attributes: c.attributes ? JSON.stringify(c.attributes) : undefined
+        },
+        create: {
           id: c.id,
           parentId: c.parentId,
           name: c.name,
@@ -569,11 +583,32 @@ async function main() {
       });
     }
 
-    console.log('Seeding Products...');
+    console.log('Upserting Products...');
     for (const p of productsData) {
       const { categoryIds, ...rest } = p;
-      await prisma.product.create({
-        data: {
+      await prisma.product.upsert({
+        where: { id: rest.id },
+        update: {
+          productId: rest.productId,
+          sku: rest.sku,
+          name: rest.name,
+          slug: rest.slug,
+          segment: rest.segment,
+          price: rest.price,
+          promotionalPrice: rest.promotionalPrice,
+          stockQuantity: rest.stockQuantity,
+          stockStatus: rest.stockStatus,
+          lowStockThreshold: rest.lowStockThreshold,
+          shortDescription: rest.shortDescription,
+          description: rest.description,
+          status: rest.status,
+          images: rest.images,
+          attributes: rest.attributes,
+          categories: {
+            set: categoryIds.map(cid => ({ id: cid }))
+          }
+        },
+        create: {
           id: rest.id,
           productId: rest.productId,
           sku: rest.sku,
@@ -597,10 +632,26 @@ async function main() {
       });
     }
 
-    console.log('Seeding Articles...');
+    console.log('Upserting Articles...');
     for (const a of articlesData) {
-      await prisma.article.create({
-        data: {
+      await prisma.article.upsert({
+        where: { id: a.id },
+        update: {
+          title: a.title,
+          slug: a.slug,
+          category: a.category,
+          author: a.author,
+          summary: a.summary,
+          content: a.content,
+          thumbnail: a.thumbnail,
+          views: a.views,
+          status: a.status,
+          tags: a.tags,
+          metaTitle: a.metaTitle,
+          metaDescription: a.metaDescription,
+          publishedAt: a.publishedAt
+        },
+        create: {
           id: a.id,
           title: a.title,
           slug: a.slug,
@@ -619,25 +670,35 @@ async function main() {
       });
     }
 
-    console.log('Seeding Settings...');
-    await prisma.setting.create({
-      data: {
+    console.log('Upserting Settings...');
+    await prisma.setting.upsert({
+      where: { key: 'GLOBAL_SETTINGS' },
+      update: { value: JSON.stringify(globalSettingsData) },
+      create: {
         key: 'GLOBAL_SETTINGS',
         value: JSON.stringify(globalSettingsData)
       }
     });
 
-    console.log('Seeding Leads...');
+    console.log('Upserting Leads...');
     for (const l of leadsData) {
-      await prisma.lead.create({ data: l });
+      await prisma.lead.upsert({
+        where: { id: l.id },
+        update: l,
+        create: l
+      });
     }
 
-    console.log('Seeding Customers...');
+    console.log('Upserting Customers...');
     for (const c of customersData) {
-      await prisma.customer.create({ data: c });
+      await prisma.customer.upsert({
+        where: { id: c.id },
+        update: c,
+        create: c
+      });
     }
 
-    console.log('PostgreSQL database seeded successfully!');
+    console.log('PostgreSQL database seeded successfully (upsert — existing user data preserved)!');
   } catch (dbErr) {
     console.warn('Note: Could not complete PostgreSQL seed directly (DB may be offline or initializing on Railway):', dbErr);
   } finally {
