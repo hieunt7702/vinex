@@ -22,26 +22,40 @@ export default function AboutPage() {
       </div>
 
       <div className="relative z-10">
-        {/* Hero Section */}
-        <section className="relative py-20 lg:py-28 px-4 bg-[#074751] text-white flex flex-col items-center text-center overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+        {/* Hero Section with Botanical Panoramic Banner */}
+        <section className="relative py-20 lg:py-28 px-4 text-white flex flex-col items-center text-center overflow-hidden">
+          {/* Background Image Layer */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/bg_hero_gt.png"
+              alt="Giới thiệu VINEX - Vùng trồng và nông sản Việt"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+            {/* Ambient overlay: blends seamlessly with deep teal and ensures high contrast */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#074751]/55 via-[#074751]/30 to-[#074751]/75" />
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-15 mix-blend-overlay pointer-events-none"></div>
+          </div>
+
           <div className="relative z-10 max-w-4xl mx-auto">
-            <span className="text-vinex-gold font-bold tracking-widest text-[13px] uppercase mb-6 block">
+            <span className="text-vinex-gold font-bold tracking-widest text-[13px] uppercase mb-5 block drop-shadow-sm">
               {pg.hero_label || "VINEX LÀ AI"}
             </span>
-          <h1 className="text-[34px] md:text-[44px] lg:text-[52px] font-semibold uppercase tracking-tight leading-[1.2] mb-8">
-            {pg.hero_title || "GIỚI THIỆU VINEX"}
-          </h1>
-          <div className="w-[60px] h-[2px] bg-vinex-gold mx-auto mb-8"></div>
-          <p className="text-[16px] md:text-[18px] text-white/90 leading-relaxed font-medium max-w-3xl mx-auto">
-            {pg.hero_desc || "Công ty Cổ phần Xuất nhập khẩu và Thương mại Vinex hoạt động trong lĩnh vực hạt điều và nông sản Việt. Với nền tảng là nhà máy bóc tách điều thô, VINEX phát triển danh mục sản phẩm và các lựa chọn quà tặng dành cho doanh nghiệp."}
-          </p>
-        </div>
-      </section>
+            <h1 className="text-[34px] md:text-[44px] lg:text-[54px] font-semibold uppercase tracking-tight leading-[1.2] mb-6 drop-shadow-[0_4px_16px_rgba(0,0,0,0.4)]">
+              {pg.hero_title || "GIỚI THIỆU VINEX"}
+            </h1>
+            <div className="w-[60px] h-[2px] bg-vinex-gold mx-auto mb-6 shadow-sm"></div>
+            <p className="text-[16px] md:text-[18px] text-white/95 leading-relaxed font-medium max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+              {pg.hero_desc || "Công ty Cổ phần Xuất nhập khẩu và Thương mại Vinex hoạt động trong lĩnh vực hạt điều và nông sản Việt. Với nền tảng là nhà máy bóc tách điều thô, VINEX phát triển danh mục sản phẩm và các lựa chọn quà tặng dành cho doanh nghiệp."}
+            </p>
+          </div>
+        </section>
 
       {/* Section 1: Nền tảng hạt điều */}
-      <section className="py-16 lg:py-24 px-4 ">
-        <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <section className="py-16 lg:py-24">
+        <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div>
             <h2 className="text-[28px] md:text-[36px] font-semibold text-[#074751] mb-6 uppercase tracking-tight">
               {pg.section1_title || "NỀN TẢNG TỪ HOẠT ĐỘNG HẠT ĐIỀU"}
@@ -68,20 +82,31 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Section 2: Mở rộng danh mục nông sản */}
-      <section className="py-16 lg:py-24 px-4 ">
-        <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="order-2 lg:order-1 relative aspect-[4/3] rounded-[16px] overflow-hidden bg-slate-200">
+      {/* Section 2: Mở rộng hệ sản phẩm */}
+      <section className="py-20 lg:py-28 relative overflow-hidden">
+        {/* Background Image Layer */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/bg_section.png"
+            alt="Mở rộng hệ sản phẩm VINEX"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
+
+        <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
+          <div className="order-2 lg:order-1 relative aspect-[4/3] rounded-[20px] overflow-hidden bg-slate-100 shadow-[0_20px_45px_rgba(7,71,81,0.08)] border border-white/80">
             <Image
               src="/value2.png"
               alt="Mở rộng danh mục nông sản"
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-700 hover:scale-105"
             />
           </div>
           <div className="order-1 lg:order-2">
             <h2 className="text-[28px] md:text-[36px] font-semibold text-[#074751] mb-6 uppercase tracking-tight">
-              {pg.section2_title || "DANH MỤC SẢN PHẨM NÔNG SẢN VIỆT"}
+              {pg.section2_title || "MỞ RỘNG HỆ SẢN PHẨM"}
             </h2>
             <div className="w-[40px] h-[2px] bg-vinex-gold mb-6"></div>
             <p className="text-[16px] text-[#2b5963] leading-relaxed font-medium">
@@ -98,8 +123,8 @@ export default function AboutPage() {
       </section>
 
       {/* Section 3: Bao bì và quà tặng như lớp hoàn thiện */}
-      <section className="py-16 lg:py-24 px-4 ">
-        <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <section className="py-16 lg:py-24">
+        <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div>
             <h2 className="text-[28px] md:text-[36px] font-semibold text-[#074751] mb-6 uppercase tracking-tight">
               {pg.section3_title || "KẾT NỐI SẢN PHẨM VỚI QUÀ TẶNG DOANH NGHIỆP"}

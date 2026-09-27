@@ -2,7 +2,13 @@ import { NextResponse } from 'next/server';
 import { store } from '../store';
 
 export async function GET() {
-  return NextResponse.json(store.articles);
+  const sorted = [...store.articles].sort((a, b) => {
+    const timeA = new Date(a.publishedAt || a.createdAt || 0).getTime();
+    const timeB = new Date(b.publishedAt || b.createdAt || 0).getTime();
+    if (timeA && timeB && timeA !== timeB) return timeB - timeA;
+    return (Number(b.id) || 0) - (Number(a.id) || 0);
+  });
+  return NextResponse.json(sorted);
 }
 
 export async function POST(request: Request) {

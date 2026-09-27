@@ -43,7 +43,7 @@ export const CTABanner = () => {
       {/* Semi-transparent overlay for luxury contrast */}
       <div className="absolute inset-0 bg-[#0A323B]/70 z-0 pointer-events-none"></div>
 
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         
         {/* Content & Buttons */}
         <div className="lg:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">

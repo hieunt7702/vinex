@@ -3,10 +3,10 @@ import { GlassCard } from "@/components/ui/glass";
 
 export const ProductCategories = () => {
   const categories = [
-    { title: "Hạt & sản phẩm từ hạt", image: "/images/product/hat_orchard_nút/p1.png", href: "/vi/san-pham" },
-    { title: "Trà & cà phê", image: "/images/product/tra_premium_essiora_tea/p1.png", href: "/vi/san-pham" },
-    { title: "Bánh & kẹo", image: "/images/product/banh_premium_petite_deights/p1.png", href: "/vi/san-pham" },
-    { title: "Nông sản chế biến", image: "/images/product/mut_golden_grove/p1.jpg", href: "/vi/san-pham" },
+    { title: "Hạt & sản phẩm từ hạt", image: "/images/product/Orchard nuts 1.png", href: "/vi/san-pham" },
+    { title: "Trà & cà phê", image: "/images/product/Tra` premium Essiora 1.png", href: "/vi/san-pham" },
+    { title: "Bánh & kẹo", image: "/images/product/Premium petite delights.png", href: "/vi/san-pham" },
+    { title: "Nông sản chế biến", image: "/images/product/xoa`i sa^'y de?o.png", href: "/vi/san-pham" },
   ];
 
   return (

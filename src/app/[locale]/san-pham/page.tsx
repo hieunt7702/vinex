@@ -3,20 +3,22 @@ import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import Link from 'next/link';
 import { getDictionary } from '@/dictionaries';
 import type { Locale } from '@/dictionaries';
-import { products } from '@/data/products';
+import { getPublicProducts } from '@/lib/dataService';
 import { ProductCatalog } from '@/components/products/ProductCatalog';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Sản phẩm hạt điều và nông sản Việt | VINEX",
   description: "Khám phá hạt điều tẩm vị, trà, cà phê, bánh, kẹo, trái cây sấy và sản phẩm nông sản VINEX đang phát triển.",
 };
 
-// Dữ liệu mẫu (sẽ được thay thế bằng CMS sau)
-
 export default async function ProductsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = getDictionary(locale as Locale);
   const pg = t.pages.products;
+  const liveProducts = getPublicProducts();
+
   return (
     <SmoothScroll>
       <main className="w-full flex flex-col min-h-screen text-vinex-black pt-[90px] relative overflow-clip">
@@ -28,17 +30,22 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
           <div className="absolute bottom-[-10%] left-[20%] w-[60%] h-[60%] bg-[#5C7B6C]/30 rounded-full blur-[160px]" />
         </div>
 
-        {/* Header Section */}
-        <section className="relative z-10 px-4 md:px-8 xl:px-12 pt-20 pb-12 max-w-[1400px] mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6">{pg.hero_title}</h1>
-          <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>
-          <p className="text-lg text-[#074751]/80 max-w-2xl mx-auto font-light leading-relaxed">
-             {pg.hero_desc}
+        {/* Header Section matching mockup */}
+        <section className="relative z-10 px-4 md:px-8 xl:px-12 pt-12 sm:pt-14 pb-8 max-w-[1536px] mx-auto text-center w-full">
+          <span className="text-gray-500 font-medium tracking-[0.25em] text-[12px] uppercase mb-2.5 block">
+            {locale === 'en' ? 'ESSENCE OF VIETNAMESE AGRI' : 'TINH HOA NÔNG SẢN VIỆT'}
+          </span>
+          <h1 className="text-4xl md:text-5xl lg:text-[52px] font-marcellus text-[#074751] mb-3">
+            {pg.hero_title || 'Danh mục sản phẩm'}
+          </h1>
+          <div className="w-[50px] h-[2px] bg-vinex-gold mx-auto mb-3"></div>
+          <p className="text-[15px] sm:text-[16px] text-gray-600 max-w-xl mx-auto font-light leading-relaxed">
+            {locale === 'en' ? 'Choose delicious taste every day, find meaningful gifts.' : 'Chọn vị ngon mỗi ngày, tìm món quà thật ý nghĩa.'}
           </p>
         </section>
 
         {/* Filters and Product List */}
-        <ProductCatalog initialProducts={products} />
+        <ProductCatalog initialProducts={liveProducts} />
 
       </main>
     </SmoothScroll>

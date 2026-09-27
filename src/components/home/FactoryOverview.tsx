@@ -7,12 +7,12 @@ export const FactoryOverview = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const steps = [
-    { name: "Tiếp nhận", alt: "Hình ảnh bước tiếp nhận điều thô", img: "/images/factory/step-1-tiep-nhan.jpg" },
-    { name: "Bóc tách", alt: "Hình ảnh công đoạn bóc tách vỏ điều", img: "/images/factory/step-2-boc-tach.jpg" },
-    { name: "Bóc lụa", alt: "Hình ảnh công đoạn bóc lụa nhân điều", img: "/images/factory/step-3-boc-lua.jpg" },
-    { name: "Phân loại", alt: "Hình ảnh hệ thống phân loại nhân điều", img: "/images/factory/step-4-phan-loai.jpg" },
-    { name: "Kiểm tra", alt: "Hình ảnh kiểm tra chất lượng KCS", img: "/images/factory/step-5-kiem-tra.jpg" },
-    { name: "Đóng gói", alt: "Hình ảnh đóng gói và hút chân không", img: "/images/factory/step-6-dong-goi.jpg" },
+    { name: "Tiếp nhận", alt: "Hình ảnh bước tiếp nhận điều thô", img: "/images/banner/tu_van.png" },
+    { name: "Bóc tách", alt: "Hình ảnh công đoạn bóc tách vỏ điều", img: "/images/banner/nha_may_boc_tach.png" },
+    { name: "Bóc lụa", alt: "Hình ảnh công đoạn bóc lụa nhân điều", img: "/images/banner/nha_may2.png" },
+    { name: "Phân loại", alt: "Hình ảnh hệ thống phân loại nhân điều", img: "/images/banner/nha_may3.png" },
+    { name: "Kiểm tra", alt: "Hình ảnh kiểm tra chất lượng KCS", img: "/images/banner/nha_may4.png" },
+    { name: "Đóng gói", alt: "Hình ảnh đóng gói và hút chân không", img: "/images/banner/san_xuat.png" },
   ];
 
   return (

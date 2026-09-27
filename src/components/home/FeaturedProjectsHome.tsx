@@ -68,7 +68,7 @@ export const FeaturedProjectsHome: React.FC = () => {
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-gradient-to-tl from-teal-500/25 to-emerald-400/20 rounded-full blur-[120px] pointer-events-none translate-x-1/4 translate-y-1/4" />
       <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-400/15 to-cyan-400/15 rounded-full blur-[100px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 xl:px-12 relative z-10 w-full">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 relative z-10 w-full">
         {/* Header Row: Badge, Headline & Top-Right Button */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 sm:mb-12">
           {/* Left: Badge & Headline */}

@@ -8,16 +8,16 @@ import { GlassCard, GlassButton } from "@/components/ui/glass";
 
 export const Featured = () => {
   const collections = [
-    { title: "PREMIUM", img: "/images/product/bao_bi_qua_tang/p1.png" },
-    { title: "EXECUTIVE", img: "/images/product/bao_bi_qua_tang/p2.png" },
-    { title: "BUSINESS", img: "/images/product/bao_bi_qua_tang/p3.png" },
-    { title: "FAMILY", img: "/images/product/bao_bi_qua_tang/p4.png" },
-    { title: "SPECIAL", img: "/images/product/bao_bi_qua_tang/p5.png" },
+    { title: "PREMIUM", img: "/images/product/Collection 1.png" },
+    { title: "EXECUTIVE", img: "/images/product/Collection 2.png" },
+    { title: "BUSINESS", img: "/images/product/Collection 3.png" },
+    { title: "FAMILY", img: "/images/product/Collection 4.png" },
+    { title: "SPECIAL", img: "/images/product/Collection 6.png" },
   ];
 
   return (
     <section className="py-16 lg:py-20 bg-vinex-ivory text-vinex-black">
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full">
 
         {/* Section Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">

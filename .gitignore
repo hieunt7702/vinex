@@ -39,5 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-src/company profile VINEX 2.pdf
-ui_vinex*.png
+
+# heavy local design assets
+*.pdf
+*.mp4
+*.log
+ui*.png
+home_des.png
+vi-diff.txt

@@ -40,8 +40,8 @@ export default function CustomGiftsPage() {
       </section>
 
       {/* Options */}
-      <section className="py-20 px-4  border-b border-black/5">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 md:px-8 xl:px-12 border-b border-black/5 max-w-[1536px] mx-auto w-full">
+        <div>
           <div className="text-center mb-16">
             <h2 className="text-3xl font-marcellus text-vinex-teal mb-4">Các Lựa Chọn Cá Nhân Hóa</h2>
             <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>
@@ -69,8 +69,8 @@ export default function CustomGiftsPage() {
       </section>
 
       {/* Process */}
-      <section className="py-20 px-4 ">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 md:px-8 xl:px-12 max-w-[1536px] mx-auto w-full">
+        <div>
           <div className="text-center mb-16">
             <h2 className="text-3xl font-marcellus text-vinex-teal mb-4">Quy Trình Triển Khai</h2>
             <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>

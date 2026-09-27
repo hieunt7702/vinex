@@ -12,7 +12,7 @@ import { FinalCTA } from "@/components/home/FinalCTA";
 
 const Divider = () => (
   <div className="w-full relative z-10 flex justify-center py-0">
-    <div className="w-full max-w-[1400px] h-[1px] bg-gradient-to-r from-transparent via-vinex-gold/30 to-transparent"></div>
+    <div className="w-full max-w-[1536px] h-[1px] bg-gradient-to-r from-transparent via-vinex-gold/30 to-transparent"></div>
   </div>
 );
 

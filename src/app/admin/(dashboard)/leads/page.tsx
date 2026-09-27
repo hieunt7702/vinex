@@ -7,6 +7,8 @@ import { format } from 'date-fns';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
 import { toast } from 'sonner';
+import { AdminHeaderPortal } from '@/admin-components/layout/AdminHeaderPortal';
+import { CurrencyInput } from '@/admin-components/ui/CurrencyInput';
 
 const STATUS_MAP: Record<string, string> = {
   'NEW': 'Mới tạo',
@@ -205,144 +207,82 @@ const handleDelete = async (id: number) => {
   return (
     <div className="h-full flex flex-col space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-500">
 
-      {/* Top Header & Filters */}
-      <div className="flex flex-col gap-3 flex-shrink-0">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-white dark:bg-[#14151a] p-3 rounded-[4px] border border-gray-200 dark:border-gray-800">
-          <div className="flex flex-1 items-center gap-2 max-w-xl">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setPage(0); }}
-                placeholder="Tìm Tên, SĐT Khách hàng..."
-                className="pl-9 pr-4 py-2 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 w-full text-gray-900 dark:text-gray-100 transition-all"
-              />
-            </div>
+      {/* Top Header Portal Injection */}
+      <AdminHeaderPortal
+        title="Yêu Cầu Tư Vấn & Báo Giá"
+        description="Quản lý khách hàng tiềm năng, nhu cầu đặt quà B2B & nông sản"
+        search={
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setPage(0); }}
+              placeholder="Tìm tên, SĐT khách hàng..."
+              className="pl-9 pr-4 py-2 w-[200px] sm:w-[260px] bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 dark:focus:ring-[#5865f2]/30 focus:border-[#5865f2]/40 text-gray-900 dark:text-gray-100 placeholder-gray-400 transition-all shadow-xs"
+            />
+          </div>
+        }
+        actions={
+          <button
+            onClick={() => {
+              setModalMode('add');
+              setFormData({
+                id: '', fullName: '', phone: '', email: '', company: '',
+                budget: '', need: '', status: 'NEW', note: '', products: []
+              });
+              setErrors({});
+              setIsDrawerOpen(true);
+            }}
+            className="flex items-center gap-2 px-3.5 py-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors border-0 cursor-pointer shadow-sm shrink-0"
+          >
+            <Plus className="w-4 h-4" />
+            <span className="hidden sm:inline">Tạo Yêu Cầu Mới</span>
+            <span className="sm:hidden">Thêm</span>
+          </button>
+        }
+      />
 
-            <button
-              onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
-              className={`flex items-center gap-2 px-3 h-[38px] rounded-[4px] text-sm font-medium transition-all border cursor-pointer ${isFiltersExpanded
-                ? 'bg-[#5865f2]/10 text-[#5865f2] border-[#5865f2]/50 font-medium'
-                : 'bg-white dark:bg-[#1a1b23] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23]'
-                }`}
-            >
-              <Filter className="w-4 h-4" />
-              <span>Bộ lọc</span>
-              {activeFiltersCount > 0 && <span className="flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-[#5865f2] text-white text-[11px] font-medium rounded-full">{activeFiltersCount}</span>}
-            </button>
+      {/* Permanent Filter Bar (Luôn luôn hiển thị theo yêu cầu) */}
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] flex-shrink-0 shadow-xs">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2 text-xs font-semibold text-gray-700 dark:text-gray-300">
+            <Filter className="w-3.5 h-3.5 text-[#5865f2]" />
+            <span>Trạng Thái:</span>
           </div>
 
-          <div className="flex items-center gap-2 justify-end">
-            {selectedIds.length > 0 && (
-              <button
-                onClick={handleBulkDelete}
-                className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-[4px] text-sm font-medium transition-colors border-0 cursor-pointer"
-              >
-                <Trash2 className="w-4 h-4" />
-                Xóa ({selectedIds.length})
-              </button>
-            )}
-            <button
-              onClick={() => {
-                setModalMode('add');
-                setFormData({
-                  id: '', customerName: '', phone: '', email: '', location: '', source: 'Tự nhập', assignee: '',
-                  projectType: 'Chung cư', area: 0, projectLocation: '', currentStatus: '', budget: '200-500',
-                  timeline: '1-thang', style: 'Hiện đại', priority: 'MEDIUM', needs: 'Thiết kế & Thi công trọn gói',
-                  needSupervision: false, needProjectManagement: false, notes: '', status: 'NEW',
-                  leadClassification: 'WARM', proposedUnits: '', connectedUnit: '', callNotes: '', chatNotes: '', followUpDate: '',
-                });
-                setErrors({});
-                setIsDrawerOpen(true);
-              }}
-              className="flex items-center gap-2 px-4 py-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors border-0 cursor-pointer"
-            >
-              <Plus className="w-4 h-4" /> Tạo Yêu Cầu
-            </button>
+          <div className="w-[180px]">
+            <CustomDropdown
+              className="w-full"
+              options={[{ value: '', label: 'Tất cả trạng thái' }, ...Object.entries(STATUS_MAP).map(([v, l]) => ({ value: v, label: l }))]}
+              value={statusFilter[0] || ''}
+              onChange={v => setStatusFilter(v ? [v] : [])}
+            />
           </div>
+
+          {activeFiltersCount > 0 && (
+            <button
+              onClick={() => setStatusFilter([])}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[4px] border border-rose-300 hover:border-rose-400 dark:border-rose-800/80 dark:hover:border-rose-700 bg-rose-50/60 hover:bg-rose-100/70 dark:bg-rose-950/20 dark:hover:bg-rose-900/30 text-xs text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 font-medium transition-all cursor-pointer shadow-2xs whitespace-nowrap"
+            >
+              <X className="w-3.5 h-3.5 shrink-0" />
+              <span>Xóa bộ lọc ({activeFiltersCount})</span>
+            </button>
+          )}
         </div>
 
-        {isFiltersExpanded && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[4px] animate-in slide-in-from-top-2 duration-200">
-            <div className="flex flex-col gap-1.5 relative">
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Trạng thái</span>
-              <button onClick={() => setOpenStatusPopover(!openStatusPopover)} className="flex items-center justify-between w-full h-9 px-3 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23]">
-                <span className="truncate">{statusFilter.length === 0 ? "Tất cả trạng thái" : statusFilter.map(s => STATUS_MAP[s]).join(', ')}</span>
-                <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 ml-2" />
-              </button>
-              {openStatusPopover && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setOpenStatusPopover(false); }} />
-                  <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm shadow-black/5 dark:shadow-none">
-                    <div className="flex flex-col gap-1">
-                      {Object.entries(STATUS_MAP).map(([val, label]) => (
-                        <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm">
-                          <input type="checkbox" checked={statusFilter.includes(val)} onChange={(e) => {
-                            if (e.target.checked) setStatusFilter([...statusFilter, val]);
-                            else setStatusFilter(statusFilter.filter(s => s !== val));
-                            setPage(0);
-                          }} className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300" />
-                          <span>{label}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-1.5 relative">
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Tiềm năng</span>
-              <button onClick={() => setOpenClassPopover(!openClassPopover)} className="flex items-center justify-between w-full h-9 px-3 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23]">
-                <span className="truncate">{classFilter.length === 0 ? "Tất cả mức độ" : classFilter.map(s => CLASS_MAP[s]).join(', ')}</span>
-                <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 ml-2" />
-              </button>
-              {openClassPopover && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setOpenClassPopover(false); }} />
-                  <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm shadow-black/5 dark:shadow-none">
-                    <div className="flex flex-col gap-1">
-                      {Object.entries(CLASS_MAP).map(([val, label]) => (
-                        <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm">
-                          <input type="checkbox" checked={classFilter.includes(val)} onChange={(e) => {
-                            if (e.target.checked) setClassFilter([...classFilter, val]);
-                            else setClassFilter(classFilter.filter(s => s !== val));
-                            setPage(0);
-                          }} className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300" />
-                          <span>{label}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
+        {selectedIds.length > 0 && (
+          <button
+            onClick={handleBulkDelete}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-[4px] text-xs font-medium transition-colors border-0 cursor-pointer shadow-xs"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+            Xóa {selectedIds.length} mục đã chọn
+          </button>
         )}
-
-        {/* Active tags */}
-        <div className="flex flex-wrap items-center gap-2 mt-1">
-          {hasActiveFilter && <span className="text-sm text-gray-500 dark:text-gray-400 font-medium mr-1">Đang lọc:</span>}
-          {statusFilter.length > 0 && (
-            <div className="flex items-center gap-1.5 pl-2.5 pr-1 py-1 bg-[#5865f2]/10 text-[#5865f2] border border-[#5865f2]/20 rounded-[4px] text-sm font-medium">
-              Trạng thái: {statusFilter.map(s => STATUS_MAP[s]).join(', ')}
-              <button onClick={() => setStatusFilter([])} className="p-0.5 hover:bg-[#5865f2]/20 rounded-[4px] transition-colors ml-1"><X className="w-3.5 h-3.5" /></button>
-            </div>
-          )}
-          {classFilter.length > 0 && (
-            <div className="flex items-center gap-1.5 pl-2.5 pr-1 py-1 bg-amber-50 dark:bg-amber-500/100/10 text-amber-600 border border-amber-500/20 rounded-[4px] text-sm font-medium">
-              Tiềm năng: {classFilter.map(c => CLASS_MAP[c]).join(', ')}
-              <button onClick={() => setClassFilter([])} className="p-0.5 hover:bg-amber-50 dark:bg-amber-500/100/20 rounded-[4px] transition-colors ml-1"><X className="w-3.5 h-3.5" /></button>
-            </div>
-          )}
-          {hasActiveFilter && (
-            <button onClick={() => { setStatusFilter([]); setClassFilter([]); setPage(0); }} className="flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] border border-red-500 text-xs font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors ml-2"><RotateCcw strokeWidth={2} className="w-3.5 h-3.5" /> Đặt lại</button>
-          )}
-        </div>
       </div>
 
-      {/* Summary Card */}
+{/* Summary Card */}
       <div className="rounded-[4px] border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] flex-shrink-0 transition-all duration-300">
         <div className={`p-4 ${isSummaryCollapsed ? 'pb-4' : 'sm:p-5 sm:pb-5'}`}>
           <div className="flex items-center justify-between">
@@ -401,7 +341,7 @@ const handleDelete = async (id: number) => {
       {/* Data Table */}
       <div className="flex-1 flex flex-col min-h-0 rounded-[4px] border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] overflow-hidden">
         <div className="flex-1 overflow-y-auto">
-          <table className="w-full text-left border-collapse min-w-max">
+          <table className="w-full text-left border-collapse">
             <thead className="sticky top-0 z-10 bg-gray-50 dark:bg-[#1a1b23] border-b border-gray-200 dark:border-gray-800">
               <tr>
                 <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs">
@@ -565,7 +505,7 @@ const handleDelete = async (id: number) => {
             </div>
 
             <div className="flex-1 overflow-y-auto custom-scrollbar">
-              <form id="lead-form" onSubmit={handleSave} className="p-6 space-y-8">
+              <form id="lead-form" onSubmit={handleSave} className="p-6 pb-32 space-y-8">
                 {/* Section: Basic */}
                 <div className="space-y-5">
                   <h3 className="text-xs font-medium text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
@@ -615,7 +555,7 @@ const handleDelete = async (id: number) => {
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Diện tích (m²)</label>
-                      <input type="number" value={formData.area || ''} onChange={e => setFormData({ ...formData, area: Number(e.target.value) })} className="w-full px-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40 transition-all hover:bg-white dark:hover:bg-[#14151a]" />
+                      <CurrencyInput value={formData.area || 0} onChange={val => setFormData({ ...formData, area: val })} allowZero={false} suffix="m²" placeholder="0" className="w-full px-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40 transition-all hover:bg-white dark:hover:bg-[#14151a]" />
                     </div>
                     <div className="space-y-1.5 relative z-30">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Ngân sách dự kiến</label>

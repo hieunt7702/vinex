@@ -34,17 +34,17 @@ export const GalleryGift = () => {
   }, []);
 
   const images = [
-    { id: 1, title: "The Art of Giving", img: "/images/product/bao_bi_qua_tang/p11.png", aspect: "aspect-[3/4]", size: "row-span-2" },
-    { id: 2, title: "Premium Textures", img: "/images/product/bao_bi_qua_tang/p12.png", aspect: "aspect-square", size: "row-span-1" },
-    { id: 3, title: "Golden Details", img: "/images/product/bao_bi_qua_tang/p13.png", aspect: "aspect-[4/3]", size: "row-span-1" },
-    { id: 4, title: "Elegant Unboxing", img: "/images/product/bao_bi_qua_tang/p14.png", aspect: "aspect-square", size: "row-span-1" },
-    { id: 5, title: "Joyful Moments", img: "/images/product/bao_bi_qua_tang/p15.png", aspect: "aspect-[3/4]", size: "row-span-2" },
-    { id: 6, title: "Timeless Quality", img: "/images/product/bao_bi_qua_tang/p16.png", aspect: "aspect-[4/3]", size: "row-span-1" },
+    { id: 1, title: "The Art of Giving", img: "/images/product/Collection 7.png", aspect: "aspect-[3/4]", size: "row-span-2" },
+    { id: 2, title: "Premium Textures", img: "/images/product/Collection 9.png", aspect: "aspect-square", size: "row-span-1" },
+    { id: 3, title: "Golden Details", img: "/images/product/Collection 10.png", aspect: "aspect-[4/3]", size: "row-span-1" },
+    { id: 4, title: "Elegant Unboxing", img: "/images/product/Collection 11.png", aspect: "aspect-square", size: "row-span-1" },
+    { id: 5, title: "Joyful Moments", img: "/images/product/Collection 12.png", aspect: "aspect-[3/4]", size: "row-span-2" },
+    { id: 6, title: "Timeless Quality", img: "/images/product/Collection 13.png", aspect: "aspect-[4/3]", size: "row-span-1" },
   ];
 
   return (
     <section ref={container} className="py-16 lg:py-20 bg-vinex-white text-vinex-black">
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20">
           <div className="max-w-2xl">
             <h2 className="text-sm tracking-widest text-vinex-blue uppercase mb-4 font-semibold">Product Gallery</h2>

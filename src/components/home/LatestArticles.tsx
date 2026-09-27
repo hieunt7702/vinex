@@ -22,10 +22,42 @@ export const LatestArticles: React.FC = () => {
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [articles, setArticles] = useState<any[]>(t.journal.articles || []);
+
+  React.useEffect(() => {
+    async function fetchLatest() {
+      try {
+        const res = await fetch('/api/v1/articles', { cache: 'no-store' });
+        if (!res.ok) return;
+        const data = await res.json();
+        const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
+        const published = list.filter((a: any) => a.status === 'PUBLISHED');
+        if (published.length > 0) {
+          setArticles(published.map((a: any, idx: number) => ({
+            id: a.id || idx,
+            slug: a.slug,
+            title: a.title,
+            date: a.publishedAt ? (() => {
+              const d = new Date(a.publishedAt);
+              return isNaN(d.getTime()) ? (a.date || 'Gần đây') : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+            })() : (a.date || 'Gần đây'),
+            img: (typeof a.thumbnail === 'string' && a.thumbnail) ? a.thumbnail : `/images/product/Cashew${(idx % 6) + 1}.png`
+          })));
+        }
+      } catch (e) {
+        console.warn('Could not fetch articles for homepage:', e);
+      }
+    }
+    fetchLatest();
+
+    const handleSync = () => fetchLatest();
+    window.addEventListener('vinex_articles_updated', handleSync);
+    return () => window.removeEventListener('vinex_articles_updated', handleSync);
+  }, [t.journal.articles]);
 
   return (
     <section className="py-14 sm:py-18 lg:py-24 bg-vinex-ivory relative overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 xl:px-12 relative z-10 w-full">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 relative z-10 w-full">
 
         {/* Header Row: Badge, Headline & Top-Right Button */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 sm:mb-12">
@@ -86,13 +118,13 @@ export const LatestArticles: React.FC = () => {
               }}
               className="!overflow-visible"
             >
-              {t.journal.articles.map((article, idx) => (
+              {articles.map((article, idx) => (
                 <SwiperSlide
                   key={article.id || idx}
                   className="!w-[260px] sm:!w-[285px] md:!w-[310px]"
                 >
                   <Link
-                    href={`/${lang}/tin-tuc/${(article as any).slug || article.id || ''}`}
+                    href={`/${lang}/tin-tuc/${article.slug || ''}`}
                     className="group flex flex-col h-full rounded-[24px] overflow-hidden select-none block"
                   >
                     <GlassCard
@@ -104,7 +136,7 @@ export const LatestArticles: React.FC = () => {
                       {/* Top Article Image */}
                       <div className="relative aspect-[16/9.5] w-full overflow-hidden bg-[#eef3ef]">
                         <Image
-                          src={`/images/product/Cashew${(idx % 6) + 1}.png`}
+                          src={article.img || `/images/product/Cashew${(idx % 6) + 1}.png`}
                           alt={article.title}
                           fill
                           sizes="(max-width: 640px) 260px, (max-width: 1024px) 285px, 310px"

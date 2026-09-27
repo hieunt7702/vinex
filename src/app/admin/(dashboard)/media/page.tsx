@@ -6,6 +6,8 @@ import { ImageUploader } from '@/admin-components/ui/image-uploader';
 import apiClient from '@/admin-lib/apiClient';
 import { toast } from 'sonner';
 
+import { AdminHeaderPortal } from '@/admin-components/layout/AdminHeaderPortal';
+
 export default function MediaLibraryPage() {
   const { confirm } = useConfirm();
   const [searchTerm, setSearchTerm] = useState('');
@@ -47,14 +49,14 @@ export default function MediaLibraryPage() {
       variant: 'danger',
       onConfirm: async () => {
         try {
-        await apiClient.delete(`/media/${id}`);
-        setMediaFiles(mediaFiles.filter(f => f.id !== id));
-        toast.success('Xóa ảnh thành công');
-      } catch (error) {
-        toast.error('Lỗi khi xóa ảnh');
+          await apiClient.delete(`/media/${id}`);
+          setMediaFiles(mediaFiles.filter(f => f.id !== id));
+          toast.success('Xóa ảnh thành công');
+        } catch (error) {
+          toast.error('Lỗi khi xóa ảnh');
+        }
       }
-      }
-    })
+    });
   };
 
   const handleUploadSuccess = () => {
@@ -73,16 +75,23 @@ export default function MediaLibraryPage() {
   };
 
   return (
-    <div className="h-full flex flex-col space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0">
-        <div>
-          <h2 className="text-xl font-medium tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
-            <ImageIcon className="w-5 h-5 text-[#5865f2]" />
-            Thư viện Media
-          </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Quản lý tập trung toàn bộ hình ảnh được lưu trữ trên Cloudinary.</p>
-        </div>
-      </div>
+    <div className="h-full flex flex-col space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <AdminHeaderPortal
+        title="Thư Viện Media"
+        description="Quản lý tập trung toàn bộ hình ảnh và tài nguyên thương hiệu"
+        search={
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Tìm kiếm theo tên file..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9 pr-4 py-2 w-[220px] sm:w-[280px] bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 text-gray-900 dark:text-white transition-all shadow-xs"
+            />
+          </div>
+        }
+      />
 
       <div className="flex-1 flex flex-col min-h-0 bg-white dark:bg-[#14151a] rounded-[4px] border border-gray-200 dark:border-gray-800 overflow-hidden">
         <div className="p-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] flex-shrink-0">
@@ -100,18 +109,6 @@ export default function MediaLibraryPage() {
           </div>
         </div>
 
-        <div className="p-4 border-b border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-[#1a1b23] flex-shrink-0">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Tìm kiếm theo tên file..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 text-gray-900 dark:text-white transition-all"
-            />
-          </div>
-        </div>
 
         <div className="flex-1 p-6 overflow-y-auto">
           {filteredMedia.length > 0 ? (

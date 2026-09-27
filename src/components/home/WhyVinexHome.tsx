@@ -31,7 +31,7 @@ export const WhyVinexHome: React.FC = () => {
 
   return (
     <section className="py-14 sm:py-18 lg:py-24 bg-vinex-ivory relative overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 xl:px-12 relative z-10 w-full">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 relative z-10 w-full">
 
         {/* Header Row: Badge, Title & Top-Right Button */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 sm:mb-12">

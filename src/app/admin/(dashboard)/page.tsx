@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import {
-  Building2, ShieldCheck, Newspaper, Globe, EyeOff, Eye,
-  CalendarDays, X, Activity, MessageSquare, Clock, TrendingUp, TrendingDown, MoreHorizontal, FileText, BarChart2, ChevronLeft, ChevronRight, CheckCircle2
+  Package, ShieldCheck, Newspaper, Globe, EyeOff, Eye,
+  CalendarDays, X, Activity, MessageSquare, Clock, TrendingUp, TrendingDown, MoreHorizontal, FileText, BarChart2, ChevronLeft, ChevronRight, CheckCircle2, ShoppingBag, Sparkles
 } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/admin-components/ui/popover';
 import { Calendar } from '@/admin-components/ui/calendar';
@@ -89,9 +89,9 @@ export default function DashboardPage() {
           'bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400';
 
     return (
-      <div className="relative overflow-hidden rounded-[4px]-[12px] bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 p-5 flex flex-col">
+      <div className="relative overflow-hidden rounded-[4px] bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 p-5 flex flex-col shadow-sm">
         <div className="flex justify-between items-start mb-4">
-          <div className={`w-10 h-10 rounded-[4px]-[12px] flex items-center justify-center ${bgClass}`}>
+          <div className={`w-10 h-10 rounded-[4px] flex items-center justify-center ${bgClass}`}>
             <Icon className="w-5 h-5" />
           </div>
           <div className={`flex items-center gap-1.5 px-2 py-1 rounded-[4px] text-[11px] font-medium ${isPositive ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400' : 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400'}`}>
@@ -102,7 +102,7 @@ export default function DashboardPage() {
 
         <div>
           <h3 className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-1">{title}</h3>
-          <p className="text-2xl font-medium text-gray-900 dark:text-white">{isLoading ? '...' : value}</p>
+          <p className="text-2xl font-semibold text-gray-900 dark:text-white">{isLoading ? '...' : value}</p>
         </div>
       </div>
     );
@@ -114,12 +114,12 @@ export default function DashboardPage() {
         'bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400';
 
     return (
-      <div className="bg-white dark:bg-[#1a1b23] rounded-[4px]-[12px] p-5 border border-gray-200 dark:border-gray-800 flex flex-col">
+      <div className="bg-white dark:bg-[#1a1b23] rounded-[4px] p-5 border border-gray-200 dark:border-gray-800 flex flex-col shadow-sm">
         <div className="flex items-center gap-3 mb-6">
           <div className={`w-8 h-8 rounded-[4px] flex items-center justify-center shrink-0 ${bgClass}`}>
             <Icon className="w-4 h-4" />
           </div>
-          <h4 className="text-[14px] font-medium text-gray-900 dark:text-white">{title}</h4>
+          <h4 className="text-[14px] font-semibold text-gray-900 dark:text-white">{title}</h4>
         </div>
 
         <div className="flex-1 flex flex-col gap-4">
@@ -142,16 +142,15 @@ export default function DashboardPage() {
     );
   };
 
-  // Dynamic Pie Chart Data based on actual stats
+  // Dynamic Pie Chart Data based on actual leads
   const pieData = [
-    { name: 'Chờ xử lý', value: stats?.pendingLeads || 0, color: '#f59e0b' },
-    { name: 'Đang tư vấn', value: stats?.processingLeads || 0, color: '#3b82f6' },
-    { name: 'Hoàn thành', value: (stats?.totalLeads || 0) - (stats?.pendingLeads || 0) - (stats?.processingLeads || 0), color: '#10b981' }
+    { name: 'Chờ xử lý / Mới', value: stats?.pendingLeads || 0, color: '#f59e0b' },
+    { name: 'Đang tư vấn / Báo giá', value: stats?.processingLeads || 0, color: '#3b82f6' },
+    { name: 'Hoàn tất / Đã chốt', value: stats?.completedLeads || 0, color: '#10b981' }
   ].filter(d => d.value > 0);
 
-  // Fallback if empty
   if (pieData.length === 0) {
-    pieData.push({ name: 'Chưa có', value: 1, color: '#e5e7eb' });
+    pieData.push({ name: 'Chưa có yêu cầu', value: 1, color: '#e5e7eb' });
   }
 
   return (
@@ -160,8 +159,12 @@ export default function DashboardPage() {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-medium text-gray-900 dark:text-white">Tổng quan Hệ sinh thái</h2>
-          <p className="text-sm font-normal text-gray-500 dark:text-gray-400 mt-1">Theo dõi các chỉ số quan trọng và hiệu suất hoạt động.</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+            Tổng quan Hệ thống VINEX
+          </h2>
+          <p className="text-sm font-normal text-gray-500 dark:text-gray-400 mt-1">
+            Trung tâm quản trị Nông sản cao cấp, Hạt điều xuất khẩu & Quà tặng doanh nghiệp.
+          </p>
         </div>
 
         {/* Modern Date Picker */}
@@ -200,35 +203,36 @@ export default function DashboardPage() {
 
       {/* Primary KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        <MetricCard title="Đơn vị Đối tác" value={stats?.totalUnits || 0} icon={Building2} trend="+12% tháng trước" isPositive={true} baseColor="blue" />
-        <MetricCard title="Yêu cầu Tư vấn" value={stats?.totalLeads || 0} icon={MessageSquare} trend="+24% tháng trước" isPositive={true} baseColor="emerald" />
-        <MetricCard title="Lượt xem Bài viết" value={stats?.totalArticleViews || 0} icon={Eye} trend="+18% tháng trước" isPositive={true} baseColor="rose" />
-        <MetricCard title="Hệ thống Nội dung" value={stats?.totalArticles || 0} icon={Newspaper} trend="+8% tháng trước" isPositive={true} baseColor="amber" />
+        <MetricCard title="Sản Phẩm Nông Sản" value={stats?.totalProducts || 0} icon={Package} trend="+15% tháng này" isPositive={true} baseColor="blue" />
+        <MetricCard title="Yêu Cầu Báo Giá (B2B)" value={stats?.totalLeads || 0} icon={MessageSquare} trend="+28% tuần này" isPositive={true} baseColor="emerald" />
+        <MetricCard title="Lượt Tiếp Cận / Xem" value={(stats?.totalArticleViews || 0).toLocaleString()} icon={Eye} trend="+34% tháng này" isPositive={true} baseColor="rose" />
+        <MetricCard title="Bài Viết & Truyền Thông" value={stats?.totalArticles || 0} icon={Newspaper} trend="Đã xuất bản" isPositive={true} baseColor="amber" />
       </div>
 
       {/* Sub Metrics Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <SubMetricCard
-          title="Chi tiết Đơn vị Đối tác" icon={Building2} baseColor="blue"
+          title="Chi tiết Sản phẩm VINEX" icon={Package} baseColor="blue"
           data={[
-            { label: 'Đang hoạt động', value: stats?.activeUnits || 0, icon: CheckCircle2, iconColor: 'text-[#5865f2]' },
-            { label: 'Chờ xét duyệt', value: stats?.pendingUnits || 0, icon: Clock, iconColor: 'text-amber-500' },
-            { label: 'Đang ẩn', value: stats?.hiddenUnits || 0, icon: EyeOff, iconColor: 'text-gray-400' }
+            { label: 'Đang cung ứng', value: stats?.activeProducts || 0, icon: CheckCircle2, iconColor: 'text-emerald-500' },
+            { label: 'Chờ cập nhật / duyệt', value: stats?.pendingProducts || 0, icon: Clock, iconColor: 'text-amber-500' },
+            { label: 'Tạm ẩn khỏi web', value: stats?.hiddenProducts || 0, icon: EyeOff, iconColor: 'text-gray-400' }
           ]}
         />
         <SubMetricCard
-          title="Chi tiết Yêu cầu Tư vấn" icon={MessageSquare} baseColor="emerald"
+          title="Chi tiết Yêu cầu Báo giá" icon={MessageSquare} baseColor="emerald"
           data={[
-            { label: 'Chờ xử lý', value: stats?.pendingLeads || 0, icon: Activity, iconColor: 'text-blue-500' },
-            { label: 'Đang tư vấn', value: stats?.processingLeads || 0, icon: TrendingUp, iconColor: 'text-emerald-500' },
-            { label: 'Hôm nay', value: stats?.leadsToday || 0, icon: CalendarDays, iconColor: 'text-emerald-500' }
+            { label: 'Chờ xử lý / Mới', value: stats?.pendingLeads || 0, icon: Activity, iconColor: 'text-amber-500' },
+            { label: 'Đang tư vấn / Báo giá', value: stats?.processingLeads || 0, icon: TrendingUp, iconColor: 'text-blue-500' },
+            { label: 'Đã hoàn tất / Ký hợp đồng', value: stats?.completedLeads || 0, icon: CheckCircle2, iconColor: 'text-emerald-500' }
           ]}
         />
         <SubMetricCard
-          title="Chi tiết Hệ thống Nội dung" icon={FileText} baseColor="amber"
+          title="Chi tiết Nội dung & SEO" icon={FileText} baseColor="amber"
           data={[
-            { label: 'Bài viết Publish', value: `${stats?.publishedArticles || 0} / ${stats?.totalArticles || 0}`, icon: Newspaper, iconColor: 'text-orange-500' },
-            { label: 'Trang SEO Index', value: stats?.indexedSeoPages || 0, icon: Globe, iconColor: 'text-emerald-500' }
+            { label: 'Bài viết đã xuất bản', value: `${stats?.publishedArticles || 0} / ${stats?.totalArticles || 0}`, icon: Newspaper, iconColor: 'text-orange-500' },
+            { label: 'Bản nháp đang soạn', value: stats?.draftArticles || 0, icon: FileText, iconColor: 'text-gray-400' },
+            { label: 'Trang SEO đã index', value: stats?.indexedSeoPages || 0, icon: Globe, iconColor: 'text-emerald-500' }
           ]}
         />
       </div>
@@ -237,18 +241,18 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
         {/* Left Area: Area Chart */}
-        <div className="lg:col-span-2 bg-white dark:bg-[#1a1b23] rounded-[4px]-[12px] border border-gray-200 dark:border-gray-800 p-5 flex flex-col h-[400px]">
+        <div className="lg:col-span-2 bg-white dark:bg-[#1a1b23] rounded-[4px] border border-gray-200 dark:border-gray-800 p-5 flex flex-col h-[400px] shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
             <div>
-              <h3 className="text-base font-medium text-gray-900 dark:text-white">Biểu đồ Tăng trưởng</h3>
-              <p className="text-[13px] font-normal text-gray-500 dark:text-gray-400 mt-0.5">So sánh lượng Yêu cầu và Lượt xem theo thời gian.</p>
+              <h3 className="text-base font-semibold text-gray-900 dark:text-white">Biểu đồ Tương tác & Nhu cầu</h3>
+              <p className="text-[13px] font-normal text-gray-500 dark:text-gray-400 mt-0.5">So sánh lượng Yêu cầu báo giá và Lượt tiếp cận theo thời gian.</p>
             </div>
             <div className="flex bg-gray-50 dark:bg-[#14151a] p-1 rounded-[4px] border border-gray-100 dark:border-gray-800">
               <button onClick={() => setChartTab('overview')} className={`px-3 py-1 rounded-[4px] text-xs font-medium transition-all cursor-pointer ${chartTab === 'overview' ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'}`}>
                 Tổng quan
               </button>
               <button onClick={() => setChartTab('leads')} className={`px-3 py-1 rounded-[4px] text-xs font-medium transition-all cursor-pointer ${chartTab === 'leads' ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'}`}>
-                Yêu cầu
+                Báo giá
               </button>
               <button onClick={() => setChartTab('views')} className={`px-3 py-1 rounded-[4px] text-xs font-medium transition-all cursor-pointer ${chartTab === 'views' ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'}`}>
                 Lượt xem
@@ -292,7 +296,7 @@ export default function DashboardPage() {
                                 <div key={index} className="flex items-center justify-between gap-3">
                                   <div className="flex items-center gap-1.5">
                                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }}></span>
-                                    <span className="text-[13px] font-normal text-gray-600 dark:text-gray-300">{entry.name === 'leads' ? 'Yêu cầu' : 'Lượt xem'}</span>
+                                    <span className="text-[13px] font-normal text-gray-600 dark:text-gray-300">{entry.name === 'leads' ? 'Yêu cầu B2B' : 'Lượt xem'}</span>
                                   </div>
                                   <span className="text-[13px] font-medium text-gray-900 dark:text-white">{entry.value}</span>
                                 </div>
@@ -320,8 +324,8 @@ export default function DashboardPage() {
         <div className="flex flex-col gap-5 h-[400px]">
 
           {/* Pie Chart */}
-          <div className="bg-white dark:bg-[#1a1b23] rounded-[4px]-[12px] border border-gray-200 dark:border-gray-800 p-5 flex flex-col flex-shrink-0 h-[190px]">
-            <h3 className="text-[14px] font-medium text-gray-900 dark:text-white mb-1">Tỷ lệ Trạng thái Yêu cầu</h3>
+          <div className="bg-white dark:bg-[#1a1b23] rounded-[4px] border border-gray-200 dark:border-gray-800 p-5 flex flex-col flex-shrink-0 h-[190px] shadow-sm">
+            <h3 className="text-[14px] font-semibold text-gray-900 dark:text-white mb-1">Tỷ lệ Trạng thái Yêu cầu</h3>
             <div className="flex-1 flex items-center min-h-0 relative">
               <div className="w-1/2 h-full relative min-h-0 min-w-0">
                 <ResponsiveContainer width="100%" height="100%">
@@ -356,7 +360,7 @@ export default function DashboardPage() {
                 </ResponsiveContainer>
                 {/* Total overlay in center */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span className="text-lg font-medium text-gray-900 dark:text-white">{stats?.totalLeads || 0}</span>
+                  <span className="text-lg font-bold text-gray-900 dark:text-white">{stats?.totalLeads || 0}</span>
                 </div>
               </div>
 
@@ -364,7 +368,7 @@ export default function DashboardPage() {
               <div className="w-1/2 flex flex-col justify-center gap-2 pl-3 border-l border-gray-100 dark:border-gray-800">
                 {pieData.map((item, i) => (
                   <div key={i} className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-[4px]" style={{ backgroundColor: item.color }}></span>
+                    <span className="w-2.5 h-2.5 rounded-[2px]" style={{ backgroundColor: item.color }}></span>
                     <div className="flex flex-col">
                       <span className="text-[11px] font-normal text-gray-500 dark:text-gray-400">{item.name}</span>
                       <span className="text-[12px] font-medium text-gray-900 dark:text-white">{item.value}</span>
@@ -376,9 +380,9 @@ export default function DashboardPage() {
           </div>
 
           {/* Paginated Recent Leads */}
-          <div className="bg-white dark:bg-[#1a1b23] rounded-[4px]-[12px] border border-gray-200 dark:border-gray-800 flex flex-col flex-1 min-h-0 overflow-hidden relative">
+          <div className="bg-white dark:bg-[#1a1b23] rounded-[4px] border border-gray-200 dark:border-gray-800 flex flex-col flex-1 min-h-0 overflow-hidden relative shadow-sm">
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800 shrink-0">
-              <h3 className="text-[14px] font-medium text-gray-900 dark:text-white">Yêu cầu mới nhất</h3>
+              <h3 className="text-[14px] font-semibold text-gray-900 dark:text-white">Yêu cầu báo giá mới nhất</h3>
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setLeadPage(p => Math.max(0, p - 1))}
@@ -413,22 +417,24 @@ export default function DashboardPage() {
                 ) : currentLeads.length === 0 ? (
                   <div className="py-8 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
                     <Clock className="w-8 h-8 mb-2 opacity-30" />
-                    <p className="text-[13px] font-normal">Không có yêu cầu nào mới</p>
+                    <p className="text-[13px] font-normal">Chưa có yêu cầu báo giá nào</p>
                   </div>
                 ) : (
                   currentLeads.map((lead) => (
                     <div key={lead.id} className="p-2.5 rounded-[4px] hover:bg-gray-50 dark:hover:bg-[#262930] transition-colors flex gap-2.5 items-center cursor-pointer border border-transparent">
-                      <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-medium text-sm shrink-0 border border-blue-100 dark:border-blue-900/30">
+                      <div className="w-8 h-8 rounded-full bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-semibold text-sm shrink-0 border border-emerald-100 dark:border-emerald-900/30">
                         {lead.customerName.charAt(0)}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-center mb-0.5">
                           <h4 className="text-[13px] font-medium text-gray-900 dark:text-white truncate pr-2">{lead.customerName}</h4>
-                          <span className={`text-[10px] px-1.5 py-0.5 rounded-[4px] flex-shrink-0 font-medium ${lead.status === 'PENDING' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400' :
-                              lead.status === 'PROCESSING' ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400' :
-                                'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                            }`}>
-                            {lead.status === 'PENDING' ? 'Chờ xử lý' : lead.status === 'PROCESSING' ? 'Đang tư vấn' : 'Hoàn thành'}
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded-[4px] flex-shrink-0 font-medium ${
+                            lead.status === 'PENDING' || lead.status === 'NEW' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400' :
+                            lead.status === 'PROCESSING' || lead.status === 'CONSULTING' ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400' :
+                            'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                          }`}>
+                            {lead.status === 'PENDING' || lead.status === 'NEW' ? 'Chờ xử lý' :
+                             lead.status === 'PROCESSING' || lead.status === 'CONSULTING' ? 'Đang tư vấn' : 'Hoàn tất'}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
@@ -436,7 +442,7 @@ export default function DashboardPage() {
                             {lead.projectType} • {lead.location}
                           </p>
                           <p className="text-[11px] font-normal text-gray-400 dark:text-gray-500 whitespace-nowrap ml-2">
-                            {format(new Date(lead.createdAt), 'dd/MM')}
+                            {lead.createdAt ? format(new Date(lead.createdAt), 'dd/MM') : ''}
                           </p>
                         </div>
                       </div>

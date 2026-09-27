@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { getDictionary } from '@/dictionaries';
 import type { Locale } from '@/dictionaries';
 import { GlassButton, GlassSelect, GlassCheckbox } from '@/components/ui/glass';
+import { ContactForm } from '@/components/forms/ContactForm';
+import { getPublicSettings } from '@/lib/dataService';
 
 export const metadata: Metadata = {
    title: "Liên hệ VINEX | Nông sản và Quà tặng doanh nghiệp",
@@ -14,6 +16,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
    const { locale } = await params;
    const t = getDictionary(locale as Locale);
    const pg = t.pages.contact;
+   const settings = getPublicSettings();
 
    return (
       <SmoothScroll>
@@ -26,7 +29,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
             </div>
 
             {/* Section 2: Form liên hệ và Thông tin */}
-            <section className="relative z-10 px-4 py-16 lg:py-24 max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-12 lg:gap-16">
+            <section className="relative z-10 px-4 md:px-8 xl:px-12 py-16 lg:py-24 max-w-[1536px] mx-auto w-full flex flex-col lg:flex-row gap-12 lg:gap-16">
 
                {/* Form Section */}
                <div className="flex-1 bg-white/40 backdrop-blur-xl p-8 sm:p-10 md:p-14 border border-white/40 shadow-[0_16px_40px_rgba(7,71,81,0.06)] rounded-[24px]">
@@ -34,50 +37,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                   <p className="text-[15px] text-vinex-charcoal/80 mb-6 font-light leading-relaxed">Gửi yêu cầu tư vấn, nhận báo giá hoặc để lại lời nhắn để đội ngũ VINEX hỗ trợ nhanh nhất.</p>
                   <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mb-10"></div>
 
-                  <form className="space-y-6 md:space-y-8 relative z-20">
-                     <div>
-                        <label className="block text-[11px] font-semibold uppercase tracking-widest mb-2 text-vinex-teal">Họ tên đại diện</label>
-                        <input type="text" placeholder="Nhập họ tên của bạn..." className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-4 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)]" />
-                     </div>
-
-                     <div>
-                        <label className="block text-[11px] font-semibold uppercase tracking-widest mb-2 text-vinex-teal">Doanh nghiệp</label>
-                        <input type="text" placeholder="Tên công ty hoặc doanh nghiệp..." className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-4 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)]" />
-                     </div>
-
-                     <div>
-                        <label className="block text-[11px] font-semibold uppercase tracking-widest mb-2 text-vinex-teal">Điện thoại / Email</label>
-                        <input type="text" placeholder="Nhập số điện thoại hoặc email liên hệ..." className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-4 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)]" />
-                     </div>
-
-                     <div>
-                        <label className="block text-[11px] font-semibold uppercase tracking-widest mb-2 text-vinex-teal">Nhu cầu</label>
-                        <GlassSelect
-                           name="nhu_cau"
-                           placeholder="Chọn nhu cầu..."
-                           options={[
-                             { value: "cung-ung", label: "Cung ứng nguyên liệu" },
-                             { value: "qua-tang", label: "Tư vấn quà tặng doanh nghiệp" },
-                             { value: "hop-tac", label: "Hợp tác thương mại" }
-                           ]}
-                        />
-                     </div>
-
-                     <div>
-                        <label className="block text-[11px] font-semibold uppercase tracking-widest mb-2 text-vinex-teal">Nội dung chi tiết</label>
-                        <textarea rows={5} placeholder="Mô tả cụ thể về nhu cầu hợp tác của bạn..." className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-4 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)] resize-none"></textarea>
-                     </div>
-
-                     <div className="hidden items-start gap-4">
-                        <GlassCheckbox id="consent" label={pg.form_consent} />
-                     </div>
-
-                     <div className="pt-4">
-                        <GlassButton variant="primary" size="lg" className="w-full md:w-auto">
-                           {pg.form_submit}
-                        </GlassButton>
-                     </div>
-                  </form>
+                  <ContactForm submitText={pg.form_submit} />
                </div>
 
                {/* Info Section */}
@@ -88,23 +48,27 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                      <ul className="space-y-6 text-vinex-charcoal/80">
                         <li>
                            <span className="block font-semibold text-xs uppercase tracking-widest text-vinex-gold mb-1">Hotline</span>
-                           <span className="text-base text-vinex-black font-semibold">(+84) 966 967 966</span>
+                           <a href={`tel:${(settings.hotline || '0988 888 888').replace(/\s+/g, '')}`} className="text-base text-vinex-black font-semibold hover:text-vinex-teal transition-colors">
+                              {settings.hotline || '(+84) 966 967 966'}
+                           </a>
                         </li>
                         <li>
                            <span className="block font-semibold text-xs uppercase tracking-widest text-vinex-gold mb-1">Email</span>
-                           <span className="text-base text-vinex-black font-semibold">info@vinexgroup.vn</span>
+                           <a href={`mailto:${settings.contactEmail || 'info@vinexgroup.vn'}`} className="text-base text-vinex-black font-semibold hover:text-vinex-teal transition-colors">
+                              {settings.contactEmail || 'info@vinexgroup.vn'}
+                           </a>
                         </li>
                         <li>
                            <span className="block font-semibold text-xs uppercase tracking-widest text-vinex-gold mb-1">Website</span>
-                           <span className="text-sm font-light leading-relaxed text-vinex-black">www.vinexgroup.vn</span>
+                           <a href={settings.siteUrl || 'https://vinexgroup.vn'} target="_blank" rel="noopener noreferrer" className="text-sm font-light leading-relaxed text-vinex-black hover:underline">
+                              {settings.siteUrl || 'www.vinexgroup.vn'}
+                           </a>
                         </li>
                         <li>
-                           <span className="block font-semibold text-xs uppercase tracking-widest text-vinex-gold mb-1">Văn phòng Hà Nội</span>
-                           <span className="text-sm font-light leading-relaxed text-vinex-black">Sảnh 2B tòa nhà Sun Grand City - 69B Thụy Khuê - Hà Nội</span>
-                        </li>
-                        <li>
-                           <span className="block font-semibold text-xs uppercase tracking-widest text-vinex-gold mb-1">Nhà máy sản xuất</span>
-                           <span className="text-sm font-light leading-relaxed text-vinex-black">Khu 6 Bằng Doãn, Xã Bằng Luân, Tỉnh Phú Thọ</span>
+                           <span className="block font-semibold text-xs uppercase tracking-widest text-vinex-gold mb-1">Địa chỉ trụ sở / Nhà máy</span>
+                           <span className="text-sm font-light leading-relaxed text-vinex-black">
+                              {settings.address || 'Sảnh 2B tòa nhà Sun Grand City - 69B Thụy Khuê - Hà Nội & Khu 6 Bằng Doãn, Xã Bằng Luân, Tỉnh Phú Thọ'}
+                           </span>
                         </li>
                      </ul>
                   </div>

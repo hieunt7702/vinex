@@ -42,7 +42,7 @@ export const VietnamStory: React.FC = () => {
       </div>
 
       {/* 2. Main Content Layer */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 xl:px-12 w-full relative z-20 py-12 sm:py-16 lg:py-20">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full relative z-20 py-12 sm:py-16 lg:py-20">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10 lg:gap-8">
 
           {/* Left Column: Badge, Typography & Glowing CTA Button */}

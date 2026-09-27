@@ -27,7 +27,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
 
         <div className="relative z-10">
           {/* Section 1: Hero ảnh nhà máy thật & Mô tả */}
-          <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto flex flex-col items-center text-center">
+          <section className="px-4 md:px-8 xl:px-12 py-16 lg:py-20 max-w-[1536px] mx-auto flex flex-col items-center text-center w-full">
             <h1 className="text-4xl md:text-5xl lg:text-[56px] font-marcellus text-vinex-teal mb-6 leading-tight">{pg.hero_title}</h1>
             <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
             <p className="text-lg text-gray-600 max-w-3xl mb-16 font-light leading-relaxed">
@@ -55,7 +55,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ locale
             </div>
             
             {/* Khối ảnh grid (3 ảnh) */}
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full grid grid-cols-1 md:grid-cols-3 gap-6">
               {[2, 3, 4].map((num) => (
                 <div key={num} className="aspect-[4/3] rounded-[18px] border border-[#E8E4D9] overflow-hidden group relative">
                   <Image

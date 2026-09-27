@@ -28,7 +28,7 @@ export const Testimonials = () => {
     <section ref={container} className="py-16 lg:py-20 bg-vinex-black text-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-vinex-blue/20 to-transparent"></div>
 
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12 relative z-10">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 relative z-10 w-full">
         <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
           <div>
             <h2 className="text-sm tracking-widest text-vinex-yellow uppercase mb-4 font-semibold">Testimonials</h2>

@@ -68,12 +68,12 @@ export const FactoryProof: React.FC = () => {
 
           {/* Right Visual Column (Documentary Style Photo) */}
           <div className="w-full lg:w-[55%] xl:w-[60%]">
-              <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:h-full min-h-[320px] w-full rounded-[16px] overflow-hidden bg-slate-200 shadow-[0_24px_50px_rgba(7,71,81,0.08)]">
+              <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:h-full min-h-[340px] w-full rounded-[20px] overflow-hidden bg-slate-200 shadow-[0_24px_50px_rgba(7,71,81,0.1)] border border-white/60">
                 <Image 
-                  src="/images/des4.png"
-                  alt="Nhà máy bóc tách điều"
+                  src="/section_boc_tach.png"
+                  alt="Nhà máy bóc tách điều VINEX"
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 55vw, 45vw"
                   className="object-cover transition-transform duration-700 hover:scale-105"
                 />
               </div>

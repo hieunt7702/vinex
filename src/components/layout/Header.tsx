@@ -4,9 +4,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, ArrowRight, Globe } from 'lucide-react';
+import { Menu, X, ArrowRight, Globe, Phone } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useDict } from '@/hooks/useDict';
+import { useGlobalSettings } from '@/hooks/useGlobalSettings';
+import { useProductCategories } from '@/hooks/useProductCategories';
 
 import { GlassButton, Glass, GlassCard } from '@/components/ui/glass';
 
@@ -19,6 +21,8 @@ export const Header = () => {
   const router = useRouter();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
   const t = useDict();
+  const { settings } = useGlobalSettings();
+  const { categories: productCategories } = useProductCategories();
 
   useEffect(() => {
     setMounted(true);
@@ -69,12 +73,17 @@ export const Header = () => {
       name: t.nav?.products || 'Sản phẩm',
       href: `/${lang}/san-pham`,
       hasDropdown: true,
-      dropdown: [
-        { name: t.nav?.products_cashew || 'Hạt điều tẩm vị', href: `/${lang}/san-pham?category=hat-dieu` },
-        { name: t.nav?.products_tea || 'Trà & cà phê', href: `/${lang}/san-pham?category=tra-ca-phe` },
-        { name: t.nav?.products_bakery || 'Bánh & kẹo', href: `/${lang}/san-pham?category=banh-keo` },
-        { name: t.nav?.products_agri || 'Nông sản chế biến', href: `/${lang}/san-pham?category=nong-san` },
-      ]
+      dropdown: (productCategories && productCategories.length > 0)
+        ? productCategories.map(cat => ({
+            name: cat.name,
+            href: `/${lang}/san-pham?category=${cat.slug || encodeURIComponent(cat.name)}`
+          }))
+        : [
+            { name: 'Hạt điều tẩm vị', href: `/${lang}/san-pham?category=hat-dieu-tam-vi` },
+            { name: 'Trà và cà phê', href: `/${lang}/san-pham?category=tra-va-ca-phe` },
+            { name: 'Bánh kẹo', href: `/${lang}/san-pham?category=banh-keo` },
+            { name: 'Nông sản sấy', href: `/${lang}/san-pham?category=nong-san-say` },
+          ]
     },
     { name: t.nav?.gifts || 'Quà tặng', href: `/${lang}/qua-tang-doanh-nghiep` },
     { name: t.nav?.news || 'Tin tức', href: `/${lang}/tin-tuc` },
@@ -143,31 +152,28 @@ export const Header = () => {
                 )}
 
                 <div
-                  className={`absolute top-full left-0 pt-2 z-50 w-64 pointer-events-auto transition-all duration-200 ease-out origin-top-left ${activeDropdown === item.name
+                  className={`absolute top-full left-0 pt-2.5 z-50 w-56 sm:w-60 pointer-events-auto transition-all duration-200 ease-out origin-top-left ${activeDropdown === item.name
                     ? 'opacity-100 translate-y-0 visible pointer-events-auto'
                     : 'opacity-0 -translate-y-2 invisible pointer-events-none'
                     }`}
                 >
-                  <Glass radius={12} className="w-full relative shadow-[0_8px_32px_rgba(7,71,81,0.04)] border border-white/80">
-                    <div className="w-full rounded-[12px] p-1.5 flex flex-col gap-0.5 relative z-10 bg-white/40">
-                      {/* Specular sheen reflection gradient overlay */}
-                      <span
-                        className="absolute inset-0 bg-gradient-to-b from-white/50 via-white/5 to-transparent pointer-events-none rounded-[inherit]"
-                        aria-hidden="true"
-                      />
-                      {item.dropdown?.map((sub) => (
-                        <Link
-                          key={sub.name}
-                          href={sub.href}
-                          onClick={() => setActiveDropdown(null)}
-                          className="relative z-10 flex items-center justify-between px-3.5 py-2.5 rounded-[9px] text-[13.5px] font-medium text-[#074751] hover:bg-white/55 hover:border hover:border-white/60 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.7),0_2px_8px_rgba(7,71,81,0.06)] border border-transparent whitespace-nowrap transition-all duration-150 group"
-                        >
-                          <span className="group-hover:translate-x-0.5 transition-transform duration-150">{sub.name}</span>
-                          <span className="text-[11px] text-vinex-gold opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-150 font-bold">&rarr;</span>
-                        </Link>
-                      ))}
-                    </div>
-                  </Glass>
+                  <div className="w-full rounded-[22px] p-2.5 flex flex-col gap-1 relative z-10 bg-white/95 backdrop-blur-xl border border-white/90 shadow-[0_16px_40px_rgba(7,71,81,0.08),inset_0_1.5px_2px_rgba(255,255,255,0.9)] overflow-hidden">
+                    {/* Specular sheen reflection gradient overlay */}
+                    <span
+                      className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/10 to-transparent pointer-events-none rounded-[inherit]"
+                      aria-hidden="true"
+                    />
+                    {item.dropdown?.map((sub) => (
+                      <Link
+                        key={sub.name}
+                        href={sub.href}
+                        onClick={() => setActiveDropdown(null)}
+                        className="relative z-10 flex items-center px-4 py-2.5 sm:py-3 rounded-[14px] text-[14.5px] font-medium text-[#074751] hover:bg-[#074751]/5 hover:text-[#074751] whitespace-nowrap transition-colors duration-150 group"
+                      >
+                        <span className="transition-colors duration-150">{sub.name}</span>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             );
@@ -351,6 +357,18 @@ export const Header = () => {
                     </div>
                   );
                 })}
+             </div>
+
+             {/* Drawer Hotline Strip */}
+             <div className="px-6 py-2.5 bg-white/40 border-t border-[#074751]/10 relative z-10 flex items-center justify-between text-xs">
+                <span className="text-vinex-gold font-semibold uppercase tracking-wider text-[11px]">Hotline</span>
+                <a 
+                  href={`tel:${(settings.hotline || '0988 888 888').replace(/\s+/g, '')}`} 
+                  className="font-semibold text-vinex-teal flex items-center gap-1.5 hover:text-vinex-gold transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-vinex-gold" />
+                  {settings.hotline || '0988 888 888'}
+                </a>
              </div>
 
              {/* Drawer Bottom Action */}

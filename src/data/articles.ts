@@ -24,20 +24,20 @@ export interface Article {
 export const articles: Article[] = [
   {
     slug: 'vinex-miss-world',
-    title: 'VINEX đồng hành cùng Miss World Vietnam',
-    desc: 'VINEX tham gia hoạt động tài trợ với những bộ quà được thiết kế riêng. Sự kiện là cơ hội giới thiệu giá trị nông sản và văn hóa Việt Nam thông qua những phần quà được trao tặng trong chương trình.',
+    title: 'VINEX đồng hành cùng Miss World Vietnam Nâng tầm nông sản Việt',
+    desc: 'Bộ quà tặng nông sản mang câu chuyện thương hiệu đến sự kiện.',
     category: 'Tin tức VINEX',
     author: 'Truyền thông VINEX',
-    date: '17 tháng 09, 2026',
-    views: 0,
-    badge: 'SỰ KIỆN',
+    date: '17/09/2026',
+    views: 1248,
+    badge: 'TIN TỨC VINEX',
     bg: 'from-[#074751] to-[#04282D]',
-    coverImg: '/images/banner/Missworld1.png',
+    coverImg: '/images/banner/b_miss_world_2026.png',
     abstract: 'VINEX tham gia hoạt động tài trợ với những bộ quà được thiết kế riêng. Sự kiện là cơ hội giới thiệu giá trị nông sản và văn hóa Việt Nam thông qua những phần quà được trao tặng trong chương trình.',
     content: `
       <p>VINEX tham gia hoạt động tài trợ với những bộ quà được thiết kế riêng. Sự kiện là cơ hội giới thiệu giá trị nông sản và văn hóa Việt Nam thông qua những phần quà được trao tặng trong chương trình.</p>
       <div style="margin: 2rem 0; text-align: center;">
-         <img src="/images/banner/Missworld2.png" alt="VINEX đồng hành Miss World" style="border-radius: 12px; max-width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.1);" />
+         <img src="/images/banner/b_miss_world_2026.png" alt="VINEX đồng hành Miss World" style="border-radius: 12px; max-width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.1);" />
       </div>
       <p>Với tinh thần tôn vinh sắc đẹp và trí tuệ, VINEX mong muốn mang đến những sản phẩm nông sản chất lượng cao, góp phần quảng bá hình ảnh Việt Nam đến bạn bè quốc tế.</p>
     `,
@@ -45,15 +45,15 @@ export const articles: Article[] = [
   },
   {
     slug: 'sai-lam-thuong-gap-khi-xay-dung-qua-tang',
-    title: '5 SAI LẦM THƯỜNG GẶP KHI XÂY DỰNG BỘ QUÀ TẶNG DOANH NGHIỆP',
+    title: '5 sai lầm khi chọn quà tặng doanh nghiệp',
     desc: 'Bài viết tổng hợp những rủi ro và sai lầm phổ biến khiến doanh nghiệp tốn kém chi phí và thời gian khi tự chuẩn bị quà tặng.',
     category: 'Kinh nghiệm quà tặng',
     author: 'Chuyên gia VINEX',
-    date: '31 tháng 08, 2026',
-    views: 1250,
-    badge: 'NỔI BẬT',
+    date: '11/09/2026',
+    views: 386,
+    badge: 'KINH NGHIỆM QUÀ TẶNG',
     bg: 'from-[#074751] to-[#04282D]',
-    coverImg: getProductImage(14),
+    coverImg: '/images/news/article_gift_box.jpg',
     abstract: 'Quá trình lên kế hoạch và chuẩn bị quà tặng doanh nghiệp thường mất nhiều thời gian hơn dự kiến. Nhiều đơn vị lầm tưởng rằng chỉ cần chọn một món đồ có sẵn, in logo lên là xong. Tuy nhiên, đằng sau một bộ quà tặng ấn tượng là cả một quy trình thiết kế, sản xuất bao bì và quản lý chất lượng.',
     content: `
       <p>Quá trình lên kế hoạch và chuẩn bị quà tặng doanh nghiệp thường mất nhiều thời gian hơn dự kiến. Nhiều đơn vị lầm tưởng rằng chỉ cần chọn một món đồ có sẵn, in logo lên là xong. Tuy nhiên, đằng sau một bộ quà tặng ấn tượng là cả một quy trình thiết kế, sản xuất bao bì và quản lý chất lượng.</p>
@@ -71,7 +71,7 @@ export const articles: Article[] = [
 
       <h3>2. Bỏ qua chất lượng và chất liệu của bao bì</h3>
       <div style="margin: 2rem 0; text-align: center;">
-         <img src="${getProductImage(15)}" alt="Bao bì quà tặng cao cấp" style="border-radius: 12px; max-width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.1);" />
+         <img src="/images/news/article_gift_box.jpg" alt="Bao bì quà tặng cao cấp" style="border-radius: 12px; max-width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.1);" />
          <p style="font-size: 13px; color: #666; margin-top: 10px; font-style: italic;">Bao bì chiếm đến 50% cảm xúc của người nhận khi cầm món quà trên tay.</p>
       </div>
       <p>Một hộp quà lỏng lẻo, chất liệu giấy ọp ẹp, in ấn sai màu sắc thương hiệu sẽ làm giảm nghiêm trọng giá trị của món đồ bên trong, dù nó đắt tiền đến đâu. Sự tinh tế nằm ở xúc giác và thị giác ban đầu.</p>
@@ -85,15 +85,15 @@ export const articles: Article[] = [
   },
   {
     slug: 'bao-quan-nhan-dieu-trang',
-    title: 'BẢO QUẢN NHÂN ĐIỀU TRẮNG SAO CHO ĐÚNG CÁCH?',
+    title: 'Bảo quản hạt điều trắng đúng cách',
     desc: 'Bí quyết bảo quản nhân điều trắng giữ trọn độ giòn, hương vị và màu sắc tự nhiên trong suốt thời gian dài.',
     category: 'Kiến thức nông sản',
     author: 'Kỹ sư Nông nghiệp',
-    date: '25 tháng 08, 2026',
-    views: 980,
-    badge: 'KIẾN THỨC',
+    date: '17/09/2026',
+    views: 524,
+    badge: 'KIẾN THỨC NÔNG SẢN',
     bg: 'from-[#5C7B6C] to-[#074751]',
-    coverImg: getProductImage(20),
+    coverImg: '/images/news/article_cashew_bowl.jpg',
     abstract: 'Nhân điều trắng là một trong những sản phẩm nông sản cao cấp có giá trị cao, nhưng lại rất dễ bị ảnh hưởng bởi độ ẩm và ánh sáng. Bảo quản sai cách sẽ làm hạt bị ỉu, mốc và mất đi hương vị béo ngậy đặc trưng.',
     content: `
       <p>Nhân điều trắng (White Wholes - WW) luôn được săn đón bởi vị ngọt bùi và độ giòn đặc trưng. Tuy nhiên, nếu không biết cách bảo quản, nhân điều rất dễ bị ỉu, ngả màu vàng ố hoặc xuất hiện mùi hôi dầu (ôi thiu). Dưới đây là những nguyên tắc cốt lõi bạn cần nắm.</p>
@@ -107,7 +107,7 @@ export const articles: Article[] = [
 
       <h3>2. Tránh ánh nắng trực tiếp và nhiệt độ cao</h3>
       <div style="margin: 2rem 0; text-align: center;">
-         <img src="${getProductImage(21)}" alt="Nhân điều trắng chuẩn" style="border-radius: 12px; max-width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.1);" />
+         <img src="/images/news/article_cashew_bowl.jpg" alt="Nhân điều trắng chuẩn" style="border-radius: 12px; max-width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.1);" />
       </div>
       <p>Nhiệt độ cao và tia UV trong ánh nắng mặt trời sẽ làm đứt gãy các liên kết chất béo tốt (Omega) có trong hạt điều, gây ra hiện tượng gắt dầu rất khó chịu.</p>
 
@@ -122,15 +122,15 @@ export const articles: Article[] = [
   },
   {
     slug: 'quy-trinh-boc-tach-dieu',
-    title: 'Quy trình 8 bước từ điều thô đến nhân điều trắng đạt chuẩn quốc tế',
-    desc: 'Khám phá hành trình đầy tỉ mỉ để tạo ra những hạt điều trắng tinh khiết, đạt tiêu chuẩn xuất khẩu khắt khe nhất.',
-    category: 'Kiến thức nông sản',
+    title: 'Từ hạt điều thô đến nhân điều trắng',
+    desc: 'Khám phá hành trình đầy tỉ mỉ từ những hạt điều thô ngoài vườn cây đến nhân điều trắng tinh khiết đạt chuẩn quốc tế.',
+    category: 'Quy trình sản xuất',
     author: 'Chuyên gia Sản xuất',
-    date: '31 tháng 08, 2026',
-    views: 1540,
-    badge: 'QUY TRÌNH',
+    date: '17/09/2026',
+    views: 297,
+    badge: 'QUY TRÌNH SẢN XUẤT',
     bg: 'from-[#074751] to-[#10626f]',
-    coverImg: getProductImage(2),
+    coverImg: '/images/news/article_raw_cashew.jpg',
     abstract: 'Từ những quả điều thô mộc mạc trên cành, để có được lớp nhân điều trắng nõn, béo ngậy đưa đến tay người tiêu dùng là cả một quy trình sản xuất nghiêm ngặt gồm 8 bước khép kín.',
     content: `
       <p>Rất ít người biết rằng, để bóc tách được một hạt điều hoàn chỉnh, không bị sứt mẻ và giữ nguyên được lớp lụa hoặc bóc sạch lụa trắng, cần đến sự kết hợp giữa máy móc hiện đại và đôi bàn tay khéo léo của người công nhân.</p>

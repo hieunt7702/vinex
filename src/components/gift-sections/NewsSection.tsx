@@ -26,7 +26,7 @@ export const NewsSection = () => {
 
   return (
     <section ref={container} className="py-16 lg:py-20 bg-vinex-white text-vinex-black">
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-black/10 pb-8">
           <div>
             <h2 className="text-sm tracking-widest text-vinex-blue uppercase mb-4 font-semibold">Vinex Journal</h2>

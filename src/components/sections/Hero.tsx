@@ -46,7 +46,7 @@ export const Hero = () => {
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-vinex-yellow via-transparent to-transparent pointer-events-none"></div>
       </div>
 
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12 w-full relative z-20">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full relative z-20">
 
         {/* Content */}
         <div className="flex flex-col md:flex-row items-center justify-between w-full">
@@ -87,7 +87,7 @@ export const Hero = () => {
 
           <div className="w-full md:w-5/12 hero-desc">
             <div className="relative aspect-[4/5] bg-vinex-white rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center p-8">
-              <div className="absolute inset-0 bg-cover bg-center opacity-90" style={{ backgroundImage: "url('/images/product/bao_bi_qua_tang/p11.png')" }}></div>
+              <div className="absolute inset-0 bg-cover bg-center opacity-90" style={{ backgroundImage: "url('/images/hero_gift.png')" }}></div>
               <div className="absolute inset-0 bg-gradient-to-t from-vinex-teal/50 to-transparent"></div>
             </div>
           </div>

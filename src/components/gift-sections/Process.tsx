@@ -29,7 +29,7 @@ export const Process = () => {
         </defs>
       </svg>
 
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full">
 
         {/* Section Header */}
         <div className="text-center mb-16">

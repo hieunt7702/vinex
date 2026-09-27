@@ -41,8 +41,8 @@ export const HomeHero = () => {
         <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/20 via-black/5 to-transparent" />
       </div>
 
-      {/* 2. Main Content Layer (Width aligned with bottom Dock) */}
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 xl:px-20 w-full relative z-20 flex-1 flex flex-col justify-center py-6 sm:py-8 lg:py-10">
+      {/* 2. Main Content Layer (Width aligned with Header and bottom Dock) */}
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full relative z-20 flex-1 flex flex-col justify-center py-6 sm:py-8 lg:py-10">
         <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-10 lg:gap-8">
 
           {/* Left Column: Badge, Headline, Subtitle & Action Buttons */}
@@ -135,7 +135,7 @@ export const HomeHero = () => {
           {/* Right Column: Floating Liquid Glass Stats Card (Border-radius 16px, matching Header) */}
         </div>
       </div>
-      <div className="w-full max-w-[1440px] mx-auto relative z-20 px-6 sm:px-8 md:px-12 xl:px-20 mb-5 sm:mb-7 lg:mb-8">
+      <div className="w-full max-w-[1536px] mx-auto relative z-20 px-4 md:px-8 xl:px-12 mb-5 sm:mb-7 lg:mb-8">
         <Glass
           radius={isDesktop ? 9999 : 24}
           className="w-full !rounded-[24px] lg:!rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.15)] transition-all duration-300 relative border border-white/45"

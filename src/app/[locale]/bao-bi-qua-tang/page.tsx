@@ -26,7 +26,7 @@ export default async function PackagingPage({ params }: { params: Promise<{ loca
       <main className="w-full flex flex-col min-h-screen bg-vinex-white text-vinex-black pt-20">
 
         {/* Section 1: Hero */}
-        <section className="px-4 py-16 lg:py-20 max-w-7xl mx-auto text-center">
+        <section className="px-4 md:px-8 xl:px-12 py-16 lg:py-20 max-w-[1536px] mx-auto text-center w-full">
           <h1 className="text-4xl md:text-5xl font-marcellus text-vinex-teal mb-6">{pg.hero_title}</h1>
           <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-8"></div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-16 leading-relaxed font-light">

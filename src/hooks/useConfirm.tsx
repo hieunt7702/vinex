@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useCallback, useMemo } from 'react';
 import ConfirmModal from '@/admin-components/ui/ConfirmModal';
 
 type ConfirmOptions = {
@@ -19,12 +19,12 @@ export const ConfirmProvider = ({ children }: { children: ReactNode }) => {
   const [options, setOptions] = useState<ConfirmOptions | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const confirm = (opts: ConfirmOptions) => {
+  const confirm = useCallback((opts: ConfirmOptions) => {
     setOptions(opts);
     setIsOpen(true);
-  };
+  }, []);
 
-  const handleConfirm = async () => {
+  const handleConfirm = useCallback(async () => {
     if (options?.onConfirm) {
       setIsLoading(true);
       try {
@@ -34,10 +34,12 @@ export const ConfirmProvider = ({ children }: { children: ReactNode }) => {
         setIsOpen(false);
       }
     }
-  };
+  }, [options]);
+
+  const contextValue = useMemo(() => ({ confirm }), [confirm]);
 
   return (
-    <ConfirmContext.Provider value={{ confirm }}>
+    <ConfirmContext.Provider value={contextValue}>
       {children}
       {options && (
         <ConfirmModal

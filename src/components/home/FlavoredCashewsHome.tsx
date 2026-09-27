@@ -16,8 +16,47 @@ export const FlavoredCashewsHome: React.FC = () => {
   const desc = "Khám phá các dòng hạt điều tẩm vị trong danh mục VINEX. Hình ảnh giới thiệu các lựa chọn sản phẩm và bao bì cho nhu cầu thưởng thức hoặc kết hợp trong bộ quà.";
   const cta = "Xem sản phẩm hạt điều";
 
-  // Placeholder SKUs
-  const skus = [1, 2, 3, 4, 5, 6];
+  // Dynamic products from API or fallback
+  const [items, setItems] = React.useState<any[]>([
+    { id: 1, img: '/images/product/Cashew1.png', name: 'Hạt điều tẩm vị 1', slug: '' },
+    { id: 2, img: '/images/product/Cashew2.png', name: 'Hạt điều tẩm vị 2', slug: '' },
+    { id: 3, img: '/images/product/Cashew3.png', name: 'Hạt điều tẩm vị 3', slug: '' },
+    { id: 4, img: '/images/product/Cashew4.png', name: 'Hạt điều tẩm vị 4', slug: '' },
+    { id: 5, img: '/images/product/Cashew5.png', name: 'Hạt điều tẩm vị 5', slug: '' },
+    { id: 6, img: '/images/product/Cashew6.png', name: 'Hạt điều tẩm vị 6', slug: '' },
+  ]);
+
+  React.useEffect(() => {
+    async function fetchCashews() {
+      try {
+        const res = await fetch('/api/v1/products', { cache: 'no-store' });
+        if (!res.ok) return;
+        const data = await res.json();
+        const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
+        const active = list.filter((p: any) => p.status === 'ACTIVE');
+        const cashews = active.filter((p: any) => 
+          (p.categories?.[0]?.name || p.category || p.name || '').toLowerCase().includes('điều') ||
+          (p.name || '').toLowerCase().includes('điều')
+        );
+        const displayList = (cashews.length > 0 ? cashews : active).slice(0, 6);
+        if (displayList.length > 0) {
+          setItems(displayList.map((p: any, idx: number) => ({
+            id: p.id || idx,
+            name: p.name,
+            slug: p.slug,
+            img: (Array.isArray(p.images) && p.images[0]) ? p.images[0] : (p.img || `/images/product/Cashew${(idx % 6) + 1}.png`)
+          })));
+        }
+      } catch (e) {
+        console.warn('Could not fetch cashews for homepage:', e);
+      }
+    }
+    fetchCashews();
+
+    const handleSync = () => fetchCashews();
+    window.addEventListener('vinex_products_updated', handleSync);
+    return () => window.removeEventListener('vinex_products_updated', handleSync);
+  }, []);
 
   return (
     <section className="py-16 sm:py-20 lg:py-24  relative overflow-hidden">
@@ -40,20 +79,32 @@ export const FlavoredCashewsHome: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-12 max-w-[1000px] mx-auto">
-          {skus.map((sku) => (
-            <div
-              key={sku}
-              className="w-full aspect-square rounded-[20px] overflow-hidden relative shadow-[0_12px_30px_rgba(7,71,81,0.08)] hover:-translate-y-2 transition-transform duration-500 group cursor-pointer"
-            >
-              <Image 
-                src={`/images/product/Cashew${sku}.png`} 
-                alt={`Cashew Flavor ${sku}`} 
-                fill 
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
-          ))}
+          {items.map((item) => {
+            const content = (
+              <div
+                className="w-full aspect-square rounded-[20px] overflow-hidden relative shadow-[0_12px_30px_rgba(7,71,81,0.08)] hover:-translate-y-2 transition-transform duration-500 group cursor-pointer border border-white/60 bg-white/40"
+              >
+                <Image 
+                  src={item.img} 
+                  alt={item.name} 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-[#074751]/80 via-[#074751]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <span className="text-white text-xs font-semibold drop-shadow-sm line-clamp-1">{item.name}</span>
+                </div>
+              </div>
+            );
+
+            return item.slug ? (
+              <Link key={item.id} href={`/${lang}/san-pham/${item.slug}`}>
+                {content}
+              </Link>
+            ) : (
+              <div key={item.id}>{content}</div>
+            );
+          })}
         </div>
 
         <div className="flex justify-center">

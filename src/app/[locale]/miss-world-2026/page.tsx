@@ -51,8 +51,8 @@ export default function MissWorldPage() {
       </section>
 
       {/* Role & Reason Section */}
-      <section className="py-16 lg:py-24 relative z-10 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 lg:py-24 relative z-10 px-4 md:px-8 xl:px-12 max-w-[1536px] mx-auto w-full">
+        <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
               <h2 className="text-3xl font-marcellus text-vinex-teal mb-4">Vai trò và Sứ mệnh</h2>
@@ -84,8 +84,8 @@ export default function MissWorldPage() {
       </section>
 
       {/* The Gift Box Story (Hidden as requested) */}
-      <section className="hidden py-16 lg:py-24 relative z-10 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto text-center mb-16">
+      <section className="hidden py-16 lg:py-24 relative z-10 px-4 md:px-8 xl:px-12 max-w-[1536px] mx-auto w-full">
+        <div className="text-center mb-16">
           <h2 className="text-3xl font-marcellus text-vinex-teal mb-4">Câu chuyện Bộ Quà Tặng</h2>
           <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-6"></div>
           <p className="text-vinex-charcoal/70 max-w-3xl mx-auto font-light">
@@ -118,8 +118,8 @@ export default function MissWorldPage() {
       </section>
 
       {/* Preparation & BTS (Hidden as requested) */}
-      <section className="hidden py-16 lg:py-24 relative z-10 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className="hidden py-16 lg:py-24 relative z-10 px-4 md:px-8 xl:px-12 max-w-[1536px] mx-auto w-full">
+        <div>
           <h2 className="text-3xl font-marcellus text-vinex-teal mb-4 text-center">Hậu trường & Quá trình chuẩn bị</h2>
           <div className="w-[80px] h-[2px] bg-gradient-to-r from-vinex-gold via-vinex-gold/80 to-transparent mx-auto mb-12"></div>
 

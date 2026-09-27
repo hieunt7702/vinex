@@ -1,30 +1,57 @@
 export const products = [
   {
     "id": 1,
+    "slug": "hat-dieu-vi-trung-muoi",
+    "name": "Hạt điều vị trứng muối",
+    "category": "Hạt điều tẩm vị",
+    "status": "Sẵn sàng cung ứng",
+    "desc": "Béo bùi, đậm vị trứng muối",
+    "img": "/images/product/Orchard nuts 1.png"
+  },
+  {
+    "id": 2,
+    "slug": "hat-dieu-vi-tu-xuyen",
+    "name": "Hạt điều vị Tứ Xuyên",
+    "category": "Hạt điều tẩm vị",
+    "status": "Sẵn sàng cung ứng",
+    "desc": "Cay thơm, đậm đà đặc trưng",
+    "img": "/images/product/Orchard nuts 2.png"
+  },
+  {
+    "id": 3,
+    "slug": "hat-dieu-vi-tomyum",
+    "name": "Hạt điều vị Tomyum",
+    "category": "Hạt điều tẩm vị",
+    "status": "Sẵn sàng cung ứng",
+    "desc": "Chua cay, thơm vị thảo mộc",
+    "img": "/images/product/Orchard nuts 3.png"
+  },
+  {
+    "id": 101,
     "slug": "hat-dieu-tam-vi-pho-mai",
     "name": "Hạt điều tẩm vị phô mai",
     "category": "Hạt điều tẩm vị",
     "status": "Sẵn sàng cung ứng",
-    "desc": "Hạt điều rang giòn tẩm vị phô mai đậm đà, giữ trọn hương vị thơm ngon.",
-    "img": "/images/product/Cashew1.png"
+    "desc": "Hạt điều rang giòn tẩm vị phô mai béo ngậy, giữ trọn hương thơm.",
+    "img": "/images/product/Orchard nuts 4.png"
   },
   {
-    "id": 2,
-    "slug": "hat-dieu-tam-vi-tỏi-ot",
+    "id": 102,
+    "slug": "hat-dieu-tam-vi-toi-ot",
     "name": "Hạt điều tẩm vị tỏi ớt",
     "category": "Hạt điều tẩm vị",
     "status": "Sẵn sàng cung ứng",
-    "desc": "Hạt điều tỏi ớt cay nồng, kích thích vị giác, thích hợp cho các buổi tiệc.",
-    "img": "/images/product/Cashew2.png"
+    "desc": "Hạt điều tỏi ớt cay nồng, giòn thơm đậm đà đặc trưng.",
+    "img": "/images/product/Orchard nuts 5.png"
   },
   {
-    "id": 3,
+    "id": 103,
     "slug": "hat-dieu-tam-vi-mat-ong",
     "name": "Hạt điều tẩm vị mật ong",
     "category": "Hạt điều tẩm vị",
     "status": "Sẵn sàng cung ứng",
-    "desc": "Vị ngọt thanh của mật ong kết hợp độ bùi béo của hạt điều nguyên bản.",
-    "img": "/images/product/Cashew3.png"
+    "desc": "Vị ngọt thanh của mật ong hoa rừng kết hợp độ bùi béo tự nhiên.",
+    "img": "/images/product/Orchard nuts 6.png"
   },
   {
     "id": 4,

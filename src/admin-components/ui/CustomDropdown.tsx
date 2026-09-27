@@ -29,6 +29,7 @@ interface CustomDropdownProps {
 
 export default function CustomDropdown({ options, value, onChange, placeholder = 'Chọn tùy chọn...', className = '', onQuickAdd, emptyText }: CustomDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [openUpwards, setOpenUpwards] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const selectedOption = options.find((opt) => opt.value === value);
@@ -48,8 +49,25 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
   useEffect(() => {
     if (!isOpen) {
       setSearchTerm('');
+    } else if (dropdownRef.current) {
+      requestAnimationFrame(() => {
+        dropdownRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
     }
   }, [isOpen]);
+
+  const handleToggle = () => {
+    if (!isOpen && dropdownRef.current) {
+      const rect = dropdownRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      if (spaceBelow < 260 && rect.top > 200) {
+        setOpenUpwards(true);
+      } else {
+        setOpenUpwards(false);
+      }
+    }
+    setIsOpen(prev => !prev);
+  };
 
   const filteredOptions = options.filter(opt => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
 
@@ -57,8 +75,8 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-3.5 py-2.5 bg-gray-50/80 dark:bg-[#0b0c10]/80 border border-gray-200 dark:border-gray-800 rounded-lg text-sm text-gray-900 dark:!text-white font-normal hover:bg-gray-100 dark:hover:bg-[#14151a] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 transition-all font-medium"
+        onClick={handleToggle}
+        className="w-full flex items-center justify-between px-3.5 py-2.5 bg-gray-50/80 dark:bg-[#0b0c10]/80 border border-gray-200 dark:border-gray-800 rounded-lg text-sm text-gray-900 dark:!text-white font-normal hover:bg-gray-100 dark:hover:bg-[#14151a] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 transition-all"
       >
         <div className="flex items-center gap-2 truncate">
           {selectedOption?.color && (
@@ -70,7 +88,7 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1.5 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm shadow-black/5 dark:shadow-none overflow-hidden animate-in fade-in zoom-in-95 duration-100 flex flex-col">
+        <div className={`absolute z-50 w-full ${openUpwards ? 'bottom-full mb-1.5' : 'top-full mt-1.5'} bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-lg shadow-xl overflow-hidden animate-in fade-in duration-100 flex flex-col`}>
           <div className="p-2 border-b border-gray-100 dark:border-gray-800 shrink-0">
             <div className="relative">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
@@ -121,8 +139,8 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
                       setIsOpen(false);
                     }}
                     className={`w-full text-left flex items-center justify-between px-3 py-2 text-sm rounded-[4px] transition-colors ${value === option.value
-                        ? 'bg-[#5865f2]/10 text-[#5865f2] font-medium dark:bg-[#5865f2]/20 dark:text-blue-400'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#14151a]'
+                        ? 'bg-[#5865f2]/10 text-[#5865f2] font-normal dark:bg-[#5865f2]/20 dark:text-blue-400'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#14151a] font-normal'
                       }`}
                   >
                     <div className="flex items-center gap-2 truncate">

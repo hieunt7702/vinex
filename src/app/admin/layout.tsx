@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body className="min-h-screen h-full w-full antialiased tracking-tight text-gray-900 dark:text-gray-100 font-asana admin-wrapper">
+      <body suppressHydrationWarning className="min-h-screen h-full w-full antialiased tracking-tight text-gray-900 dark:text-gray-100 font-asana admin-wrapper">
         <ThemeProvider defaultTheme="system" storageKey="admin-theme">
           {children}
         </ThemeProvider>

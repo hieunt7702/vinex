@@ -26,14 +26,15 @@ export default function SettingsPage() {
   const canSubmitReset = confirmText.trim().toUpperCase() === 'CONFIRM';
 
   const [formData, setFormData] = useState<any>({
-    siteName: 'VINEX - Nông sản Việt Nam',
-    siteUrl: 'https://vinex.com.vn',
-    contactEmail: 'contact@vinex.com.vn',
-    hotline: '0988.888.888',
-    zalo: '0988888888',
-    facebook: 'https://facebook.com/bim',
+    siteName: 'VINEX - Tinh Hoa Nông Sản Việt',
+    siteUrl: 'https://vinexgroup.vn',
+    contactEmail: 'info@vinexgroup.vn',
+    hotline: '0988 888 888',
+    zalo: '0988 888 888',
+    facebook: 'https://facebook.com/vinexgroup.vn',
+    address: 'Sảnh 2B Sun Grand City, 69B Thụy Khuê, Hà Nội & Khu 6 Bằng Doãn, Bằng Luân, Phú Thọ',
     globalMetaTitle: 'VINEX - Nông sản Việt Nam cao cấp vươn tầm quốc tế',
-    globalMetaDesc: 'Hệ sinh thái kết nối gia chủ với các đơn vị thiết kế thi công uy tín nhất Việt Nam.',
+    globalMetaDesc: 'Hạt điều Bình Phước và nông sản chế biến sâu thượng hạng xuất khẩu toàn cầu.',
     googleAnalytics: 'G-XXXXXXX',
     facebookPixel: '',
   });
@@ -44,11 +45,19 @@ export default function SettingsPage() {
   const fetchSettings = async () => {
     try {
       const res = await apiClient.get('/settings');
-      const globalSetting = res.data.find((s: any) => s.key === 'GLOBAL_SETTINGS');
+      const list = Array.isArray(res.data)
+        ? res.data
+        : (Array.isArray(res?.data?.data) ? res.data.data : (res.data ? [res.data] : []));
+      const globalSetting = list.find((s: any) => s && s.key === 'GLOBAL_SETTINGS');
       if (globalSetting) {
         setSettingId(globalSetting.id);
         if (globalSetting.value) {
-          setFormData({ ...formData, ...JSON.parse(globalSetting.value) });
+          try {
+            const parsed = typeof globalSetting.value === 'string' ? JSON.parse(globalSetting.value) : globalSetting.value;
+            setFormData((prev: any) => ({ ...prev, ...parsed }));
+          } catch (e) {
+            console.error('Failed to parse settings JSON:', e);
+          }
         }
       }
     } catch (error) {
@@ -90,6 +99,10 @@ export default function SettingsPage() {
         setSettingId(res.data.id);
       }
       setSuccessMessage('Lưu cấu hình hệ thống thành công!');
+      toast.success('Lưu cấu hình hệ thống thành công! Dữ liệu đã đồng bộ sang trang chính.');
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('vinex_settings_updated'));
+      }
       setTimeout(() => setSuccessMessage(''), 3000);
     } catch (error) {
       console.error('Failed to save settings', error);
@@ -228,6 +241,14 @@ export default function SettingsPage() {
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Fanpage Facebook</label>
                       <input
                         type="text" value={formData.facebook} onChange={e => setFormData({ ...formData, facebook: e.target.value })}
+                        className="w-full px-3 py-2 bg-white dark:bg-[#1a1b23] text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm font-medium focus:outline-none focus:border-[#5865f2]/50 focus:ring-[3px] focus:ring-[#5865f2]/10"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Địa chỉ trụ sở / Văn phòng / Nhà máy</label>
+                      <input
+                        type="text" value={formData.address || ''} onChange={e => setFormData({ ...formData, address: e.target.value })}
+                        placeholder="VD: Sảnh 2B Sun Grand City, 69B Thụy Khuê, Hà Nội & Khu 6 Bằng Doãn, Phú Thọ"
                         className="w-full px-3 py-2 bg-white dark:bg-[#1a1b23] text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm font-medium focus:outline-none focus:border-[#5865f2]/50 focus:ring-[3px] focus:ring-[#5865f2]/10"
                       />
                     </div>

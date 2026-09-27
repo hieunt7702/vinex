@@ -58,10 +58,10 @@ export const Showcase = () => {
   };
 
   const products = [
-    { title: "Premium Coffee", subtitle: "F&B Brand Identity", img: "/images/product/cafe_nguyen_hat_500g&1kg/cafe_nguyen_hat_honey_robussta_1kg.png" },
-    { title: "Premium Tea", subtitle: "Packaging Design", img: "/images/product/tra_premium_essiora_tea/p1.png" },
-    { title: "Gift Box", subtitle: "Luxury Collection", img: "/images/product/bao_bi_qua_tang/p10.png" },
-    { title: "Healthy Food", subtitle: "Brand Strategy", img: "/images/product/hat_orchard_nút/p1.png" },
+    { title: "Premium Coffee", subtitle: "F&B Brand Identity", img: "/images/product/ca phe nguyen hat 1.png" },
+    { title: "Premium Tea", subtitle: "Packaging Design", img: "/images/product/Tra` premium Essiora 1.png" },
+    { title: "Gift Box", subtitle: "Luxury Collection", img: "/images/product/Collection 10.png" },
+    { title: "Healthy Food", subtitle: "Brand Strategy", img: "/images/product/Orchard nuts 1.png" },
   ];
 
   return (
