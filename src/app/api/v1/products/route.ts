@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../store';
 import prisma from '@/lib/prisma';
+import { getUniqueProductSlug } from '@/lib/serverSlugHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -37,6 +38,8 @@ export async function GET(request: Request) {
             return NextResponse.json({
               ...dbProd,
               categoryIds: dbProd.categories.map((c: any) => c.id)
+            }, {
+              headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate' }
             });
           }
         } else if (id) {
@@ -54,19 +57,21 @@ export async function GET(request: Request) {
             return NextResponse.json({
               ...dbProd,
               categoryIds: dbProd.categories.map((c: any) => c.id)
+            }, {
+              headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate' }
             });
           }
         } else {
           const dbProds = await prisma.product.findMany({
             include: { categories: true },
-            orderBy: { id: 'asc' }
+            orderBy: { id: 'desc' }
           });
-          if (dbProds && dbProds.length > 0) {
-            return NextResponse.json(dbProds.map((p: any) => ({
-              ...p,
-              categoryIds: p.categories.map((c: any) => c.id)
-            })));
-          }
+          return NextResponse.json(dbProds.map((p: any) => ({
+            ...p,
+            categoryIds: p.categories.map((c: any) => c.id)
+          })), {
+            headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate' }
+          });
         }
       } catch (dbErr) {
         // Fallback to store
@@ -112,7 +117,9 @@ export async function GET(request: Request) {
       }
       return (Number(b.id) || 0) - (Number(a.id) || 0);
     });
-    return NextResponse.json(sorted);
+    return NextResponse.json(sorted, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate' }
+    });
   } catch (err) {
     return NextResponse.json([...store.products]);
   }
@@ -139,9 +146,10 @@ export async function POST(request: Request) {
           }
         }
 
-        const genSlug = data.slug || `san-pham-${Date.now()}`;
-        const genSku = data.sku || `VNX-SKU-${Math.floor(1000 + Math.random() * 9000)}`;
-        const genProductId = data.productId || `VNX-${Math.floor(100 + Math.random() * 900)}`;
+        // Tự động giải quyết xung đột slug và SKU khi nhiều người cùng thêm sản phẩm
+        const genSlug = await getUniqueProductSlug(data.slug || data.name || 'san-pham');
+        const genSku = data.sku ? data.sku.trim() : `VNX-SKU-${Date.now().toString().slice(-6)}-${Math.floor(100 + Math.random() * 900)}`;
+        const genProductId = data.productId ? data.productId.trim() : `VNX-${Date.now().toString().slice(-4)}-${Math.floor(10 + Math.random() * 90)}`;
 
         createdProduct = await prisma.product.create({
           data: {

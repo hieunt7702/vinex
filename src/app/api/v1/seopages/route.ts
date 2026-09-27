@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../store';
 import prisma from '@/lib/prisma';
+import { getUniqueSeoPageSlug } from '@/lib/serverSlugHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -17,9 +18,11 @@ export async function GET() {
       const dbPages = await prisma.seoPage.findMany({
         orderBy: { id: 'desc' }
       });
-      if (dbPages && dbPages.length > 0) {
-        return NextResponse.json(dbPages);
-      }
+      return NextResponse.json(dbPages, {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        },
+      });
     } catch (e) {
       // fallback
     }
@@ -34,7 +37,7 @@ export async function POST(request: Request) {
 
     if (process.env.DATABASE_URL) {
       try {
-        const genSlug = data.slug || `trang-seo-${Date.now()}`;
+        const genSlug = await getUniqueSeoPageSlug(data.slug || data.title || 'trang-seo');
         createdPage = await prisma.seoPage.create({
           data: {
             title: data.title || 'Trang SEO mới',

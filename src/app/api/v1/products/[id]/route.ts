@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../../store';
 import prisma from '@/lib/prisma';
+import { getUniqueProductSlug } from '@/lib/serverSlugHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -89,11 +90,16 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
           const { categoryIds, categories, id: _id, ...cleanData } = data;
 
+          let resolvedSlug = cleanData.slug;
+          if (resolvedSlug) {
+            resolvedSlug = await getUniqueProductSlug(resolvedSlug, existing.id);
+          }
+
           updatedProduct = await prisma.product.update({
             where: { id: existing.id },
             data: {
               ...(cleanData.name !== undefined ? { name: cleanData.name } : {}),
-              ...(cleanData.slug !== undefined ? { slug: cleanData.slug } : {}),
+              ...(resolvedSlug !== undefined ? { slug: resolvedSlug } : {}),
               ...(cleanData.segment !== undefined ? { segment: cleanData.segment } : {}),
               ...(cleanData.price !== undefined ? { price: Number(cleanData.price) } : {}),
               ...(cleanData.promotionalPrice !== undefined ? { promotionalPrice: Number(cleanData.promotionalPrice) } : {}),

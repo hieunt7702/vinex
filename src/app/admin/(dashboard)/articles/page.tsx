@@ -41,6 +41,7 @@ export default function ArticlesPage() {
   const [data, setData] = useState<any[]>([]);
   const [categories, setCategories] = useState<string[]>(DEFAULT_CATEGORIES);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSlugManual, setIsSlugManual] = useState(false);
 
   const fetchArticles = async () => {
@@ -206,6 +207,7 @@ export default function ArticlesPage() {
       publishedAt: formData.status === 'PUBLISHED' ? (formData.publishedAt || new Date().toISOString()) : ''
     };
 
+    setIsSubmitting(true);
     try {
       if (modalMode === 'add') {
         const { id, ...createData } = dataToSave;
@@ -230,6 +232,8 @@ export default function ArticlesPage() {
     } catch (error) {
       console.error('Failed to save article:', error);
       toast.error('Có lỗi xảy ra khi lưu bài viết');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -1104,9 +1108,10 @@ export default function ArticlesPage() {
               <button
                 type="submit"
                 form="article-form"
-                className="flex items-center gap-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] font-medium text-sm h-10 px-6 border-0 cursor-pointer transition-colors shadow-sm"
+                disabled={isSubmitting}
+                className="flex items-center gap-2 bg-[#074751] hover:bg-[#0a5c68] text-white rounded-[6px] font-medium text-sm h-10 px-6 border-0 cursor-pointer transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Check className="w-4 h-4" /> {modalMode === 'add' ? 'Đăng bài viết' : 'Lưu thay đổi'}
+                <Check className="w-4 h-4" /> {isSubmitting ? 'Đang lưu...' : (modalMode === 'add' ? 'Đăng bài viết' : 'Lưu thay đổi')}
               </button>
             </div>
           </div>

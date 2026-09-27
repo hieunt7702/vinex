@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../../store';
 import prisma from '@/lib/prisma';
+import { getUniqueCategorySlug } from '@/lib/serverSlugHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -69,11 +70,17 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
         if (existing) {
           const { id: _id, ...cleanData } = data;
+
+          let resolvedSlug = cleanData.slug;
+          if (resolvedSlug) {
+            resolvedSlug = await getUniqueCategorySlug(resolvedSlug, existing.id);
+          }
+
           updatedCategory = await prisma.category.update({
             where: { id: existing.id },
             data: {
               ...(cleanData.name !== undefined ? { name: cleanData.name } : {}),
-              ...(cleanData.slug !== undefined ? { slug: cleanData.slug } : {}),
+              ...(resolvedSlug !== undefined ? { slug: resolvedSlug } : {}),
               ...(cleanData.type !== undefined ? { type: cleanData.type } : {}),
               ...(cleanData.parentId !== undefined ? { parentId: cleanData.parentId ? Number(cleanData.parentId) : null } : {}),
               ...(cleanData.description !== undefined ? { description: cleanData.description } : {}),

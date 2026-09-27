@@ -48,6 +48,7 @@ export default function CategoriesPage() {
   // Modals
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -158,6 +159,7 @@ export default function CategoriesPage() {
       return;
     }
     setErrors({});
+    setIsSubmitting(true);
 
     try {
       if (modalMode === 'add') {
@@ -179,6 +181,8 @@ export default function CategoriesPage() {
     } catch (error) {
       console.error(error);
       toast.error('Có lỗi xảy ra khi lưu danh mục');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -745,9 +749,10 @@ export default function CategoriesPage() {
               <button
                 type="submit"
                 form="category-form"
-                className="flex items-center gap-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] font-medium text-sm h-10 px-6 border-0 cursor-pointer transition-colors shadow-sm"
+                disabled={isSubmitting}
+                className="flex items-center gap-2 bg-[#074751] hover:bg-[#0a5c68] text-white rounded-[6px] font-medium text-sm h-10 px-6 border-0 cursor-pointer transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Check className="w-4 h-4" /> {modalMode === 'add' ? 'Thêm mới' : 'Lưu thay đổi'}
+                <Check className="w-4 h-4" /> {isSubmitting ? 'Đang lưu...' : (modalMode === 'add' ? 'Thêm mới' : 'Lưu thay đổi')}
               </button>
             </div>
           </div>

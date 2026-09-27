@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../store';
 import prisma from '@/lib/prisma';
+import { getUniqueCategorySlug } from '@/lib/serverSlugHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -17,13 +18,11 @@ export async function GET() {
       const dbCats = await prisma.category.findMany({
         orderBy: { id: 'asc' }
       });
-      if (dbCats && dbCats.length > 0) {
-        return NextResponse.json(dbCats, {
-          headers: {
-            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-          },
-        });
-      }
+      return NextResponse.json(dbCats, {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        },
+      });
     } catch (e) {
       // Fallback to store
     }
@@ -43,7 +42,7 @@ export async function POST(request: Request) {
 
     if (process.env.DATABASE_URL) {
       try {
-        const genSlug = data.slug || `danh-muc-${Date.now()}`;
+        const genSlug = await getUniqueCategorySlug(data.slug || data.name || 'danh-muc');
         createdCategory = await prisma.category.create({
           data: {
             name: data.name,

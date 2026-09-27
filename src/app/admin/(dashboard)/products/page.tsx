@@ -56,6 +56,7 @@ export default function ProductsPage() {
   const [data, setData] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetchProductsAndCategories = async () => {
     try {
@@ -215,6 +216,7 @@ export default function ProductsPage() {
       return;
     }
     setErrors({});
+    setIsSubmitting(true);
 
     try {
       // Auto-compute stock status if user hasn't explicitly set preorder
@@ -255,6 +257,8 @@ export default function ProductsPage() {
     } catch (error) {
       console.error('Failed to save product:', error);
       toast.error('Lỗi khi lưu sản phẩm');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -1133,9 +1137,10 @@ export default function ProductsPage() {
               <button
                 type="submit"
                 form="product-form"
-                className="flex items-center gap-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] font-medium text-sm h-10 px-6 border-0 cursor-pointer transition-colors shadow-sm"
+                disabled={isSubmitting}
+                className="flex items-center gap-2 bg-[#074751] hover:bg-[#0a5c68] text-white rounded-[6px] font-medium text-sm h-10 px-6 border-0 cursor-pointer transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Check className="w-4 h-4" /> {modalMode === 'add' ? 'Thêm mới' : 'Lưu thay đổi'}
+                <Check className="w-4 h-4" /> {isSubmitting ? 'Đang lưu...' : (modalMode === 'add' ? 'Thêm mới' : 'Lưu thay đổi')}
               </button>
             </div>
 

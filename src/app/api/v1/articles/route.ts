@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../store';
 import prisma from '@/lib/prisma';
 import { sortArticlesNewestFirst } from '@/lib/imageUtils';
+import { getUniqueArticleSlug } from '@/lib/serverSlugHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -18,14 +19,12 @@ export async function GET() {
       const dbArticles = await prisma.article.findMany({
         orderBy: { id: 'desc' }
       });
-      if (dbArticles && dbArticles.length > 0) {
-        const sorted = sortArticlesNewestFirst(dbArticles);
-        return NextResponse.json(sorted, {
-          headers: {
-            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-          },
-        });
-      }
+      const sorted = sortArticlesNewestFirst(dbArticles);
+      return NextResponse.json(sorted, {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        },
+      });
     } catch (e) {
       // Fallback
     }
@@ -46,7 +45,7 @@ export async function POST(request: Request) {
 
     if (process.env.DATABASE_URL) {
       try {
-        const genSlug = data.slug || `bai-viet-${Date.now()}`;
+        const genSlug = await getUniqueArticleSlug(data.slug || data.title || 'bai-viet');
         createdArticle = await prisma.article.create({
           data: {
             title: data.title,

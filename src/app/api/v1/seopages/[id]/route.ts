@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../../store';
 import prisma from '@/lib/prisma';
+import { getUniqueSeoPageSlug } from '@/lib/serverSlugHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -60,11 +61,17 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
         if (existing) {
           const { id: _id, ...cleanData } = data;
+
+          let resolvedSlug = cleanData.slug;
+          if (resolvedSlug) {
+            resolvedSlug = await getUniqueSeoPageSlug(resolvedSlug, existing.id);
+          }
+
           updatedPage = await prisma.seoPage.update({
             where: { id: existing.id },
             data: {
               ...(cleanData.title !== undefined ? { title: cleanData.title } : {}),
-              ...(cleanData.slug !== undefined ? { slug: cleanData.slug } : {}),
+              ...(resolvedSlug !== undefined ? { slug: resolvedSlug } : {}),
               ...(cleanData.keyword !== undefined ? { keyword: cleanData.keyword } : {}),
               ...(cleanData.content !== undefined ? { content: cleanData.content } : {}),
               ...(cleanData.status !== undefined ? { status: cleanData.status } : {}),
