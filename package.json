@@ -13,8 +13,7 @@
     "start": "node scripts/bootstrap.js && next start -H 0.0.0.0",
     "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
-    "prisma:push": "prisma db push --accept-data-loss",
-    "prisma:seed": "prisma db seed",
+    "prisma:push": "prisma db push",
     "seed": "ts-node --transpile-only prisma/seed.ts",
     "lint": "eslint",
     "db:up": "docker compose up -d",
@@ -22,7 +21,7 @@
     "db:logs": "docker compose logs -f postgres"
   },
   "prisma": {
-    "seed": "ts-node --transpile-only prisma/seed.ts"
+    "seed": "ts-node --transpile-only scripts/seed-safe.js"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

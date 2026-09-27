@@ -519,6 +519,38 @@ const customersData = [
 async function main() {
   console.log('--- VINEX DATABASE SEED STARTED ---');
 
+  // ─── PRODUCTION DATA GUARD ────────────────────────────────────────────────
+  // If we are connected to a REMOTE PostgreSQL (not localhost) and the DB already
+  // has records, refuse to seed UNLESS the caller explicitly sets FORCE_SEED=true.
+  // This is the last line of defense against accidental data wipes in production.
+  const databaseUrl = process.env.DATABASE_URL || '';
+  const isRemoteDb = databaseUrl && !databaseUrl.includes('localhost') && !databaseUrl.includes('127.0.0.1');
+  const forceSeed = process.env.FORCE_SEED === 'true';
+
+  if (isRemoteDb && !forceSeed) {
+    try {
+      await prisma.$connect();
+      const [productCount, articleCount, categoryCount] = await Promise.all([
+        prisma.product.count(),
+        prisma.article.count(),
+        prisma.category.count(),
+      ]);
+
+      if (productCount > 0 || articleCount > 0 || categoryCount > 0) {
+        console.log(`\n⛔  SEED ABORTED — Remote DB already has data:`);
+        console.log(`   Products: ${productCount}, Articles: ${articleCount}, Categories: ${categoryCount}`);
+        console.log(`   To force a full re-seed, run: FORCE_SEED=true pnpm run seed`);
+        console.log(`   WARNING: Force re-seed uses upsert and does NOT delete user records.\n`);
+        await prisma.$disconnect();
+        process.exit(0);
+      }
+
+      console.log('[Seed] Remote DB is empty — proceeding with initial seed...');
+    } catch (guardErr: any) {
+      console.warn('[Seed] Could not run guard check:', guardErr?.message, '— proceeding...');
+    }
+  }
+
   // Try DB seeding if DATABASE_URL is available
   try {
     console.log('Checking database connection...');
