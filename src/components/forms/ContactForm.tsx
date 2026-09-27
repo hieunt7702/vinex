@@ -6,6 +6,16 @@ import { CheckCircle2, Loader2, Send } from 'lucide-react';
 import { toast } from 'sonner';
 import { getApiUrl } from '@/lib/apiConfig';
 
+const NEED_OPTIONS = [
+  { value: 'Hộp quà Tết & Set quà doanh nghiệp', label: 'Tư vấn quà tặng doanh nghiệp (Hộp quà Tết, Set quà VIP)' },
+  { value: 'Hạt điều tẩm vị & Hạt dinh dưỡng', label: 'Nông sản chế biến & Hạt điều (Bán buôn, Bán lẻ)' },
+  { value: 'Trà Ô Long, Cà phê & Thảo mộc', label: 'Trà Ô Long, Cà phê & Thảo mộc cao cấp' },
+  { value: 'Cung ứng nguyên liệu / Nông sản xuất khẩu', label: 'Cung ứng nguyên liệu & Nông sản xuất khẩu' },
+  { value: 'Gia công sản phẩm theo yêu cầu (OEM/ODM)', label: 'Gia công sản phẩm theo yêu cầu (OEM / ODM)' },
+  { value: 'Hợp tác thương mại & Phân phối', label: 'Hợp tác phân phối & Đại lý thương mại' },
+  { value: 'Liên hệ tư vấn chung', label: 'Liên hệ & Tư vấn dịch vụ khác' }
+];
+
 interface ContactFormProps {
   submitText?: string;
 }
@@ -15,7 +25,7 @@ export function ContactForm({ submitText = 'Gửi Yêu Cầu Tư Vấn' }: Conta
     name: '',
     company: '',
     contact: '',
-    need: 'qua-tang',
+    need: 'Hộp quà Tết & Set quà doanh nghiệp',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,21 +47,19 @@ export function ContactForm({ submitText = 'Gửi Yêu Cầu Tư Vấn' }: Conta
     try {
       const isEmail = formData.contact.includes('@');
       const payload = {
-        customerName: formData.company ? `${formData.name} (${formData.company})` : formData.name,
+        customerName: formData.name,
+        companyName: formData.company || null,
         phone: !isEmail ? formData.contact : '',
         email: isEmail ? formData.contact : '',
         location: 'Khách hàng Website',
         source: 'Website - Trang Liên Hệ',
-        projectType: formData.need === 'cung-ung' 
-          ? 'Cung ứng nguyên liệu' 
-          : formData.need === 'qua-tang' 
-          ? 'Tư vấn quà tặng doanh nghiệp' 
-          : 'Hợp tác thương mại',
-        needs: formData.message || 'Yêu cầu tư vấn trực tiếp từ website',
-        notes: `Doanh nghiệp: ${formData.company || 'Không nêu'}. Liên hệ: ${formData.contact}`,
+        productGroup: formData.need,
+        purpose: formData.need,
+        projectType: formData.need,
+        notes: formData.message || 'Yêu cầu tư vấn trực tiếp từ website',
         status: 'NEW',
-        priority: 'MEDIUM',
-        leadClassification: 'WARM'
+        priority: 'HIGH',
+        leadClassification: 'HOT'
       };
 
       const res = await fetch(getApiUrl('/leads'), {
@@ -64,7 +72,7 @@ export function ContactForm({ submitText = 'Gửi Yêu Cầu Tư Vấn' }: Conta
 
       setIsSuccess(true);
       toast.success('Gửi thông tin thành công! Chuyên viên VINEX sẽ liên hệ lại trong thời gian sớm nhất.');
-      setFormData({ name: '', company: '', contact: '', need: 'qua-tang', message: '' });
+      setFormData({ name: '', company: '', contact: '', need: 'Hộp quà Tết & Set quà doanh nghiệp', message: '' });
     } catch (err) {
       console.error('Lỗi khi gửi lead:', err);
       toast.error('Có lỗi xảy ra khi gửi thông tin. Vui lòng liên hệ hotline: 0966 967 966');
@@ -85,7 +93,7 @@ export function ContactForm({ submitText = 'Gửi Yêu Cầu Tư Vấn' }: Conta
         </p>
         <button
           onClick={() => setIsSuccess(false)}
-          className="px-6 py-2.5 rounded-full bg-[#074751] text-white text-sm font-medium hover:bg-[#0d5962] transition-colors shadow-md"
+          className="px-6 py-2.5 rounded-full bg-[#074751] text-white text-sm font-medium hover:bg-[#0d5962] transition-colors shadow-md cursor-pointer"
         >
           Gửi yêu cầu khác
         </button>
@@ -94,7 +102,7 @@ export function ContactForm({ submitText = 'Gửi Yêu Cầu Tư Vấn' }: Conta
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8 relative z-20">
+    <form onSubmit={handleSubmit} className="space-y-6 md:space-y-7 relative z-20">
       <div>
         <label className="block text-[11px] font-semibold uppercase tracking-widest mb-2 text-vinex-teal">
           Họ tên đại diện <span className="text-red-500">*</span>
@@ -105,7 +113,7 @@ export function ContactForm({ submitText = 'Gửi Yêu Cầu Tư Vấn' }: Conta
           onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
           required
           placeholder="Nhập họ tên của bạn..." 
-          className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-4 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)]" 
+          className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-3.5 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)] text-sm" 
         />
       </div>
 
@@ -116,7 +124,7 @@ export function ContactForm({ submitText = 'Gửi Yêu Cầu Tư Vấn' }: Conta
           value={formData.company}
           onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
           placeholder="Tên công ty hoặc doanh nghiệp..." 
-          className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-4 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)]" 
+          className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-3.5 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)] text-sm" 
         />
       </div>
 
@@ -130,53 +138,41 @@ export function ContactForm({ submitText = 'Gửi Yêu Cầu Tư Vấn' }: Conta
           onChange={(e) => setFormData(prev => ({ ...prev, contact: e.target.value }))}
           required
           placeholder="Nhập số điện thoại hoặc email liên hệ..." 
-          className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-4 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)]" 
+          className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-3.5 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)] text-sm" 
         />
       </div>
 
       <div>
         <label className="block text-[11px] font-semibold uppercase tracking-widest mb-2 text-vinex-teal">Nhu cầu</label>
-        <select
+        <GlassSelect
+          options={NEED_OPTIONS}
           value={formData.need}
-          onChange={(e) => setFormData(prev => ({ ...prev, need: e.target.value }))}
-          className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-4 text-vinex-charcoal focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)]"
-        >
-          <option value="cung-ung">Cung ứng nguyên liệu</option>
-          <option value="qua-tang">Tư vấn quà tặng doanh nghiệp</option>
-          <option value="hop-tac">Hợp tác thương mại</option>
-        </select>
+          onChange={(val) => setFormData(prev => ({ ...prev, need: val }))}
+          placeholder="Chọn nhóm nhu cầu quan tâm..."
+        />
       </div>
 
       <div>
         <label className="block text-[11px] font-semibold uppercase tracking-widest mb-2 text-vinex-teal">Nội dung chi tiết</label>
         <textarea 
-          rows={5} 
+          rows={4} 
           value={formData.message}
           onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
           placeholder="Mô tả cụ thể về nhu cầu hợp tác của bạn..." 
-          className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-4 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)] resize-none"
+          className="w-full bg-white/60 backdrop-blur-md border border-white/40 rounded-xl px-5 py-3.5 text-vinex-charcoal placeholder:text-vinex-charcoal/40 focus:outline-none focus:border-vinex-teal/50 focus:bg-white/80 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)] resize-none text-sm" 
         ></textarea>
       </div>
 
-      <div className="pt-4">
+      <div className="pt-2">
         <GlassButton 
           type="submit" 
           disabled={isSubmitting}
           variant="primary" 
           size="lg" 
-          className="w-full md:w-auto flex items-center justify-center gap-2"
+          leftIcon={isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+          className="w-full sm:w-auto px-8 py-3.5 flex items-center justify-center font-medium shadow-[0_8px_25px_rgba(7,71,81,0.25)] hover:shadow-[0_12px_32px_rgba(7,71,81,0.38)] cursor-pointer"
         >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Đang gửi yêu cầu...
-            </>
-          ) : (
-            <>
-              <Send className="w-4 h-4" />
-              {submitText}
-            </>
-          )}
+          {isSubmitting ? 'Đang gửi yêu cầu...' : submitText}
         </GlassButton>
       </div>
     </form>

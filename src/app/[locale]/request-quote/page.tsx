@@ -56,18 +56,23 @@ export default function RequestQuotePage() {
       if (formData.brandingCard) branding.push('Thiệp chúc mừng');
 
       const payload = {
-        customerName: `${formData.contactName} (${formData.companyName})`,
+        customerName: formData.contactName,
+        companyName: formData.companyName,
         phone: formData.phone,
         email: formData.email,
         location: 'Khách hàng B2B Website',
         source: 'Website Form Báo Giá',
         projectType: formData.occasion || 'Quà tặng doanh nghiệp',
+        productGroup: 'Hộp quà & Set quà phối hợp',
+        purpose: formData.occasion || 'Quà tặng doanh nghiệp',
+        quantity: formData.quantity,
         budget: formData.budget,
         timeline: formData.deliveryDate || 'Càng sớm càng tốt',
+        customization: branding.length > 0 ? branding.join(', ') : 'Tiêu chuẩn',
         priority: 'HIGH',
         leadClassification: 'HOT',
         needs: `Số lượng dự kiến: ${formData.quantity}. Tùy chỉnh: ${branding.length > 0 ? branding.join(', ') : 'Tiêu chuẩn'}. Ghi chú: ${formData.notes || 'Không có'}`,
-        notes: `Tên công ty: ${formData.companyName}. Đại diện: ${formData.contactName}. Dịp: ${formData.occasion || 'N/A'}. Ngày giao: ${formData.deliveryDate || 'N/A'}`,
+        notes: `Tên công ty: ${formData.companyName}. Đại diện: ${formData.contactName}. Dịp: ${formData.occasion || 'N/A'}. Ngày giao: ${formData.deliveryDate || 'N/A'}. Ghi chú: ${formData.notes || 'Không có'}`,
         status: 'NEW'
       };
 

@@ -32,6 +32,8 @@ export async function POST(request: Request) {
     const data = await request.json();
     let createdCustomer: any = null;
 
+    const requestType = data.requestType || data.projectType || data.productGroup || 'Quà tặng doanh nghiệp';
+
     if (process.env.DATABASE_URL) {
       try {
         createdCustomer = await prisma.customer.create({
@@ -40,6 +42,7 @@ export async function POST(request: Request) {
             phoneNumber: data.phoneNumber || data.phone || '',
             email: data.email || null,
             address: data.address || null,
+            requestType: requestType,
             totalOrders: Number(data.totalOrders) || 0,
             notes: data.notes || null
           }
@@ -51,6 +54,7 @@ export async function POST(request: Request) {
 
     const finalCustomer = createdCustomer || {
       ...data,
+      requestType,
       id: store?.customers?.length ? Math.max(...store.customers.map(c => c.id)) + 1 : 1,
       createdAt: new Date().toISOString()
     };

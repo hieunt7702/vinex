@@ -29,6 +29,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
             ...(cleanData.phoneNumber !== undefined ? { phoneNumber: cleanData.phoneNumber } : {}),
             ...(cleanData.email !== undefined ? { email: cleanData.email } : {}),
             ...(cleanData.address !== undefined ? { address: cleanData.address } : {}),
+            ...(cleanData.requestType !== undefined ? { requestType: cleanData.requestType } : {}),
             ...(cleanData.totalOrders !== undefined ? { totalOrders: Number(cleanData.totalOrders) } : {}),
             ...(cleanData.notes !== undefined ? { notes: cleanData.notes } : {})
           }

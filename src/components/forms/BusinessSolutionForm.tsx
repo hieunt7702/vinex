@@ -39,13 +39,17 @@ export function BusinessSolutionForm() {
         email: isEmail ? formData.contact : '',
         location: 'Khách hàng B2B Website',
         source: 'Website - Giải Pháp Doanh Nghiệp',
-        projectType: 'Giải pháp sản phẩm theo nhu cầu doanh nghiệp',
+        projectType: formData.productGroup || 'Giải pháp sản phẩm nông sản theo nhu cầu',
+        productGroup: formData.productGroup || 'Chưa chọn',
+        purpose: formData.purpose || 'N/A',
+        quantity: formData.quantity || 'N/A',
+        customization: formData.requirements || '',
         budget: formData.budget || 'Thương lượng theo số lượng',
         timeline: formData.timeline || 'Theo tiến độ dự án',
         priority: 'HIGH',
         leadClassification: 'HOT',
         needs: `Nhóm sản phẩm: ${formData.productGroup || 'Chưa chọn'}. Mục đích: ${formData.purpose || 'N/A'}. Số lượng: ${formData.quantity || 'N/A'}. Yêu cầu quy cách: ${formData.requirements || 'N/A'}`,
-        notes: `Thông tin đại diện: ${formData.contact}. Thời gian dự kiến: ${formData.timeline || 'N/A'}`,
+        notes: `Thông tin đại diện: ${formData.contact}. Thời gian dự kiến: ${formData.timeline || 'N/A'}. Yêu cầu quy cách: ${formData.requirements || 'N/A'}`,
         status: 'NEW'
       };
 

@@ -26,14 +26,21 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
           where: { id: leadId },
           data: {
             ...(cleanData.customerName !== undefined ? { customerName: cleanData.customerName } : {}),
+            ...(cleanData.companyName !== undefined ? { companyName: cleanData.companyName } : {}),
             ...(cleanData.phone !== undefined ? { phone: cleanData.phone } : {}),
             ...(cleanData.email !== undefined ? { email: cleanData.email } : {}),
             ...(cleanData.location !== undefined ? { location: cleanData.location } : {}),
             ...(cleanData.source !== undefined ? { source: cleanData.source } : {}),
-            ...(cleanData.projectType !== undefined ? { projectType: cleanData.projectType } : {}),
+            ...(cleanData.productGroup !== undefined ? { productGroup: cleanData.productGroup } : {}),
+            ...(cleanData.purpose !== undefined ? { purpose: cleanData.purpose } : {}),
+            ...(cleanData.quantity !== undefined ? { quantity: cleanData.quantity } : {}),
             ...(cleanData.budget !== undefined ? { budget: cleanData.budget } : {}),
+            ...(cleanData.timeline !== undefined ? { timeline: cleanData.timeline } : {}),
+            ...(cleanData.customization !== undefined ? { customization: cleanData.customization } : {}),
             ...(cleanData.notes !== undefined ? { notes: cleanData.notes } : {}),
-            ...(cleanData.status !== undefined ? { status: cleanData.status } : {})
+            ...(cleanData.status !== undefined ? { status: cleanData.status } : {}),
+            ...(cleanData.leadClassification !== undefined ? { leadClassification: cleanData.leadClassification } : {}),
+            ...(cleanData.assignee !== undefined ? { assignee: cleanData.assignee } : {})
           }
         });
       } catch (dbErr) {
@@ -42,7 +49,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     }
 
     if (store?.leads) {
-      const index = store.leads.findIndex(l => l.id === leadId);
+      const index = store.leads.findIndex((l: any) => l.id === leadId);
       if (index !== -1) {
         store.leads[index] = { ...store.leads[index], ...data, ...(updatedLead || {}) };
         savePersistedData();
@@ -50,7 +57,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     }
 
     if (updatedLead) return NextResponse.json(updatedLead);
-    const fallback = store?.leads?.find(l => l.id === leadId);
+    const fallback = store?.leads?.find((l: any) => l.id === leadId);
     if (fallback) return NextResponse.json(fallback);
 
     return NextResponse.json({ message: 'Lead không tồn tại' }, { status: 404 });
@@ -72,7 +79,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
   }
 
   if (store?.leads) {
-    const index = store.leads.findIndex(l => l.id === leadId);
+    const index = store.leads.findIndex((l: any) => l.id === leadId);
     if (index !== -1) {
       store.leads.splice(index, 1);
       if (store.stats && store.stats.totalLeads > 0) store.stats.totalLeads--;

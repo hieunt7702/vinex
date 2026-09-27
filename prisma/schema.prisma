@@ -67,18 +67,26 @@ model Article {
 }
 
 model Lead {
-  id           Int      @id @default(autoincrement())
-  customerName String
-  phone        String
-  email        String?
-  location     String?
-  source       String?
-  projectType  String?
-  budget       String?
-  notes        String?
-  status       String   @default("PENDING")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id                 Int      @id @default(autoincrement())
+  customerName       String
+  companyName        String?
+  phone              String
+  email              String?
+  location           String?
+  source             String?  @default("Website")
+  productGroup       String?  // Nhóm sản phẩm quan tâm (Hạt điều, Trà/Cà phê, Bánh kẹo, Quà Tết...)
+  purpose            String?  // Mục đích sử dụng (Quà Tết doanh nghiệp, Tri ân đối tác, Bán lẻ...)
+  quantity           String?  // Số lượng dự kiến
+  budget             String?  // Ngân sách dự kiến
+  timeline           String?  // Thời gian giao hàng mong muốn
+  customization      String?  // Tùy chỉnh thương hiệu (In ép kim logo, Ruy băng, Thiệp...)
+  notes              String?  // Yêu cầu chi tiết & Ghi chú
+  status             String   @default("NEW") // NEW, CONTACTED, CONSULTING, WON, LOST
+  leadClassification String?  @default("WARM") // HOT, WARM, COLD
+  assignee           String?  // Nhân viên phụ trách tư vấn
+  projectType        String?  // Dự phòng tương thích ngược
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model Customer {
@@ -87,6 +95,7 @@ model Customer {
   phoneNumber String
   email       String?
   address     String?
+  requestType String?  // Loại yêu cầu (Quà tặng doanh nghiệp, Hạt điều & Nông sản, Cung ứng, OEM...)
   totalOrders Int      @default(0)
   notes       String?
   createdAt   DateTime @default(now())

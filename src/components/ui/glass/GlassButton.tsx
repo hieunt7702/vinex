@@ -52,9 +52,9 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
   // Variant styles adhering to guide section 3 & 11 with authentic liquid glass refraction & specular highlights
   const variantStyles = {
     primary:
-      'bg-[#0D5962]/85 hover:bg-[#0D5962]/95 backdrop-blur-md text-white border border-white/30 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.4),0_8px_25px_rgba(13,89,98,0.25)]',
+      'bg-gradient-to-r from-[#074751] via-[#0D5962] to-[#074751] hover:from-[#0a5c68] hover:via-[#146b76] hover:to-[#0a5c68] text-white border border-white/30 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.4),0_8px_25px_rgba(7,71,81,0.28)] hover:shadow-[0_12px_32px_rgba(7,71,81,0.4)]',
     secondary:
-      'bg-white/45 hover:bg-white/60 backdrop-blur-md text-[#074751] border border-white/70 shadow-[inset_0_1px_2px_rgba(255,255,255,0.75),0_4px_16px_rgba(0,0,0,0.06)]',
+      'bg-white/70 hover:bg-white/85 backdrop-blur-md text-[#074751] border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.75),0_4px_16px_rgba(0,0,0,0.06)]',
     gold:
       'bg-[#F2B719]/85 hover:bg-[#F2B719]/95 backdrop-blur-md text-[#24313A] border border-white/40 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.5),0_8px_25px_rgba(242,183,25,0.22)]',
     ghost:
@@ -83,9 +83,9 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
         aria-hidden="true"
       />
 
-      <span className={`relative z-10 flex items-center ${gapClasses[size]}`}>
+      <span className={`relative z-10 inline-flex items-center justify-center whitespace-nowrap ${gapClasses[size]}`}>
         {leftIcon && <span className="flex-shrink-0 flex items-center justify-center">{leftIcon}</span>}
-        <span>{children}</span>
+        <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap">{children}</span>
         {rightIcon && <span className="flex-shrink-0 flex items-center justify-center">{rightIcon}</span>}
       </span>
     </Component>
