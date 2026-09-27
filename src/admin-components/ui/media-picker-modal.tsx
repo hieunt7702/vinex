@@ -35,13 +35,15 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10, 
   const [searchTerm, setSearchTerm] = useState('');
   const [mediaFiles, setMediaFiles] = useState<MediaFile[]>([]);
   const [selectedUrls, setSelectedUrls] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [customUrlInput, setCustomUrlInput] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchMedia = async () => {
     try {
       setIsLoading(true);
       const response = await apiClient.get('/media');
-      setMediaFiles(response.data);
+      setMediaFiles(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error('Failed to fetch media:', error);
       toast.error('Lỗi khi tải thư viện Media');
@@ -55,12 +57,26 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10, 
       fetchMedia();
       setSelectedUrls(initialSelectedUrls);
       setSearchTerm('');
+      setCustomUrlInput('');
     }
   }, [open]);
 
-  const filteredMedia = mediaFiles.filter(file =>
-    file.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredMedia = mediaFiles.filter(file => {
+    const matchesSearch = file.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          file.url.toLowerCase().includes(searchTerm.toLowerCase());
+    if (!matchesSearch) return false;
+
+    if (selectedCategory === 'cloudinary') {
+      return file.url.includes('cloudinary.com') || file.type?.toLowerCase().includes('cloudinary');
+    }
+    if (selectedCategory === 'internal_product') {
+      return file.url.includes('/images/product');
+    }
+    if (selectedCategory === 'internal_news') {
+      return file.url.includes('/images/news') || file.url.includes('/images/banner');
+    }
+    return true;
+  });
 
   const toggleSelect = (url: string) => {
     setSelectedUrls(prev => {
@@ -75,6 +91,23 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10, 
     });
   };
 
+  const handleAddCustomUrl = () => {
+    const trimmed = customUrlInput.trim();
+    if (!trimmed) {
+      toast.warning('Vui lòng nhập đường dẫn ảnh');
+      return;
+    }
+    if (selectedUrls.length >= maxFiles) {
+      toast.warning(`Chỉ được chọn tối đa ${maxFiles} ảnh`);
+      return;
+    }
+    if (!selectedUrls.includes(trimmed)) {
+      setSelectedUrls(prev => [...prev, trimmed]);
+      toast.success('Đã thêm đường dẫn vào danh sách chọn');
+    }
+    setCustomUrlInput('');
+  };
+
   const handleConfirm = () => {
     if (selectedUrls.length > 0) {
       onSelect(selectedUrls);
@@ -87,21 +120,63 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10, 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent style={{ fontFamily: 'Roboto, sans-serif' }} className="sm:max-w-[1000px] w-[95vw] h-[85vh] !p-0 flex flex-col bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[8px] overflow-hidden shadow-xl !outline-none focus:outline-none ring-0">
-        <DialogHeader className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 shrink-0 bg-white dark:bg-[#14151a] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-full">
-            <DialogTitle className="text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-              Chọn ảnh từ thư viện
+        <DialogHeader className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 shrink-0 bg-white dark:bg-[#14151a] flex flex-col gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full">
+            <DialogTitle className="text-base font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+              Thư Viện Ảnh (Cloudinary &amp; Ảnh Nội Bộ)
             </DialogTitle>
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Tìm kiếm tên file..."
+                placeholder="Tìm kiếm tên file hoặc URL..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40 text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23]"
+                className="w-full pl-9 pr-3 py-1.5 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40 text-gray-900 dark:text-white transition-all hover:bg-white dark:hover:bg-[#1a1b23]"
               />
             </div>
+          </div>
+
+          {/* Quick Filter Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+            {[
+              { id: 'all', label: 'Tất cả' },
+              { id: 'cloudinary', label: '☁️ Cloudinary Upload' },
+              { id: 'internal_product', label: '🥜 Ảnh Sản phẩm nội bộ' },
+              { id: 'internal_news', label: '📰 Banner & Tin tức' }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setSelectedCategory(tab.id)}
+                className={`px-3 py-1 rounded-[4px] font-medium transition-colors whitespace-nowrap cursor-pointer ${
+                  selectedCategory === tab.id
+                    ? 'bg-[#5865f2] text-white shadow-xs'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Direct URL input bar */}
+          <div className="flex items-center gap-2 pt-1 border-t border-gray-100 dark:border-gray-800/80">
+            <input
+              type="text"
+              placeholder="Hoặc dán URL Cloudinary / đường dẫn nội bộ (VD: /images/product/Cashew1.png)..."
+              value={customUrlInput}
+              onChange={(e) => setCustomUrlInput(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomUrl(); } }}
+              className="flex-1 px-3 py-1.5 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-xs focus:outline-none focus:ring-2 focus:ring-[#5865f2]/20 text-gray-900 dark:text-white"
+            />
+            <button
+              type="button"
+              onClick={handleAddCustomUrl}
+              className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-medium rounded-[4px] transition-colors shrink-0 cursor-pointer"
+            >
+              + Thêm URL
+            </button>
           </div>
         </DialogHeader>
 
@@ -118,7 +193,8 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10, 
                   <div
                     key={file.id}
                     onClick={() => toggleSelect(file.url)}
-                    className={`relative aspect-square rounded-[4px] overflow-hidden cursor-pointer border transition-all group ${
+                    title={`${file.name}\n${file.url}`}
+                    className={`relative aspect-square rounded-[6px] overflow-hidden cursor-pointer border transition-all group ${
                       isSelected ? 'border-[#5865f2] ring-[3px] ring-[#5865f2]/20' : 'border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 bg-white dark:bg-[#14151a]'
                     }`}
                   >
@@ -127,6 +203,9 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10, 
                       alt={file.name}
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute inset-x-0 bottom-0 bg-black/60 backdrop-blur-xs p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <p className="text-[10px] text-white truncate font-medium">{file.name}</p>
+                    </div>
                     {isSelected && (
                       <div className="absolute top-1.5 right-1.5 bg-white rounded-full shadow-sm">
                         <CheckCircle2 className="w-5 h-5 text-[#5865f2]" />
@@ -139,8 +218,8 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10, 
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-gray-500 dark:text-gray-400">
               <FolderOpen className="w-12 h-12 text-gray-300 dark:text-gray-600 mb-3" strokeWidth={1} />
-              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Thư viện trống</p>
-              <p className="text-xs mt-1 text-gray-500">Không tìm thấy hình ảnh nào phù hợp.</p>
+              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Không tìm thấy ảnh</p>
+              <p className="text-xs mt-1 text-gray-500">Thử tìm kiếm khác hoặc dán trực tiếp đường dẫn ảnh ở thanh trên.</p>
             </div>
           )}
         </div>
@@ -163,7 +242,7 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10, 
               disabled={selectedUrls.length === 0}
               className="h-10 px-5 text-sm font-medium rounded-[4px] bg-[#5865f2] hover:bg-[#4752c4] text-white disabled:opacity-50 shadow-none transition-colors flex items-center gap-2"
             >
-              <Check className="w-4 h-4" /> Chèn ảnh
+              <Check className="w-4 h-4" /> Xác nhận chọn ảnh
             </Button>
           </div>
         </DialogFooter>

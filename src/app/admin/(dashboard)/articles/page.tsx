@@ -4,11 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { 
   Search, Filter, FileText, Plus, Edit, Trash2, X, ChevronLeft, ChevronRight, 
   Image as ImageIcon, SearchCode, Check, ArrowUpDown, ChevronDown, ChevronUp, 
-  User, Eye, EyeOff, Tag, Link as LinkIcon, Loader2, FolderOpen, Globe, CheckCircle2, AlertTriangle, Sparkles
+  User, Eye, EyeOff, Tag, Link as LinkIcon, Loader2, FolderOpen, Globe, CheckCircle2, AlertTriangle, Sparkles, Star
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import apiClient from '@/admin-lib/apiClient';
 import { format } from 'date-fns';
+import { normalizeImageUrl } from '@/lib/imageUtils';
 import TiptapEditor from '@/admin-components/ui/TiptapEditor';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ImageUploader } from '@/admin-components/ui/image-uploader';
@@ -199,6 +200,7 @@ export default function ArticlesPage() {
 
     const dataToSave = {
       ...formData,
+      isFeatured: Boolean(formData.isFeatured),
       thumbnail: thumbnailStr,
       publishedAt: formData.status === 'PUBLISHED' ? (formData.publishedAt || new Date().toISOString()) : ''
     };
@@ -235,6 +237,7 @@ export default function ArticlesPage() {
     setModalMode('edit');
     setFormData({
       ...article,
+      isFeatured: Boolean(article.isFeatured),
       thumbnail: article.thumbnail ? (Array.isArray(article.thumbnail) ? article.thumbnail : [article.thumbnail]) : [],
       canonicalUrl: article.canonicalUrl || `https://vinex.vn/tin-tuc/${article.slug || ''}`,
       ogTitle: article.ogTitle || '',
@@ -247,6 +250,21 @@ export default function ArticlesPage() {
     });
     setErrors({});
     setIsDrawerOpen(true);
+  };
+
+  const handleToggleFeatured = async (article: any) => {
+    const nextFeatured = !article.isFeatured;
+    try {
+      await apiClient.patch(`/articles/${article.id}`, { isFeatured: nextFeatured });
+      toast.success(nextFeatured ? 'Đã ghim bài viết làm Tiêu Điểm Nổi Bật!' : 'Đã bỏ ghim bài viết nổi bật.');
+      fetchArticles();
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('vinex_articles_updated'));
+      }
+    } catch (error) {
+      console.error('Lỗi khi đổi trạng thái nổi bật:', error);
+      toast.error('Có lỗi xảy ra khi đổi trạng thái nổi bật');
+    }
   };
 
   const handleToggleStatus = (article: any) => {
@@ -412,6 +430,7 @@ export default function ArticlesPage() {
                 robotsFollow: 'follow',
                 schemaType: 'Article',
                 faqSchema: false,
+                isFeatured: false,
                 publishedAt: new Date().toISOString()
               });
               setErrors({});
@@ -661,6 +680,7 @@ export default function ArticlesPage() {
                             robotsFollow: 'follow',
                             schemaType: 'Article',
                             faqSchema: false,
+                            isFeatured: false,
                             publishedAt: new Date().toISOString()
                           });
                           setErrors({});
@@ -693,13 +713,20 @@ export default function ArticlesPage() {
                           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
                             <div className="w-12 h-9 sm:w-14 sm:h-10 lg:w-16 lg:h-12 rounded-[4px] bg-gray-100 dark:bg-gray-800 shrink-0 overflow-hidden border border-gray-200 dark:border-gray-800 flex items-center justify-center">
                               {article.thumbnail ? (
-                                <img src={article.thumbnail} alt="" className="w-full h-full object-cover" />
+                                <img src={normalizeImageUrl(article.thumbnail)} alt="" className="w-full h-full object-cover" />
                               ) : (
                                 <ImageIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
                               )}
                             </div>
                             <div className="min-w-0 flex-1">
-                              <div className="font-semibold text-xs sm:text-sm text-gray-900 dark:text-white line-clamp-2 leading-snug">{article.title}</div>
+                              <div className="flex items-center gap-2 flex-wrap">
+                                {article.isFeatured && (
+                                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 border border-amber-300 dark:border-amber-700 shrink-0">
+                                    ⭐ NỔI BẬT
+                                  </span>
+                                )}
+                                <span className="font-semibold text-xs sm:text-sm text-gray-900 dark:text-white line-clamp-2 leading-snug">{article.title}</span>
+                              </div>
                               <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 sm:mt-1 min-w-0 text-xs text-gray-400">
                                 <span className="font-mono truncate max-w-[120px] sm:max-w-[160px] lg:max-w-[240px]">/tin-tuc/{article.slug}</span>
                                 <span className="shrink-0">• {article.createdAt ? format(new Date(article.createdAt), 'dd/MM/yyyy') : ''}</span>
@@ -769,6 +796,11 @@ export default function ArticlesPage() {
                                 label: 'Chỉnh sửa & Tối ưu SEO',
                                 icon: Edit,
                                 onClick: () => handleEdit(article)
+                              },
+                              {
+                                label: article.isFeatured ? 'Bỏ ghim bài viết nổi bật' : 'Ghim bài viết nổi bật ⭐',
+                                icon: Star,
+                                onClick: () => handleToggleFeatured(article)
                               },
                               {
                                 label: article.status === 'PUBLISHED' ? 'Ẩn bài viết (Bản nháp)' : 'Mở xuất bản bài viết',
@@ -986,6 +1018,28 @@ export default function ArticlesPage() {
                         onChange={v => setFormData({ ...formData, status: v })}
                       />
                     </div>
+                  </div>
+
+                  {/* Toggle Đánh dấu bài viết nổi bật */}
+                  <div className="flex items-center justify-between p-3.5 rounded-lg border border-amber-200 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-950/20">
+                    <div className="flex items-start gap-3">
+                      <Star className={`w-5 h-5 mt-0.5 shrink-0 ${formData.isFeatured ? 'text-amber-500 fill-amber-500' : 'text-gray-400'}`} />
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900 dark:text-white">Đánh dấu bài viết nổi bật (Tiêu điểm)</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                          Bài viết nổi bật mới nhất sẽ tự động được ưu tiên đưa lên vị trí tiêu điểm trên đầu trang tin tức.
+                        </p>
+                      </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer shrink-0 ml-4">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(formData.isFeatured)}
+                        onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-500"></div>
+                    </label>
                   </div>
 
                   <div className="space-y-1.5">

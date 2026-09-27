@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass';
 import { getApiUrl } from '@/lib/apiConfig';
+import { normalizeImageUrl } from '@/lib/imageUtils';
 
 // Custom Botanical & Food Icons matching VINEX brand
 const CashewIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
@@ -106,7 +107,7 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
                 category: p.categories?.[0]?.name || p.category || (typeof p.categoryName === 'string' ? p.categoryName : 'Nông sản VINEX'),
                 status: 'Sẵn sàng cung ứng',
                 desc: p.shortDescription || p.desc || '',
-                img: (Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : (p.img || '/images/placeholder.jpg')),
+                img: normalizeImageUrl(p.images || p.img, '/images/placeholder.jpg'),
                 price: p.price,
                 promotionalPrice: p.promotionalPrice,
                 description: p.description,
@@ -469,9 +470,10 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
                     <div className="p-3.5 pb-0">
                       <Link href={productHref} className="block relative aspect-[4/3] rounded-[16px] overflow-hidden bg-[#074751]/5 border border-white/60 group-hover:border-white transition-colors">
                         <Image
-                          src={product.img || '/images/placeholder.jpg'}
+                          src={normalizeImageUrl(product.img, '/images/placeholder.jpg')}
                           alt={product.name}
                           fill
+                          unoptimized
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />

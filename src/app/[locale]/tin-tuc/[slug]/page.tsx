@@ -7,6 +7,7 @@ import type { Locale } from '@/dictionaries';
 import { GlassCard } from '@/components/ui/glass';
 import { Clock, Eye, User, Tag, ChevronRight, ArrowRight } from 'lucide-react';
 import { getArticleBySlug, getPublicArticles } from '@/lib/dataService';
+import { normalizeImageUrl } from '@/lib/imageUtils';
 import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
@@ -93,7 +94,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
                {article.coverImg && (
                   <div className="w-full aspect-[16/10] md:aspect-[21/9] bg-gradient-to-br from-[#074751] to-[#10626f] rounded-[16px] overflow-hidden mb-12 shadow-[0_16px_40px_rgba(7,71,81,0.1)] relative group cursor-pointer">
                       <div className="absolute inset-0 opacity-90">
-                          <Image src={article.coverImg} alt={article.title} fill className="object-cover" />
+                          <Image src={normalizeImageUrl(article.coverImg)} alt={article.title} fill unoptimized className="object-cover" />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-[#074751]/40 to-transparent" />
                   </div>
@@ -148,7 +149,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
                            >
                               <div className="w-full aspect-[4/3] bg-gradient-to-br from-[#074751]/80 to-[#10626f]/80 relative overflow-hidden shrink-0">
                                  <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 opacity-70">
-                                    <Image src={item.coverImg} alt={item.title} fill className="object-cover mix-blend-overlay" />
+                                    <Image src={normalizeImageUrl(item.coverImg)} alt={item.title} fill unoptimized className="object-cover mix-blend-overlay" />
                                  </div>
                                  <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
                                  <div className="absolute top-4 left-4 bg-vinex-gold text-white text-[10px] font-bold px-2.5 py-1.5 rounded-[4px] uppercase tracking-wider shadow-sm z-10">

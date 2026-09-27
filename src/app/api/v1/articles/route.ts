@@ -54,6 +54,7 @@ export async function POST(request: Request) {
     const newArticle = {
       ...data,
       id: newId,
+      isFeatured: Boolean(data.isFeatured),
       createdAt: new Date().toISOString()
     };
 
@@ -71,6 +72,7 @@ export async function POST(request: Request) {
             thumbnail: data.thumbnail || data.coverImg || '',
             views: Number(data.views) || 0,
             status: data.status || 'PUBLISHED',
+            isFeatured: Boolean(data.isFeatured),
             tags: typeof data.tags === 'string' ? data.tags : (Array.isArray(data.tags) ? data.tags.join(', ') : ''),
             publishedAt: data.publishedAt || new Date().toISOString()
           }

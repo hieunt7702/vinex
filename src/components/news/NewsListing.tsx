@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { PublicArticle } from '@/lib/dataService';
 import { getApiUrl } from '@/lib/apiConfig';
+import { normalizeImageUrl } from '@/lib/imageUtils';
 
 interface NewsListingProps {
   initialArticles: PublicArticle[];
@@ -64,10 +65,12 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
                   return isNaN(d.getTime()) ? (a.date || 'Gần đây') : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
                 })() : (a.date || 'Gần đây'),
                 views: a.views || 0,
-                badge: a.category || 'NỔI BẬT',
-                coverImg: (typeof a.thumbnail === 'string' && a.thumbnail) ? a.thumbnail : (a.coverImg || '/images/placeholder.jpg'),
+                badge: a.isFeatured ? 'NỔI BẬT' : (a.category || 'TIN TỨC VINEX'),
+                coverImg: normalizeImageUrl(a.thumbnail || a.coverImg, '/images/banner/b_miss_world_2026.png'),
                 content: a.content || '',
-                tags: Array.isArray(a.tags) ? a.tags : (typeof a.tags === 'string' && a.tags ? a.tags.split(',').map((t: string) => t.trim()) : [])
+                tags: Array.isArray(a.tags) ? a.tags : (typeof a.tags === 'string' && a.tags ? a.tags.split(',').map((t: string) => t.trim()) : []),
+                isFeatured: Boolean(a.isFeatured),
+                publishedAt: a.publishedAt || a.createdAt || ''
               }));
             setArticles(mapped);
           }
@@ -105,9 +108,19 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
     };
   }, []);
 
-  // Top featured post: pick vinex-miss-world or the first article with 'Tin tức VINEX'
+  // Top featured post: pick newest isFeatured article, fallback to articles[0]
   const featuredPost = useMemo(() => {
-    return articles.find(a => a.slug === 'vinex-miss-world') || articles[0];
+    const featuredArticles = articles.filter(a => Boolean(a.isFeatured));
+    if (featuredArticles.length > 0) {
+      // Sort newest first
+      return [...featuredArticles].sort((a, b) => {
+        const timeA = new Date(a.publishedAt || a.date || 0).getTime();
+        const timeB = new Date(b.publishedAt || b.date || 0).getTime();
+        if (timeA && timeB && timeA !== timeB) return timeB - timeA;
+        return (Number(b.id) || 0) - (Number(a.id) || 0);
+      })[0];
+    }
+    return articles[0];
   }, [articles]);
 
   // Filtered articles list
@@ -135,7 +148,7 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
 
       return true;
     });
-  }, [initialArticles, selectedCategory, searchQuery, featuredPost]);
+  }, [articles, selectedCategory, searchQuery, featuredPost]);
 
   return (
     <div className="w-full">
@@ -172,10 +185,11 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
               {/* Cover Image - Flush with top, left, bottom of the card, zero outer white padding */}
               <div className="lg:col-span-7 relative w-full aspect-[2.32/1] lg:aspect-auto lg:h-full min-h-[220px] sm:min-h-[280px] lg:min-h-[320px] max-h-[360px] overflow-hidden bg-[#eef3ef]">
                 <Image
-                  src={featuredPost.coverImg || '/images/banner/b_miss_world_2026.png'}
+                  src={normalizeImageUrl(featuredPost.coverImg, '/images/banner/b_miss_world_2026.png')}
                   alt={featuredPost.title}
                   fill
                   priority
+                  unoptimized
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 58vw"
                 />
@@ -335,9 +349,10 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
                   {/* Card Thumbnail Image */}
                   <div className="w-full aspect-[16/10] relative overflow-hidden bg-gray-100">
                     <Image
-                      src={article.coverImg || '/images/placeholder.jpg'}
+                      src={normalizeImageUrl(article.coverImg, '/images/placeholder.jpg')}
                       alt={article.title}
                       fill
+                      unoptimized
                       className="object-cover transition-transform duration-600 ease-out group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />

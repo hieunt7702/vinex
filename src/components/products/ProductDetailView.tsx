@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass';
 import type { PublicProduct } from '@/lib/dataService';
+import { normalizeImageUrl } from '@/lib/imageUtils';
 
 interface ProductDetailViewProps {
   product: PublicProduct;
@@ -25,12 +26,13 @@ interface ProductDetailViewProps {
 
 export function ProductDetailView({ product, relatedProducts, lang }: ProductDetailViewProps) {
   // Gallery images setup (dynamic from admin, fallback to multiple related angles)
-  const dynamicImages = product.images && product.images.length > 0 
+  const rawImages = product.images && product.images.length > 0 
     ? product.images 
     : [product.img];
+  const dynamicImages = rawImages.map(img => normalizeImageUrl(img, '/images/placeholder.jpg')).filter(Boolean);
   const galleryImages = Array.from(new Set([
     ...dynamicImages,
-    ...(product.attributes?.find(a => a.name === 'Hình ảnh phụ')?.value ? [product.attributes.find(a => a.name === 'Hình ảnh phụ')!.value] : []),
+    ...(product.attributes?.find(a => a.name === 'Hình ảnh phụ')?.value ? [normalizeImageUrl(product.attributes.find(a => a.name === 'Hình ảnh phụ')!.value)] : []),
     '/images/product/Orchard nuts 1.png',
     '/images/product/Orchard nuts 2.png',
   ].filter(Boolean))).slice(0, 4);
@@ -85,10 +87,11 @@ export function ProductDetailView({ product, relatedProducts, lang }: ProductDet
             <div className="rounded-[20px] backdrop-blur(24px) saturate(140%) bg-white/70 border border-white/80 shadow-[0_16px_40px_rgba(7,71,81,0.06),inset_0_1.5px_2px_rgba(255,255,255,0.75)] p-3.5 relative overflow-hidden group">
               <div className="relative aspect-square w-full rounded-[16px] overflow-hidden bg-[#074751]/5 border border-white/60">
                 <Image
-                  src={activeImage}
+                  src={normalizeImageUrl(activeImage, '/images/placeholder.jpg')}
                   alt={product.name}
                   fill
                   priority
+                  unoptimized
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className={`object-cover transition-all duration-500 ${isZoomed ? 'scale-125 cursor-zoom-out' : 'group-hover:scale-105 cursor-zoom-in'}`}
                   onClick={() => setIsZoomed(!isZoomed)}
@@ -126,9 +129,10 @@ export function ProductDetailView({ product, relatedProducts, lang }: ProductDet
                   >
                     <div className="relative w-full h-full rounded-[10px] overflow-hidden">
                       <Image
-                        src={imgUrl}
+                        src={normalizeImageUrl(imgUrl, '/images/placeholder.jpg')}
                         alt={`${product.name} angle ${idx + 1}`}
                         fill
+                        unoptimized
                         className="object-cover"
                       />
                     </div>
@@ -344,9 +348,10 @@ export function ProductDetailView({ product, relatedProducts, lang }: ProductDet
                   <div className="p-3.5 pb-0">
                     <Link href={relHref} className="block relative aspect-[4/3] rounded-[16px] overflow-hidden bg-[#074751]/5 border border-white/60 group-hover:border-white transition-colors">
                       <Image
-                        src={rel.img || '/images/placeholder.jpg'}
+                        src={normalizeImageUrl(rel.img, '/images/placeholder.jpg')}
                         alt={rel.name}
                         fill
+                        unoptimized
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />

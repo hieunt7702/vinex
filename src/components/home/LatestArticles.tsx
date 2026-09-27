@@ -8,6 +8,7 @@ import { ArrowRight, ChevronRight, ChevronLeft, Calendar } from "lucide-react";
 import { useDict } from "@/hooks/useDict";
 import { GlassCard } from "@/components/ui/glass";
 import { getApiUrl } from "@/lib/apiConfig";
+import { normalizeImageUrl } from "@/lib/imageUtils";
 
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -42,7 +43,7 @@ export const LatestArticles: React.FC = () => {
               const d = new Date(a.publishedAt);
               return isNaN(d.getTime()) ? (a.date || 'Gần đây') : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
             })() : (a.date || 'Gần đây'),
-            img: (typeof a.thumbnail === 'string' && a.thumbnail) ? a.thumbnail : `/images/product/Cashew${(idx % 6) + 1}.png`
+            img: normalizeImageUrl(a.thumbnail || a.coverImg, `/images/product/Cashew${(idx % 6) + 1}.png`)
           })));
         }
       } catch (e) {
@@ -137,9 +138,10 @@ export const LatestArticles: React.FC = () => {
                       {/* Top Article Image */}
                       <div className="relative aspect-[16/9.5] w-full overflow-hidden bg-[#eef3ef]">
                         <Image
-                          src={article.img || `/images/product/Cashew${(idx % 6) + 1}.png`}
+                          src={normalizeImageUrl(article.img, `/images/product/Cashew${(idx % 6) + 1}.png`)}
                           alt={article.title}
                           fill
+                          unoptimized
                           sizes="(max-width: 640px) 260px, (max-width: 1024px) 285px, 310px"
                           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />

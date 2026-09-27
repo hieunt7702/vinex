@@ -2,6 +2,7 @@ import prisma from '@/lib/prisma';
 import { store } from '@/app/api/v1/store';
 import { getApiUrl } from '@/lib/apiConfig';
 import defaultDb from '@/data/db.json';
+import { normalizeImageUrl } from '@/lib/imageUtils';
 import type { PublicProduct, PublicCategory, PublicArticle, GlobalSettings } from '@/lib/types';
 import { defaultGlobalSettings } from '@/lib/types';
 
@@ -27,9 +28,10 @@ function getLocalDbData(): any {
 }
 
 function formatRawProduct(p: any): PublicProduct {
-  const images = Array.isArray(p.images) && p.images.length > 0 
+  const rawImages = Array.isArray(p.images) && p.images.length > 0 
     ? p.images 
     : (p.img ? [p.img] : ['/images/product/Cashew1.png']);
+  const images = rawImages.map((img: any) => normalizeImageUrl(img, '/images/product/Cashew1.png')).filter(Boolean);
   const firstImg = images[0] || '/images/product/Cashew1.png';
 
   const categoryName = p.categories?.[0]?.name 
@@ -44,7 +46,7 @@ function formatRawProduct(p: any): PublicProduct {
     status: p.status === 'ACTIVE' || p.status === 'Sẵn sàng cung ứng' ? 'Sẵn sàng cung ứng' : (p.status || 'Sẵn sàng cung ứng'),
     desc: p.shortDescription || p.desc || '',
     img: firstImg,
-    images: images,
+    images: images.length > 0 ? images : [firstImg],
     price: typeof p.price === 'number' ? p.price : 98000,
     promotionalPrice: p.promotionalPrice,
     description: p.description || '',
@@ -294,7 +296,10 @@ export async function getPublicArticles(): Promise<PublicArticle[]> {
             { status: 'published' }
           ]
         },
-        orderBy: { id: 'desc' }
+        orderBy: [
+          { publishedAt: 'desc' },
+          { id: 'desc' }
+        ]
       });
       if (dbArticles && dbArticles.length > 0) {
         return dbArticles.map((a: any) => ({
@@ -304,12 +309,17 @@ export async function getPublicArticles(): Promise<PublicArticle[]> {
           desc: a.summary || '',
           category: a.category || 'Tin tức VINEX',
           author: a.author || 'Truyền thông VINEX',
-          date: a.publishedAt ? new Date(a.publishedAt).toLocaleDateString('vi-VN') : 'Gần đây',
+          date: a.publishedAt ? (() => {
+            const d = new Date(a.publishedAt);
+            return isNaN(d.getTime()) ? 'Gần đây' : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+          })() : 'Gần đây',
           views: a.views || 0,
-          badge: a.category || 'NỔI BẬT',
-          coverImg: a.thumbnail || '/images/banner/b_miss_world_2026.png',
+          badge: a.isFeatured ? 'NỔI BẬT' : (a.category || 'TIN TỨC'),
+          coverImg: normalizeImageUrl((a as any).thumbnail || (a as any).coverImg, '/images/banner/b_miss_world_2026.png'),
           content: a.content || '',
-          tags: typeof a.tags === 'string' ? a.tags.split(',').map((t: string) => t.trim()) : (Array.isArray(a.tags) ? a.tags : [])
+          tags: typeof a.tags === 'string' ? a.tags.split(',').map((t: string) => t.trim()) : (Array.isArray(a.tags) ? a.tags : []),
+          isFeatured: Boolean(a.isFeatured),
+          publishedAt: a.publishedAt || a.createdAt?.toISOString?.() || ''
         }));
       }
     } catch (e) {
@@ -323,6 +333,12 @@ export async function getPublicArticles(): Promise<PublicArticle[]> {
   if (list && list.length > 0) {
     return list
       .filter((a: any) => a.status === 'PUBLISHED' || !a.status || a.status === 'published')
+      .sort((a: any, b: any) => {
+        const timeA = new Date(a.publishedAt || a.createdAt || 0).getTime();
+        const timeB = new Date(b.publishedAt || b.createdAt || 0).getTime();
+        if (timeA && timeB && timeA !== timeB) return timeB - timeA;
+        return (Number(b.id) || 0) - (Number(a.id) || 0);
+      })
       .map((a: any) => ({
         id: a.id,
         title: a.title,
@@ -330,12 +346,17 @@ export async function getPublicArticles(): Promise<PublicArticle[]> {
         desc: a.summary || a.desc || '',
         category: a.category || 'Tin tức VINEX',
         author: a.author || 'Truyền thông VINEX',
-        date: a.publishedAt ? new Date(a.publishedAt).toLocaleDateString('vi-VN') : (a.date || 'Gần đây'),
+        date: a.publishedAt ? (() => {
+          const d = new Date(a.publishedAt);
+          return isNaN(d.getTime()) ? (a.date || 'Gần đây') : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+        })() : (a.date || 'Gần đây'),
         views: a.views || 0,
-        badge: a.category || 'NỔI BẬT',
-        coverImg: a.thumbnail || a.coverImg || '/images/banner/b_miss_world_2026.png',
+        badge: a.isFeatured ? 'NỔI BẬT' : (a.category || 'TIN TỨC'),
+        coverImg: normalizeImageUrl(a.thumbnail || a.coverImg, '/images/banner/b_miss_world_2026.png'),
         content: a.content || '',
-        tags: Array.isArray(a.tags) ? a.tags : (typeof a.tags === 'string' ? a.tags.split(',').map((t: string) => t.trim()) : [])
+        tags: Array.isArray(a.tags) ? a.tags : (typeof a.tags === 'string' ? a.tags.split(',').map((t: string) => t.trim()) : []),
+        isFeatured: Boolean(a.isFeatured),
+        publishedAt: a.publishedAt || a.createdAt || ''
       }));
   }
 
@@ -365,12 +386,17 @@ export async function getArticleBySlug(slug: string): Promise<PublicArticle | un
           desc: a.summary || '',
           category: a.category || 'Tin tức VINEX',
           author: a.author || 'Truyền thông VINEX',
-          date: a.publishedAt ? new Date(a.publishedAt).toLocaleDateString('vi-VN') : 'Gần đây',
+          date: a.publishedAt ? (() => {
+            const d = new Date(a.publishedAt);
+            return isNaN(d.getTime()) ? 'Gần đây' : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+          })() : 'Gần đây',
           views: a.views || 0,
-          badge: a.category || 'NỔI BẬT',
-          coverImg: a.thumbnail || '/images/banner/b_miss_world_2026.png',
+          badge: a.isFeatured ? 'NỔI BẬT' : (a.category || 'TIN TỨC'),
+          coverImg: normalizeImageUrl((a as any).thumbnail || (a as any).coverImg, '/images/banner/b_miss_world_2026.png'),
           content: a.content || '',
-          tags: typeof a.tags === 'string' ? a.tags.split(',').map((t: string) => t.trim()) : []
+          tags: typeof a.tags === 'string' ? a.tags.split(',').map((t: string) => t.trim()) : [],
+          isFeatured: Boolean(a.isFeatured),
+          publishedAt: a.publishedAt || a.createdAt?.toISOString?.() || ''
         };
       }
     } catch (e) {

@@ -8,6 +8,7 @@ import { ArrowRight } from "lucide-react";
 import { useDict } from "@/hooks/useDict";
 import { GlassCard } from "@/components/ui/glass";
 import { getApiUrl } from "@/lib/apiConfig";
+import { normalizeImageUrl } from "@/lib/imageUtils";
 
 export const FlavoredCashewsHome: React.FC = () => {
   const pathname = usePathname();
@@ -45,7 +46,7 @@ export const FlavoredCashewsHome: React.FC = () => {
             id: p.id || idx,
             name: p.name,
             slug: p.slug,
-            img: (Array.isArray(p.images) && p.images[0]) ? p.images[0] : (p.img || `/images/product/Cashew${(idx % 6) + 1}.png`)
+            img: normalizeImageUrl(p.images || p.img, `/images/product/Cashew${(idx % 6) + 1}.png`)
           })));
         }
       } catch (e) {
@@ -86,9 +87,10 @@ export const FlavoredCashewsHome: React.FC = () => {
                 className="w-full aspect-square rounded-[20px] overflow-hidden relative shadow-[0_12px_30px_rgba(7,71,81,0.08)] hover:-translate-y-2 transition-transform duration-500 group cursor-pointer border border-white/60 bg-white/40"
               >
                 <Image 
-                  src={item.img} 
+                  src={normalizeImageUrl(item.img, '/images/product/Cashew1.png')} 
                   alt={item.name} 
                   fill 
+                  unoptimized
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />

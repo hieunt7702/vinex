@@ -36,6 +36,8 @@ export interface PublicArticle {
   coverImg: string;
   content: string;
   tags?: string[];
+  isFeatured?: boolean;
+  publishedAt?: string;
 }
 
 export interface GlobalSettings {
