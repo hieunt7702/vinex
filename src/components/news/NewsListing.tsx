@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { PublicArticle } from '@/lib/dataService';
 import { getApiUrl } from '@/lib/apiConfig';
-import { normalizeImageUrl } from '@/lib/imageUtils';
+import { normalizeImageUrl, sortArticlesNewestFirst, formatArticleDate } from '@/lib/imageUtils';
 
 interface NewsListingProps {
   initialArticles: PublicArticle[];
@@ -31,10 +31,16 @@ const DEFAULT_CATEGORIES = [
 ];
 
 export function NewsListing({ initialArticles, locale }: NewsListingProps) {
-  const [articles, setArticles] = useState<PublicArticle[]>(initialArticles);
+  const [articles, setArticles] = useState<PublicArticle[]>(() => sortArticlesNewestFirst(initialArticles || []));
   const [categories, setCategories] = useState<string[]>(DEFAULT_CATEGORIES);
   const [selectedCategory, setSelectedCategory] = useState<string>('Tất cả');
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  React.useEffect(() => {
+    if (initialArticles && initialArticles.length > 0) {
+      setArticles(sortArticlesNewestFirst(initialArticles));
+    }
+  }, [initialArticles]);
 
   // Real-time synchronization with Admin APIs
   React.useEffect(() => {
@@ -60,11 +66,8 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
                 desc: a.summary || a.desc || '',
                 category: a.category || 'Tin tức VINEX',
                 author: a.author || 'Truyền thông VINEX',
-                date: a.publishedAt ? (() => {
-                  const d = new Date(a.publishedAt);
-                  return isNaN(d.getTime()) ? (a.date || 'Gần đây') : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
-                })() : (a.date || 'Gần đây'),
-                views: a.views || 0,
+                date: formatArticleDate(a.publishedAt || a.createdAt || a.date),
+                views: Number(a.views ?? 0) || 0,
                 badge: a.isFeatured ? 'NỔI BẬT' : (a.category || 'TIN TỨC VINEX'),
                 coverImg: normalizeImageUrl(a.thumbnail || a.coverImg, '/images/banner/b_miss_world_2026.png'),
                 content: a.content || '',
@@ -72,7 +75,7 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
                 isFeatured: Boolean(a.isFeatured),
                 publishedAt: a.publishedAt || a.createdAt || ''
               }));
-            setArticles(mapped);
+            setArticles(sortArticlesNewestFirst(mapped));
           }
         }
 
@@ -108,27 +111,26 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
     };
   }, []);
 
-  // Top featured post: pick newest isFeatured article, fallback to articles[0]
+  // Top featured post: pick newest isFeatured article, fallback to newest overall article
   const featuredPost = useMemo(() => {
     const featuredArticles = articles.filter(a => Boolean(a.isFeatured));
     if (featuredArticles.length > 0) {
-      // Sort newest first
-      return [...featuredArticles].sort((a, b) => {
-        const timeA = new Date(a.publishedAt || a.date || 0).getTime();
-        const timeB = new Date(b.publishedAt || b.date || 0).getTime();
-        if (timeA && timeB && timeA !== timeB) return timeB - timeA;
-        return (Number(b.id) || 0) - (Number(a.id) || 0);
-      })[0];
+      // articles is already sorted newest first by date/time
+      return featuredArticles[0];
     }
-    return articles[0];
+    return articles[0] || null;
   }, [articles]);
 
-  // Filtered articles list
+  // Filtered articles list for the grid: All published articles sorted newest first.
+  // ONLY the single top hero featuredPost is excluded from the grid when viewing "Tất cả" without search.
+  // Any older featured articles REMAIN in the grid at their newest position!
   const filteredArticles = useMemo(() => {
     return articles.filter(article => {
-      // If we are on "Tất cả" and no search query, exclude the featured post from the grid so it's not duplicated
+      // Exclude only the single featured post that is showcased in the top hero banner
       if (selectedCategory === 'Tất cả' && !searchQuery.trim()) {
-        if (featuredPost && article.slug === featuredPost.slug) return false;
+        if (featuredPost && (article.id === featuredPost.id || article.slug === featuredPost.slug)) {
+          return false;
+        }
       }
 
       // Category filter
@@ -231,12 +233,12 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
                     <span className="text-[#074751]/30">•</span>
                     <div className="flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5 text-[#5C7B6C] shrink-0" />
-                      <span>{featuredPost.date || '17/09/2026'}</span>
+                      <span>{featuredPost.date || 'Gần đây'}</span>
                     </div>
                     <span className="text-[#074751]/30">•</span>
                     <div className="flex items-center gap-1.5">
                       <Eye className="w-3.5 h-3.5 text-[#5C7B6C] shrink-0" />
-                      <span>{(featuredPost.views || 1248).toLocaleString('vi-VN')} lượt xem</span>
+                      <span>{Number(featuredPost.views ?? 0).toLocaleString('vi-VN')} lượt xem</span>
                     </div>
                   </div>
 
@@ -363,7 +365,7 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
                   <div className="p-5 sm:p-6 flex flex-col flex-1 relative z-10 text-left">
                     {/* Category Label */}
                     <span className="text-[11px] font-bold text-vinex-gold uppercase tracking-widest mb-2 inline-block">
-                      {article.category || 'KIẾN THỨC NÔNG SẢN'}
+                      {article.isFeatured ? '⭐ NỔI BẬT' : (article.category || 'KIẾN THỨC NÔNG SẢN')}
                     </span>
 
                     {/* Article Title */}
@@ -381,7 +383,7 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
                         <span className="text-gray-300">•</span>
                         <div className="flex items-center gap-1">
                           <Eye className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-                          <span>{(article.views || 0).toLocaleString('vi-VN')} lượt xem</span>
+                          <span>{Number(article.views ?? 0).toLocaleString('vi-VN')} lượt xem</span>
                         </div>
                       </div>
 

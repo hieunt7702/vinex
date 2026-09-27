@@ -2,7 +2,7 @@ import prisma from '@/lib/prisma';
 import { store } from '@/app/api/v1/store';
 import { getApiUrl } from '@/lib/apiConfig';
 import defaultDb from '@/data/db.json';
-import { normalizeImageUrl } from '@/lib/imageUtils';
+import { normalizeImageUrl, sortArticlesNewestFirst, formatArticleDate } from '@/lib/imageUtils';
 import type { PublicProduct, PublicCategory, PublicArticle, GlobalSettings } from '@/lib/types';
 import { defaultGlobalSettings } from '@/lib/types';
 
@@ -302,18 +302,15 @@ export async function getPublicArticles(): Promise<PublicArticle[]> {
         ]
       });
       if (dbArticles && dbArticles.length > 0) {
-        return dbArticles.map((a: any) => ({
+        const mapped = dbArticles.map((a: any) => ({
           id: a.id,
           title: a.title,
           slug: a.slug,
           desc: a.summary || '',
           category: a.category || 'Tin tức VINEX',
           author: a.author || 'Truyền thông VINEX',
-          date: a.publishedAt ? (() => {
-            const d = new Date(a.publishedAt);
-            return isNaN(d.getTime()) ? 'Gần đây' : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
-          })() : 'Gần đây',
-          views: a.views || 0,
+          date: formatArticleDate(a.publishedAt || a.createdAt),
+          views: Number(a.views ?? 0) || 0,
           badge: a.isFeatured ? 'NỔI BẬT' : (a.category || 'TIN TỨC'),
           coverImg: normalizeImageUrl((a as any).thumbnail || (a as any).coverImg, '/images/banner/b_miss_world_2026.png'),
           content: a.content || '',
@@ -321,6 +318,7 @@ export async function getPublicArticles(): Promise<PublicArticle[]> {
           isFeatured: Boolean(a.isFeatured),
           publishedAt: a.publishedAt || a.createdAt?.toISOString?.() || ''
         }));
+        return sortArticlesNewestFirst(mapped);
       }
     } catch (e) {
       // fallback
@@ -331,33 +329,24 @@ export async function getPublicArticles(): Promise<PublicArticle[]> {
   const localDb = getLocalDbData();
   const list = (store?.articles?.length ? store.articles : (localDb?.articles || []));
   if (list && list.length > 0) {
-    return list
-      .filter((a: any) => a.status === 'PUBLISHED' || !a.status || a.status === 'published')
-      .sort((a: any, b: any) => {
-        const timeA = new Date(a.publishedAt || a.createdAt || 0).getTime();
-        const timeB = new Date(b.publishedAt || b.createdAt || 0).getTime();
-        if (timeA && timeB && timeA !== timeB) return timeB - timeA;
-        return (Number(b.id) || 0) - (Number(a.id) || 0);
-      })
-      .map((a: any) => ({
-        id: a.id,
-        title: a.title,
-        slug: a.slug,
-        desc: a.summary || a.desc || '',
-        category: a.category || 'Tin tức VINEX',
-        author: a.author || 'Truyền thông VINEX',
-        date: a.publishedAt ? (() => {
-          const d = new Date(a.publishedAt);
-          return isNaN(d.getTime()) ? (a.date || 'Gần đây') : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
-        })() : (a.date || 'Gần đây'),
-        views: a.views || 0,
-        badge: a.isFeatured ? 'NỔI BẬT' : (a.category || 'TIN TỨC'),
-        coverImg: normalizeImageUrl(a.thumbnail || a.coverImg, '/images/banner/b_miss_world_2026.png'),
-        content: a.content || '',
-        tags: Array.isArray(a.tags) ? a.tags : (typeof a.tags === 'string' ? a.tags.split(',').map((t: string) => t.trim()) : []),
-        isFeatured: Boolean(a.isFeatured),
-        publishedAt: a.publishedAt || a.createdAt || ''
-      }));
+    const published = list.filter((a: any) => a.status === 'PUBLISHED' || !a.status || a.status === 'published');
+    const mapped = published.map((a: any) => ({
+      id: a.id,
+      title: a.title,
+      slug: a.slug,
+      desc: a.summary || a.desc || '',
+      category: a.category || 'Tin tức VINEX',
+      author: a.author || 'Truyền thông VINEX',
+      date: formatArticleDate(a.publishedAt || a.createdAt || a.date),
+      views: Number(a.views ?? 0) || 0,
+      badge: a.isFeatured ? 'NỔI BẬT' : (a.category || 'TIN TỨC'),
+      coverImg: normalizeImageUrl(a.thumbnail || a.coverImg, '/images/banner/b_miss_world_2026.png'),
+      content: a.content || '',
+      tags: Array.isArray(a.tags) ? a.tags : (typeof a.tags === 'string' ? a.tags.split(',').map((t: string) => t.trim()) : []),
+      isFeatured: Boolean(a.isFeatured),
+      publishedAt: a.publishedAt || a.createdAt || ''
+    }));
+    return sortArticlesNewestFirst(mapped);
   }
 
   return [];
@@ -386,11 +375,8 @@ export async function getArticleBySlug(slug: string): Promise<PublicArticle | un
           desc: a.summary || '',
           category: a.category || 'Tin tức VINEX',
           author: a.author || 'Truyền thông VINEX',
-          date: a.publishedAt ? (() => {
-            const d = new Date(a.publishedAt);
-            return isNaN(d.getTime()) ? 'Gần đây' : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
-          })() : 'Gần đây',
-          views: a.views || 0,
+          date: formatArticleDate(a.publishedAt || a.createdAt),
+          views: Number(a.views ?? 0) || 0,
           badge: a.isFeatured ? 'NỔI BẬT' : (a.category || 'TIN TỨC'),
           coverImg: normalizeImageUrl((a as any).thumbnail || (a as any).coverImg, '/images/banner/b_miss_world_2026.png'),
           content: a.content || '',

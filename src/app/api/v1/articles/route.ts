@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../store';
 import prisma from '@/lib/prisma';
+import { sortArticlesNewestFirst } from '@/lib/imageUtils';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -23,7 +24,8 @@ export async function GET() {
         orderBy: { id: 'desc' }
       });
       if (dbArticles && dbArticles.length > 0) {
-        return NextResponse.json(dbArticles, {
+        const sorted = sortArticlesNewestFirst(dbArticles);
+        return NextResponse.json(sorted, {
           headers: {
             'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
           },
@@ -34,12 +36,7 @@ export async function GET() {
     }
   }
 
-  const sorted = [...store.articles].sort((a, b) => {
-    const timeA = new Date(a.publishedAt || a.createdAt || 0).getTime();
-    const timeB = new Date(b.publishedAt || b.createdAt || 0).getTime();
-    if (timeA && timeB && timeA !== timeB) return timeB - timeA;
-    return (Number(b.id) || 0) - (Number(a.id) || 0);
-  });
+  const sorted = sortArticlesNewestFirst(store.articles);
   return NextResponse.json(sorted, {
     headers: {
       'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',

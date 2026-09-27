@@ -123,7 +123,7 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10, 
         <DialogHeader className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 shrink-0 bg-white dark:bg-[#14151a] flex flex-col gap-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full">
             <DialogTitle className="text-base font-semibold text-gray-900 dark:text-white whitespace-nowrap">
-              Thư Viện Ảnh (Cloudinary &amp; Ảnh Nội Bộ)
+              Thư Viện Ảnh
             </DialogTitle>
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />

@@ -86,7 +86,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
                   </div>
                   <div className="flex items-center gap-2">
                      <Eye className="w-4 h-4" />
-                     <span>{article.views} lượt xem</span>
+                     <span>{Number(article.views ?? 0).toLocaleString('vi-VN')} lượt xem</span>
                   </div>
                </div>
 

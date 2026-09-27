@@ -8,7 +8,6 @@ import {
   X, 
   Image as ImageIcon, 
   MonitorUp,
-  Link as LinkIcon,
   CheckCircle2,
   AlertCircle 
 } from "lucide-react";
@@ -40,8 +39,6 @@ export function ImageUploader({ onUploadSuccess, onRemoveImage, maxFiles = 5, in
   const [previewUrls, setPreviewUrls] = useState<string[]>(initialImages);
   const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isUrlModalOpen, setIsUrlModalOpen] = useState(false);
-  const [manualUrl, setManualUrl] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Sync initialImages when they change (useful for edit mode)
@@ -185,7 +182,7 @@ export function ImageUploader({ onUploadSuccess, onRemoveImage, maxFiles = 5, in
         {isMenuOpen && (
           <>
             <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setIsMenuOpen(false); }} />
-            <div className="absolute bottom-[135px] left-1/2 -translate-x-1/2 z-50 w-72 bg-white dark:bg-[#14151a] p-1.5 shadow-md shadow-black/5 dark:shadow-none border border-gray-200 dark:border-gray-800 rounded-lg animate-in zoom-in-95 slide-in-from-bottom-2 duration-100">
+            <div className="absolute bottom-[135px] left-1/2 -translate-x-1/2 z-50 w-64 bg-white dark:bg-[#14151a] p-1.5 shadow-md shadow-black/5 dark:shadow-none border border-gray-200 dark:border-gray-800 rounded-lg animate-in zoom-in-95 slide-in-from-bottom-2 duration-100">
               <label 
                 htmlFor={`dropzone-file-${uploaderId}`} 
                 className="flex items-center w-full cursor-pointer py-2.5 px-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/50 rounded-md transition-colors"
@@ -200,70 +197,10 @@ export function ImageUploader({ onUploadSuccess, onRemoveImage, maxFiles = 5, in
                 className="flex items-center w-full cursor-pointer py-2.5 px-3 text-sm font-medium text-[#5865f2] hover:text-[#4752c4] hover:bg-gray-100 dark:hover:bg-gray-800/50 rounded-md transition-colors"
               >
                 <ImageIcon className="w-4 h-4 mr-2.5" />
-                Chọn từ thư viện (Cloudinary / Nội bộ)
-              </button>
-              <button 
-                type="button" 
-                onClick={(e) => { e.stopPropagation(); setIsMenuOpen(false); setIsUrlModalOpen(true); }} 
-                className="flex items-center w-full cursor-pointer py-2.5 px-3 text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:bg-gray-100 dark:hover:bg-gray-800/50 rounded-md transition-colors"
-              >
-                <LinkIcon className="w-4 h-4 mr-2.5" />
-                Nhập link / đường dẫn ảnh trực tiếp
+                Chọn từ thư viện
               </button>
             </div>
           </>
-        )}
-
-        {isUrlModalOpen && (
-          <div className="p-3 bg-gray-50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[6px] flex flex-col gap-2 animate-in fade-in">
-            <div className="flex items-center justify-between text-xs font-semibold text-gray-700 dark:text-gray-300">
-              <span className="flex items-center gap-1.5">
-                <LinkIcon className="w-3.5 h-3.5 text-emerald-500" />
-                Nhập URL Cloudinary hoặc đường dẫn nội bộ (/images/...)
-              </span>
-              <button type="button" onClick={() => setIsUrlModalOpen(false)} className="text-gray-400 hover:text-gray-600">
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={manualUrl}
-                onChange={(e) => setManualUrl(e.target.value)}
-                placeholder="VD: https://res.cloudinary.com/... hoặc /images/product/Cashew1.png"
-                className="flex-1 px-3 py-1.5 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-700 rounded-[4px] text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-gray-900 dark:text-white"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    if (manualUrl.trim()) {
-                      const trimmed = manualUrl.trim();
-                      setPreviewUrls(prev => [...prev, trimmed]);
-                      onUploadSuccess([trimmed]);
-                      setManualUrl('');
-                      setIsUrlModalOpen(false);
-                      toast.success('Đã thêm ảnh từ đường dẫn');
-                    }
-                  }
-                }}
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  if (manualUrl.trim()) {
-                    const trimmed = manualUrl.trim();
-                    setPreviewUrls(prev => [...prev, trimmed]);
-                    onUploadSuccess([trimmed]);
-                    setManualUrl('');
-                    setIsUrlModalOpen(false);
-                    toast.success('Đã thêm ảnh từ đường dẫn');
-                  }
-                }}
-                className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-[4px] text-xs font-medium transition-colors cursor-pointer shrink-0"
-              >
-                Thêm ảnh
-              </button>
-            </div>
-          </div>
         )}
 
         <input 

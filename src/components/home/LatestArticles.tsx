@@ -8,7 +8,7 @@ import { ArrowRight, ChevronRight, ChevronLeft, Calendar } from "lucide-react";
 import { useDict } from "@/hooks/useDict";
 import { GlassCard } from "@/components/ui/glass";
 import { getApiUrl } from "@/lib/apiConfig";
-import { normalizeImageUrl } from "@/lib/imageUtils";
+import { normalizeImageUrl, sortArticlesNewestFirst, formatArticleDate } from "@/lib/imageUtils";
 
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -33,16 +33,14 @@ export const LatestArticles: React.FC = () => {
         if (!res.ok) return;
         const data = await res.json();
         const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
-        const published = list.filter((a: any) => a.status === 'PUBLISHED');
+        const published = list.filter((a: any) => a.status === 'PUBLISHED' || !a.status || a.status === 'published');
         if (published.length > 0) {
-          setArticles(published.map((a: any, idx: number) => ({
+          const sorted = sortArticlesNewestFirst(published);
+          setArticles(sorted.map((a: any, idx: number) => ({
             id: a.id || idx,
             slug: a.slug,
             title: a.title,
-            date: a.publishedAt ? (() => {
-              const d = new Date(a.publishedAt);
-              return isNaN(d.getTime()) ? (a.date || 'Gần đây') : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
-            })() : (a.date || 'Gần đây'),
+            date: formatArticleDate(a.publishedAt || a.createdAt || a.date),
             img: normalizeImageUrl(a.thumbnail || a.coverImg, `/images/product/Cashew${(idx % 6) + 1}.png`)
           })));
         }
