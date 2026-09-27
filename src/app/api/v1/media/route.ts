@@ -124,3 +124,56 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: 'Lỗi thêm media' }, { status: 400 });
   }
 }
+
+/**
+ * DELETE /api/v1/media
+ * Body: { ids: string[] }
+ * Bulk-delete multiple media items in a single request.
+ * - Numeric IDs → Prisma deleteMany (single DB round-trip)
+ * - String IDs ("local_*") → remove from in-memory store in one pass
+ */
+export async function DELETE(request: Request) {
+  try {
+    const body = await request.json();
+    const ids: string[] = Array.isArray(body?.ids) ? body.ids : [];
+
+    if (ids.length === 0) {
+      return NextResponse.json({ message: 'Không có ID nào được cung cấp', deleted: 0 }, { status: 400 });
+    }
+
+    let dbDeleted = 0;
+
+    // 1. Collect numeric IDs → single Prisma deleteMany call
+    const numericIds = ids
+      .map(id => Number(id))
+      .filter(n => !isNaN(n) && n > 0);
+
+    if (numericIds.length > 0 && process.env.DATABASE_URL) {
+      try {
+        const result = await prisma.media.deleteMany({
+          where: { id: { in: numericIds } }
+        });
+        dbDeleted = result.count;
+      } catch (e) {
+        console.warn('Prisma bulk media delete error:', e);
+      }
+    }
+
+    // 2. Remove all matching IDs from in-memory store in one pass
+    const idSet = new Set(ids.map(String));
+    if (!(store as any).media) (store as any).media = [];
+    const before = (store as any).media.length;
+    (store as any).media = (store as any).media.filter((m: any) => !idSet.has(String(m.id)));
+    const storeDeleted = before - (store as any).media.length;
+
+    const totalDeleted = dbDeleted + storeDeleted;
+    return NextResponse.json({
+      message: `Đã xóa ${totalDeleted} ảnh thành công`,
+      deleted: totalDeleted,
+    });
+  } catch (error) {
+    console.error('Bulk media delete error:', error);
+    return NextResponse.json({ message: 'Lỗi khi xóa media hàng loạt' }, { status: 500 });
+  }
+}
+

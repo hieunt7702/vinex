@@ -83,24 +83,21 @@ export default function MediaLibraryPage() {
       onConfirm: async () => {
         setIsBulkDeleting(true);
         const ids = Array.from(selectedIds);
-        let successCount = 0;
-        let failCount = 0;
 
-        for (const id of ids) {
-          try {
-            await apiClient.delete(`/media/${encodeURIComponent(id)}`);
-            successCount++;
-          } catch {
-            failCount++;
-          }
+        try {
+          // Single request — server handles everything in parallel DB calls
+          const res = await apiClient.delete('/media', { data: { ids } });
+          const deleted: number = res.data?.deleted ?? ids.length;
+
+          setMediaFiles(prev => prev.filter(f => !selectedIds.has(String(f.id))));
+          setSelectedIds(new Set());
+          toast.success(`Đã xóa ${deleted} ảnh thành công`);
+        } catch (err: any) {
+          const msg = err?.response?.data?.message || 'Lỗi khi xóa ảnh';
+          toast.error(msg);
+        } finally {
+          setIsBulkDeleting(false);
         }
-
-        setMediaFiles(prev => prev.filter(f => !selectedIds.has(String(f.id))));
-        setSelectedIds(new Set());
-        setIsBulkDeleting(false);
-
-        if (successCount > 0) toast.success(`Đã xóa ${successCount} ảnh thành công`);
-        if (failCount > 0) toast.error(`Không thể xóa ${failCount} ảnh`);
       }
     });
   };
@@ -183,10 +180,12 @@ export default function MediaLibraryPage() {
               type="button"
               onClick={handleBulkDelete}
               disabled={isBulkDeleting}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white text-sm font-medium rounded-[4px] transition-colors cursor-pointer disabled:opacity-60"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500 hover:bg-red-600 disabled:bg-red-400 text-white text-sm font-medium rounded-[4px] transition-colors cursor-pointer disabled:cursor-not-allowed"
             >
-              {isBulkDeleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
-              Xóa đã chọn
+              {isBulkDeleting
+                ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Đang xóa {selectedIds.size} ảnh…</>
+                : <><Trash2 className="w-3.5 h-3.5" /> Xóa {selectedIds.size} ảnh</>
+              }
             </button>
             <button
               type="button"
