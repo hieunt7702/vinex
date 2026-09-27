@@ -34,8 +34,14 @@ async function bootstrap() {
 
     if (fs.existsSync(migrationDir)) {
       console.log('[Bootstrap] Applying pending migrations via prisma migrate deploy...');
-      execSync('npx prisma migrate deploy', { stdio: 'inherit', timeout: 60000 });
-      console.log('[Bootstrap] migrate deploy: OK');
+      try {
+        execSync('npx prisma migrate deploy', { stdio: 'inherit', timeout: 60000 });
+        console.log('[Bootstrap] migrate deploy: OK');
+      } catch (mErr) {
+        console.warn('[Bootstrap] migrate deploy failed, falling back to safe prisma db push:', mErr.message);
+        execSync('npx prisma db push --skip-generate', { stdio: 'inherit', timeout: 60000 });
+        console.log('[Bootstrap] db push fallback: OK');
+      }
     } else {
       // No migrations directory → schema was never converted to migrations.
       // Use db push WITHOUT --accept-data-loss so Prisma refuses any destructive changes.
