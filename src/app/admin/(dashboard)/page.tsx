@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/admin-components/ui/p
 import { Calendar } from '@/admin-components/ui/calendar';
 import { vi } from 'date-fns/locale';
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-fns';
+import { safeFormatDate } from '@/admin-utils/dateUtils';
 import { DateRange } from 'react-day-picker';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
@@ -442,7 +443,7 @@ export default function DashboardPage() {
                             {lead.projectType} • {lead.location}
                           </p>
                           <p className="text-[11px] font-normal text-gray-400 dark:text-gray-500 whitespace-nowrap ml-2">
-                            {lead.createdAt ? format(new Date(lead.createdAt), 'dd/MM') : ''}
+                            {safeFormatDate(lead.createdAt, 'dd/MM', '')}
                           </p>
                         </div>
                       </div>

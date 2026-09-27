@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { ImageUploader } from '@/admin-components/ui/image-uploader';
 import apiClient from '@/admin-lib/apiClient';
+import { safeFormatDate } from '@/admin-utils/dateUtils';
 import { toast } from 'sonner';
 import { AdminHeaderPortal } from '@/admin-components/layout/AdminHeaderPortal';
 
@@ -279,7 +280,7 @@ export default function MediaLibraryPage() {
                         <p className="text-[11px] font-medium text-gray-900 dark:text-white truncate" title={file.name}>{file.name}</p>
                         <div className="flex items-center justify-between mt-1 text-[10px] text-gray-400">
                           <span>{formatSize(file.size)}</span>
-                          <span>{new Date(file.createdAt).toLocaleDateString('vi-VN')}</span>
+                          <span>{safeFormatDate(file.createdAt, 'dd/MM/yyyy')}</span>
                         </div>
                       </div>
                     </div>

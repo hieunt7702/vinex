@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Search, Filter, MessageSquare, CheckCircle2, Plus, Edit, Trash2, X, ChevronLeft, ChevronRight, Phone, MapPin, Calendar, User, FileText, ArrowRightCircle, Check, ArrowUpDown, ChevronDown, ChevronUp, Activity, Tags, RotateCcw, Eye, Link2 } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
 import { format } from 'date-fns';
+import { safeFormatDate } from '@/admin-utils/dateUtils';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
 import { toast } from 'sonner';
@@ -401,7 +402,7 @@ const handleDelete = async (id: number) => {
                           </div>
                           <div className="flex flex-col gap-0.5 text-xs text-gray-500 dark:text-gray-400">
                             <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> {lead.phone}</span>
-                            <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {format(new Date(lead.createdAt), 'dd/MM/yyyy HH:mm')}</span>
+                            <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {safeFormatDate(lead.createdAt, 'dd/MM/yyyy HH:mm')}</span>
                           </div>
                         </div>
                       </div>

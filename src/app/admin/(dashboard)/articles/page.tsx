@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'next/navigation';
 import apiClient from '@/admin-lib/apiClient';
 import { format } from 'date-fns';
+import { safeFormatDate } from '@/admin-utils/dateUtils';
 import { normalizeImageUrl } from '@/lib/imageUtils';
 import TiptapEditor from '@/admin-components/ui/TiptapEditor';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
@@ -729,7 +730,7 @@ export default function ArticlesPage() {
                               </div>
                               <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 sm:mt-1 min-w-0 text-xs text-gray-400">
                                 <span className="font-mono truncate max-w-[120px] sm:max-w-[160px] lg:max-w-[240px]">/tin-tuc/{article.slug}</span>
-                                <span className="shrink-0">• {article.createdAt ? format(new Date(article.createdAt), 'dd/MM/yyyy') : ''}</span>
+                                <span className="shrink-0">• {safeFormatDate(article.publishedAt || article.createdAt || article.date, 'dd/MM/yyyy')}</span>
                               </div>
                             </div>
                           </div>

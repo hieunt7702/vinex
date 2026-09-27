@@ -1469,7 +1469,8 @@
       "projectType": "Hộp quà Tết doanh nghiệp",
       "budget": "150 - 200 triệu",
       "notes": "Khắc logo công ty lên nắp hộp gỗ, in thiệp chúc mừng, 300 suất quà VIP.",
-      "status": "PROCESSING"
+      "status": "PROCESSING",
+      "createdAt": "2026-09-20T08:00:00.000Z"
     },
     {
       "id": 2,
@@ -1481,7 +1482,8 @@
       "projectType": "Mua sỉ hạt điều & Nông sản",
       "budget": "50 - 80 triệu",
       "notes": "Nhập hạt điều rang muối và hạt điều vị tỏi ớt hũ 250g.",
-      "status": "PENDING"
+      "status": "PENDING",
+      "createdAt": "2026-09-22T09:30:00.000Z"
     }
   ],
   "customers": [
@@ -1491,7 +1493,8 @@
       "phoneNumber": "0901234567",
       "email": "nam.nguyen@fpt.com.vn",
       "address": "Cầu Giấy, Hà Nội",
-      "totalOrders": 4
+      "totalOrders": 4,
+      "createdAt": "2026-09-15T08:00:00.000Z"
     },
     {
       "id": 2,
@@ -1499,7 +1502,8 @@
       "phoneNumber": "0987654321",
       "email": "thu.tran@dhgpharma.com.vn",
       "address": "Quận 1, TP.HCM",
-      "totalOrders": 2
+      "totalOrders": 2,
+      "createdAt": "2026-09-18T10:00:00.000Z"
     }
   ]
 }

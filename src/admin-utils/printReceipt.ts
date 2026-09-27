@@ -1,4 +1,5 @@
 import { format, addDays } from 'date-fns';
+import { safeFormatDate } from '@/admin-utils/dateUtils';
 
 export const numberToVietnameseWords = (value?: number | string) => {
   const amount = Number(value || 0);
@@ -67,8 +68,8 @@ export const openPrintReceipt = (data: any, settings?: any) => {
 
   const pawnAmountWords = numberToVietnameseWords(data.pawnAmount);
   const receiptId = data.receiptId || 'Hợp đồng mới';
-  const pawnDateStr = data.pawnDate ? format(new Date(data.pawnDate), 'dd/MM/yyyy') : format(new Date(), 'dd/MM/yyyy');
-  const dueDateStr = data.dueDate ? format(new Date(data.dueDate), 'dd/MM/yyyy') : format(addDays(new Date(), 30), 'dd/MM/yyyy');
+  const pawnDateStr = safeFormatDate(data.pawnDate, 'dd/MM/yyyy', format(new Date(), 'dd/MM/yyyy'));
+  const dueDateStr = safeFormatDate(data.dueDate, 'dd/MM/yyyy', format(addDays(new Date(), 30), 'dd/MM/yyyy'));
   const barcodeValue = receiptId.replace(/[^A-Za-z0-9]/g, '');
   const barcodeUrl = `https://barcode.tec-it.com/barcode.ashx?data=${barcodeValue}&code=Code128&dpi=96&dataseparator=`;
   const primaryColor = '#105e32';

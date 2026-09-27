@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
+import { safeFormatDate } from '@/admin-utils/dateUtils';
 import { vi } from 'date-fns/locale';
 import {
   ArrowLeft,
@@ -279,7 +280,7 @@ export default function CustomerDetailPage() {
                             </p>
                             <p className="text-xs text-gray-400 mt-1 flex items-center justify-end gap-1">
                               <Clock className="w-3 h-3" />
-                              {format(new Date(tx.transactionDate), 'dd/MM/yyyy HH:mm', { locale: vi })}
+                              {safeFormatDate(tx.transactionDate, 'dd/MM/yyyy HH:mm')}
                             </p>
                           </div>
                         </div>

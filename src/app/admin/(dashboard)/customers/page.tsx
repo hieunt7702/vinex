@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Search, Filter, Users, Edit, Trash2, Plus, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, User, Phone, Mail, MapPin, ClipboardList, RotateCcw } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
 import { format } from 'date-fns';
+import { safeFormatDate } from '@/admin-utils/dateUtils';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ImageUploader } from '@/admin-components/ui/image-uploader';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
@@ -366,7 +367,7 @@ const handleDelete = async (id: number) => {
                       <span className="inline-flex items-center px-2 py-0.5 rounded-[4px] text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-800">{customer.totalLeads} yêu cầu</span>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">{format(new Date(customer.createdAt), 'dd/MM/yyyy')}</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{safeFormatDate(customer.createdAt, 'dd/MM/yyyy')}</span>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800 text-center">
                       <div className="flex items-center justify-center">

@@ -1,5 +1,6 @@
 "use client";
 import { format } from 'date-fns';
+import { safeFormatDate } from '@/admin-utils/dateUtils';
 import { ArrowRight, Clock, Box } from 'lucide-react';
 
 const FIELD_LABELS: Record<string, string> = {
@@ -20,7 +21,7 @@ const FIELD_LABELS: Record<string, string> = {
 
 const formatValue = (key: string, value: any) => {
   if (value === null || value === undefined || value === '') return 'Trống';
-  if (key === 'pawnDate' || key === 'dueDate') return format(new Date(value), 'dd/MM/yyyy');
+  if (key === 'pawnDate' || key === 'dueDate') return safeFormatDate(value, 'dd/MM/yyyy');
   if (key === 'itemValue' || key === 'pawnAmount') return new Intl.NumberFormat('vi-VN').format(Number(value)) + ' đ';
   if (key === 'interestRate') return value + '%';
   return String(value);
@@ -72,7 +73,7 @@ export function HistoryTimeline({ data }: { data: any[] }) {
             <div className="flex items-center gap-2 mb-3">
               <Clock className="w-4 h-4 text-gray-400" />
               <span className="text-sm font-medium text-gray-900 dark:text-white">
-                {format(new Date(item.createdAt), 'HH:mm, dd/MM/yyyy')}
+                {safeFormatDate(item.createdAt, 'HH:mm, dd/MM/yyyy')}
               </span>
             </div>
 

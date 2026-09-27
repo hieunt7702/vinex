@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Search, FileSearch, Plus, Edit, Trash2, X, Check, CheckCircle2, ChevronLeft, ChevronRight, BarChart2 } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
 import { format } from 'date-fns';
+import { safeFormatDate } from '@/admin-utils/dateUtils';
 import TiptapEditor from '@/admin-components/ui/TiptapEditor';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { toast } from 'sonner';
@@ -235,7 +236,7 @@ export default function SeoPages() {
                   </td>
                   <td className="px-5 py-4">
                     <div className="text-sm text-gray-900 dark:text-white mb-1"><span className="text-xs text-gray-500 dark:text-gray-400 mr-1">Schema:</span> {page.schemaType}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">{format(new Date(page.updatedAt), 'dd/MM/yyyy HH:mm')}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">{safeFormatDate(page.updatedAt, 'dd/MM/yyyy HH:mm')}</div>
                   </td>
                   <td className="px-5 py-4">
                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] text-[11px] font-medium ${page.status === 'PUBLISHED'
