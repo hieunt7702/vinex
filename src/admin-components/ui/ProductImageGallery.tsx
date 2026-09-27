@@ -2,7 +2,19 @@
 
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import { Loader2, UploadCloud, X, Star, ArrowLeft, ArrowRight, Eye, Image as ImageIcon, MonitorUp, AlertCircle } from "lucide-react";
+import { 
+  Loader2, 
+  UploadCloud, 
+  X, 
+  Star, 
+  ArrowLeft, 
+  ArrowRight, 
+  Eye, 
+  Image as ImageIcon, 
+  MonitorUp, 
+  AlertCircle,
+  CheckCircle2
+} from "lucide-react";
 import { MediaPickerModal } from "./media-picker-modal";
 import { toast } from "sonner";
 
@@ -12,8 +24,18 @@ interface ProductImageGalleryProps {
   maxImages?: number;
 }
 
+interface UploadingItem {
+  id: string;
+  file: File;
+  previewUrl: string;
+  progress: number;
+  status: 'uploading' | 'processing' | 'success' | 'error';
+  errorMessage?: string;
+}
+
 export function ProductImageGallery({ images = [], onChange, maxImages = 12 }: ProductImageGalleryProps) {
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadingItems, setUploadingItems] = useState<UploadingItem[]>([]);
   const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false);
   const [previewModalUrl, setPreviewModalUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -22,32 +44,95 @@ export function ProductImageGallery({ images = [], onChange, maxImages = 12 }: P
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    if (images.length + files.length > maxImages) {
+    const fileList = Array.from(files);
+
+    if (images.length + uploadingItems.length + fileList.length > maxImages) {
       toast.error(`Chỉ được tải lên tối đa ${maxImages} ảnh. Hiện tại đã có ${images.length} ảnh.`);
+      if (fileInputRef.current) fileInputRef.current.value = '';
       return;
     }
 
-    setIsUploading(true);
-    const formData = new FormData();
-    Array.from(files).forEach((file) => {
-      formData.append("files", file);
-    });
+    // Create an uploading box entry for each file immediately
+    const newItems: UploadingItem[] = fileList.map((file, i) => ({
+      id: `upload_${Date.now()}_${i}_${Math.random().toString(36).substring(2, 7)}`,
+      file,
+      previewUrl: URL.createObjectURL(file),
+      progress: 0,
+      status: 'uploading'
+    }));
 
-    try {
-      const response = await axios.post('/api/upload/images', formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      const uploadedUrls = response.data as string[];
-      if (Array.isArray(uploadedUrls) && uploadedUrls.length > 0) {
-        onChange([...images, ...uploadedUrls]);
-        toast.success(`Đã thêm thành công ${uploadedUrls.length} ảnh`);
-      }
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || "Tải ảnh thất bại");
-    } finally {
-      setIsUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
+    setUploadingItems(prev => [...prev, ...newItems]);
+    setIsUploading(true);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+
+    const successfulUrls: string[] = [];
+
+    // Upload each file individually to accurately track per-file progress percentage
+    await Promise.all(
+      newItems.map(async (item) => {
+        const formData = new FormData();
+        formData.append("files", item.file);
+
+        try {
+          const response = await axios.post('/api/upload/images', formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+            onUploadProgress: (progressEvent) => {
+              const total = progressEvent.total || item.file.size;
+              const percent = Math.min(98, Math.round((progressEvent.loaded * 100) / total));
+              setUploadingItems(current =>
+                current.map(it => 
+                  it.id === item.id 
+                    ? { ...it, progress: percent, status: percent >= 95 ? 'processing' : 'uploading' } 
+                    : it
+                )
+              );
+            }
+          });
+
+          const uploadedUrls = response.data as string[];
+          if (Array.isArray(uploadedUrls) && uploadedUrls.length > 0) {
+            const finalUrl = uploadedUrls[0];
+            successfulUrls.push(finalUrl);
+
+            setUploadingItems(current =>
+              current.map(it => 
+                it.id === item.id 
+                  ? { ...it, progress: 100, status: 'success' } 
+                  : it
+              )
+            );
+          } else {
+            throw new Error("Không nhận được URL từ server");
+          }
+        } catch (err: any) {
+          const msg = err.response?.data?.message || err.message || "Tải ảnh thất bại";
+          setUploadingItems(current =>
+            current.map(it => 
+              it.id === item.id 
+                ? { ...it, status: 'error', errorMessage: msg } 
+                : it
+            )
+          );
+          toast.error(`Ảnh ${item.file.name}: ${msg}`);
+        }
+      })
+    );
+
+    // Merge successful uploads into product gallery
+    if (successfulUrls.length > 0) {
+      onChange([...images, ...successfulUrls]);
+      toast.success(`Đã tải lên thành công ${successfulUrls.length} ảnh`);
     }
+
+    // Clean up successful uploading boxes after short display
+    setTimeout(() => {
+      setUploadingItems(current => current.filter(it => it.status !== 'success'));
+      setIsUploading(false);
+    }, 800);
+  };
+
+  const handleDismissUploadingItem = (id: string) => {
+    setUploadingItems(current => current.filter(it => it.id !== id));
   };
 
   const handleSetPrimary = (index: number) => {
@@ -76,11 +161,12 @@ export function ProductImageGallery({ images = [], onChange, maxImages = 12 }: P
   };
 
   const handleMediaPickerSelect = (urls: string[]) => {
-    // Add unique urls that are not yet in images
     const newUrls = urls.filter(u => !images.includes(u));
     const combined = [...images, ...newUrls].slice(0, maxImages);
     onChange(combined);
   };
+
+  const totalSlotUsed = images.length + uploadingItems.length;
 
   return (
     <div className="space-y-4">
@@ -93,21 +179,26 @@ export function ProductImageGallery({ images = [], onChange, maxImages = 12 }: P
           <span className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800/40">
             ⭐ Ảnh đầu tiên là Ảnh chính (Cover)
           </span>
+          {uploadingItems.length > 0 && (
+            <span className="text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800/40 animate-pulse font-medium">
+              Đang tải {uploadingItems.length} ảnh...
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            disabled={isUploading || images.length >= maxImages}
+            disabled={isUploading || totalSlotUsed >= maxImages}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 dark:bg-[#1a1b23] hover:bg-gray-200 dark:hover:bg-[#262930] text-gray-700 dark:text-gray-200 rounded-[4px] text-xs font-medium border border-gray-200 dark:border-gray-700 transition-colors cursor-pointer disabled:opacity-50"
           >
-            {isUploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <MonitorUp className="w-3.5 h-3.5" />}
+            {isUploading ? <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-500" /> : <MonitorUp className="w-3.5 h-3.5" />}
             Tải từ máy tính
           </button>
           <button
             type="button"
             onClick={() => setIsMediaPickerOpen(true)}
-            disabled={images.length >= maxImages}
+            disabled={totalSlotUsed >= maxImages}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-[#5865f2]/10 hover:bg-[#5865f2]/20 text-[#5865f2] rounded-[4px] text-xs font-medium border border-[#5865f2]/30 transition-colors cursor-pointer disabled:opacity-50"
           >
             <ImageIcon className="w-3.5 h-3.5" />
@@ -125,9 +216,10 @@ export function ProductImageGallery({ images = [], onChange, maxImages = 12 }: P
         className="hidden"
       />
 
-      {/* Image Grid */}
-      {images.length > 0 ? (
+      {/* Image Grid with both existing images and uploading boxes */}
+      {images.length > 0 || uploadingItems.length > 0 ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
+          {/* 1. Existing Gallery Images */}
           {images.map((url, idx) => {
             const isPrimary = idx === 0;
             return (
@@ -216,6 +308,95 @@ export function ProductImageGallery({ images = [], onChange, maxImages = 12 }: P
               </div>
             );
           })}
+
+          {/* 2. Actively Uploading Boxes with Real-time Percentage & Preview */}
+          {uploadingItems.map((item) => (
+            <div
+              key={item.id}
+              className={`relative rounded-[6px] overflow-hidden aspect-square border-2 shadow-md transition-all ${
+                item.status === 'error'
+                  ? 'border-rose-500 bg-rose-950/20'
+                  : item.status === 'success'
+                  ? 'border-emerald-500 bg-emerald-950/20'
+                  : 'border-[#5865f2] bg-gray-900'
+              }`}
+            >
+              {/* Local instant thumbnail preview */}
+              <img
+                src={item.previewUrl}
+                alt={item.file.name}
+                className="w-full h-full object-cover opacity-40 scale-105 filter blur-[0.5px]"
+              />
+
+              {/* Progress Overlay */}
+              <div className="absolute inset-0 bg-black/65 backdrop-blur-[2px] flex flex-col justify-between p-2.5 text-white">
+                {/* File info header */}
+                <div className="flex items-center justify-between w-full text-[11px]">
+                  <span className="truncate max-w-[70%] font-medium text-gray-200" title={item.file.name}>
+                    {item.file.name}
+                  </span>
+                  {item.status === 'error' ? (
+                    <button
+                      type="button"
+                      onClick={() => handleDismissUploadingItem(item.id)}
+                      className="p-0.5 rounded hover:bg-rose-500/30 text-rose-300"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  ) : (
+                    <span className="text-[10px] text-gray-400 font-mono">
+                      {(item.file.size / 1024).toFixed(0)} KB
+                    </span>
+                  )}
+                </div>
+
+                {/* Center loading & percentage indicator */}
+                <div className="flex flex-col items-center justify-center gap-1 my-auto">
+                  {item.status === 'error' ? (
+                    <div className="flex flex-col items-center gap-1 text-rose-400 text-center">
+                      <AlertCircle className="w-7 h-7 text-rose-500 animate-pulse" />
+                      <span className="text-[11px] font-semibold text-rose-300 line-clamp-1">
+                        {item.errorMessage || 'Lỗi tải ảnh'}
+                      </span>
+                    </div>
+                  ) : item.status === 'success' ? (
+                    <div className="flex flex-col items-center gap-1 text-emerald-400">
+                      <CheckCircle2 className="w-8 h-8 text-emerald-400 animate-bounce" />
+                      <span className="text-[11px] font-bold text-emerald-300">Hoàn tất 100%</span>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-1">
+                      <div className="relative flex items-center justify-center">
+                        <Loader2 className="w-9 h-9 animate-spin text-[#5865f2]" />
+                        <span className="absolute text-[11px] font-extrabold text-white font-mono">
+                          {item.progress}%
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-medium text-gray-300 mt-0.5">
+                        {item.status === 'processing' ? 'Đang lưu Cloudinary...' : `Đang tải lên ${item.progress}%`}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Bottom Progress Bar */}
+                <div className="w-full space-y-1">
+                  <div className="w-full h-1.5 bg-white/20 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full transition-all duration-200 rounded-full ${
+                        item.status === 'error'
+                          ? 'bg-rose-500'
+                          : item.status === 'success'
+                          ? 'bg-emerald-500'
+                          : 'bg-gradient-to-r from-blue-500 to-[#5865f2]'
+                      }`}
+                      style={{ width: `${item.progress}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         <div
