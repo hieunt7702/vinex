@@ -1,7 +1,9 @@
 # CẨM NANG CẤU HÌNH BIẾN MÔI TRƯỜNG & TRIỂN KHAI VINEX LÊN RAILWAY
 
 **Tên miền chính thức:** `https://vinexgroup.vn`  
-**Nền tảng:** Railway (Next.js 16 Full-Stack Engine)  
+**Tên miền phụ API:** `https://api.vinexgroup.vn`  
+**DNS & Bảo mật CDN:** Cloudflare  
+**Nền tảng Cloud:** Railway (Next.js 16 Full-Stack Engine)  
 **Cập nhật lần cuối:** 2026
 
 ---
@@ -23,7 +25,8 @@ NEXT_TELEMETRY_DISABLED=1
 # 2. ĐỊNH DANH DOMAIN & ĐƯỜNG DẪN API (NETWORKING & SEO)
 # ==============================================================================
 NEXT_PUBLIC_SITE_URL=https://vinexgroup.vn
-NEXT_PUBLIC_API_URL=/api/v1
+# Có thể dùng đường dẫn tương đối /api/v1 hoặc subdomain chính thức:
+NEXT_PUBLIC_API_URL=https://api.vinexgroup.vn/v1
 
 # ==============================================================================
 # 3. TỐI ƯU HÓA QUÁ TRÌNH BUILD (NIXPACKS & PNPM ENGINE)
@@ -33,7 +36,6 @@ NIXPACKS_PNPM_VERSION=9.15.9
 # ==============================================================================
 # 4. KẾT NỐI DATABASE POSTGRESQL (NẾU KÍCH HOẠT DATABASE TRÊN RAILWAY)
 # ==============================================================================
-# Nếu bạn tạo Database PostgreSQL trên Railway, liên kết biến bằng cú pháp sau:
 DATABASE_URL=${{Postgres.DATABASE_URL}}
 POSTGRES_USER=${{Postgres.POSTGRES_USER}}
 POSTGRES_PASSWORD=${{Postgres.POSTGRES_PASSWORD}}
@@ -56,95 +58,93 @@ NEXT_PUBLIC_FB_PIXEL=
 
 ---
 
-## II. BẢNG GIẢI THÍCH CHI TIẾT TỪNG BIẾN
+## II. HƯỚNG DẪN KẾT NỐI CLOUDFLARE CHO TÊN MIỀN `vinexgroup.vn`
 
-| Tên biến (Key) | Giá trị khuyến nghị | Bắt buộc | Mục đích & Chi tiết kỹ thuật |
-|---|---|:---:|---|
-| `NODE_ENV` | `production` | **Bắt buộc** | Kích hoạt chế độ Production của Next.js (bật cache, minify code, tắt debug). |
-| `PORT` | `3000` | **Bắt buộc** | Cổng lắng nghe của Node.js server. Railway sẽ tự động map port này ra Internet. |
-| `HOSTNAME` | `0.0.0.0` | **Bắt buộc** | Đảm bảo Next.js lắng nghe trên toàn bộ network interface của container Docker Railway. |
-| `NEXT_PUBLIC_SITE_URL` | `https://vinexgroup.vn` | **Bắt buộc** | Định danh URL gốc website cho SEO, Open Graph (chia sẻ Facebook/Zalo), Canonical link và Sitemap. |
-| `NEXT_PUBLIC_API_URL` | `/api/v1` | **Bắt buộc** | Đường dẫn API tương đối. Giữ nguyên `/api/v1` để trình duyệt gọi trực tiếp cùng domain, **không bao giờ bị lỗi CORS**. |
-| `NIXPACKS_PNPM_VERSION` | `9.15.9` | Khuyên dùng | Chỉ định chính xác phiên bản `pnpm` của dự án để Railway cài đặt đồng bộ với `pnpm-lock.yaml`. |
-| `NEXT_TELEMETRY_DISABLED`| `1` | Khuyên dùng | Tắt việc gửi dữ liệu thống kê ngầm về Vercel, giúp tăng tốc độ build thêm 15-20%. |
-| `DATABASE_URL` | `${{Postgres.DATABASE_URL}}` | Tùy chọn | Chuỗi kết nối đến PostgreSQL. Nếu bạn thêm Database trên Railway, biến này tự động đồng bộ. |
-| `JWT_SECRET` | Chuỗi ký tự ngẫu nhiên | Khuyên dùng | Khóa bí mật dùng để ký và xác thực token JWT khi đăng nhập trang Admin. |
-| `ADMIN_USERNAME` | `admin` | Tùy chọn | Tên đăng nhập mặc định vào trang quản trị (`/admin`). |
-| `ADMIN_PASSWORD` | `admin` | Tùy chọn | Mật khẩu đăng nhập mặc định vào trang quản trị (`/admin`). |
-| `NEXT_PUBLIC_GA_ID` | `G-XXXXXXXXXX` | Tùy chọn | Mã đo lường Google Analytics 4 (thay bằng mã thực tế khi website chạy). |
+Cloudflare mang lại cho bạn:
+- Tự động nén và tăng tốc website (CDN toàn cầu, truy cập siêu nhanh).
+- Chống tấn công DDoS và ẩn IP gốc của máy chủ.
+- Hỗ trợ **CNAME Flattening** (cho phép trỏ cả tên miền gốc `@` dạng CNAME về Railway cực kỳ mượt mà).
 
----
+### Bước 1: Thêm Website vào Cloudflare
+1. Đăng ký/Đăng nhập tài khoản tại **[dash.cloudflare.com](https://dash.cloudflare.com)**.
+2. Bấm **+ Add a Domain** (hoặc **Add a Site**).
+3. Nhập tên miền: `vinexgroup.vn` ➔ Chọn gói **Free** (Miễn phí) ➔ Bấm **Continue**.
+4. Cloudflare sẽ quét các bản ghi DNS hiện có. Bấm **Continue**.
+5. Cloudflare cung cấp **2 địa chỉ Nameserver** (ví dụ: `amy.ns.cloudflare.com` và `todd.ns.cloudflare.com`).
 
-## III. QUY TRÌNH TRIỂN KHAI TỪNG BƯỚC LÊN RAILWAY
+### Bước 2: Đổi Nameserver tại Nhà đăng ký tên miền (Mắt Bão, P.A, Tenten...)
+1. Đăng nhập vào trang quản lý nơi bạn mua tên miền `vinexgroup.vn`.
+2. Tìm mục **Quản lý Nameserver / Cặp máy chủ tên miền**.
+3. Chọn chế độ **Sử dụng Nameserver tùy chỉnh (Custom Nameservers)**.
+4. Xóa các nameserver cũ và dán 2 Nameserver của Cloudflare vào.
+5. Bấm **Lưu / Cập nhật**. *(Đợi 5 - 30 phút để Cloudflare kích hoạt tên miền thành công)*.
 
-### Bước 1: Đẩy toàn bộ code mới nhất lên GitHub
-Mở Terminal tại thư mục dự án và chạy:
-```bash
-git push origin master
-```
-*(Nếu trình duyệt bật cửa sổ yêu cầu đăng nhập GitHub, xác thực với tài khoản `hieunt7702`)*.
-
----
-
-### Bước 2: Tạo Project trên Railway & Kết nối Repo
-1. Truy cập **[railway.com](https://railway.com)** ➔ Đăng nhập bằng tài khoản GitHub `hieunt7702`.
-2. Bấm nút **+ New Project** (màu tím).
-3. Chọn **Deploy from GitHub repo**.
-4. Chọn repository **`hieunt7702/vinex`**.
-5. Bấm **Deploy Now**.
-   - Railway sẽ tự động nhận diện file `railway.json` và cấu hình build `pnpm run build` đã chuẩn bị sẵn.
+### Bước 3: Cấu hình Bắt buộc: Chế độ SSL/TLS trên Cloudflare
+> [!IMPORTANT]
+> **CỰC KỲ QUAN TRỌNG ĐỂ TRÁNH LỖI VÒNG LẶP CHUYỂN HƯỚNG (ERR_TOO_MANY_REDIRECTS):**
+> 1. Trong Dashboard Cloudflare của `vinexgroup.vn`, vào menu bên trái chọn **SSL/TLS**.
+> 2. Tại mục **Overview**, chọn chế độ mã hóa: **Full (strict)** hoặc **Full**.
+> 3. **TUYỆT ĐỐI KHÔNG CHỌN** chế độ `Flexible` (vì Railway bắt buộc chạy HTTPS ở backend, nếu để Flexible sẽ gây xung đột chuyển hướng vô tận).
+> 4. Vào mục **Edge Certificates** (trong menu SSL/TLS) ➔ Bật nút: **Always Use HTTPS**.
 
 ---
 
-### Bước 3: Dán biến môi trường vào Service
-1. Nhấp vào ô Service `vinex` vừa tạo trên màn hình Canvas.
-2. Chuyển sang tab **Variables** ở menu phía trên.
-3. Nhấp vào nút **RAW Editor** (biểu tượng code bên góc phải).
-4. Sao chép toàn bộ nội dung trong mục **I** ở trên và dán vào.
-5. Bấm **Save**. Railway sẽ tự động trigger một lượt Build mới áp dụng toàn bộ các biến này.
+## III. CẤU HÌNH TÊN MIỀN PHỤ API (`api.vinexgroup.vn`)
+
+Dự án đã được tích hợp sẵn bộ định tuyến thông minh trong `src/proxy.ts` và bộ header CORS chuẩn trong `next.config.ts`.
+Bạn **không cần tạo thêm server mới**, chỉ cần cấu hình trên cùng một Service Next.js trên Railway!
+
+### Các Endpoint của `api.vinexgroup.vn`:
+- `https://api.vinexgroup.vn/` ➔ Trả về JSON trạng thái hệ thống: `{"name":"VINEX High-End Agriculture API","status":"online",...}`.
+- `https://api.vinexgroup.vn/v1/products` (hoặc `/api/v1/products`) ➔ Danh sách sản phẩm (đã sắp xếp mới nhất lên đầu).
+- `https://api.vinexgroup.vn/v1/articles` ➔ Danh sách tin tức / bài viết truyền thông.
+- `https://api.vinexgroup.vn/v1/categories` ➔ Cây danh mục nông sản & quà tặng.
+- `https://api.vinexgroup.vn/v1/leads` ➔ Tiếp nhận báo giá và thông tin khách hàng B2B.
 
 ---
 
-### Bước 4: (Tùy chọn) Thêm Database PostgreSQL trên Railway
-1. Tại màn hình dự án, bấm nút **+ New** ở góc trên cùng bên phải.
-2. Chọn **Database** ➔ Chọn **Add PostgreSQL**.
-3. Railway khởi tạo database chỉ trong 5 giây.
-4. Bấm lại vào Service `vinex` ➔ tab **Variables** ➔ bấm **Add Reference** ➔ chọn `${{Postgres.DATABASE_URL}}`.
+## IV. BẢNG CẤU HÌNH DNS TRÊN CLOUDFLARE CHO CẢ WEBSITE VÀ API
 
----
+Trong Cloudflare, vào menu **DNS** ➔ **Records** ➔ Bấm **Add record** và thêm các bản ghi sau:
 
-### Bước 5: Cấu hình Tên miền riêng `vinexgroup.vn` trên Railway
-1. Trong Service `vinex`, chọn tab **Settings**.
-2. Kéo xuống mục **Networking** ➔ chọn **+ Custom Domain**.
-3. Nhập domain thứ nhất: `vinexgroup.vn` ➔ Bấm **Add**.
-4. Bấm tiếp **+ Custom Domain** và nhập thêm: `www.vinexgroup.vn` ➔ Bấm **Add**.
-5. Railway sẽ hiển thị bảng DNS Records cần trỏ:
-   - Với `www`: Cung cấp 1 địa chỉ CNAME (ví dụ: `xxxx.up.railway.app`).
-   - Với `@`: Cung cấp 1 địa chỉ IP (A Record) hoặc CNAME ALIAS.
-
----
-
-### Bước 6: Trỏ DNS tại Nhà cung cấp tên miền của bạn
-Đăng nhập vào trang quản trị tên miền nơi bạn đăng ký `vinexgroup.vn` (Mắt Bão, P.A Việt Nam, Tenten, Cloudflare...):
-
-Thêm 2 bản ghi sau:
-
-| Loại bản ghi (Type) | Tên host / Name | Giá trị (Value) | TTL |
-|---|---|---|---|
-| **CNAME** | `www` | Giá trị CNAME do Railway cấp (ví dụ: `xxxx.up.railway.app`) | 300 (hoặc Auto) |
-| **A** | `@` (hoặc để trống) | Địa chỉ IP do Railway cung cấp | 300 (hoặc Auto) |
+| Loại (Type) | Tên (Name) | Mục tiêu / Giá trị (Target / Content) | Proxy status | Mục đích |
+|:---:|:---:|:---:|:---:|---|
+| **CNAME** | `@` | Domain do Railway cấp (VD: `xxxx.up.railway.app`) | **Proxied** (Đám mây cam) | Trang chủ `https://vinexgroup.vn` |
+| **CNAME** | `www` | Domain do Railway cấp (VD: `xxxx.up.railway.app`) | **Proxied** (Đám mây cam) | Tên miền phụ `https://www.vinexgroup.vn` |
+| **CNAME** | `api` | Domain do Railway cấp (VD: `xxxx.up.railway.app`) | **Proxied** (Đám mây cam) | **Tên miền phụ API `https://api.vinexgroup.vn`** |
 
 > [!TIP]
-> **Nếu bạn dùng Cloudflare:**
-> Chỉ cần tạo 2 bản ghi CNAME cho cả `@` và `www` trỏ về domain Railway, Cloudflare tự động kích hoạt CNAME Flattening và bảo vệ chống DDoS miễn phí.
+> **Lưu ý trong lần đầu Railway xác thực:**
+> Khi mới bấm **Add Custom Domain** trên Railway:
+> - Nếu Railway báo *"DNS verification pending"*, bạn có thể chuyển tạm thời cột Proxy status của bản ghi đó trên Cloudflare sang **DNS only** (Đám mây xám) trong 2 phút để Railway verify xong chứng chỉ SSL.
+> - Sau khi Railway hiện dấu tích xanh **Active**, bạn bấm bật lại thành **Proxied** (Đám mây cam) để tận hưởng toàn bộ tính năng bảo vệ và CDN của Cloudflare!
 
 ---
 
-### Bước 7: Kiểm tra & Nghiệm thu
-Sau khoảng 5 - 15 phút để DNS toàn cầu cập nhật:
-1. **Chứng chỉ bảo mật SSL**: Railway tự động cấp SSL HTTPS xanh (`Let's Encrypt`) hoàn toàn miễn phí.
-2. Kiểm tra các đường dẫn hoạt động:
-   - 🌐 **Trang chủ**: `https://vinexgroup.vn`
-   - 📦 **Sản phẩm (Sắp xếp mới nhất lên đầu)**: `https://vinexgroup.vn/san-pham`
-   - 📰 **Tin tức truyền thông**: `https://vinexgroup.vn/tin-tuc`
-   - ⚙️ **Trang quản trị Admin**: `https://vinexgroup.vn/admin` *(Đăng nhập: `admin` / `admin`)*.
+## V. CÁC BƯỚC THAO TÁC TRÊN RAILWAY
+
+1. **Đẩy code mới nhất lên GitHub:**
+   ```bash
+   git push origin master
+   ```
+
+2. **Thêm Custom Domains trên Railway:**
+   - Vào Service `vinex` trên Railway ➔ chọn tab **Settings**.
+   - Kéo xuống mục **Networking** ➔ **Custom Domains** ➔ Bấm **+ Custom Domain**.
+   - Thêm lần lượt 3 domain:
+     1. `vinexgroup.vn`
+     2. `www.vinexgroup.vn`
+     3. `api.vinexgroup.vn`
+   - Mỗi domain sẽ được Railway cấp endpoint riêng (hoặc chung dạng `xxxx.up.railway.app`), hãy copy giá trị này dán vào Cloudflare DNS như bảng ở **Mục IV**.
+
+---
+
+## VI. KIỂM TRA & NGHIỆM THU HỆ THỐNG
+
+Sau khi Cloudflare cập nhật:
+1. 🌐 **Website chính:** Truy cập `https://vinexgroup.vn` (có biểu tượng ổ khóa SSL xanh).
+2. 🚀 **Hệ thống API riêng:**
+   - Kiểm tra status: `https://api.vinexgroup.vn/`
+   - Lấy sản phẩm: `https://api.vinexgroup.vn/v1/products`
+   - Lấy bài viết: `https://api.vinexgroup.vn/v1/articles`
+3. ⚙️ **Trang quản trị CMS:** `https://vinexgroup.vn/admin` *(Đăng nhập `admin` / `admin`)*.
