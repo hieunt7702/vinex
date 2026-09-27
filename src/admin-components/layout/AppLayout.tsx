@@ -252,11 +252,11 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                   <PanelLeftOpen className="w-[18px] h-[18px]" />
                 </button>
               )}
-              <div className="w-10 h-10 rounded-[8px] bg-[#5865f2]/10 dark:bg-[#5865f2]/20 border border-[#5865f2]/20 text-[#5865f2] dark:text-[#7983f5] flex items-center justify-center shrink-0 shadow-xs">
-                <NavIcon className="w-5 h-5" strokeWidth={2} />
+              <div className="w-10 h-10 rounded-[8px] bg-[#5865f2]/10 dark:bg-[#5865f2]/20 text-[#5865f2] dark:text-[#7983f5] flex items-center justify-center shrink-0">
+                <NavIcon className="w-5 h-5" strokeWidth={1.75} />
               </div>
               <div className="flex flex-col min-w-0">
-                <h1 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-tight truncate tracking-tight">
+                <h1 className="text-base sm:text-lg font-medium text-gray-900 dark:text-white leading-tight truncate tracking-tight">
                   {title}
                 </h1>
                 {description && (
