@@ -1,35 +1,41 @@
-import fs from 'fs';
-import path from 'path';
-
-const DB_PATH = path.join(process.cwd(), 'src', 'data', 'db.json');
+import dbJson from '@/data/db.json';
 
 function loadPersistedData() {
-  try {
-    if (fs.existsSync(DB_PATH)) {
-      const raw = fs.readFileSync(DB_PATH, 'utf-8');
-      const parsed = JSON.parse(raw);
-      return parsed;
+  if (typeof window === 'undefined') {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const DB_PATH = path.join(process.cwd(), 'src', 'data', 'db.json');
+      if (fs.existsSync(DB_PATH)) {
+        const raw = fs.readFileSync(DB_PATH, 'utf-8');
+        return JSON.parse(raw);
+      }
+    } catch (e) {
+      // Fallback to imported json
     }
-  } catch (e) {
-    console.warn('Failed to load db.json:', e);
   }
-  return null;
+  return dbJson;
 }
 
 export function savePersistedData() {
-  try {
-    if (!globalThis.__VINEX_STORE__) return;
-    const dataToSave = {
-      products: globalThis.__VINEX_STORE__.products || [],
-      categories: globalThis.__VINEX_STORE__.categories || [],
-      articles: globalThis.__VINEX_STORE__.articles || [],
-      settings: globalThis.__VINEX_STORE__.settings || [],
-      leads: globalThis.__VINEX_STORE__.leads || [],
-      customers: globalThis.__VINEX_STORE__.customers || [],
-    };
-    fs.writeFileSync(DB_PATH, JSON.stringify(dataToSave, null, 2), 'utf-8');
-  } catch (e) {
-    console.warn('Failed to write db.json:', e);
+  if (typeof window === 'undefined') {
+    try {
+      if (!globalThis.__VINEX_STORE__) return;
+      const fs = require('fs');
+      const path = require('path');
+      const DB_PATH = path.join(process.cwd(), 'src', 'data', 'db.json');
+      const dataToSave = {
+        products: globalThis.__VINEX_STORE__.products || [],
+        categories: globalThis.__VINEX_STORE__.categories || [],
+        articles: globalThis.__VINEX_STORE__.articles || [],
+        settings: globalThis.__VINEX_STORE__.settings || [],
+        leads: globalThis.__VINEX_STORE__.leads || [],
+        customers: globalThis.__VINEX_STORE__.customers || [],
+      };
+      fs.writeFileSync(DB_PATH, JSON.stringify(dataToSave, null, 2), 'utf-8');
+    } catch (e) {
+      console.warn('Failed to write db.json:', e);
+    }
   }
 }
 
@@ -47,7 +53,7 @@ declare global {
   } | undefined;
 }
 
-const persisted = loadPersistedData();
+const persisted = loadPersistedData() || dbJson;
 
 if (!globalThis.__VINEX_STORE__) {
   globalThis.__VINEX_STORE__ = {

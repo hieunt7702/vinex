@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          Int        @id @default(autoincrement())
+  parentId    Int?
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+  name        String
+  slug        String     @unique
+  type        String     @default("Sản phẩm") // "Sản phẩm", "Bài viết"
+  description String?
+  status      String     @default("ACTIVE")
+  isPinned    Boolean    @default(false)
+  attributes  Json?
+  products    Product[]  @relation("ProductToCategory")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Product {
+  id                Int        @id @default(autoincrement())
+  productId         String?
+  sku               String?
+  name              String
+  slug              String     @unique
+  segment           String?    @default("cao-cap")
+  price             Int?
+  promotionalPrice  Int?
+  stockQuantity     Int?       @default(100)
+  stockStatus       String?    @default("IN_STOCK")
+  lowStockThreshold Int?       @default(10)
+  shortDescription  String?
+  description       String?
+  status            String     @default("ACTIVE")
+  images            Json?
+  attributes        Json?
+  categories        Category[] @relation("ProductToCategory")
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}
+
+model Article {
+  id              Int      @id @default(autoincrement())
+  title           String
+  slug            String   @unique
+  category        String
+  author          String?  @default("VINEX Editorial")
+  summary         String?
+  content         String?
+  thumbnail       String?
+  views           Int      @default(0)
+  status          String   @default("PUBLISHED")
+  isFeatured      Boolean  @default(false)
+  tags            String?
+  metaTitle       String?
+  metaDescription String?
+  publishedAt     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Lead {
+  id           Int      @id @default(autoincrement())
+  customerName String
+  phone        String
+  email        String?
+  location     String?
+  source       String?
+  projectType  String?
+  budget       String?
+  notes        String?
+  status       String   @default("PENDING")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Customer {
+  id          Int      @id @default(autoincrement())
+  fullName    String
+  phoneNumber String
+  email       String?
+  address     String?
+  totalOrders Int      @default(0)
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Setting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id        Int      @id @default(autoincrement())
+  url       String
+  name      String
+  type      String
+  size      Int
+  createdAt DateTime @default(now())
+}
+
+model SeoPage {
+  id              Int      @id @default(autoincrement())
+  title           String
+  slug            String   @unique
+  keyword         String?
+  content         String?
+  status          String   @default("ACTIVE")
+  metaTitle       String?
+  metaDescription String?
+  views           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

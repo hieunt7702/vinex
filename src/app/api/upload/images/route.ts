@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import crypto from 'crypto';
 import { store } from '@/app/api/v1/store';
+import prisma from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
@@ -9,11 +9,13 @@ export async function POST(request: Request) {
     const files = formData.getAll('files') as File[];
 
     if (!files || files.length === 0) {
-      return NextResponse.json({ message: 'Không có file nào được tải lên' }, { status: 400 });
+      return NextResponse.json({ success: false, message: 'Không có file nào được tải lên.' }, { status: 400 });
     }
 
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    await mkdir(uploadDir, { recursive: true });
+    const cloudName = process.env.CLOUDINARY_CLOUD_NAME || 'dmbc4l5sp';
+    const apiKey = process.env.CLOUDINARY_API_KEY || '754381674985892';
+    const apiSecret = process.env.CLOUDINARY_API_SECRET || '6c5yCfbKtbR3JMYVR5I3b1ddyqs';
+    const folder = process.env.CLOUDINARY_FOLDER || 'vinex';
 
     const uploadedUrls: string[] = [];
 
@@ -23,37 +25,69 @@ export async function POST(request: Request) {
         continue;
       }
 
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      const base64String = `data:${file.type};base64,${buffer.toString('base64')}`;
 
-      const ext = path.extname(file.name) || '.jpg';
-      const cleanBaseName = path.basename(file.name, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
-      const uniqueName = `${Date.now()}_${cleanBaseName}${ext}`;
-      const filePath = path.join(uploadDir, uniqueName);
+      const timestamp = Math.round(new Date().getTime() / 1000);
 
-      await writeFile(filePath, buffer);
-      const fileUrl = `/uploads/${uniqueName}`;
-      uploadedUrls.push(fileUrl);
+      // Create signature according to Cloudinary standard:
+      // Alphabetically sorted parameters
+      const strToSign = `folder=${folder}&timestamp=${timestamp}${apiSecret}`;
+      const signature = crypto.createHash('sha1').update(strToSign).digest('hex');
 
-      // Record to store.media if available
-      if ((store as any).media) {
-        (store as any).media.unshift({
-          id: `media_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
-          url: fileUrl,
-          name: file.name,
-          size: file.size,
-          createdAt: new Date().toISOString()
-        });
+      const cloudinaryFormData = new FormData();
+      cloudinaryFormData.append('file', base64String);
+      cloudinaryFormData.append('api_key', apiKey);
+      cloudinaryFormData.append('timestamp', timestamp.toString());
+      cloudinaryFormData.append('signature', signature);
+      cloudinaryFormData.append('folder', folder);
+
+      const cloudinaryRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: 'POST',
+        body: cloudinaryFormData,
+      });
+
+      const cloudinaryData = await cloudinaryRes.json();
+      if (cloudinaryData.secure_url) {
+        uploadedUrls.push(cloudinaryData.secure_url);
+
+        // Save to Prisma Media table if database is connected
+        try {
+          await prisma.media.create({
+            data: {
+              url: cloudinaryData.secure_url,
+              name: file.name,
+              type: file.type,
+              size: file.size,
+            }
+          });
+        } catch (dbErr) {
+          // Gracefully continue if DB is offline
+        }
+
+        // Record to in-memory store.media
+        if ((store as any).media) {
+          (store as any).media.unshift({
+            id: `media_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+            url: cloudinaryData.secure_url,
+            name: file.name,
+            size: file.size,
+            createdAt: new Date().toISOString()
+          });
+        }
+      } else {
+        console.error('Cloudinary error response:', cloudinaryData);
       }
     }
 
     if (uploadedUrls.length === 0) {
-      return NextResponse.json({ message: 'Định dạng file không hợp lệ. Vui lòng chọn ảnh PNG, JPG, WEBP.' }, { status: 400 });
+      return NextResponse.json({ success: false, message: 'Định dạng file không hợp lệ hoặc tải lên Cloudinary thất bại.' }, { status: 400 });
     }
 
     return NextResponse.json(uploadedUrls, { status: 201 });
   } catch (error: any) {
-    console.error('Lỗi khi tải ảnh:', error);
-    return NextResponse.json({ message: 'Lỗi máy chủ khi xử lý tải ảnh' }, { status: 500 });
+    console.error('Upload Error:', error);
+    return NextResponse.json({ success: false, message: 'Lỗi server khi tải ảnh' }, { status: 500 });
   }
 }

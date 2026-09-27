@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
-import type { GlobalSettings } from '@/lib/dataService';
-import { defaultGlobalSettings } from '@/lib/dataService';
+import type { GlobalSettings } from '@/lib/types';
+import { defaultGlobalSettings } from '@/lib/types';
 import { getApiUrl } from '@/lib/apiConfig';
 
 export type { GlobalSettings };

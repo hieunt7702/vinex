@@ -17,14 +17,14 @@ export const FlavoredCashewsHome: React.FC = () => {
   const desc = "Khám phá các dòng hạt điều tẩm vị trong danh mục VINEX. Hình ảnh giới thiệu các lựa chọn sản phẩm và bao bì cho nhu cầu thưởng thức hoặc kết hợp trong bộ quà.";
   const cta = "Xem sản phẩm hạt điều";
 
-  // Dynamic products from API or fallback
+  // Dynamic products from API or fallback with real authentic slugs
   const [items, setItems] = React.useState<any[]>([
-    { id: 1, img: '/images/product/Cashew1.png', name: 'Hạt điều tẩm vị 1', slug: '' },
-    { id: 2, img: '/images/product/Cashew2.png', name: 'Hạt điều tẩm vị 2', slug: '' },
-    { id: 3, img: '/images/product/Cashew3.png', name: 'Hạt điều tẩm vị 3', slug: '' },
-    { id: 4, img: '/images/product/Cashew4.png', name: 'Hạt điều tẩm vị 4', slug: '' },
-    { id: 5, img: '/images/product/Cashew5.png', name: 'Hạt điều tẩm vị 5', slug: '' },
-    { id: 6, img: '/images/product/Cashew6.png', name: 'Hạt điều tẩm vị 6', slug: '' },
+    { id: 1, img: '/images/product/Cashew2.png', name: 'Hạt điều tẩm vị phô mai hũ 150g', slug: 'hat-dieu-tam-vi-phomai-hu-150g' },
+    { id: 2, img: '/images/product/Cashew1.png', name: 'Hạt điều tẩm vị phô mai hũ 100g', slug: 'hat-dieu-tam-vi-phomai-hu-100g' },
+    { id: 3, img: '/images/product/Orchard nuts 1.png', name: 'Hạt điều vị trứng muối', slug: 'hat-dieu-vi-trung-muoi' },
+    { id: 4, img: '/images/product/Orchard nuts 2.png', name: 'Hạt điều vị Tứ Xuyên', slug: 'hat-dieu-vi-tu-xuyen' },
+    { id: 5, img: '/images/product/Orchard nuts 3.png', name: 'Hạt điều vị Tomyum', slug: 'hat-dieu-vi-tomyum' },
+    { id: 6, img: '/value1.png', name: 'Hạt điều rang củi Bình Phước W240', slug: 'hat-dieu-rang-cui-binh-phuoc-w240' },
   ]);
 
   React.useEffect(() => {
