@@ -48,3 +48,8 @@ next-env.d.ts
 ui*.png
 home_des.png
 vi-diff.txt
+
+# Local runtime data store — must NEVER be committed to git.
+# Turbopack would bundle this file at build time causing "invalid JSON" errors
+# and ghost data reappearing on every new Railway deployment.
+src/data/db.json

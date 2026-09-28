@@ -1,7 +1,6 @@
 import prisma from '@/lib/prisma';
 import { store } from '@/app/api/v1/store';
 import { getApiUrl } from '@/lib/apiConfig';
-import defaultDb from '@/data/db.json';
 import { normalizeImageUrl, sortArticlesNewestFirst, formatArticleDate } from '@/lib/imageUtils';
 import type { PublicProduct, PublicCategory, PublicArticle, GlobalSettings } from '@/lib/types';
 import { defaultGlobalSettings } from '@/lib/types';
@@ -9,22 +8,25 @@ import { defaultGlobalSettings } from '@/lib/types';
 export type { PublicProduct, PublicCategory, PublicArticle, GlobalSettings };
 export { defaultGlobalSettings };
 
-// Safe helper to read local persisted db.json
+// ─────────────────────────────────────────────────────────────────────────────
+// IMPORTANT: db.json must NEVER be statically imported here.
+// Turbopack bundles ALL static imports at build time → build crash + ghost data.
+// Use dynamic require() at runtime only (server-side, never during build).
+// ─────────────────────────────────────────────────────────────────────────────
 function getLocalDbData(): any {
-  if (typeof window === 'undefined') {
-    try {
-      const fs = require('fs');
-      const path = require('path');
-      const dbPath = path.join(process.cwd(), 'src', 'data', 'db.json');
-      if (fs.existsSync(dbPath)) {
-        const content = fs.readFileSync(dbPath, 'utf-8');
-        return JSON.parse(content);
-      }
-    } catch (e) {
-      // Ignore
+  if (typeof window !== 'undefined') return null;
+  try {
+    const fs   = require('fs')  as typeof import('fs');
+    const path = require('path') as typeof import('path');
+    const dbPath = path.join(process.cwd(), 'src', 'data', 'db.json');
+    if (fs.existsSync(dbPath)) {
+      const content = fs.readFileSync(dbPath, 'utf-8');
+      return JSON.parse(content);
     }
+  } catch (_) {
+    // db.json missing or corrupt — fine, default to empty
   }
-  return defaultDb;
+  return null;
 }
 
 function formatRawProduct(p: any): PublicProduct {
@@ -65,12 +67,12 @@ export async function getPublicSettings(): Promise<GlobalSettings> {
         const parsed = JSON.parse(setting.value);
         return { ...defaultGlobalSettings, ...parsed };
       }
-    } catch (e) {
+    } catch (_) {
       // fallback
     }
   }
 
-  // 2. Try in-memory store or local db.json
+  // 2. Try in-memory store or local db.json (dev only)
   const localDb = getLocalDbData();
   const settingsList = store?.settings?.length ? store.settings : (localDb?.settings || []);
   const found = settingsList.find((s: any) => s && s.key === 'GLOBAL_SETTINGS');
@@ -94,7 +96,7 @@ export async function getPublicSettings(): Promise<GlobalSettings> {
         return { ...defaultGlobalSettings, ...parsed };
       }
     }
-  } catch (e) {
+  } catch (_) {
     // Ignore fetch error
   }
 
@@ -121,12 +123,12 @@ export async function getPublicCategories(type?: 'Sản phẩm' | 'Bài viết')
           description: c.description || ''
         }));
       }
-    } catch (e) {
+    } catch (_) {
       // fallback
     }
   }
 
-  // 2. Try store or local db.json
+  // 2. Try store or local db.json (dev only)
   const localDb = getLocalDbData();
   list = (store?.categories?.length ? store.categories : (localDb?.categories || []));
 
@@ -147,7 +149,7 @@ export async function getPublicCategories(type?: 'Sản phẩm' | 'Bài viết')
         return type ? apiList.filter((c: any) => c.type === type) : apiList;
       }
     }
-  } catch (e) {
+  } catch (_) {
     // Ignore
   }
 
@@ -171,12 +173,12 @@ export async function getPublicProducts(): Promise<PublicProduct[]> {
       if (dbProds && dbProds.length > 0) {
         return dbProds.map(formatRawProduct);
       }
-    } catch (e) {
+    } catch (_) {
       // continue to fallback
     }
   }
 
-  // 2. Try store or local db.json
+  // 2. Try store or local db.json (dev only)
   const localDb = getLocalDbData();
   const list = (store?.products?.length ? store.products : (localDb?.products || []));
   if (list && list.length > 0) {
@@ -197,7 +199,7 @@ export async function getPublicProducts(): Promise<PublicProduct[]> {
           .map(formatRawProduct);
       }
     }
-  } catch (e) {
+  } catch (_) {
     // Ignore
   }
 
@@ -224,8 +226,8 @@ export async function getProductBySlug(slug: string): Promise<PublicProduct | un
       if (dbProd) {
         return formatRawProduct(dbProd);
       }
-    } catch (e) {
-      // Prisma failed or DB offline, fallback to local store
+    } catch (_) {
+      // fallback
     }
   }
 
@@ -258,7 +260,7 @@ export async function getProductBySlug(slug: string): Promise<PublicProduct | un
     });
   }
 
-  // Match 4: Substring / keyword match (e.g. 'phomai' or 'trung-muoi' or 'tu-xuyen' or 'tomyum' or 'rang-cui')
+  // Match 4: Substring / keyword match
   if (!found) {
     const slugParts = normalizedSlug.split('-').filter(part => part.length > 2);
     found = allProducts.find(p => {
@@ -268,8 +270,7 @@ export async function getProductBySlug(slug: string): Promise<PublicProduct | un
     });
   }
 
-  // Match 5: Fallback to the first active product in that category or first product in catalog
-  // This guarantees that clicking ANY product NEVER results in a 404 page!
+  // Match 5: Fallback to first product in catalog (never 404)
   if (!found && allProducts.length > 0) {
     if (normalizedSlug.includes('dieu') || normalizedSlug.includes('cashew')) {
       found = allProducts.find(p => (p.name || '').toLowerCase().includes('điều')) || allProducts[0];
@@ -320,12 +321,12 @@ export async function getPublicArticles(): Promise<PublicArticle[]> {
         }));
         return sortArticlesNewestFirst(mapped);
       }
-    } catch (e) {
+    } catch (_) {
       // fallback
     }
   }
 
-  // 2. Try store or db.json
+  // 2. Try store or db.json (dev only)
   const localDb = getLocalDbData();
   const list = (store?.articles?.length ? store.articles : (localDb?.articles || []));
   if (list && list.length > 0) {
@@ -385,12 +386,12 @@ export async function getArticleBySlug(slug: string): Promise<PublicArticle | un
           publishedAt: a.publishedAt || a.createdAt?.toISOString?.() || ''
         };
       }
-    } catch (e) {
+    } catch (_) {
       // fallback
     }
   }
 
-  // 2. Try store/db.json
+  // 2. Try store/db.json (dev only)
   const allArticles = await getPublicArticles();
   const found = allArticles.find(a => {
     const aSlug = decodeURIComponent(a.slug || '').toLowerCase().trim();
