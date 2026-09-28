@@ -11,7 +11,7 @@ import {
   DollarSign, ShoppingCart, HelpCircle, Handshake, Store, Edit3, ArrowRight, Save,
   Building, Globe, Radio, UserPlus, Target, Layers, Hash, Coins, CalendarClock,
   MessageSquareText, ShieldCheck, CircleDollarSign, MapPin, CalendarCheck, Barcode,
-  Receipt, CheckSquare, ArrowRightCircle, Activity, Info, Users, Flame
+  Receipt, CheckSquare, ArrowRightCircle, Activity, Info, Users, Flame, FolderOpen, Loader2
 } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
 import { safeFormatDate } from '@/admin-utils/dateUtils';
@@ -1067,39 +1067,8 @@ export default function LeadsPage() {
 
       {/* 4. Main Table Container */}
       <div className="flex-1 bg-white dark:bg-[#14151a] rounded-[4px] border border-gray-200 dark:border-gray-800 flex flex-col min-h-0 overflow-hidden shadow-sm">
-        {isLoading ? (
-          <div className="py-20 flex flex-col items-center justify-center text-gray-400">
-            <RefreshCw className="w-8 h-8 animate-spin text-[#5865f2] mb-3" />
-            <p className="text-sm">Đang tải danh sách yêu cầu...</p>
-          </div>
-        ) : sortedLeads.length === 0 ? (
-          <div className="py-16 text-center text-gray-400 px-4">
-            <MessageSquare className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-            <h4 className="text-base font-semibold text-gray-800 dark:text-gray-200 mb-1">
-              Không tìm thấy yêu cầu nào phù hợp
-            </h4>
-            <p className="text-xs text-gray-500 max-w-sm mx-auto mb-3">
-              Không có dữ liệu yêu cầu nào khớp với từ khóa tìm kiếm hoặc bộ lọc đã chọn.
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setSearchQuery('');
-                setPurposeFilter('ALL');
-                setStatusFilter('ALL');
-                setPriorityFilter('ALL');
-                setAssigneeFilter('ALL');
-                setQuickFilter('ALL');
-                setPage(0);
-              }}
-              className="text-xs text-[#5865f2] hover:underline font-semibold cursor-pointer"
-            >
-              Đặt lại toàn bộ bộ lọc
-            </button>
-          </div>
-        ) : (
-          <div className="flex-1 overflow-x-auto overflow-y-auto">
-            <table className="w-full text-left border-collapse text-sm">
+        <div className="flex-1 overflow-x-auto overflow-y-auto">
+          <table className="w-full text-left border-collapse text-sm">
               <thead className="sticky top-0 z-10 bg-gray-50/80 dark:bg-[#1a1b23]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
                 <tr>
                   <th className="px-4 lg:px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs min-w-[150px] whitespace-nowrap">
@@ -1161,7 +1130,44 @@ export default function LeadsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-800/80">
-                {paginatedData.map((lead) => {
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={10} className="px-5 py-24 text-center">
+                      <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
+                        <Loader2 className="w-8 h-8 animate-spin text-[#5865f2] mb-4" />
+                        <h3 className="text-sm font-medium text-gray-900 dark:text-white">Đang tải danh sách yêu cầu...</h3>
+                      </div>
+                    </td>
+                  </tr>
+                ) : paginatedData.length === 0 ? (
+                  <tr>
+                    <td colSpan={10} className="px-5 py-24 text-center animate-in fade-in zoom-in-95 duration-500">
+                      <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
+                        <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4 border border-gray-200 dark:border-gray-800">
+                          <FolderOpen className="w-8 h-8 text-gray-400" />
+                        </div>
+                        <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1">Không có yêu cầu nào</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Chưa có yêu cầu phù hợp với bộ lọc tìm kiếm.</p>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSearchQuery('');
+                            setPurposeFilter('ALL');
+                            setStatusFilter('ALL');
+                            setPriorityFilter('ALL');
+                            setAssigneeFilter('ALL');
+                            setQuickFilter('ALL');
+                            setPage(0);
+                          }}
+                          className="flex items-center gap-2 px-5 py-2.5 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors cursor-pointer"
+                        >
+                          <RefreshCw className="w-4 h-4" /> Đặt Lại Bộ Lọc
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  paginatedData.map((lead) => {
                   const purposeInfo = PURPOSE_CONFIG[lead.purpose] || PURPOSE_CONFIG['OTHER'];
                   const statusInfo = STATUS_CONFIG[lead.status] || STATUS_CONFIG['NEW'];
                   const priorityInfo = PRIORITY_CONFIG[lead.priority] || PRIORITY_CONFIG['NORMAL'];
@@ -1437,11 +1443,11 @@ export default function LeadsPage() {
                       </td>
                     </tr>
                   );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* 52px Standard Pagination Footer */}
         <div className="px-4 py-3 bg-gray-50/50 dark:bg-[#1a1b23]/50 border-t border-gray-200 dark:border-gray-800 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-500 dark:text-gray-400 shrink-0">

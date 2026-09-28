@@ -19,6 +19,11 @@
   --color-vinex-indigo: #001571;
   --color-vinex-orange: #ff913e;
 
+  /* Softer, lighter gray borders across website and admin */
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #edf0f3;
+  --color-gray-300: #dfe3e8;
+
   --font-sans: var(--font-sans), sans-serif;
   --font-serif: var(--font-serif), serif;
   --font-marcellus: var(--font-marcellus), serif;
@@ -299,6 +304,9 @@
 @layer base {
   .admin-wrapper {
     --color-gray-900: oklch(44.6% .03 256.802);
+    --color-gray-100: #f8f9fa;
+    --color-gray-200: #edf0f3;
+    --color-gray-300: #dfe3e8;
   }
 
   .admin-wrapper * {
