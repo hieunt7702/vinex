@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../../store';
+import { handleCorsPreflight, getCorsHeaders } from '@/lib/cors';
+
+export async function OPTIONS(request: Request) {
+  return handleCorsPreflight(request);
+}
 
 function sanitizeStaff(staff: any) {
   const { password, ...rest } = staff;

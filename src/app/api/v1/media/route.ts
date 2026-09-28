@@ -3,8 +3,13 @@ import { store } from '../store';
 import prisma from '@/lib/prisma';
 import fs from 'fs';
 import path from 'path';
+import { handleCorsPreflight, getCorsHeaders } from '@/lib/cors';
 
 export const dynamic = 'force-dynamic';
+
+export async function OPTIONS(request: Request) {
+  return handleCorsPreflight(request);
+}
 
 function getInternalImages(): any[] {
   const list: any[] = [];

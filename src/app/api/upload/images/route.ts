@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { store } from '@/app/api/v1/store';
 import prisma from '@/lib/prisma';
+import { handleCorsPreflight, getCorsHeaders } from '@/lib/cors';
+
+export async function OPTIONS(request: Request) {
+  return handleCorsPreflight(request);
+}
 
 export async function POST(request: Request) {
   try {

@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server';
 import { store } from '../store';
 import prisma from '@/lib/prisma';
+import { handleCorsPreflight, getCorsHeaders } from '@/lib/cors';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+export async function OPTIONS(request: Request) {
+  return handleCorsPreflight(request);
+}
 
 export async function GET(request: Request) {
   try {
@@ -124,6 +129,9 @@ export async function GET(request: Request) {
     allActivities.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
     const recentActivities = allActivities.slice(0, 8);
 
+    const origin = request.headers.get('origin');
+    const corsHeaders = getCorsHeaders(origin);
+
     return NextResponse.json({
       stats: {
         totalLeads,
@@ -152,9 +160,15 @@ export async function GET(request: Request) {
       chartData,
       recentLeads,
       recentActivities
+    }, {
+      headers: corsHeaders
     });
   } catch (error: any) {
     console.error('Failed to get dashboard data:', error);
-    return NextResponse.json({ message: 'Lỗi nạp dữ liệu dashboard' }, { status: 500 });
+    const origin = request.headers.get('origin');
+    return NextResponse.json(
+      { message: 'Lỗi nạp dữ liệu dashboard' },
+      { status: 500, headers: getCorsHeaders(origin) }
+    );
   }
 }

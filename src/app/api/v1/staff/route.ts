@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../store';
+import { handleCorsPreflight, getCorsHeaders } from '@/lib/cors';
+
+export async function OPTIONS(request: Request) {
+  return handleCorsPreflight(request);
+}
 
 // Helper to remove sensitive password from returned user object
 function sanitizeStaff(staff: any) {

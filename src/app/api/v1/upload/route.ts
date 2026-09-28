@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { handleCorsPreflight, getCorsHeaders } from '@/lib/cors';
 
 export const dynamic = 'force-dynamic';
+
+export async function OPTIONS(request: Request) {
+  return handleCorsPreflight(request);
+}
 
 export async function POST(request: Request) {
   try {
