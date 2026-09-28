@@ -1,5 +1,16 @@
 import dbJson from '@/data/db.json';
 
+// ─── DATABASE_URL detection ──────────────────────────────────────────────────
+// When DATABASE_URL is present (production/Railway), PostgreSQL is the source
+// of truth for ALL business data. We NEVER pre-populate leads, products,
+// articles, customers or categories from db.json to avoid "ghost data" that
+// reappears on every new deployment.
+//
+// db.json is ONLY used as a fallback when DATABASE_URL is absent (local dev
+// without Postgres).  Staff records are always loaded from db.json because they
+// are used for in-memory auth even in production.
+const HAS_DB = Boolean(process.env.DATABASE_URL);
+
 function loadPersistedData() {
   if (typeof window === 'undefined') {
     try {
@@ -18,19 +29,38 @@ function loadPersistedData() {
 }
 
 export function savePersistedData() {
+  // When PostgreSQL is available, db.json is no longer the source of truth.
+  // We only persist staff (for in-memory auth fallback) so that new staff
+  // members created via the admin UI survive a server restart in dev mode.
+  // In production, staff is also stored in PostgreSQL; this is just a safety net.
   if (typeof window === 'undefined') {
     try {
       if (!globalThis.__VINEX_STORE__) return;
       const fs = require('fs');
       const path = require('path');
       const DB_PATH = path.join(process.cwd(), 'src', 'data', 'db.json');
+
+      // Read current file so we preserve any fields we don't manage here
+      let current: any = {};
+      try {
+        const raw = fs.readFileSync(DB_PATH, 'utf-8');
+        current = JSON.parse(raw);
+      } catch (_) {}
+
       const dataToSave = {
-        products: globalThis.__VINEX_STORE__.products || [],
-        categories: globalThis.__VINEX_STORE__.categories || [],
-        articles: globalThis.__VINEX_STORE__.articles || [],
-        settings: globalThis.__VINEX_STORE__.settings || [],
-        leads: globalThis.__VINEX_STORE__.leads || [],
-        customers: globalThis.__VINEX_STORE__.customers || [],
+        ...current,
+        // When no DB, persist everything. When DB is present, only save staff.
+        ...(HAS_DB
+          ? {}
+          : {
+              products: globalThis.__VINEX_STORE__.products || [],
+              categories: globalThis.__VINEX_STORE__.categories || [],
+              articles: globalThis.__VINEX_STORE__.articles || [],
+              settings: globalThis.__VINEX_STORE__.settings || [],
+              leads: globalThis.__VINEX_STORE__.leads || [],
+              customers: globalThis.__VINEX_STORE__.customers || [],
+            }),
+        // Staff is always persisted (used for in-memory auth even with DB)
         staff: globalThis.__VINEX_STORE__.staff || [],
       };
       fs.writeFileSync(DB_PATH, JSON.stringify(dataToSave, null, 2), 'utf-8');
@@ -83,27 +113,30 @@ const DEFAULT_STAFF = [
 ];
 
 if (!globalThis.__VINEX_STORE__) {
+  // When DATABASE_URL is present, start with EMPTY arrays for all business
+  // entities so that no stale db.json data ever "leaks" into the API response.
+  // When DATABASE_URL is absent (local dev), load everything from db.json.
   globalThis.__VINEX_STORE__ = {
-    products: Array.isArray(persisted?.products) ? persisted.products : [],
-    leads: Array.isArray(persisted?.leads) ? persisted.leads : [],
-    articles: Array.isArray(persisted?.articles) ? persisted.articles : [],
-    customers: Array.isArray(persisted?.customers) ? persisted.customers : [],
-    categories: Array.isArray(persisted?.categories) ? persisted.categories : [],
+    products:   HAS_DB ? [] : (Array.isArray(persisted?.products)   ? persisted.products   : []),
+    leads:      HAS_DB ? [] : (Array.isArray(persisted?.leads)      ? persisted.leads      : []),
+    articles:   HAS_DB ? [] : (Array.isArray(persisted?.articles)   ? persisted.articles   : []),
+    customers:  HAS_DB ? [] : (Array.isArray(persisted?.customers)  ? persisted.customers  : []),
+    categories: HAS_DB ? [] : (Array.isArray(persisted?.categories) ? persisted.categories : []),
     media: [],
     seopages: [],
     settings: Array.isArray(persisted?.settings) ? persisted.settings : [],
     staff: Array.isArray(persisted?.staff) && persisted.staff.length > 0 ? persisted.staff : DEFAULT_STAFF,
     stats: {
-      totalProducts: persisted?.products?.length || 0,
-      activeProducts: persisted?.products?.filter((p: any) => p.status === 'ACTIVE').length || 0,
+      totalProducts: HAS_DB ? 0 : (persisted?.products?.length || 0),
+      activeProducts: HAS_DB ? 0 : (persisted?.products?.filter((p: any) => p.status === 'ACTIVE').length || 0),
       pendingProducts: 0,
       hiddenProducts: 0,
-      totalCategories: persisted?.categories?.length || 0,
-      totalArticles: persisted?.articles?.length || 0,
-      publishedArticles: persisted?.articles?.filter((a: any) => a.status === 'PUBLISHED').length || 0,
+      totalCategories: HAS_DB ? 0 : (persisted?.categories?.length || 0),
+      totalArticles: HAS_DB ? 0 : (persisted?.articles?.length || 0),
+      publishedArticles: HAS_DB ? 0 : (persisted?.articles?.filter((a: any) => a.status === 'PUBLISHED').length || 0),
       draftArticles: 0,
       totalArticleViews: 0,
-      totalLeads: persisted?.leads?.length || 0,
+      totalLeads: HAS_DB ? 0 : (persisted?.leads?.length || 0),
       pendingLeads: 0,
       processingLeads: 0,
       completedLeads: 0,
@@ -112,7 +145,7 @@ if (!globalThis.__VINEX_STORE__) {
       leadsThisMonth: 0,
       conversionRate: '0%',
       indexedSeoPages: 0,
-      totalCustomers: persisted?.customers?.length || 0
+      totalCustomers: HAS_DB ? 0 : (persisted?.customers?.length || 0)
     },
   };
 }
