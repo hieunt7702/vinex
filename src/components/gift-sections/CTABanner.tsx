@@ -70,7 +70,7 @@ export const CTABanner = () => {
               </GlassButton>
             </Link>
             
-            <Link href="/vi/lien-he" className="w-full">
+            <Link href="/vi/lien-he?purpose=CORPORATE_GIFT" className="w-full">
               <GlassButton 
                 variant="secondary" 
                 size="lg" 

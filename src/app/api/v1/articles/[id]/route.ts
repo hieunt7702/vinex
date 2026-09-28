@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../../store';
 import prisma from '@/lib/prisma';
 import { getUniqueArticleSlug } from '@/lib/serverSlugHelper';
+import { getUserFromRequest, checkConcurrencyConflict } from '@/lib/auditHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -99,6 +100,24 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
       }
     }
 
+    // Concurrency conflict check against existing store record
+    const existingArticle = store?.articles?.find(a => 
+      (!isNaN(articleId) && a.id === articleId) || 
+      String(a.id) === decodedId || 
+      (a.slug && a.slug.toLowerCase().trim() === decodedId)
+    );
+
+    if (existingArticle) {
+      const conflict = checkConcurrencyConflict(existingArticle, data);
+      if (conflict) {
+        return NextResponse.json(conflict, { status: 409 });
+      }
+    }
+
+    const user = getUserFromRequest(request, data);
+    const nowIso = new Date().toISOString();
+    const nextVersion = (Number(existingArticle?.version) || 1) + 1;
+
     if (store?.articles) {
       const index = store.articles.findIndex(a => 
         (!isNaN(articleId) && a.id === articleId) || 
@@ -107,17 +126,28 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
       );
 
       if (index !== -1) {
+        const prev = store.articles[index];
         store.articles[index] = { 
-          ...store.articles[index], 
+          ...prev, 
           ...data,
-          ...(updatedArticle || {})
+          ...(updatedArticle || {}),
+          createdBy: prev.createdBy || user,
+          updatedBy: user,
+          version: nextVersion,
+          updatedAt: nowIso
         };
         savePersistedData();
       }
     }
 
     if (updatedArticle) {
-      return NextResponse.json(updatedArticle);
+      return NextResponse.json({
+        ...updatedArticle,
+        createdBy: existingArticle?.createdBy || user,
+        updatedBy: user,
+        version: nextVersion,
+        updatedAt: nowIso
+      });
     }
 
     const storeArt = store?.articles?.find(a => 

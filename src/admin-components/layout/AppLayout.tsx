@@ -33,20 +33,6 @@ import { useAuthStore } from '@/admin-features/auth/stores/useAuthStore';
 import { useAdminHeaderStore } from '@/admin-stores/useAdminHeaderStore';
 import { ConfirmProvider } from '@/hooks/useConfirm';
 
-const navigation = [
-  { name: 'Tổng quan', href: '/admin', icon: LayoutGrid },
-  { name: 'Khách hàng', href: '/admin/customers', icon: Users },
-  { name: 'Yêu cầu tư vấn (Lead)', href: '/admin/leads', icon: MessageSquare },
-  { name: 'Sản phẩm', href: '/admin/products', icon: Star },
-  { name: 'Tin tức', href: '/admin/articles', icon: FileText },
-  { name: 'Thư viện Media', href: '/admin/media', icon: ImageIcon },
-  { name: 'Danh mục & Bộ lọc', href: '/admin/categories', icon: Tags },
-];
-
-const systemNav = [
-  { name: 'Cài đặt hệ thống', href: '/admin/settings', icon: Settings },
-];
-
 export default function AppLayout({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
   const { theme, resolvedTheme, setTheme } = useTheme();
@@ -55,6 +41,36 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
   const title = useAdminHeaderStore((s) => s.title);
   const description = useAdminHeaderStore((s) => s.description);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
+
+  const isSuperAdmin = user?.role === 'ADMIN';
+  const perms = user?.permissions;
+
+  const navigation = [
+    { name: 'Tổng quan', href: '/admin', icon: LayoutGrid },
+    ...(isSuperAdmin || perms?.leads !== false ? [
+      { name: 'Khách hàng', href: '/admin/customers', icon: Users },
+      { name: 'Yêu cầu tư vấn (Lead)', href: '/admin/leads', icon: MessageSquare },
+    ] : []),
+    ...(isSuperAdmin || perms?.products !== false ? [
+      { name: 'Sản phẩm', href: '/admin/products', icon: Star },
+    ] : []),
+    ...(isSuperAdmin || perms?.articles !== false ? [
+      { name: 'Tin tức', href: '/admin/articles', icon: FileText },
+    ] : []),
+    ...(isSuperAdmin || perms?.media !== false ? [
+      { name: 'Thư viện Media', href: '/admin/media', icon: ImageIcon },
+    ] : []),
+    ...(isSuperAdmin || perms?.categories !== false ? [
+      { name: 'Danh mục & Bộ lọc', href: '/admin/categories', icon: Tags },
+    ] : []),
+  ];
+
+  const systemNav = [
+    ...(isSuperAdmin || perms?.canManageStaff ? [
+      { name: 'Quản lý nhân viên', href: '/admin/staff', icon: ShieldCheck },
+    ] : []),
+    { name: 'Cài đặt hệ thống', href: '/admin/settings', icon: Settings },
+  ];
 
   const allNavItems = [...navigation, ...systemNav];
   const currentNavItem = allNavItems.find((item) =>
@@ -74,7 +90,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   };
 
-  const noScrollPages = ['/admin/units', '/admin/products', '/admin/projects', '/admin/leads', '/admin/supervisions', '/admin/articles', '/admin/seo', '/admin/categories', '/admin/testimonials', '/admin/customers', '/admin/operations'];
+  const noScrollPages = ['/admin/units', '/admin/products', '/admin/projects', '/admin/leads', '/admin/supervisions', '/admin/articles', '/admin/seo', '/admin/categories', '/admin/testimonials', '/admin/customers', '/admin/operations', '/admin/staff'];
   const isNoScroll = noScrollPages.includes(location.pathname);
 
   return (
@@ -182,13 +198,13 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                 </div>
                 <button
                   onClick={toggleTheme}
-                  className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-amber-500 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-[#2a2d36] rounded-[4px] transition-colors cursor-pointer"
-                  title={mounted ? (resolvedTheme === 'dark' ? 'Chuyển sang Giao diện Sáng' : 'Chuyển sang Giao diện Tối') : 'Chuyển chế độ'}
+                  className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-amber-500 dark:hover:text-blue-300 hover:bg-gray-100 dark:hover:bg-[#2a2d36] rounded-[4px] transition-colors cursor-pointer"
+                  title={mounted ? (resolvedTheme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng') : 'Chuyển chế độ'}
                 >
                   {mounted ? (
-                    resolvedTheme === 'dark' ? <Sun className="w-3.5 h-3.5 text-amber-500" /> : <Moon className="w-3.5 h-3.5 text-blue-400" />
+                    resolvedTheme === 'light' ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-blue-300" />
                   ) : (
-                    <div className="w-3.5 h-3.5" />
+                    <div className="w-4 h-4" />
                   )}
                 </button>
                 <button
@@ -207,21 +223,29 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                   </div>
                   <div className="flex flex-col min-w-0">
                     <span className="text-[13px] font-medium text-gray-900 dark:text-white truncate">
-                      {user ? user.username : 'Loading...'}
+                      {user ? (user.fullName || user.username) : 'Loading...'}
                     </span>
-                    <span className="text-[11px] text-gray-400 truncate">Administrator</span>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className={`inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-semibold uppercase tracking-wider ${
+                        user?.role === 'ADMIN'
+                          ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60'
+                          : 'bg-teal-100 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800/60'
+                      }`}>
+                        {user?.role === 'ADMIN' ? 'Quản trị viên' : 'Nhân viên'}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-0.5 shrink-0">
                   <button
                     onClick={toggleTheme}
-                    className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-amber-500 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-[#2a2d36] rounded-[4px] transition-colors cursor-pointer"
-                    title={mounted ? (resolvedTheme === 'dark' ? 'Chuyển sang Giao diện Sáng' : 'Chuyển sang Giao diện Tối') : 'Chuyển chế độ'}
+                    className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-amber-500 dark:hover:text-blue-300 hover:bg-gray-100 dark:hover:bg-[#2a2d36] rounded-[4px] transition-colors cursor-pointer"
+                    title={mounted ? (resolvedTheme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng') : 'Chuyển chế độ'}
                   >
                     {mounted ? (
-                      resolvedTheme === 'dark' ? <Sun className="w-3.5 h-3.5 text-amber-500" /> : <Moon className="w-3.5 h-3.5 text-blue-400" />
+                      resolvedTheme === 'light' ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-blue-300" />
                     ) : (
-                      <div className="w-3.5 h-3.5" />
+                      <div className="w-4 h-4" />
                     )}
                   </button>
                   <button
@@ -273,20 +297,20 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
               
               <div className="h-5 w-px bg-gray-200 dark:bg-gray-800 hidden sm:block mx-0.5" />
 
+              {/* Theme Toggle */}
               <button
                 onClick={toggleTheme}
-                className="w-9 h-9 flex items-center justify-center rounded-[6px] border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1a1b23] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#252830] hover:border-gray-300 dark:hover:border-gray-700 transition-all shadow-xs cursor-pointer group shrink-0"
-                title={mounted ? (resolvedTheme === 'dark' ? 'Chuyển sang Giao diện Sáng' : 'Chuyển sang Giao diện Tối') : 'Chuyển giao diện'}
-                aria-label="Đổi giao diện Sáng / Tối"
+                className="w-9 h-9 rounded-full bg-white/50 dark:bg-black/30 border border-gray-200 dark:border-white/10 hover:bg-white dark:hover:bg-black/50 transition-colors backdrop-blur-md cursor-pointer flex items-center justify-center shrink-0"
+                title={mounted ? (resolvedTheme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng') : 'Chuyển chế độ'}
               >
                 {mounted ? (
-                  resolvedTheme === 'dark' ? (
-                    <Sun className="w-4 h-4 text-amber-500 group-hover:rotate-45 transition-transform duration-300" />
+                  resolvedTheme === 'light' ? (
+                    <Sun className="w-[18px] h-[18px] text-amber-500" />
                   ) : (
-                    <Moon className="w-4 h-4 text-blue-500 group-hover:-rotate-12 transition-transform duration-300" />
+                    <Moon className="w-[18px] h-[18px] text-blue-300" />
                   )
                 ) : (
-                  <div className="w-4 h-4" />
+                  <div className="w-[18px] h-[18px]" />
                 )}
               </button>
             </div>

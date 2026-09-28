@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../../store';
 import prisma from '@/lib/prisma';
 import { getUniqueProductSlug } from '@/lib/serverSlugHelper';
+import { getUserFromRequest, checkConcurrencyConflict } from '@/lib/auditHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -121,6 +122,24 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
       }
     }
 
+    // Concurrency conflict check against existing product
+    const existingProduct = store?.products?.find((p: any) => 
+      String(p.id) === decodedId || 
+      (p.slug && decodeURIComponent(p.slug).toLowerCase().trim() === decodedId) ||
+      (p.productId && p.productId.toLowerCase().trim() === decodedId)
+    );
+
+    if (existingProduct) {
+      const conflict = checkConcurrencyConflict(existingProduct, data);
+      if (conflict) {
+        return NextResponse.json(conflict, { status: 409 });
+      }
+    }
+
+    const user = getUserFromRequest(request, data);
+    const nowIso = new Date().toISOString();
+    const nextVersion = (Number(existingProduct?.version) || 1) + 1;
+
     // 2. Also update in-memory store
     if (store?.products) {
       const index = store.products.findIndex((p: any) => 
@@ -130,13 +149,18 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
       );
 
       if (index !== -1) {
+        const prev = store.products[index];
         store.products[index] = { 
-          ...store.products[index], 
+          ...prev, 
           ...data,
           ...(updatedProduct ? {
             ...updatedProduct,
             categoryIds: updatedProduct.categories?.map((c: any) => c.id) || data.categoryIds
-          } : {})
+          } : {}),
+          createdBy: prev.createdBy || user,
+          updatedBy: user,
+          version: nextVersion,
+          updatedAt: nowIso
         };
         savePersistedData();
       }
@@ -145,6 +169,10 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     if (updatedProduct) {
       return NextResponse.json({
         ...updatedProduct,
+        createdBy: existingProduct?.createdBy || user,
+        updatedBy: user,
+        version: nextVersion,
+        updatedAt: nowIso,
         categoryIds: updatedProduct.categories?.map((c: any) => c.id) || []
       });
     }

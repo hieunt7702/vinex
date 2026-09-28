@@ -37,6 +37,12 @@ export function AdminHeaderPortal({
     const el = document.getElementById("admin-header-actions-portal");
     if (el) {
       setPortalTarget(el);
+    } else {
+      const timer = setTimeout(() => {
+        const retryEl = document.getElementById("admin-header-actions-portal");
+        if (retryEl) setPortalTarget(retryEl);
+      }, 50);
+      return () => clearTimeout(timer);
     }
   }, []);
 

@@ -22,12 +22,13 @@ interface CustomDropdownProps {
   value: string;
   onChange: (val: string) => void;
   className?: string;
+  btnClassName?: string;
   onQuickAdd?: (newVal?: string) => void;
   emptyText?: string;
   placeholder?: string;
 }
 
-export default function CustomDropdown({ options, value, onChange, placeholder = 'Chọn tùy chọn...', className = '', onQuickAdd, emptyText }: CustomDropdownProps) {
+export default function CustomDropdown({ options, value, onChange, placeholder = 'Chọn tùy chọn...', className = '', btnClassName = '', onQuickAdd, emptyText }: CustomDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [openUpwards, setOpenUpwards] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -76,7 +77,7 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
       <button
         type="button"
         onClick={handleToggle}
-        className="w-full flex items-center justify-between px-3.5 py-2.5 bg-gray-50/80 dark:bg-[#0b0c10]/80 border border-gray-200 dark:border-gray-800 rounded-lg text-sm text-gray-900 dark:!text-white font-normal hover:bg-gray-100 dark:hover:bg-[#14151a] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 transition-all"
+        className={`w-full h-[36px] flex items-center justify-between px-3 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-700 rounded-[4px] text-xs text-gray-900 dark:!text-white font-normal hover:bg-gray-50 dark:hover:bg-[#1f2129] focus:outline-none focus:border-[#5865f2] transition-all cursor-pointer ${btnClassName}`}
       >
         <div className="flex items-center gap-2 truncate">
           {selectedOption?.color && (
@@ -84,11 +85,11 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
           )}
           <span className="truncate">{selectedOption ? selectedOption.label : placeholder}</span>
         </div>
-        <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
-        <div className={`absolute z-50 w-full ${openUpwards ? 'bottom-full mb-1.5' : 'top-full mt-1.5'} bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-lg shadow-xl overflow-hidden animate-in fade-in duration-100 flex flex-col`}>
+        <div className={`absolute z-50 w-full ${openUpwards ? 'bottom-full mb-1.5' : 'top-full mt-1.5'} bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[4px] shadow-xl overflow-hidden animate-in fade-in duration-100 flex flex-col`}>
           <div className="p-2 border-b border-gray-100 dark:border-gray-800 shrink-0">
             <div className="relative">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
@@ -98,7 +99,7 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Tìm kiếm..."
-                className="w-full pl-8 pr-3 py-1.5 bg-gray-50 dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm focus:outline-none focus:ring-[2px] focus:ring-[#5865f2]/20 text-gray-900 dark:!text-white font-normal"
+                className="w-full pl-8 pr-3 py-1.5 bg-gray-50 dark:bg-[#14151a] border border-gray-200 dark:border-gray-700 rounded-[4px] text-xs focus:outline-none focus:border-[#5865f2] text-gray-900 dark:!text-white font-normal"
               />
             </div>
           </div>
@@ -113,9 +114,9 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
                       setIsOpen(false);
                       onQuickAdd(searchTerm);
                     }}
-                    className="w-full text-left flex items-center gap-2 px-3 py-2 bg-[#5865f2]/10 hover:bg-[#5865f2]/20 text-[#5865f2] rounded-[4px] text-sm font-medium transition-colors"
+                    className="w-full text-left flex items-center gap-2 px-3 py-2 bg-[#5865f2]/10 hover:bg-[#5865f2]/20 text-[#5865f2] rounded-[4px] text-xs font-medium transition-colors"
                   >
-                    <Plus className="w-4 h-4 shrink-0" />
+                    <Plus className="w-3.5 h-3.5 shrink-0" />
                     <span className="truncate">Tạo mới "{searchTerm}"</span>
                   </button>
                 </li>
@@ -124,7 +125,7 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
                   <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-3">
                     <FolderOpen className="w-5 h-5 text-gray-400" />
                   </div>
-                  <p className="text-sm font-medium text-gray-900 dark:!text-white font-normal mb-1">
+                  <p className="text-xs font-medium text-gray-900 dark:!text-white font-normal mb-1">
                     {searchTerm ? 'Không tìm thấy kết quả' : (emptyText || 'Không có dữ liệu')}
                   </p>
                 </li>
@@ -138,9 +139,9 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
                       onChange(option.value);
                       setIsOpen(false);
                     }}
-                    className={`w-full text-left flex items-center justify-between px-3 py-2 text-sm rounded-[4px] transition-colors ${value === option.value
-                        ? 'bg-[#5865f2]/10 text-[#5865f2] font-normal dark:bg-[#5865f2]/20 dark:text-blue-400'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#14151a] font-normal'
+                    className={`w-full text-left flex items-center justify-between px-3 py-2 text-xs rounded-[4px] transition-colors cursor-pointer ${value === option.value
+                        ? 'bg-[#5865f2]/10 text-[#5865f2] font-semibold dark:bg-[#5865f2]/20 dark:text-[#7983f5]'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#14151a]'
                       }`}
                   >
                     <div className="flex items-center gap-2 truncate">
@@ -149,7 +150,9 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
                       )}
                       <span className="truncate">{option.label}</span>
                     </div>
-                    {value === option.value && <Check className="w-4 h-4 shrink-0" />}
+                    {value === option.value && (
+                      <Check className="w-3.5 h-3.5 text-[#5865f2] dark:text-[#7983f5] shrink-0 ml-2" />
+                    )}
                   </button>
                 </li>
               ))

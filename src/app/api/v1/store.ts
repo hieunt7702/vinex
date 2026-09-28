@@ -31,6 +31,7 @@ export function savePersistedData() {
         settings: globalThis.__VINEX_STORE__.settings || [],
         leads: globalThis.__VINEX_STORE__.leads || [],
         customers: globalThis.__VINEX_STORE__.customers || [],
+        staff: globalThis.__VINEX_STORE__.staff || [],
       };
       fs.writeFileSync(DB_PATH, JSON.stringify(dataToSave, null, 2), 'utf-8');
     } catch (e) {
@@ -49,11 +50,37 @@ declare global {
     media: any[];
     seopages: any[];
     settings: any[];
+    staff: any[];
     stats: any;
   } | undefined;
 }
 
 const persisted = loadPersistedData() || dbJson;
+
+const DEFAULT_STAFF = [
+  {
+    id: 1,
+    username: 'admin',
+    password: 'admin',
+    fullName: 'Quản trị viên Hệ thống',
+    email: 'admin@vinex.vn',
+    phone: '0901234567',
+    role: 'ADMIN',
+    status: 'ACTIVE',
+    department: 'Ban Điều Hành',
+    permissions: {
+      products: true,
+      articles: true,
+      categories: true,
+      media: true,
+      leads: true,
+      canDelete: true,
+      canManageStaff: true
+    },
+    lastLogin: '2026-09-28T09:30:00.000Z',
+    createdAt: '2026-01-01T08:00:00.000Z'
+  }
+];
 
 if (!globalThis.__VINEX_STORE__) {
   globalThis.__VINEX_STORE__ = {
@@ -65,6 +92,7 @@ if (!globalThis.__VINEX_STORE__) {
     media: [],
     seopages: [],
     settings: Array.isArray(persisted?.settings) ? persisted.settings : [],
+    staff: Array.isArray(persisted?.staff) && persisted.staff.length > 0 ? persisted.staff : DEFAULT_STAFF,
     stats: {
       totalProducts: persisted?.products?.length || 0,
       activeProducts: persisted?.products?.filter((p: any) => p.status === 'ACTIVE').length || 0,
@@ -87,6 +115,15 @@ if (!globalThis.__VINEX_STORE__) {
       totalCustomers: persisted?.customers?.length || 0
     },
   };
+}
+
+if (!globalThis.__VINEX_STORE__.staff || globalThis.__VINEX_STORE__.staff.length <= 1) {
+  const latestDb = loadPersistedData();
+  if (latestDb?.staff && latestDb.staff.length > 0) {
+    globalThis.__VINEX_STORE__.staff = latestDb.staff;
+  } else {
+    globalThis.__VINEX_STORE__.staff = Array.isArray(persisted?.staff) && persisted.staff.length > 0 ? persisted.staff : DEFAULT_STAFF;
+  }
 }
 
 export const store = globalThis.__VINEX_STORE__;

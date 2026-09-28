@@ -1,9 +1,651 @@
 {
-  "products": [],
+  "products": [
+    {
+      "id": 2,
+      "productId": "VNX-9316-77",
+      "sku": "VNX-SKU-829316-432",
+      "name": "Hạt điều vị trứng muối",
+      "slug": "hat-dieu-vi-trung-muoi",
+      "segment": "cao-cap",
+      "price": 165000,
+      "promotionalPrice": 145000,
+      "stockQuantity": 100,
+      "stockStatus": "IN_STOCK",
+      "lowStockThreshold": 10,
+      "shortDescription": "Hạt điều rang giòn thơm béo, phủ trứng muối thượng hạng thơm lừng",
+      "description": "",
+      "status": "ACTIVE",
+      "images": [
+        "/images/product/Orchard nuts 1.png"
+      ],
+      "attributes": [
+        {
+          "name": "Quy cách",
+          "value": "Hộp 250g / Hũ 500g"
+        },
+        {
+          "name": "Độ rang",
+          "value": "Rang vừa sấy giòn"
+        }
+      ],
+      "createdAt": "2026-09-28T10:03:49.331Z",
+      "updatedAt": "2026-09-28T10:03:49.331Z",
+      "categories": [],
+      "createdBy": {
+        "id": 1,
+        "username": "admin",
+        "fullName": "Quản trị viên Hệ thống",
+        "role": "ADMIN"
+      },
+      "updatedBy": {
+        "id": 1,
+        "username": "admin",
+        "fullName": "Quản trị viên Hệ thống",
+        "role": "ADMIN"
+      },
+      "version": 1,
+      "categoryIds": []
+    }
+  ],
   "categories": [],
   "articles": [],
   "settings": [],
-  "leads": [],
+  "leads": [
+    {
+      "id": 4,
+      "requestCode": "REQ-20260928-1466",
+      "customerName": "Nguyễn Văn Test",
+      "companyName": "Công ty Nông Sản Thật",
+      "phone": "0912345678",
+      "email": "test@vinexgroup.vn",
+      "location": "Hà Nội",
+      "source": "Website - Trang Liên Hệ",
+      "sourceUrl": "http://localhost:3000/vi/lien-he?purpose=BUY_PRODUCT&product=H%E1%BA%A1t%20%C4%91i%E1%BB%81u%20v%E1%BB%8B%20tr%E1%BB%A9ng%20mu%E1%BB%91i&productId=2&slug=hat-dieu-vi-trung-muoi",
+      "sourceProduct": "Hạt điều vị trứng muối",
+      "utmParams": null,
+      "purpose": "BUY_PRODUCT",
+      "productGroup": "Mua sản phẩm",
+      "preferredChannel": "Điện thoại",
+      "preferredTime": null,
+      "quantity": "50 hộp",
+      "budget": null,
+      "timeline": "2026-10-01",
+      "customization": null,
+      "notes": "Tư vấn báo giá sản phẩm Hạt điều vị trứng muối",
+      "details": {
+        "variant": "Hộp 250g",
+        "quantity": "50 hộp",
+        "productId": 2,
+        "desiredDate": "2026-10-01",
+        "productName": "Hạt điều vị trứng muối",
+        "productSlug": "hat-dieu-vi-trung-muoi",
+        "shippingProvince": "Hà Nội"
+      },
+      "attachments": [],
+      "consentVersion": "v1.0",
+      "marketingOptIn": false,
+      "isRead": true,
+      "status": "ASSIGNED",
+      "priority": "NORMAL",
+      "leadClassification": "WARM",
+      "assignee": "Nguyễn Thảo",
+      "internalReason": null,
+      "nextFollowUpDate": null,
+      "lastContactDate": null,
+      "firstResponseAt": null,
+      "closingResult": null,
+      "closingNote": null,
+      "linkedOrderCode": null,
+      "orderValue": null,
+      "linkedRequestId": null,
+      "closedAt": null,
+      "verifiedInfo": null,
+      "activities": [],
+      "quotations": [],
+      "auditLog": [
+        {
+          "id": "audit_1790594236818_asgn",
+          "user": "Quản trị viên",
+          "action": "Phân công",
+          "details": "Phân công cho nhân viên: Nguyễn Thảo",
+          "timestamp": "2026-09-28T11:17:16.818Z"
+        },
+        {
+          "id": "audit_1790593664951_asgn",
+          "user": "Quản trị viên",
+          "action": "Phân công",
+          "details": "Phân công cho nhân viên: Nguyễn Thảo",
+          "timestamp": "2026-09-28T11:07:44.951Z"
+        },
+        {
+          "id": "audit_1790589913818",
+          "user": "Hệ thống",
+          "action": "Tiếp nhận yêu cầu",
+          "details": "Nhận yêu cầu [REQ-20260928-1466] từ Website - Trang Liên Hệ",
+          "timestamp": "2026-09-28T10:05:13.818Z"
+        }
+      ],
+      "reopenHistory": [],
+      "projectType": "Mua sản phẩm",
+      "createdAt": "2026-09-28T10:05:13.832Z",
+      "updatedAt": "2026-09-28T11:17:16.820Z"
+    },
+    {
+      "id": 3,
+      "requestCode": "REQ-20260928-7657",
+      "customerName": "Nguyen Trung Hieu",
+      "companyName": "OWS",
+      "phone": "0334689521",
+      "email": "hieunt270702@gmail.com",
+      "location": null,
+      "source": "Website - Trang Liên Hệ",
+      "sourceUrl": "http://localhost:3000/vi/lien-he",
+      "sourceProduct": "Hạt điều vị trứng muối",
+      "utmParams": null,
+      "purpose": "BUY_PRODUCT",
+      "productGroup": "Mua sản phẩm",
+      "preferredChannel": "Điện thoại",
+      "preferredTime": null,
+      "quantity": null,
+      "budget": null,
+      "timeline": null,
+      "customization": null,
+      "notes": "Khách hàng gửi yêu cầu tư vấn: Mua sản phẩm",
+      "details": {
+        "variant": null,
+        "quantity": null,
+        "desiredDate": null,
+        "productName": "Hạt điều vị trứng muối",
+        "shippingProvince": null
+      },
+      "attachments": [
+        {
+          "url": "/uploads/1790586862435_qr_e.jpg",
+          "name": "qr_e.jpg",
+          "size": 242627,
+          "type": "image/jpeg"
+        }
+      ],
+      "consentVersion": "v1.0",
+      "marketingOptIn": false,
+      "isRead": true,
+      "status": "ASSIGNED",
+      "priority": "NORMAL",
+      "leadClassification": "WARM",
+      "assignee": "Trần Hoàng",
+      "internalReason": null,
+      "nextFollowUpDate": null,
+      "lastContactDate": null,
+      "firstResponseAt": null,
+      "closingResult": null,
+      "closingNote": null,
+      "linkedOrderCode": null,
+      "orderValue": null,
+      "linkedRequestId": null,
+      "closedAt": null,
+      "verifiedInfo": {
+        "notes": "",
+        "verifiedBudget": "",
+        "verifiedQuantity": "",
+        "verifiedNeedInvoice": false,
+        "verifiedDeliveryDate": "",
+        "verifiedDeliveryLocation": ""
+      },
+      "activities": [],
+      "quotations": [],
+      "auditLog": [
+        {
+          "id": "audit_1790593974558_asgn",
+          "user": "Admin",
+          "action": "Phân công",
+          "details": "Phân công cho nhân viên: Trần Hoàng",
+          "timestamp": "2026-09-28T11:12:54.558Z"
+        },
+        {
+          "id": "audit_1790593971171_asgn",
+          "user": "Admin",
+          "action": "Phân công",
+          "details": "Phân công cho nhân viên: Nguyễn Thảo",
+          "timestamp": "2026-09-28T11:12:51.171Z"
+        },
+        {
+          "id": "audit_1790593964768_asgn",
+          "user": "Admin",
+          "action": "Phân công",
+          "details": "Phân công cho nhân viên: Quản trị viên Hệ thống",
+          "timestamp": "2026-09-28T11:12:44.768Z"
+        },
+        {
+          "id": "audit_1790586867484",
+          "user": "Hệ thống",
+          "action": "Tiếp nhận yêu cầu",
+          "details": "Nhận yêu cầu [REQ-20260928-7657] từ Website - Trang Liên Hệ",
+          "timestamp": "2026-09-28T09:14:27.484Z"
+        }
+      ],
+      "reopenHistory": [],
+      "projectType": "Mua sản phẩm",
+      "createdAt": "2026-09-28T09:14:27.514Z",
+      "updatedAt": "2026-09-28T11:43:22.062Z"
+    },
+    {
+      "id": 2,
+      "requestCode": "REQ-20260928-1257",
+      "customerName": "Trần Văn Minh",
+      "companyName": "Công ty Cổ phần Thực phẩm Sạch",
+      "phone": "0912345678",
+      "email": "minh.tran@thucphamsach.vn",
+      "location": null,
+      "source": "Website - Form Liên Hệ",
+      "sourceUrl": null,
+      "sourceProduct": null,
+      "utmParams": null,
+      "purpose": "WHOLESALE",
+      "productGroup": "Mua sỉ / Đại lý / Phân phối",
+      "preferredChannel": "Điện thoại",
+      "preferredTime": null,
+      "quantity": "1.000 hộp/tháng",
+      "budget": null,
+      "timeline": null,
+      "customization": null,
+      "notes": "Quan tâm chính sách chiết khấu đại lý cấp 1 phân phối khu vực Đà Nẵng.",
+      "details": {
+        "businessArea": "Miền Trung & Tây Nguyên",
+        "businessType": "Nhà phân phối cấp tỉnh / Khu vực",
+        "expectedVolume": "1.000 hộp/tháng",
+        "wholesaleProducts": [
+          "Hạt điều tẩm vị cao cấp"
+        ]
+      },
+      "attachments": [],
+      "consentVersion": "v1.0",
+      "marketingOptIn": false,
+      "isRead": false,
+      "status": "NEW",
+      "priority": "HIGH",
+      "leadClassification": "WARM",
+      "assignee": null,
+      "internalReason": null,
+      "nextFollowUpDate": null,
+      "lastContactDate": null,
+      "firstResponseAt": null,
+      "closingResult": null,
+      "closingNote": null,
+      "linkedOrderCode": null,
+      "orderValue": null,
+      "linkedRequestId": null,
+      "closedAt": null,
+      "verifiedInfo": null,
+      "activities": [],
+      "quotations": [],
+      "auditLog": [
+        {
+          "id": "audit_1790578655322",
+          "user": "Hệ thống",
+          "action": "Tiếp nhận yêu cầu",
+          "details": "Nhận yêu cầu [REQ-20260928-1257] từ Website - Form Liên Hệ",
+          "timestamp": "2026-09-28T06:57:35.322Z"
+        }
+      ],
+      "reopenHistory": null,
+      "projectType": "Mua sỉ / Đại lý / Phân phối",
+      "createdAt": "2026-09-28T06:57:35.332Z",
+      "updatedAt": "2026-09-28T06:57:35.332Z"
+    },
+    {
+      "id": 1,
+      "requestCode": "REQ-20260928-8776",
+      "customerName": "Nguyễn Hoàng Long",
+      "companyName": "Tập đoàn Công nghệ Á Châu",
+      "phone": "0987654321",
+      "email": "long.nguyen@achau.vn",
+      "location": null,
+      "source": "Website - Form Liên Hệ",
+      "sourceUrl": null,
+      "sourceProduct": null,
+      "utmParams": null,
+      "purpose": "CORPORATE_GIFT",
+      "productGroup": "Quà tặng doanh nghiệp",
+      "preferredChannel": "Điện thoại",
+      "preferredTime": null,
+      "quantity": "100 - 300 phần",
+      "budget": "500.000đ - 1.000.000đ / phần",
+      "timeline": null,
+      "customization": "In/ép kim Logo doanh nghiệp, Thiệp chúc mừng riêng",
+      "notes": "Khách cần khoảng 200 phần quà, ngân sách 500k-700k/phần có logo công ty. Cần kiểm tra thời gian làm hộp trước khi xác nhận. Hẹn gửi 2 phương án trước 15:00 ngày mai.",
+      "details": {
+        "budgetRange": "500.000đ - 1.000.000đ / phần",
+        "needInvoice": "Có",
+        "giftOccasion": "Quà Tết Nguyên Đán",
+        "giftQuantity": "100 - 300 phần",
+        "customization": [
+          "In/ép kim Logo doanh nghiệp",
+          "Thiệp chúc mừng riêng"
+        ],
+        "shippingLocation": "Hà Nội"
+      },
+      "attachments": [],
+      "consentVersion": "v1.0",
+      "marketingOptIn": false,
+      "isRead": true,
+      "status": "ASSIGNED",
+      "priority": "HIGH",
+      "leadClassification": "WARM",
+      "assignee": "",
+      "internalReason": null,
+      "nextFollowUpDate": "2026-09-30T10:00",
+      "lastContactDate": "2026-09-28T06:40:20.631Z",
+      "firstResponseAt": "2026-09-28T06:40:20.631Z",
+      "closingResult": "ORDER_CREATED",
+      "closingNote": "Khách hàng chốt hợp đồng 200 set quà Tết Hoàng Kim.",
+      "linkedOrderCode": "DH-VINEX-8901",
+      "orderValue": 120000000,
+      "linkedRequestId": null,
+      "closedAt": null,
+      "verifiedInfo": null,
+      "activities": [
+        {
+          "id": "act_1790577620631",
+          "type": "CALL",
+          "title": "",
+          "author": "Nguyễn Thảo (Trưởng nhóm B2B)",
+          "content": "Đã gọi điện trao đổi với anh Long. Khách cần hộp quà Tết ép kim logo Á Châu, hẹn gửi báo giá trước 15:00 ngày mai.",
+          "createdAt": "2026-09-28T06:40:20.631Z",
+          "nextAction": "Gửi 2 phương án báo giá hộp quà",
+          "attachments": [],
+          "contactResult": "CONNECTED",
+          "nextActionDeadline": "2026-09-29T15:00"
+        }
+      ],
+      "quotations": [
+        {
+          "id": "quote_1790577627078",
+          "notes": "Chiết khấu 15% cho 200 set quà Tết, bao gồm in ép kim logo và thiệp.",
+          "value": 120000000,
+          "sentAt": "2026-09-28T06:40:27.078Z",
+          "sentBy": "Quản trị viên",
+          "fileUrl": null,
+          "version": "v1",
+          "fileName": "Báo giá VINEX",
+          "quoteCode": "BG-ACHAU-2026",
+          "validUntil": "2026-10-15"
+        }
+      ],
+      "auditLog": [
+        {
+          "id": "audit_1790594457374_st",
+          "user": "Admin",
+          "action": "Đổi trạng thái",
+          "details": "Chuyển trạng thái từ [WAITING_CUSTOMER] sang [ASSIGNED]",
+          "timestamp": "2026-09-28T11:20:57.374Z"
+        },
+        {
+          "id": "audit_1790594456166_st",
+          "user": "Admin",
+          "action": "Đổi trạng thái",
+          "details": "Chuyển trạng thái từ [WAITING_INTERNAL] sang [WAITING_CUSTOMER]",
+          "timestamp": "2026-09-28T11:20:56.166Z"
+        },
+        {
+          "id": "audit_1790594453548_st",
+          "user": "Admin",
+          "action": "Đổi trạng thái",
+          "details": "Chuyển trạng thái từ [CLOSED] sang [WAITING_INTERNAL]",
+          "timestamp": "2026-09-28T11:20:53.548Z"
+        },
+        {
+          "id": "audit_1790594453548_reopen",
+          "user": "Admin",
+          "action": "Mở lại yêu cầu",
+          "details": "Lý do: Mở lại để tiếp tục xử lý",
+          "timestamp": "2026-09-28T11:20:53.548Z"
+        },
+        {
+          "id": "audit_1790577627510_st",
+          "user": "Quản trị viên",
+          "action": "Đổi trạng thái",
+          "details": "Chuyển trạng thái từ [WAITING_CUSTOMER] sang [CLOSED]",
+          "timestamp": "2026-09-28T06:40:27.510Z"
+        },
+        {
+          "id": "audit_1790577627510_win",
+          "user": "Quản trị viên",
+          "action": "Chuyển thành đơn hàng",
+          "details": "Đã chốt đơn hàng: Mã [DH-VINEX-8901], giá trị: 120.000.000đ",
+          "timestamp": "2026-09-28T06:40:27.510Z"
+        },
+        {
+          "id": "audit_1790577627078_q",
+          "user": "Quản trị viên",
+          "action": "Tạo báo giá",
+          "details": "Đã tạo báo giá BG-ACHAU-2026 (v1) trị giá 120.000.000đ",
+          "timestamp": "2026-09-28T06:40:27.078Z"
+        },
+        {
+          "id": "audit_1790577627088_st",
+          "user": "Quản trị viên",
+          "action": "Đổi trạng thái",
+          "details": "Chuyển trạng thái từ [PROCESSING] sang [WAITING_CUSTOMER]",
+          "timestamp": "2026-09-28T06:40:27.078Z"
+        },
+        {
+          "id": "audit_1790577620631_act",
+          "user": "Quản trị viên",
+          "action": "Thêm hoạt động",
+          "details": "Nguyễn Thảo (Trưởng nhóm B2B) đã thêm hoạt động [CALL]: Đã gọi điện trao đổi với anh Long. Khách cần hộp quà Tết ép ",
+          "timestamp": "2026-09-28T06:40:20.631Z"
+        },
+        {
+          "id": "audit_1790577620631_st",
+          "user": "Quản trị viên",
+          "action": "Đổi trạng thái",
+          "details": "Chuyển trạng thái từ [NEW] sang [PROCESSING]",
+          "timestamp": "2026-09-28T06:40:20.631Z"
+        },
+        {
+          "id": "audit_1790577620631_asgn",
+          "user": "Quản trị viên",
+          "action": "Phân công",
+          "details": "Phân công cho nhân viên: Nguyễn Thảo (Trưởng nhóm B2B)",
+          "timestamp": "2026-09-28T06:40:20.631Z"
+        },
+        {
+          "id": "audit_1790577619326",
+          "user": "Hệ thống",
+          "action": "Tiếp nhận yêu cầu",
+          "details": "Nhận yêu cầu [REQ-20260928-8776] từ Website - Form Liên Hệ",
+          "timestamp": "2026-09-28T06:40:19.326Z"
+        }
+      ],
+      "reopenHistory": [
+        {
+          "reason": "Mở lại để tiếp tục xử lý",
+          "reopenedAt": "2026-09-28T11:20:53.548Z",
+          "reopenedBy": "Admin"
+        }
+      ],
+      "projectType": "Quà tặng doanh nghiệp",
+      "createdAt": "2026-09-28T06:40:19.368Z",
+      "updatedAt": "2026-09-28T11:21:49.351Z"
+    }
+  ],
   "customers": [],
-  "seopages": []
+  "staff": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin",
+      "fullName": "Quản trị viên Hệ thống",
+      "email": "admin@vinex.vn",
+      "phone": "0901234567",
+      "role": "ADMIN",
+      "status": "ACTIVE",
+      "department": "Ban Điều Hành",
+      "permissions": {
+        "products": true,
+        "articles": true,
+        "categories": true,
+        "media": true,
+        "leads": true,
+        "canDelete": true,
+        "canManageStaff": true
+      },
+      "lastLogin": "2026-09-28T10:38:51.354Z",
+      "createdAt": "2026-01-01T08:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "username": "nguyenthao",
+      "password": "password123",
+      "fullName": "Nguyễn Thảo",
+      "email": "thao.nguyen@vinex.vn",
+      "phone": "0901234568",
+      "role": "STAFF",
+      "status": "ACTIVE",
+      "department": "Trưởng nhóm B2B",
+      "permissions": {
+        "products": true,
+        "articles": true,
+        "categories": true,
+        "media": true,
+        "leads": true,
+        "canDelete": false,
+        "canManageStaff": false
+      },
+      "lastLogin": "2026-09-28T08:15:00.000Z",
+      "createdAt": "2026-01-05T08:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "username": "tranhoang",
+      "password": "password123",
+      "fullName": "Trần Hoàng",
+      "email": "hoang.tran@vinex.vn",
+      "phone": "0901234569",
+      "role": "STAFF",
+      "status": "ACTIVE",
+      "department": "Chuyên viên Nông sản",
+      "permissions": {
+        "products": true,
+        "articles": true,
+        "categories": true,
+        "media": true,
+        "leads": true,
+        "canDelete": false,
+        "canManageStaff": false
+      },
+      "lastLogin": "2026-09-27T14:20:00.000Z",
+      "createdAt": "2026-01-10T08:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "username": "lemai",
+      "password": "password123",
+      "fullName": "Lê Mai",
+      "email": "mai.le@vinex.vn",
+      "phone": "0901234570",
+      "role": "STAFF",
+      "status": "ACTIVE",
+      "department": "Quà tặng Doanh nghiệp",
+      "permissions": {
+        "products": true,
+        "articles": true,
+        "categories": true,
+        "media": true,
+        "leads": true,
+        "canDelete": false,
+        "canManageStaff": false
+      },
+      "lastLogin": "2026-09-28T09:10:00.000Z",
+      "createdAt": "2026-01-15T08:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "username": "phamtuan",
+      "password": "password123",
+      "fullName": "Phạm Tuấn",
+      "email": "tuan.pham@vinex.vn",
+      "phone": "0901234571",
+      "role": "STAFF",
+      "status": "ACTIVE",
+      "department": "Đại lý & Phân phối",
+      "permissions": {
+        "products": true,
+        "articles": true,
+        "categories": true,
+        "media": true,
+        "leads": true,
+        "canDelete": false,
+        "canManageStaff": false
+      },
+      "lastLogin": "2026-09-26T16:00:00.000Z",
+      "createdAt": "2026-02-01T08:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "username": "dotrang",
+      "password": "password123",
+      "fullName": "Đỗ Trang",
+      "email": "trang.do@vinex.vn",
+      "phone": "0901234572",
+      "role": "STAFF",
+      "status": "ACTIVE",
+      "department": "CSKH & Hỗ trợ",
+      "permissions": {
+        "products": false,
+        "articles": false,
+        "categories": false,
+        "media": true,
+        "leads": true,
+        "canDelete": false,
+        "canManageStaff": false
+      },
+      "lastLogin": "2026-09-28T07:45:00.000Z",
+      "createdAt": "2026-02-15T08:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "username": "hoangnam",
+      "password": "password123",
+      "fullName": "Hoàng Nam",
+      "email": "nam.hoang@vinex.vn",
+      "phone": "0901234573",
+      "role": "STAFF",
+      "status": "ACTIVE",
+      "department": "Kế toán & Báo giá",
+      "permissions": {
+        "products": false,
+        "articles": false,
+        "categories": false,
+        "media": false,
+        "leads": true,
+        "canDelete": false,
+        "canManageStaff": false
+      },
+      "lastLogin": "2026-09-27T11:30:00.000Z",
+      "createdAt": "2026-03-01T08:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "username": "tet",
+      "password": "123",
+      "fullName": "TYest",
+      "email": "tet@gmail.com",
+      "phone": "",
+      "role": "STAFF",
+      "status": "ACTIVE",
+      "department": "Nội dung & Sản phẩm",
+      "permissions": {
+        "products": true,
+        "articles": true,
+        "categories": true,
+        "media": true,
+        "leads": false,
+        "canDelete": false,
+        "canManageStaff": false
+      },
+      "lastLogin": null,
+      "createdAt": "2026-09-28T12:37:07.509Z"
+    }
+  ]
 }

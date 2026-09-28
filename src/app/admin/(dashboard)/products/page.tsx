@@ -5,8 +5,11 @@ import { useRouter } from 'next/navigation';
 import { 
   Search, Plus, Filter, Edit, Trash2, Package, X, ChevronLeft, ChevronRight, 
   Check, ArrowUpDown, ChevronDown, ChevronUp, Loader2, FolderOpen, 
-  Layers, Barcode, AlertTriangle, Star, Image as ImageIcon, ShieldAlert, Sparkles, ExternalLink
+  Layers, Barcode, AlertTriangle, Star, Image as ImageIcon, ShieldAlert, Sparkles, ExternalLink,
+  User
 } from 'lucide-react';
+import { ConflictModal, type ConflictInfo } from '@/admin-components/ui/ConflictModal';
+import { safeFormatDate } from '@/admin-utils/dateUtils';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ProductImageGallery } from '@/admin-components/ui/ProductImageGallery';
 import { CategoryTreeSelect } from '@/admin-components/ui/CategoryTreeSelect';
@@ -87,6 +90,8 @@ export default function ProductsPage() {
   // Modals
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
+  const [conflictInfo, setConflictInfo] = useState<ConflictInfo | null>(null);
+  const [isConflictModalOpen, setIsConflictModalOpen] = useState(false);
 
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -98,7 +103,7 @@ export default function ProductsPage() {
 
   const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' } | null>(null);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     id: 0,
     productId: '',
     sku: '',
@@ -118,6 +123,11 @@ export default function ProductsPage() {
     attributes: [] as { name: string, value: string }[],
     seoTitle: '',
     metaDescription: '',
+    version: 1,
+    createdBy: null,
+    updatedBy: null,
+    createdAt: '',
+    updatedAt: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSlugManual, setIsSlugManual] = useState(false);
@@ -244,7 +254,14 @@ export default function ProductsPage() {
         if (!updateData.slug) updateData.slug = generateSlug(updateData.name);
         
         const selectedCategories = categories.filter((c: any) => updateData.categoryIds?.includes(c.id));
-        const payload = { ...updateData, status: updateData.status || 'ACTIVE', stockStatus, categories: selectedCategories };
+        const payload = {
+          ...updateData,
+          status: updateData.status || 'ACTIVE',
+          stockStatus,
+          categories: selectedCategories,
+          lastModifiedVersion: formData.version,
+          lastUpdatedAt: formData.updatedAt
+        };
 
         await apiClient.patch(`/products/${id}`, payload);
         toast.success('Cập nhật sản phẩm thành công!');
@@ -254,11 +271,91 @@ export default function ProductsPage() {
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new Event('vinex_products_updated'));
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response?.status === 409) {
+        setConflictInfo(error.response.data);
+        setIsConflictModalOpen(true);
+        return;
+      }
       console.error('Failed to save product:', error);
-      toast.error('Lỗi khi lưu sản phẩm');
+      toast.error(error.response?.data?.message || 'Lỗi khi lưu sản phẩm');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleForceOverwriteProduct = async () => {
+    setIsConflictModalOpen(false);
+    try {
+      setIsSubmitting(true);
+      let stockStatus = formData.stockStatus;
+      if (stockStatus !== 'PREORDER') {
+        if (formData.stockQuantity === 0) stockStatus = 'OUT_OF_STOCK';
+        else if (formData.stockQuantity <= formData.lowStockThreshold) stockStatus = 'LOW_STOCK';
+        else stockStatus = 'IN_STOCK';
+      }
+
+      const { id, ...updateData } = formData;
+      if (!updateData.slug) updateData.slug = generateSlug(updateData.name);
+      const selectedCategories = categories.filter((c: any) => updateData.categoryIds?.includes(c.id));
+      const payload = {
+        ...updateData,
+        status: updateData.status || 'ACTIVE',
+        stockStatus,
+        categories: selectedCategories,
+        forceOverwrite: true
+      };
+
+      await apiClient.patch(`/products/${id}`, payload);
+      toast.success('Đã ghi đè và cập nhật sản phẩm thành công!');
+      setIsDrawerOpen(false);
+      fetchProductsAndCategories();
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('vinex_products_updated'));
+      }
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Lỗi khi ghi đè sản phẩm');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleReloadConflictProduct = async () => {
+    setIsConflictModalOpen(false);
+    await fetchProductsAndCategories();
+    if (formData.id) {
+      try {
+        const res = await apiClient.get(`/products/${formData.id}`);
+        if (res.data) {
+          const prod = res.data;
+          setFormData({
+            ...prod,
+            sku: prod.sku || '',
+            stockQuantity: prod.stockQuantity ?? 100,
+            stockStatus: prod.stockStatus || 'IN_STOCK',
+            lowStockThreshold: prod.lowStockThreshold || 10,
+            slug: prod.slug || '',
+            segment: prod.segment || 'cao-cap',
+            shortDescription: prod.shortDescription || '',
+            description: prod.description || '',
+            price: prod.price || 0,
+            promotionalPrice: prod.promotionalPrice || 0,
+            images: Array.isArray(prod.images) ? prod.images : [],
+            categoryIds: prod.categories?.map((c: any) => c.id) || [],
+            attributes: Array.isArray(prod.attributes) ? prod.attributes : [],
+            seoTitle: prod.seoTitle || '',
+            metaDescription: prod.metaDescription || '',
+            version: prod.version || 1,
+            createdBy: prod.createdBy || null,
+            updatedBy: prod.updatedBy || null,
+            createdAt: prod.createdAt || '',
+            updatedAt: prod.updatedAt || '',
+          });
+          toast.info('Đã tải lại phiên bản sản phẩm mới nhất từ máy chủ!');
+        }
+      } catch (e) {
+        setIsDrawerOpen(false);
+      }
     }
   };
 
@@ -351,6 +448,11 @@ export default function ProductsPage() {
                 attributes: [],
                 seoTitle: '',
                 metaDescription: '',
+                version: 1,
+                createdBy: null,
+                updatedBy: null,
+                createdAt: '',
+                updatedAt: '',
               });
               setErrors({});
               setIsDrawerOpen(true);
@@ -570,7 +672,7 @@ export default function ProductsPage() {
                         onClick={() => {
                           setModalMode('add');
                           setFormData({
-                            id: 0, productId: '', sku: '', name: '', slug: '', segment: 'cao-cap', price: 0, promotionalPrice: 0, stockQuantity: 100, stockStatus: 'IN_STOCK', lowStockThreshold: 10, status: 'ACTIVE', shortDescription: '', description: '', images: [], categoryIds: [], attributes: [], seoTitle: '', metaDescription: ''
+                            id: 0, productId: '', sku: '', name: '', slug: '', segment: 'cao-cap', price: 0, promotionalPrice: 0, stockQuantity: 100, stockStatus: 'IN_STOCK', lowStockThreshold: 10, status: 'ACTIVE', shortDescription: '', description: '', images: [], categoryIds: [], attributes: [], seoTitle: '', metaDescription: '', version: 1, createdBy: null, updatedBy: null, createdAt: '', updatedAt: ''
                           });
                           setErrors({});
                           setIsDrawerOpen(true);
@@ -644,11 +746,26 @@ export default function ProductsPage() {
                               {prod.name}
                             </a>
                             <div className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1">{prod.shortDescription}</div>
-                            {prod.images && prod.images.length > 0 && (
-                              <div className="flex items-center gap-1 text-[10px] text-gray-400 mt-0.5">
-                                <ImageIcon className="w-3 h-3" /> {prod.images.length} hình ảnh
-                              </div>
-                            )}
+                            <div className="flex items-center gap-1.5 sm:gap-2 mt-1 min-w-0 text-xs text-gray-400 flex-wrap">
+                              {prod.images && prod.images.length > 0 && (
+                                <span className="inline-flex items-center gap-1 text-[10px] text-gray-400">
+                                  <ImageIcon className="w-3 h-3" /> {prod.images.length} ảnh
+                                </span>
+                              )}
+                              {prod.createdBy && (
+                                <span className="inline-flex items-center gap-1 text-[11px] text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-1.5 py-0.2 rounded border border-gray-200/60 dark:border-gray-700/60">
+                                  <User className="w-3 h-3 text-gray-400" />
+                                  Tạo: <strong className="font-medium text-gray-900 dark:text-gray-100">{prod.createdBy.fullName || prod.createdBy.username}</strong>
+                                </span>
+                              )}
+                              {prod.updatedBy && prod.updatedAt && (
+                                <span className="inline-flex items-center gap-1 text-[11px] text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 px-1.5 py-0.2 rounded border border-purple-200/60 dark:border-purple-800/40">
+                                  <Edit className="w-2.5 h-2.5 text-purple-500" />
+                                  Sửa: <strong className="font-medium">{prod.updatedBy.fullName || prod.updatedBy.username}</strong>
+                                  <span className="text-[10px] text-gray-400 ml-0.5">({safeFormatDate(prod.updatedAt, 'dd/MM/yyyy')})</span>
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -740,6 +857,11 @@ export default function ProductsPage() {
                                     attributes: Array.isArray(prod.attributes) ? prod.attributes : [],
                                     seoTitle: prod.seoTitle || '',
                                     metaDescription: prod.metaDescription || '',
+                                    version: prod.version || 1,
+                                    createdBy: prod.createdBy || null,
+                                    updatedBy: prod.updatedBy || null,
+                                    createdAt: prod.createdAt || '',
+                                    updatedAt: prod.updatedAt || '',
                                   });
                                   setErrors({});
                                   setIsDrawerOpen(true);
@@ -811,6 +933,41 @@ export default function ProductsPage() {
             {/* Drawer Content */}
             <div className="flex-1 overflow-y-auto custom-scrollbar">
               <form id="product-form" onSubmit={handleSave} className="p-6 pb-48 space-y-8">
+
+                {/* Audit Trail Banner (Who created & Who last edited) */}
+                {modalMode === 'edit' && (
+                  <div className="p-3.5 bg-gray-50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[6px] text-xs space-y-2">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                        <User className="w-3.5 h-3.5 text-[#5865f2]" />
+                        Người tạo: <strong className="text-gray-900 dark:text-white">{formData.createdBy?.fullName || formData.createdBy?.username || 'Quản trị viên'}</strong>
+                        {formData.createdBy?.role && (
+                          <span className="px-1.5 py-0.2 rounded text-[10px] bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-bold border border-purple-200 dark:border-purple-800">
+                            {formData.createdBy.role === 'ADMIN' ? 'Admin' : 'Nhân viên'}
+                          </span>
+                        )}
+                      </span>
+                      <span className="text-gray-400">
+                        {safeFormatDate(formData.createdAt, 'dd/MM/yyyy HH:mm')}
+                      </span>
+                    </div>
+
+                    {formData.updatedBy && (
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-gray-200/60 dark:border-gray-800/60 text-gray-500 dark:text-gray-400">
+                        <span className="flex items-center gap-1.5">
+                          <Edit className="w-3.5 h-3.5 text-teal-500" />
+                          Sửa đổi lần cuối: <strong className="text-gray-800 dark:text-gray-200">{formData.updatedBy.fullName || formData.updatedBy.username}</strong>
+                        </span>
+                        <div className="flex items-center gap-2">
+                          <span>{safeFormatDate(formData.updatedAt, 'dd/MM/yyyy HH:mm:ss')}</span>
+                          <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                            v{formData.version || 1}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Section 1: Thông tin cơ bản */}
                 <div className="space-y-5">
@@ -1050,7 +1207,7 @@ export default function ProductsPage() {
 
                   {formData.attributes && formData.attributes.length > 0 ? (
                     <div className="space-y-3">
-                      {formData.attributes.map((attr, index) => (
+                      {formData.attributes.map((attr: { name: string; value: string }, index: number) => (
                         <div key={index} className="flex items-start gap-3">
                           <input
                             type="text"
@@ -1077,7 +1234,7 @@ export default function ProductsPage() {
                           <button
                             type="button"
                             onClick={() => {
-                              const newAttr = formData.attributes.filter((_, i) => i !== index);
+                              const newAttr = formData.attributes.filter((_: any, i: number) => i !== index);
                               setFormData({ ...formData, attributes: newAttr });
                             }}
                             className="p-2.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-[4px] transition-colors cursor-pointer"
@@ -1148,6 +1305,15 @@ export default function ProductsPage() {
         </div>
       )}
 
+      {/* Conflict Resolution Modal */}
+      <ConflictModal
+        isOpen={isConflictModalOpen}
+        conflictInfo={conflictInfo}
+        onClose={() => setIsConflictModalOpen(false)}
+        onReload={handleReloadConflictProduct}
+        onForceOverwrite={handleForceOverwriteProduct}
+        itemType="sản phẩm"
+      />
     </div>
   );
 }

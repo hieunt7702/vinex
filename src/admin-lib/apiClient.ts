@@ -13,27 +13,37 @@ export const apiClient = axios.create({
   },
 });
 
-// Optionally add interceptors for auth tokens here
+// Automatically inject authenticated staff/admin info into headers
 apiClient.interceptors.request.use((config) => {
-  // const token = localStorage.getItem('token');
-  // if (token) {
-  //   config.headers.Authorization = `Bearer ${token}`;
-  // }
+  if (typeof window !== 'undefined') {
+    try {
+      const storedUser = localStorage.getItem('vinex_auth_user');
+      if (storedUser) {
+        const u = JSON.parse(storedUser);
+        config.headers['x-user-id'] = String(u.id);
+        config.headers['x-user-username'] = encodeURIComponent(u.username || '');
+        config.headers['x-user-fullname'] = encodeURIComponent(u.fullName || u.username || '');
+        config.headers['x-user-role'] = u.role || 'STAFF';
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
   return config;
 });
 
-// Global response interceptor to handle errors and show toasts
+// Global response interceptor
 apiClient.interceptors.response.use(
   (response) => {
-    // We can also intercept successful POST/PATCH requests here,
-    // but typically it's better to show success inside the component to customize the message.
     return response;
   },
   (error) => {
-    // Extract error message from response or fallback to generic message
+    // Don't show generic error toast for 409 Conflict (handled by specialized Conflict modal in form)
+    if (error.response?.status === 409) {
+      return Promise.reject(error);
+    }
+
     const errorMessage = error.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại sau!';
-    
-    // Display error toast
     toast.error(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
 
     return Promise.reject(error);

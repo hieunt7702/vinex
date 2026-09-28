@@ -198,7 +198,7 @@ export function ProductDetailView({ product, relatedProducts, lang }: ProductDet
               
               {/* Primary: Yêu cầu báo giá */}
               <Link
-                href={`/${lang}/lien-he?product=${encodeURIComponent(product.name)}`}
+                href={`/${lang}/${lang === 'en' ? 'contact' : 'lien-he'}?purpose=BUY_PRODUCT&product=${encodeURIComponent(product.name)}&productId=${product.id}&slug=${encodeURIComponent(product.slug)}`}
                 className="w-full py-3.5 px-6 rounded-full bg-[#074751] hover:bg-[#0b545f] text-white font-semibold text-[14.5px] flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(7,71,81,0.22)] transition-all duration-300 group cursor-pointer"
               >
                 <span>{lang === 'en' ? 'Request Quotation' : 'Yêu cầu báo giá'}</span>
@@ -207,7 +207,7 @@ export function ProductDetailView({ product, relatedProducts, lang }: ProductDet
 
               {/* Secondary: Tư vấn chọn sản phẩm */}
               <Link
-                href={`/${lang}/lien-he`}
+                href={`/${lang}/${lang === 'en' ? 'contact' : 'lien-he'}?purpose=BUY_PRODUCT&product=${encodeURIComponent(product.name)}&productId=${product.id}&slug=${encodeURIComponent(product.slug)}`}
                 className="w-full py-3.5 px-6 rounded-full bg-white/75 hover:bg-white backdrop-blur-md border border-[#074751]/30 hover:border-[#074751] text-[#074751] font-semibold text-[14.5px] flex items-center justify-center gap-2 transition-all duration-300 shadow-xs cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4 text-[#074751]" />

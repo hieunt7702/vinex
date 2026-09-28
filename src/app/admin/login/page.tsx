@@ -32,7 +32,7 @@ export default function LoginPage() {
     setMounted(true);
   }, []);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
 
@@ -53,18 +53,28 @@ export default function LoginPage() {
       setIsLoading(true);
       setError('');
       
-      // Hardcoded login for VINEX ADMIN
-      if (data.username === 'admin' && data.password === 'admin') {
-        const fakeUser = { id: 1, username: 'admin', name: 'VINEX Admin', role: 'admin' };
-        const fakeToken = 'vinex-admin-token';
-        login(fakeUser, fakeToken);
+      try {
+        const response = await apiClient.post(`/auth/login`, data);
+        login(response.data.user, response.data.accessToken);
         router.push('/admin');
         return;
+      } catch (apiErr: any) {
+        // Fallback for hardcoded admin if server issue
+        if (data.username === 'admin' && data.password === 'admin') {
+          const fakeUser = {
+            id: 1,
+            username: 'admin',
+            fullName: 'Quản trị viên Hệ thống',
+            role: 'ADMIN' as const,
+            status: 'ACTIVE' as const
+          };
+          const fakeToken = 'vinex-admin-token';
+          login(fakeUser, fakeToken);
+          router.push('/admin');
+          return;
+        }
+        throw apiErr;
       }
-      
-      const response = await apiClient.post(`/auth/login`, data);
-      login(response.data.user, response.data.accessToken);
-      router.push('/admin');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.');
     } finally {

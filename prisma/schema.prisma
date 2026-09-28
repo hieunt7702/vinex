@@ -68,22 +68,59 @@ model Article {
 
 model Lead {
   id                 Int      @id @default(autoincrement())
+  requestCode        String?  @unique
   customerName       String
   companyName        String?
   phone              String
   email              String?
   location           String?
   source             String?  @default("Website")
-  productGroup       String?  // Nhóm sản phẩm quan tâm (Hạt điều, Trà/Cà phê, Bánh kẹo, Quà Tết...)
-  purpose            String?  // Mục đích sử dụng (Quà Tết doanh nghiệp, Tri ân đối tác, Bán lẻ...)
+  sourceUrl          String?
+  sourceProduct      String?
+  utmParams          Json?
+  
+  purpose            String?  // BUY_PRODUCT, PERSONAL_GIFT, CORPORATE_GIFT, WHOLESALE, SUPPORT, PARTNERSHIP, OTHER
+  productGroup       String?  // Tên hiển thị mục đích/nhóm
+  
+  preferredChannel   String?  // Phone, Zalo, Email
+  preferredTime      String?  // Buổi sáng, Buổi chiều, hoặc tự nhập
+  
   quantity           String?  // Số lượng dự kiến
   budget             String?  // Ngân sách dự kiến
   timeline           String?  // Thời gian giao hàng mong muốn
-  customization      String?  // Tùy chỉnh thương hiệu (In ép kim logo, Ruy băng, Thiệp...)
-  notes              String?  // Yêu cầu chi tiết & Ghi chú
-  status             String   @default("NEW") // NEW, CONTACTED, CONSULTING, WON, LOST
+  customization      String?  // Tùy chỉnh thương hiệu
+  notes              String?  // Yêu cầu chi tiết & Ghi chú ban đầu
+  
+  details            Json?    // Các trường động chi tiết theo từng loại nhu cầu
+  attachments        Json?    // Danh sách tệp đính kèm của khách [{name, url, size, type}]
+  
+  consentVersion     String?  @default("v1.0")
+  marketingOptIn     Boolean  @default(false)
+  isRead             Boolean  @default(false)
+  
+  status             String   @default("NEW") // NEW, ASSIGNED, PROCESSING, WAITING_CUSTOMER, WAITING_INTERNAL, CLOSED
+  priority           String?  @default("NORMAL") // NORMAL, HIGH, URGENT
   leadClassification String?  @default("WARM") // HOT, WARM, COLD
-  assignee           String?  // Nhân viên phụ trách tư vấn
+  assignee           String?  // Nhân viên phụ trách
+  internalReason     String?  // Lý do & bộ phận khi WAITING_INTERNAL
+  
+  nextFollowUpDate   String?  // Hẹn xử lý tiếp
+  lastContactDate    String?  // Liên hệ gần nhất
+  firstResponseAt    String?  // Phản hồi đầu tiên
+  
+  closingResult      String?  // ORDER_CREATED, RESOLVED, NO_NEED, DISAGREED, UNREACHABLE, CANCELLED, DUPLICATE, SPAM
+  closingNote        String?  // Lý do chi tiết khi đóng
+  linkedOrderCode    String?  // Mã đơn hàng liên kết
+  orderValue         Int?     // Doanh thu đơn hàng thực tế VNĐ
+  linkedRequestId    String?  // Mã yêu cầu chính nếu trùng
+  closedAt           String?
+  
+  verifiedInfo       Json?    // Thông tin đã xác minh sau khi trao đổi
+  activities         Json?    // Dòng thời gian hoạt động & note nội bộ [{id, createdAt, author, type, content, contactResult, nextAction, nextActionDeadline, attachments}]
+  quotations         Json?    // Danh sách báo giá [{id, quoteCode, version, value, validUntil, sentAt, sentBy, fileUrl, fileName, notes}]
+  auditLog           Json?    // Nhật ký hệ thống [{id, timestamp, user, action, details}]
+  reopenHistory      Json?    // Lịch sử mở lại [{reopenedAt, reopenedBy, reason}]
+  
   projectType        String?  // Dự phòng tương thích ngược
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt

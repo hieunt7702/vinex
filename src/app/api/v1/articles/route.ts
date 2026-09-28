@@ -3,6 +3,7 @@ import { store, savePersistedData } from '../store';
 import prisma from '@/lib/prisma';
 import { sortArticlesNewestFirst } from '@/lib/imageUtils';
 import { getUniqueArticleSlug } from '@/lib/serverSlugHelper';
+import { getUserFromRequest } from '@/lib/auditHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -67,11 +68,25 @@ export async function POST(request: Request) {
       }
     }
 
-    const finalArticle = createdArticle || {
+    const user = getUserFromRequest(request, data);
+    const nowIso = new Date().toISOString();
+
+    const finalArticle = createdArticle ? {
+      ...createdArticle,
+      createdBy: user,
+      updatedBy: user,
+      version: 1,
+      createdAt: nowIso,
+      updatedAt: nowIso
+    } : {
       ...data,
       id: store.articles.length > 0 ? Math.max(...store.articles.map(a => Number(a.id) || 0)) + 1 : 1,
       isFeatured: Boolean(data.isFeatured),
-      createdAt: new Date().toISOString()
+      createdBy: user,
+      updatedBy: user,
+      version: 1,
+      createdAt: nowIso,
+      updatedAt: nowIso
     };
 
     store.articles.unshift(finalArticle);

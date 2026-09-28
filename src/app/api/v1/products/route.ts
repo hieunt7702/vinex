@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { store, savePersistedData } from '../store';
 import prisma from '@/lib/prisma';
 import { getUniqueProductSlug } from '@/lib/serverSlugHelper';
+import { getUserFromRequest } from '@/lib/auditHelper';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -141,7 +142,7 @@ export async function POST(request: Request) {
               select: { id: true }
             });
             if (validCats.length > 0) {
-              categoryConnect = { connect: validCats.map(c => ({ id: c.id })) };
+              categoryConnect = { connect: validCats.map((c: any) => ({ id: c.id })) };
             }
           }
         }
@@ -177,14 +178,26 @@ export async function POST(request: Request) {
       }
     }
 
+    const user = getUserFromRequest(request, data);
+    const nowIso = new Date().toISOString();
+
     const finalProduct = createdProduct ? {
       ...createdProduct,
+      createdBy: user,
+      updatedBy: user,
+      version: 1,
+      createdAt: nowIso,
+      updatedAt: nowIso,
       categoryIds: createdProduct.categories?.map((c: any) => c.id) || data.categoryIds || []
     } : {
       ...data,
       id: store.products.length > 0 ? Math.max(...store.products.map(p => Number(p.id) || 0)) + 1 : 1,
       status: data.status || 'ACTIVE',
-      createdAt: new Date().toISOString()
+      createdBy: user,
+      updatedBy: user,
+      version: 1,
+      createdAt: nowIso,
+      updatedAt: nowIso
     };
 
     store.products.unshift(finalProduct);

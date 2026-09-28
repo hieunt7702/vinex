@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { 
   Search, Filter, Users, Edit, Trash2, X, ChevronLeft, ChevronRight, 
   Check, ArrowUpDown, ChevronDown, ChevronUp, User, Phone, Mail, MapPin, 
-  Tag, FileText, Layers, Bookmark
+  Tag, FileText, Layers, Bookmark, Loader2
 } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
 import { safeFormatDate } from '@/admin-utils/dateUtils';
@@ -110,7 +110,7 @@ export default function CustomersPage() {
   const totalPages = Math.ceil(sortedData.length / itemsPerPage) || 1;
   const currentData = sortedData.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
 
-  // Thống kê phân loại loại yêu cầu
+  // Thống kê phân loại loại yêu cầu & chỉ số khách hàng
   const requestTypeCounts = filteredData.reduce((acc: Record<string, number>, curr) => {
     const type = curr.requestType || curr.projectType || 'Quà tặng doanh nghiệp';
     acc[type] = (acc[type] || 0) + 1;
@@ -122,6 +122,8 @@ export default function CustomersPage() {
   const summary = {
     totalItems: filteredData.length,
     uniqueTypesCount: Object.keys(requestTypeCounts).length,
+    uniqueLocationsCount: new Set(filteredData.map(c => c.address || 'Toàn quốc').filter(Boolean)).size,
+    withEmailCount: filteredData.filter(c => c.email && c.email.trim() && !c.email.includes('Chưa có')).length,
     topType: topRequestType ? `${topRequestType[0]} (${topRequestType[1]})` : 'Chưa có dữ liệu'
   };
 
@@ -229,22 +231,19 @@ export default function CustomersPage() {
               value={searchQuery}
               onChange={(e) => { setSearchQuery(e.target.value); setPage(0); }}
               placeholder="Tìm tên, SĐT, email khách hàng..."
-              className="pl-9 pr-4 py-2 w-[200px] sm:w-[280px] bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[6px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#074751]/20 focus:border-[#074751] text-gray-900 dark:text-gray-100 placeholder-gray-400 transition-all shadow-xs"
+              className="pl-9 pr-4 py-2 w-[200px] sm:w-[280px] bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 dark:focus:ring-[#5865f2]/30 focus:border-[#5865f2]/40 text-gray-900 dark:text-gray-100 placeholder-gray-400 transition-all shadow-xs"
             />
           </div>
         }
-        actions={
-          /* Tạm thời ẩn nút thêm khách hàng theo yêu cầu người dùng */
-          null
-        }
+        actions={null}
       />
 
       {/* Permanent Filter Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[6px] flex-shrink-0 shadow-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] flex-shrink-0 shadow-xs">
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2 text-xs font-semibold text-gray-700 dark:text-gray-300">
-            <Filter className="w-3.5 h-3.5 text-[#074751]" />
-            <span>Bộ lọc:</span>
+            <Filter className="w-3.5 h-3.5 text-[#5865f2]" />
+            <span>Bộ Lọc:</span>
           </div>
 
           <div className="w-[180px]">
@@ -271,7 +270,7 @@ export default function CustomersPage() {
           {activeFiltersCount > 0 && (
             <button
               onClick={() => { setLocationFilter([]); setRequestTypeFilter(''); }}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[4px] border border-rose-300 hover:border-rose-400 bg-rose-50 text-xs text-rose-600 font-medium transition-all cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[4px] border border-rose-300 hover:border-rose-400 dark:border-rose-800/80 dark:hover:border-rose-700 bg-rose-50/60 hover:bg-rose-100/70 dark:bg-rose-950/20 dark:hover:bg-rose-900/30 text-xs text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 font-medium transition-all cursor-pointer shadow-2xs whitespace-nowrap"
             >
               <X className="w-3.5 h-3.5 shrink-0" />
               <span>Xóa bộ lọc ({activeFiltersCount})</span>
@@ -282,35 +281,38 @@ export default function CustomersPage() {
         {selectedIds.length > 0 && (
           <button
             onClick={handleBulkDelete}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-[4px] text-xs font-medium transition-colors border-0 cursor-pointer shadow-xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-[4px] text-xs font-medium transition-colors border-0 cursor-pointer shadow-xs whitespace-nowrap"
           >
             <Trash2 className="w-3.5 h-3.5" />
-            Xóa {selectedIds.length} mục đã chọn
+            Xóa ({selectedIds.length}) mục đã chọn
           </button>
         )}
       </div>
 
-      {/* Summary View (Thay thế hiển thị tổng yêu cầu bằng loại yêu cầu) */}
-      <div className="rounded-[6px] border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] flex-shrink-0 transition-all duration-300">
+      {/* Summary Card */}
+      <div className="rounded-[4px] border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] flex-shrink-0 transition-all duration-300 shadow-xs">
         <div className={`p-4 ${isSummaryCollapsed ? 'pb-4' : 'sm:p-5 sm:pb-5'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h3 className="font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Nhu Cầu & Khách Hàng</h3>
-              {!isSummaryCollapsed && <span className="text-xs text-gray-500 dark:text-gray-400">{summary.totalItems} khách hàng</span>}
+              <h3 className="font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Khách Hàng & Nhu Cầu</h3>
+              {!isSummaryCollapsed && (
+                <span className="text-xs text-gray-500 dark:text-gray-400">{summary.totalItems} khách hàng</span>
+              )}
             </div>
 
             {isSummaryCollapsed && (
               <div className="flex-1 flex items-center justify-end px-6 gap-5">
                 <div className="flex items-center gap-4 text-xs font-medium">
-                  <span className="text-[#074751] dark:text-teal-400 font-semibold">{summary.totalItems} Khách hàng</span>
-                  <span className="text-amber-700 dark:text-amber-400">Loại phổ biến: {summary.topType}</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-semibold">{summary.totalItems} Khách hàng</span>
+                  <span className="text-emerald-600 dark:text-emerald-400">{summary.uniqueLocationsCount} Khu vực</span>
+                  <span className="text-[#5865f2] dark:text-indigo-400 truncate max-w-[240px]">Nổi bật: {summary.topType}</span>
                 </div>
               </div>
             )}
 
             <button 
               onClick={() => setIsSummaryCollapsed(!isSummaryCollapsed)} 
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[4px] text-xs font-medium cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[4px] text-xs font-medium cursor-pointer text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               {isSummaryCollapsed ? 'Mở rộng' : 'Thu gọn'}
               {isSummaryCollapsed ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
@@ -318,21 +320,43 @@ export default function CustomersPage() {
           </div>
 
           {!isSummaryCollapsed && (
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <div className="p-3.5 rounded-[6px] border border-teal-200/80 bg-teal-50/40 dark:bg-teal-950/20">
+            <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="p-3.5 rounded-[4px] border border-blue-100 dark:border-blue-500/20 bg-blue-50/50 dark:bg-blue-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
-                  <Users className="w-4 h-4 text-[#074751]" />
-                  <span className="text-xs font-semibold text-[#074751] dark:text-teal-300">Tổng Khách Hàng Tiếp Nhận</span>
+                  <div className="w-2 h-2 bg-blue-500 rounded-[4px]"></div>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Tổng khách hàng</span>
                 </div>
-                <div className="text-2xl font-bold text-[#074751] dark:text-teal-100">{summary.totalItems}</div>
+                <div className="text-2xl font-medium text-blue-700 dark:text-blue-400">
+                  {summary.totalItems} <span className="text-xs font-normal text-gray-500">khách</span>
+                </div>
               </div>
 
-              <div className="p-3.5 rounded-[6px] border border-amber-200/80 bg-amber-50/40 dark:bg-amber-950/20">
+              <div className="p-3.5 rounded-[4px] border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
-                  <Tag className="w-4 h-4 text-amber-600" />
-                  <span className="text-xs font-semibold text-amber-800 dark:text-amber-300">Loại Yêu Cầu Nổi Bật</span>
+                  <div className="w-2 h-2 bg-emerald-500 rounded-[4px]"></div>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Khu vực ghi nhận</span>
                 </div>
-                <div className="text-base font-bold text-amber-900 dark:text-amber-100 truncate" title={summary.topType}>
+                <div className="text-2xl font-medium text-emerald-700 dark:text-emerald-400">
+                  {summary.uniqueLocationsCount} <span className="text-xs font-normal text-gray-500">tỉnh/thành</span>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-[4px] border border-amber-100 dark:border-amber-900/30 bg-amber-50/50 dark:bg-amber-500/10">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-2 h-2 bg-amber-500 rounded-[4px]"></div>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Có email liên hệ</span>
+                </div>
+                <div className="text-2xl font-medium text-amber-700 dark:text-amber-400">
+                  {summary.withEmailCount} <span className="text-xs font-normal text-gray-500">({summary.totalItems > 0 ? Math.round((summary.withEmailCount / summary.totalItems) * 100) : 0}%)</span>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-[4px] border border-indigo-100 dark:border-indigo-900/30 bg-indigo-50/50 dark:bg-indigo-500/10">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-2 h-2 bg-[#5865f2] rounded-[4px]"></div>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Nhu cầu nổi bật</span>
+                </div>
+                <div className="text-sm font-semibold text-[#5865f2] dark:text-indigo-300 truncate mt-1" title={summary.topType}>
                   {summary.topType}
                 </div>
               </div>
@@ -342,74 +366,88 @@ export default function CustomersPage() {
       </div>
 
       {/* Data Table */}
-      <div className="flex-1 flex flex-col min-h-0 rounded-[6px] border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] overflow-hidden">
-        <div className="flex-1 overflow-y-auto">
-          <table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-10 bg-gray-50 dark:bg-[#1a1b23] border-b border-gray-200 dark:border-gray-800">
+      <div className="flex-1 flex flex-col min-h-0 rounded-[4px] border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] overflow-hidden shadow-xs">
+        <div className="flex-1 overflow-x-auto overflow-y-auto">
+          <table className="w-full text-left border-collapse text-sm">
+            <thead className="sticky top-0 z-10 bg-gray-50/80 dark:bg-[#1a1b23]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
               <tr>
                 <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs">
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
                     <div
                       className={`w-4 h-4 rounded-[4px] border flex items-center justify-center cursor-pointer transition-colors ${
                         selectedIds.length === currentData.length && currentData.length > 0 
-                          ? 'bg-[#074751] border-[#074751]' 
-                          : 'border-gray-300'
+                          ? 'bg-[#5865f2] border-[#5865f2]' 
+                          : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-transparent'
                       }`}
                       onClick={toggleSelectAll}
                     >
                       {selectedIds.length === currentData.length && currentData.length > 0 && <Check className="w-3 h-3 text-white" />}
                     </div>
-                    <div className="flex items-center cursor-pointer select-none uppercase tracking-wide" onClick={() => handleSort('fullName')}>
+                    <div className="flex items-center cursor-pointer select-none uppercase tracking-wide hover:text-gray-700 dark:hover:text-gray-300" onClick={() => handleSort('fullName')}>
                       Thông tin khách hàng <SortIcon columnKey="fullName" />
                     </div>
                   </div>
                 </th>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase" onClick={() => handleSort('phoneNumber')}>
-                  <div className="flex items-center cursor-pointer">Liên hệ <SortIcon columnKey="phoneNumber" /></div>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase tracking-wide hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer" onClick={() => handleSort('phoneNumber')}>
+                  <div className="flex items-center">Liên hệ <SortIcon columnKey="phoneNumber" /></div>
                 </th>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase" onClick={() => handleSort('address')}>
-                  <div className="flex items-center cursor-pointer">Khu vực <SortIcon columnKey="address" /></div>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase tracking-wide hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer" onClick={() => handleSort('address')}>
+                  <div className="flex items-center">Khu vực <SortIcon columnKey="address" /></div>
                 </th>
-                {/* Đổi từ Tổng yêu cầu sang Loại yêu cầu */}
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase" onClick={() => handleSort('requestType')}>
-                  <div className="flex items-center cursor-pointer">Loại yêu cầu <SortIcon columnKey="requestType" /></div>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase tracking-wide hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer" onClick={() => handleSort('requestType')}>
+                  <div className="flex items-center">Loại yêu cầu <SortIcon columnKey="requestType" /></div>
                 </th>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase">Ngày tiếp nhận</th>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 text-center w-24">Thao tác</th>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase tracking-wide">Ngày tiếp nhận</th>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 text-center w-20 uppercase tracking-wide">Thao tác</th>
               </tr>
             </thead>
             <tbody>
-              {currentData.length === 0 ? (
+              {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="px-5 py-16 text-center animate-in fade-in zoom-in-95 duration-500">
+                  <td colSpan={6} className="px-5 py-24 text-center">
+                    <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
+                      <Loader2 className="w-8 h-8 animate-spin text-[#5865f2] mb-3" />
+                      <p className="text-xs font-medium">Đang tải danh sách khách hàng...</p>
+                    </div>
+                  </td>
+                </tr>
+              ) : currentData.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-5 py-24 text-center animate-in fade-in zoom-in-95 duration-500">
                     <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
                       <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4 border border-gray-200 dark:border-gray-800">
-                        <Users className="w-8 h-8 text-gray-500" />
+                        <Users className="w-8 h-8 text-gray-400" />
                       </div>
-                      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Chưa có khách hàng nào</h3>
-                      <p className="text-xs text-gray-500 max-w-sm">Dữ liệu khách hàng sẽ tự động ghi nhận khi khách hàng gửi yêu cầu tư vấn trên website.</p>
+                      <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1">Chưa có khách hàng nào</h3>
+                      <p className="text-xs text-gray-500 max-w-sm">Dữ liệu khách hàng sẽ tự động ghi nhận khi đối tác gửi yêu cầu tư vấn trên website.</p>
                     </div>
                   </td>
                 </tr>
               ) : (
                 currentData.map((customer, index) => (
-                  <tr key={customer.id} className="border-b border-gray-200 dark:border-gray-800 hover:bg-gray-50/50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] transition-colors group animate-in fade-in slide-in-from-bottom-4 duration-500" style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'both' }}>
+                  <tr 
+                    key={customer.id} 
+                    className={`border-b border-gray-200 dark:border-gray-800 hover:bg-gray-50/50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] transition-colors group animate-in fade-in slide-in-from-bottom-4 duration-500 ${
+                      selectedIds.includes(customer.id.toString()) ? 'bg-indigo-50/30 dark:bg-indigo-950/20' : ''
+                    }`} 
+                    style={{ animationDelay: `${index * 30}ms`, animationFillMode: 'both' }}
+                  >
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
                         <div
                           className={`w-4 h-4 rounded-[4px] border flex items-center justify-center cursor-pointer transition-colors shrink-0 ${
-                            selectedIds.includes(customer.id.toString()) ? 'bg-[#074751] border-[#074751]' : 'border-gray-300'
+                            selectedIds.includes(customer.id.toString()) ? 'bg-[#5865f2] border-[#5865f2]' : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-transparent'
                           }`}
                           onClick={() => toggleSelect(customer.id.toString())}
                         >
                           {selectedIds.includes(customer.id.toString()) && <Check className="w-3 h-3 text-white" />}
                         </div>
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-teal-100 dark:bg-teal-900/40 text-[#074751] dark:text-teal-300 flex items-center justify-center font-medium text-sm">
+                          <div className="w-8 h-8 rounded-full bg-[#5865f2]/10 dark:bg-[#5865f2]/20 text-[#5865f2] dark:text-[#7983f5] flex items-center justify-center font-bold text-xs shrink-0">
                             {(customer.fullName || 'K').charAt(0).toUpperCase()}
                           </div>
                           <div>
-                            <div className="font-semibold text-sm text-gray-900 dark:text-white">{customer.fullName}</div>
+                            <div className="font-medium text-sm text-gray-900 dark:text-white">{customer.fullName}</div>
                             {customer.companyName && (
                               <div className="text-xs text-gray-500 dark:text-gray-400">{customer.companyName}</div>
                             )}
@@ -418,20 +456,20 @@ export default function CustomersPage() {
                       </div>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">{customer.phoneNumber || '---'}</div>
+                      <div className="text-xs font-medium text-gray-900 dark:text-gray-200">{customer.phoneNumber || '---'}</div>
                       <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{customer.email || 'Chưa có email'}</div>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">{customer.address || 'Hà Nội'}</span>
+                      <span className="text-xs text-gray-600 dark:text-gray-300">{customer.address || 'Toàn quốc'}</span>
                     </td>
                     {/* Hiển thị Loại Yêu Cầu */}
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-[6px] text-xs font-medium bg-teal-50 dark:bg-teal-950/40 text-[#074751] dark:text-teal-300 border border-teal-200/80 dark:border-teal-800/60 max-w-[260px] truncate" title={customer.requestType || customer.projectType || 'Quà tặng doanh nghiệp'}>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-[4px] text-xs font-medium bg-indigo-50 dark:bg-indigo-950/50 text-[#5865f2] dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-800/60 max-w-[260px] truncate" title={customer.requestType || customer.projectType || 'Quà tặng doanh nghiệp'}>
                         {customer.requestType || customer.projectType || 'Quà tặng doanh nghiệp'}
                       </span>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <span className="text-xs text-gray-600 dark:text-gray-400">{safeFormatDate(customer.createdAt, 'dd/MM/yyyy')}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">{safeFormatDate(customer.createdAt, 'dd/MM/yyyy')}</span>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800 text-center">
                       <div className="flex items-center justify-center">
@@ -464,13 +502,13 @@ export default function CustomersPage() {
 
         {totalPages > 0 && (
           <div className="px-5 py-3 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-[#1a1b23]">
-            <div className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="text-xs text-gray-500 dark:text-gray-400">
               Hiển thị <span className="font-medium text-gray-900 dark:text-white">{filteredData.length > 0 ? page * itemsPerPage + 1 : 0} - {Math.min((page + 1) * itemsPerPage, filteredData.length)}</span> trong <span className="font-medium text-gray-900 dark:text-white">{filteredData.length}</span> khách hàng
             </div>
             <div className="flex items-center gap-1">
-              <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-1.5 rounded-[4px] border border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:bg-white dark:bg-[#14151a] disabled:opacity-50 transition-colors bg-white dark:bg-[#14151a] cursor-pointer"><ChevronLeft className="w-4 h-4" /></button>
-              <div className="px-3 text-sm font-medium text-gray-700 dark:text-gray-300">{page + 1} / {totalPages}</div>
-              <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page === totalPages - 1} className="p-1.5 rounded-[4px] border border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:bg-white dark:bg-[#14151a] disabled:opacity-50 transition-colors bg-white dark:bg-[#14151a] cursor-pointer"><ChevronRight className="w-4 h-4" /></button>
+              <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-1.5 rounded-[4px] border border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-[#14151a] disabled:opacity-40 transition-colors bg-white dark:bg-[#14151a] cursor-pointer"><ChevronLeft className="w-4 h-4" /></button>
+              <div className="px-3 text-xs font-medium text-gray-700 dark:text-gray-300">{page + 1} / {totalPages}</div>
+              <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page === totalPages - 1} className="p-1.5 rounded-[4px] border border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-[#14151a] disabled:opacity-40 transition-colors bg-white dark:bg-[#14151a] cursor-pointer"><ChevronRight className="w-4 h-4" /></button>
             </div>
           </div>
         )}
@@ -483,16 +521,16 @@ export default function CustomersPage() {
           <div className="relative bg-white dark:bg-[#14151a] w-full max-w-xl h-full flex flex-col border-l border-gray-200 dark:border-gray-800 animate-in slide-in-from-right duration-300 shadow-2xl z-10">
             <div className="h-16 flex items-center justify-between px-6 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-[#14151a]">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-[6px] bg-[#074751]/10 flex items-center justify-center">
-                  <Users className="w-4 h-4 text-[#074751]" />
+                <div className="w-8 h-8 rounded-[4px] bg-[#5865f2]/10 dark:bg-[#5865f2]/20 flex items-center justify-center">
+                  <Users className="w-4 h-4 text-[#5865f2]" />
                 </div>
                 <div>
-                  <h2 className="text-base font-semibold text-gray-900 dark:text-white tracking-tight">
+                  <h2 className="text-sm font-semibold text-gray-900 dark:text-white tracking-tight">
                     {modalMode === 'add' ? 'Thêm Khách Hàng' : 'Cập Nhật Hồ Sơ Khách Hàng'}
                   </h2>
                 </div>
               </div>
-              <button onClick={() => setIsDrawerOpen(false)} className="p-1.5 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer">
+              <button onClick={() => setIsDrawerOpen(false)} className="p-1.5 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -503,14 +541,14 @@ export default function CustomersPage() {
 
                 {/* Section: Thông tin khách hàng */}
                 <div className="space-y-4">
-                  <h3 className="text-xs font-semibold text-[#074751] uppercase tracking-wider flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#074751]"></span>
+                  <h3 className="text-xs font-semibold text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-[4px] bg-[#5865f2]"></span>
                     Thông tin liên hệ
                   </h3>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Họ và Tên <span className="text-red-500">*</span></label>
+                      <label className="text-xs font-medium text-gray-700 dark:text-gray-300">Họ và Tên <span className="text-red-500">*</span></label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <User className="h-4 w-4 text-gray-400" />
@@ -520,7 +558,7 @@ export default function CustomersPage() {
                           required 
                           value={formData.fullName} 
                           onChange={e => { setFormData({ ...formData, fullName: e.target.value }); if (errors.fullName) setErrors({ ...errors, fullName: '' }); }} 
-                          className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[6px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#074751]/20 focus:border-[#074751]" 
+                          className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 dark:focus:ring-[#5865f2]/30 focus:border-[#5865f2]" 
                           placeholder="VD: Nguyễn Văn A..." 
                         />
                       </div>
@@ -528,7 +566,7 @@ export default function CustomersPage() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Số điện thoại <span className="text-red-500">*</span></label>
+                      <label className="text-xs font-medium text-gray-700 dark:text-gray-300">Số điện thoại <span className="text-red-500">*</span></label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Phone className="h-4 w-4 text-gray-400" />
@@ -538,7 +576,7 @@ export default function CustomersPage() {
                           required 
                           value={formData.phoneNumber} 
                           onChange={e => { setFormData({ ...formData, phoneNumber: e.target.value }); if (errors.phoneNumber) setErrors({ ...errors, phoneNumber: '' }); }} 
-                          className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[6px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#074751]/20 focus:border-[#074751]" 
+                          className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 dark:focus:ring-[#5865f2]/30 focus:border-[#5865f2]" 
                           placeholder="0901..." 
                         />
                       </div>
@@ -548,7 +586,7 @@ export default function CustomersPage() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Email</label>
+                      <label className="text-xs font-medium text-gray-700 dark:text-gray-300">Email</label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Mail className="h-4 w-4 text-gray-400" />
@@ -557,14 +595,14 @@ export default function CustomersPage() {
                           type="email" 
                           value={formData.email || ''} 
                           onChange={e => setFormData({ ...formData, email: e.target.value })} 
-                          className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[6px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#074751]/20 focus:border-[#074751]" 
+                          className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 dark:focus:ring-[#5865f2]/30 focus:border-[#5865f2]" 
                           placeholder="contact@company.com" 
                         />
                       </div>
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Khu vực / Tỉnh thành</label>
+                      <label className="text-xs font-medium text-gray-700 dark:text-gray-300">Khu vực / Tỉnh thành</label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <MapPin className="h-4 w-4 text-gray-400" />
@@ -573,7 +611,7 @@ export default function CustomersPage() {
                           type="text" 
                           value={formData.address || ''} 
                           onChange={e => setFormData({ ...formData, address: e.target.value })} 
-                          className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[6px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#074751]/20 focus:border-[#074751]" 
+                          className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 dark:focus:ring-[#5865f2]/30 focus:border-[#5865f2]" 
                           placeholder="Hà Nội, TP.HCM..." 
                         />
                       </div>
@@ -583,30 +621,28 @@ export default function CustomersPage() {
 
                 <div className="h-px bg-gray-100 dark:bg-gray-800 -mx-6"></div>
 
-                {/* Section: Loại yêu cầu & Nhu cầu (Thay thế tổng số yêu cầu) */}
+                {/* Section: Loại yêu cầu & Nhu cầu */}
                 <div className="space-y-4">
-                  <h3 className="text-xs font-semibold text-[#074751] uppercase tracking-wider flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                  <h3 className="text-xs font-semibold text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-[4px] bg-amber-500"></span>
                     Loại yêu cầu & Nhu cầu sản phẩm
                   </h3>
 
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                  <div className="space-y-1.5 relative z-20">
+                    <label className="text-xs font-medium text-gray-700 dark:text-gray-300">
                       Loại Yêu Cầu Quan Tâm
                     </label>
-                    <select
+                    <CustomDropdown
+                      className="w-full"
+                      options={REQUEST_TYPE_OPTIONS.map(opt => ({ value: opt, label: opt }))}
                       value={formData.requestType}
-                      onChange={e => setFormData({ ...formData, requestType: e.target.value })}
-                      className="w-full px-3 py-2 text-sm rounded-[6px] border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#074751]/20 focus:border-[#074751]"
-                    >
-                      {REQUEST_TYPE_OPTIONS.map(opt => (
-                        <option key={opt} value={opt}>{opt}</option>
-                      ))}
-                    </select>
+                      onChange={val => setFormData({ ...formData, requestType: val })}
+                      placeholder="Chọn loại yêu cầu..."
+                    />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                    <label className="text-xs font-medium text-gray-700 dark:text-gray-300">
                       Ghi chú nhu cầu chi tiết
                     </label>
                     <textarea 
@@ -614,12 +650,12 @@ export default function CustomersPage() {
                       value={formData.notes || ''} 
                       onChange={e => setFormData({ ...formData, notes: e.target.value })} 
                       placeholder="Mô tả cụ thể về nhu cầu, số lượng dự kiến, quy cách bao bì..."
-                      className="w-full p-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm rounded-[6px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#074751]/20 focus:border-[#074751] resize-none"
+                      className="w-full p-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm rounded-[4px] text-gray-900 dark:text-white focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 dark:focus:ring-[#5865f2]/30 focus:border-[#5865f2] resize-none"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 block mb-1">
+                    <label className="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-1">
                       Tài liệu / File đính kèm / Hợp đồng
                     </label>
                     <ImageUploader 
@@ -633,18 +669,18 @@ export default function CustomersPage() {
               </form>
             </div>
 
-            <div className="h-18 flex items-center justify-end gap-3 px-6 border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-[#14151a] shrink-0">
+            <div className="h-16 flex items-center justify-end gap-3 px-6 border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-[#14151a] shrink-0">
               <button 
                 type="button" 
                 onClick={() => setIsDrawerOpen(false)} 
-                className="px-5 py-2.5 rounded-[6px] border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
+                className="px-4 py-2 rounded-[4px] border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
               >
                 Hủy bỏ
               </button>
               <button 
                 type="submit" 
                 form="customer-form" 
-                className="px-6 py-2.5 rounded-[6px] bg-[#074751] hover:bg-[#0a5c68] text-white text-sm font-semibold cursor-pointer transition-all shadow-md flex items-center gap-2"
+                className="px-5 py-2 rounded-[4px] bg-[#5865f2] hover:bg-[#4752c4] text-white text-xs font-medium cursor-pointer transition-all shadow-xs flex items-center gap-2"
               >
                 <Check className="w-4 h-4" /> 
                 {modalMode === 'add' ? 'Thêm mới' : 'Lưu thay đổi'}

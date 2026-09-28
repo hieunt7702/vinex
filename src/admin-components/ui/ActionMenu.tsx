@@ -25,7 +25,7 @@ interface ActionMenuProps {
 export function ActionMenu({ items }: ActionMenuProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-white/10 rounded-[6px] transition-all cursor-pointer data-[state=open]:bg-gray-100 dark:data-[state=open]:bg-white/10 data-[state=open]:text-gray-900 dark:data-[state=open]:text-gray-100 focus:outline-none">
+      <DropdownMenuTrigger className="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-white/10 rounded-[4px] transition-all cursor-pointer data-[state=open]:bg-gray-100 dark:data-[state=open]:bg-white/10 data-[state=open]:text-gray-900 dark:data-[state=open]:text-gray-100 focus:outline-none">
         <MoreHorizontal className="w-4 h-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[200px] w-auto p-1 rounded-[8px] bg-white dark:bg-[#1c1c1f] border border-[#e5e7eb] dark:border-[#2b2b30] shadow-[0px_4px_16px_rgba(17,17,26,0.05),_0px_8px_24px_rgba(17,17,26,0.05)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] animate-in fade-in-80 zoom-in-95 duration-100 font-normal">

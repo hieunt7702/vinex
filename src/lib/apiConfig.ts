@@ -3,16 +3,19 @@
  * Supports production API domain: https://api.vinexgroup.vn/v1
  */
 export const getApiBaseUrl = (): string => {
+  if (typeof window !== 'undefined') {
+    // Local development fallback
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      return '/api/v1';
+    }
+  }
+
   // If explicitly configured via env, respect it
   if (process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.trim() !== '') {
     return process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, '');
   }
 
   if (typeof window !== 'undefined') {
-    // Local development fallback
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      return '/api/v1';
-    }
     // Production default: dedicated API domain
     return 'https://api.vinexgroup.vn/v1';
   }

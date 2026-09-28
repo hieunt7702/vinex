@@ -35,7 +35,7 @@ export const Footer = () => {
           {/* Brand Info (col 1-3) */}
           <div className="lg:col-span-3 lg:pr-4">
             <div className="mb-4">
-              <Logo lang={lang as "vi" | "en"} />
+              <Logo variant="footer" lang={lang as "vi" | "en"} />
             </div>
             <p className="text-white/80 text-[13px] font-normal leading-relaxed mb-6">
               {t.footer.tagline}

@@ -20,6 +20,7 @@ import { generateSlug } from '@/admin-utils/slug';
 import { AdminHeaderPortal } from '@/admin-components/layout/AdminHeaderPortal';
 import ConfirmModal from '@/admin-components/ui/ConfirmModal';
 import { CurrencyInput } from '@/admin-components/ui/CurrencyInput';
+import { ConflictModal, type ConflictInfo } from '@/admin-components/ui/ConflictModal';
 import { toast } from 'sonner';
 
 const STATUS_MAP: Record<string, string> = {
@@ -76,6 +77,8 @@ export default function ArticlesPage() {
   // Modals
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
+  const [conflictInfo, setConflictInfo] = useState<ConflictInfo | null>(null);
+  const [isConflictModalOpen, setIsConflictModalOpen] = useState(false);
 
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -204,7 +207,9 @@ export default function ArticlesPage() {
       ...formData,
       isFeatured: Boolean(formData.isFeatured),
       thumbnail: thumbnailStr,
-      publishedAt: formData.status === 'PUBLISHED' ? (formData.publishedAt || new Date().toISOString()) : ''
+      publishedAt: formData.status === 'PUBLISHED' ? (formData.publishedAt || new Date().toISOString()) : '',
+      lastModifiedVersion: formData.version,
+      lastUpdatedAt: formData.updatedAt
     };
 
     setIsSubmitting(true);
@@ -229,11 +234,56 @@ export default function ArticlesPage() {
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new Event('vinex_articles_updated'));
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response?.status === 409) {
+        setConflictInfo(error.response.data);
+        setIsConflictModalOpen(true);
+        return;
+      }
       console.error('Failed to save article:', error);
-      toast.error('Có lỗi xảy ra khi lưu bài viết');
+      toast.error(error.response?.data?.message || 'Có lỗi xảy ra khi lưu bài viết');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleForceOverwriteArticle = async () => {
+    setIsConflictModalOpen(false);
+    const thumbnailStr = Array.isArray(formData.thumbnail) && formData.thumbnail.length > 0
+      ? formData.thumbnail[0]
+      : (typeof formData.thumbnail === 'string' ? formData.thumbnail : '');
+
+    const { id, ...updateData } = formData;
+    try {
+      setIsSubmitting(true);
+      await apiClient.patch(`/articles/${id}`, {
+        ...updateData,
+        thumbnail: thumbnailStr,
+        forceOverwrite: true
+      });
+      toast.success('Đã ghi đè và lưu bài viết thành công!');
+      setIsDrawerOpen(false);
+      fetchArticles();
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Lỗi khi ghi đè dữ liệu');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleReloadConflictArticle = async () => {
+    setIsConflictModalOpen(false);
+    await fetchArticles();
+    if (formData.id) {
+      try {
+        const res = await apiClient.get(`/articles/${formData.id}`);
+        if (res.data) {
+          handleEdit(res.data);
+          toast.info('Đã tải lại phiên bản bài viết mới nhất từ máy chủ!');
+        }
+      } catch (e) {
+        setIsDrawerOpen(false);
+      }
     }
   };
 
@@ -732,9 +782,21 @@ export default function ArticlesPage() {
                                 )}
                                 <span className="font-semibold text-xs sm:text-sm text-gray-900 dark:text-white line-clamp-2 leading-snug">{article.title}</span>
                               </div>
-                              <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 sm:mt-1 min-w-0 text-xs text-gray-400">
-                                <span className="font-mono truncate max-w-[120px] sm:max-w-[160px] lg:max-w-[240px]">/tin-tuc/{article.slug}</span>
+                              <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 sm:mt-1 min-w-0 text-xs text-gray-400 flex-wrap">
+                                <span className="font-mono truncate max-w-[120px] sm:max-w-[160px] lg:max-w-[200px]">/tin-tuc/{article.slug}</span>
                                 <span className="shrink-0">• {safeFormatDate(article.publishedAt || article.createdAt || article.date, 'dd/MM/yyyy')}</span>
+                                {article.createdBy && (
+                                  <span className="inline-flex items-center gap-1 text-[11px] text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-1.5 py-0.2 rounded">
+                                    <User className="w-3 h-3 text-gray-400" />
+                                    Tạo: <strong className="font-medium text-gray-900 dark:text-gray-100">{article.createdBy.fullName || article.createdBy.username}</strong>
+                                  </span>
+                                )}
+                                {article.updatedBy && article.updatedAt && (
+                                  <span className="inline-flex items-center gap-1 text-[11px] text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 px-1.5 py-0.2 rounded border border-purple-200/60 dark:border-purple-800/40">
+                                    <Edit className="w-2.5 h-2.5 text-purple-500" />
+                                    Sửa: <strong className="font-medium">{article.updatedBy.fullName || article.updatedBy.username}</strong>
+                                  </span>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -869,6 +931,41 @@ export default function ArticlesPage() {
 
             <div className="flex-1 overflow-y-auto custom-scrollbar">
               <form id="article-form" onSubmit={handleSave} className="p-6 pb-32 space-y-8">
+
+                {/* Audit Trail Banner (Who created & Who last edited) */}
+                {modalMode === 'edit' && (
+                  <div className="p-3.5 bg-gray-50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[6px] text-xs space-y-2">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                        <User className="w-3.5 h-3.5 text-[#5865f2]" />
+                        Người tạo: <strong className="text-gray-900 dark:text-white">{formData.createdBy?.fullName || formData.author || 'Truyền thông VINEX'}</strong>
+                        {formData.createdBy?.role && (
+                          <span className="px-1.5 py-0.2 rounded text-[10px] bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-bold border border-purple-200 dark:border-purple-800">
+                            {formData.createdBy.role === 'ADMIN' ? 'Admin' : 'Nhân viên'}
+                          </span>
+                        )}
+                      </span>
+                      <span className="text-gray-400">
+                        {safeFormatDate(formData.createdAt || formData.publishedAt, 'dd/MM/yyyy HH:mm')}
+                      </span>
+                    </div>
+
+                    {formData.updatedBy && (
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-gray-200/60 dark:border-gray-800/60 text-gray-500 dark:text-gray-400">
+                        <span className="flex items-center gap-1.5">
+                          <Edit className="w-3.5 h-3.5 text-teal-500" />
+                          Sửa đổi lần cuối: <strong className="text-gray-800 dark:text-gray-200">{formData.updatedBy.fullName || formData.updatedBy.username}</strong>
+                        </span>
+                        <div className="flex items-center gap-2">
+                          <span>{safeFormatDate(formData.updatedAt, 'dd/MM/yyyy HH:mm:ss')}</span>
+                          <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                            v{formData.version || 1}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Section 1: Nội dung bài viết */}
                 <div className="space-y-5">
@@ -1117,6 +1214,16 @@ export default function ArticlesPage() {
           </div>
         </div>
       )}
+
+      {/* Conflict Resolution Modal */}
+      <ConflictModal
+        isOpen={isConflictModalOpen}
+        conflictInfo={conflictInfo}
+        onClose={() => setIsConflictModalOpen(false)}
+        onReload={handleReloadConflictArticle}
+        onForceOverwrite={handleForceOverwriteArticle}
+        itemType="bài viết"
+      />
     </div>
   );
 }
