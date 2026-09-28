@@ -135,3 +135,45 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: error.message || 'Lỗi tạo nhân viên mới' }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const body = await request.json();
+    const ids: number[] = Array.isArray(body.ids)
+      ? body.ids.map(Number)
+      : (body.id ? [Number(body.id)] : []);
+
+    if (ids.length === 0) {
+      return NextResponse.json({ message: 'Danh sách ID không hợp lệ' }, { status: 400 });
+    }
+
+    // Filter out root admin and protect at least 1 active admin
+    const deletableIds = ids.filter(id => {
+      const s = (store.staff || []).find((u: any) => u.id === id);
+      if (!s) return false;
+      if (s.id === 1 || s.username === 'admin') return false;
+      return true;
+    });
+
+    if (deletableIds.length === 0) {
+      return NextResponse.json(
+        { message: 'Không thể xóa các tài khoản Quản trị viên gốc' },
+        { status: 400 }
+      );
+    }
+
+    store.staff = (store.staff || []).filter((s: any) => !deletableIds.includes(s.id));
+    savePersistedData();
+
+    return NextResponse.json({
+      success: true,
+      message: `Đã xóa thành công ${deletableIds.length} nhân viên`,
+      deletedCount: deletableIds.length,
+      skippedCount: ids.length - deletableIds.length
+    });
+  } catch (error: any) {
+    console.error('Failed to bulk delete staff:', error);
+    return NextResponse.json({ message: error.message || 'Lỗi xóa nhân viên' }, { status: 500 });
+  }
+}
+

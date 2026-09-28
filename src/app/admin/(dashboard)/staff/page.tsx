@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
 import { useAuthStore, UserRole } from '@/admin-features/auth/stores/useAuthStore';
+import { useConfirm } from '@/hooks/useConfirm';
 import { AdminHeaderPortal } from '@/admin-components/layout/AdminHeaderPortal';
 import ConfirmModal from '@/admin-components/ui/ConfirmModal';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
@@ -46,6 +47,7 @@ interface StaffMember {
 export default function StaffManagementPage() {
   const router = useRouter();
   const { user: currentUser } = useAuthStore();
+  const { confirm } = useConfirm();
 
   const [staffList, setStaffList] = useState<StaffMember[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -216,6 +218,94 @@ export default function StaffManagementPage() {
     } else {
       setSelectedIds([...selectedIds, id]);
     }
+  };
+
+  const selectedStaff = useMemo(() => {
+    return staffList.filter((s) => selectedIds.includes(s.id));
+  }, [staffList, selectedIds]);
+
+  const activeSelectedCount = useMemo(() => {
+    return selectedStaff.filter((s) => s.status === 'ACTIVE' && s.id !== 1 && s.username !== 'admin').length;
+  }, [selectedStaff]);
+
+  const inactiveSelectedCount = useMemo(() => {
+    return selectedStaff.filter((s) => s.status === 'INACTIVE').length;
+  }, [selectedStaff]);
+
+  const deletableSelected = useMemo(() => {
+    return selectedStaff.filter((s) => s.id !== 1 && s.username !== 'admin' && s.id !== currentUser?.id);
+  }, [selectedStaff, currentUser?.id]);
+
+  const handleBulkDelete = () => {
+    if (selectedIds.length === 0) return;
+
+    const countToDelete = deletableSelected.length;
+    if (countToDelete === 0) {
+      toast.error('Các tài khoản đã chọn đều được bảo vệ (Quản trị viên gốc admin hoặc tài khoản đang đăng nhập). Không thể xóa.');
+      return;
+    }
+
+    const hasProtected = deletableSelected.length < selectedIds.length;
+
+    confirm({
+      title: 'Xác nhận xóa nhân sự hàng loạt',
+      description: hasProtected
+        ? `Bạn có chắc chắn muốn xóa ${countToDelete} nhân sự đã chọn? (${selectedIds.length - countToDelete} tài khoản Quản trị viên gốc / tài khoản đang đăng nhập sẽ được giữ lại an toàn). Hành động này không thể hoàn tác.`
+        : `Bạn có chắc chắn muốn xóa vĩnh viễn ${countToDelete} nhân sự đã chọn? Dữ liệu nhân viên và lịch sử phân quyền sẽ bị xóa hoàn toàn.`,
+      confirmText: `Xóa ${countToDelete} nhân sự`,
+      cancelText: 'Hủy bỏ',
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
+          const idsToDelete = deletableSelected.map((s) => s.id);
+          setSelectedIds([]);
+          // Optimistic local update
+          setStaffList((prev) => prev.filter((s) => !idsToDelete.includes(s.id)));
+
+          try {
+            await apiClient.delete('/staff', { data: { ids: idsToDelete } });
+          } catch {
+            await Promise.all(idsToDelete.map((id) => apiClient.delete(`/staff/${id}`)));
+          }
+
+          toast.success(`Đã xóa thành công ${countToDelete} nhân sự!`);
+          await fetchStaff();
+        } catch (error: any) {
+          console.error('Failed to bulk delete staff:', error);
+          toast.error(error.response?.data?.message || 'Có lỗi xảy ra khi xóa nhân viên');
+          await fetchStaff();
+        }
+      }
+    });
+  };
+
+  const handleBulkToggleStatus = (targetStatus: 'ACTIVE' | 'INACTIVE') => {
+    const targets = targetStatus === 'ACTIVE'
+      ? selectedStaff.filter((s) => s.status === 'INACTIVE')
+      : selectedStaff.filter((s) => s.status === 'ACTIVE' && s.id !== 1 && s.username !== 'admin');
+
+    if (targets.length === 0) return;
+
+    confirm({
+      title: targetStatus === 'ACTIVE' ? 'Kích hoạt hàng loạt nhân viên' : 'Tạm khóa hàng loạt nhân viên',
+      description: `Bạn có chắc chắn muốn ${targetStatus === 'ACTIVE' ? 'kích hoạt' : 'tạm khóa'} ${targets.length} tài khoản nhân sự đã chọn?`,
+      confirmText: targetStatus === 'ACTIVE' ? `Kích hoạt (${targets.length})` : `Tạm khóa (${targets.length})`,
+      cancelText: 'Hủy bỏ',
+      variant: targetStatus === 'ACTIVE' ? 'primary' : 'warning',
+      onConfirm: async () => {
+        try {
+          const ids = targets.map((s) => s.id);
+          setSelectedIds([]);
+          setStaffList((prev) => prev.map((s) => ids.includes(s.id) ? { ...s, status: targetStatus } : s));
+          await Promise.all(ids.map((id) => apiClient.put(`/staff/${id}`, { status: targetStatus })));
+          toast.success(`Đã ${targetStatus === 'ACTIVE' ? 'kích hoạt' : 'tạm khóa'} ${targets.length} nhân sự thành công!`);
+          await fetchStaff();
+        } catch (error: any) {
+          toast.error(error.response?.data?.message || 'Có lỗi xảy ra khi cập nhật trạng thái');
+          await fetchStaff();
+        }
+      }
+    });
   };
 
   // Open Add Modal
@@ -507,10 +597,52 @@ export default function StaffManagementPage() {
         </div>
 
         {selectedIds.length > 0 && (
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs text-gray-500 dark:text-gray-400 font-medium mr-1 whitespace-nowrap">
               Đã chọn: <strong className="text-gray-900 dark:text-white">{selectedIds.length}</strong>
             </span>
+
+            {inactiveSelectedCount > 0 && (
+              <button
+                type="button"
+                onClick={() => handleBulkToggleStatus('ACTIVE')}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-[4px] text-xs font-medium transition-colors cursor-pointer shadow-xs whitespace-nowrap"
+                title={`Kích hoạt ${inactiveSelectedCount} tài khoản đã chọn`}
+              >
+                <Unlock className="w-3.5 h-3.5" />
+                <span>Kích hoạt ({inactiveSelectedCount})</span>
+              </button>
+            )}
+
+            {activeSelectedCount > 0 && (
+              <button
+                type="button"
+                onClick={() => handleBulkToggleStatus('INACTIVE')}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-[4px] text-xs font-medium transition-colors cursor-pointer shadow-xs whitespace-nowrap"
+                title={`Tạm khóa ${activeSelectedCount} tài khoản đã chọn`}
+              >
+                <Lock className="w-3.5 h-3.5" />
+                <span>Tạm khóa ({activeSelectedCount})</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={handleBulkDelete}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-[4px] text-xs font-medium transition-colors border-0 cursor-pointer shadow-xs whitespace-nowrap"
+              title={`Xóa ${selectedIds.length} nhân viên đã chọn`}
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span>{selectedIds.length === staffList.length ? `Xóa tất cả (${selectedIds.length})` : `Xóa (${selectedIds.length})`}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setSelectedIds([])}
+              className="text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 font-medium px-1.5 py-1 transition-colors cursor-pointer whitespace-nowrap"
+            >
+              Bỏ chọn
+            </button>
           </div>
         )}
       </div>
