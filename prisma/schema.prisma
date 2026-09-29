@@ -44,6 +44,9 @@ model Product {
   categories        Category[] @relation("ProductToCategory")
   createdAt         DateTime   @default(now())
   updatedAt         DateTime   @updatedAt
+
+  @@index([status])
+  @@index([productId])
 }
 
 model Article {
@@ -64,6 +67,9 @@ model Article {
   publishedAt     String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
+  @@index([status, publishedAt(sort: Desc)])
+  @@index([isFeatured])
 }
 
 model Lead {
@@ -124,6 +130,15 @@ model Lead {
   projectType        String?  // Dự phòng tương thích ngược
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+
+  // Performance indexes for common query patterns
+  @@index([status])
+  @@index([priority])
+  @@index([assignee])
+  @@index([isRead])
+  @@index([createdAt(sort: Desc)])
+  @@index([status, createdAt(sort: Desc)])
+  @@index([assignee, status])
 }
 
 model Customer {
@@ -137,6 +152,9 @@ model Customer {
   notes       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([phoneNumber])
+  @@index([email])
 }
 
 model Setting {

@@ -1,95 +1,118 @@
 import prisma from '@/lib/prisma';
 import { generateSlug } from '@/admin-utils/slug';
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Slug uniqueness helpers — optimised for Railway / production
+//
+// KEY CHANGE: Replaced the `while(true)` loop that made N sequential DB queries
+// with a single `findMany({ startsWith: baseSlug })` query. We fetch all
+// conflicting slugs in one round-trip and resolve the suffix locally.
+// ─────────────────────────────────────────────────────────────────────────────
+
+async function resolveUniqueSlug(
+  baseSlug: string,
+  existingSlugs: string[],
+): Promise<string> {
+  const taken = new Set(existingSlugs);
+  if (!taken.has(baseSlug)) return baseSlug;
+
+  let counter = 1;
+  while (taken.has(`${baseSlug}-${counter}`)) counter++;
+  return `${baseSlug}-${counter}`;
+}
+
 /**
- * Đảm bảo slug sản phẩm là duy nhất trong Database ngay cả khi nhiều admin
- * cùng tạo hoặc cập nhật sản phẩm có tên giống nhau tại cùng một thời điểm.
+ * Unique product slug — single DB round-trip.
  */
-export async function getUniqueProductSlug(nameOrSlug: string, currentId?: number): Promise<string> {
+export async function getUniqueProductSlug(
+  nameOrSlug: string,
+  currentId?: number,
+): Promise<string> {
   let baseSlug = generateSlug(nameOrSlug);
   if (!baseSlug) baseSlug = `san-pham-${Date.now()}`;
-  let slug = baseSlug;
-  let counter = 1;
 
-  while (true) {
-    const existing = await prisma.product.findFirst({
-      where: {
-        slug,
-        ...(currentId ? { NOT: { id: currentId } } : {})
-      },
-      select: { id: true }
-    });
-    if (!existing) return slug;
-    slug = `${baseSlug}-${counter}`;
-    counter++;
-  }
+  const conflicts = await prisma.product.findMany({
+    where: {
+      slug: { startsWith: baseSlug },
+      ...(currentId ? { NOT: { id: currentId } } : {}),
+    },
+    select: { slug: true },
+  });
+
+  return resolveUniqueSlug(
+    baseSlug,
+    conflicts.map((c: { slug: string }) => c.slug),
+  );
 }
 
 /**
- * Đảm bảo slug bài viết / tin tức là duy nhất trong Database
+ * Unique article slug — single DB round-trip.
  */
-export async function getUniqueArticleSlug(titleOrSlug: string, currentId?: number): Promise<string> {
+export async function getUniqueArticleSlug(
+  titleOrSlug: string,
+  currentId?: number,
+): Promise<string> {
   let baseSlug = generateSlug(titleOrSlug);
   if (!baseSlug) baseSlug = `bai-viet-${Date.now()}`;
-  let slug = baseSlug;
-  let counter = 1;
 
-  while (true) {
-    const existing = await prisma.article.findFirst({
-      where: {
-        slug,
-        ...(currentId ? { NOT: { id: currentId } } : {})
-      },
-      select: { id: true }
-    });
-    if (!existing) return slug;
-    slug = `${baseSlug}-${counter}`;
-    counter++;
-  }
+  const conflicts = await prisma.article.findMany({
+    where: {
+      slug: { startsWith: baseSlug },
+      ...(currentId ? { NOT: { id: currentId } } : {}),
+    },
+    select: { slug: true },
+  });
+
+  return resolveUniqueSlug(
+    baseSlug,
+    conflicts.map((c: { slug: string }) => c.slug),
+  );
 }
 
 /**
- * Đảm bảo slug danh mục là duy nhất trong Database
+ * Unique category slug — single DB round-trip.
  */
-export async function getUniqueCategorySlug(nameOrSlug: string, currentId?: number): Promise<string> {
+export async function getUniqueCategorySlug(
+  nameOrSlug: string,
+  currentId?: number,
+): Promise<string> {
   let baseSlug = generateSlug(nameOrSlug);
   if (!baseSlug) baseSlug = `danh-muc-${Date.now()}`;
-  let slug = baseSlug;
-  let counter = 1;
 
-  while (true) {
-    const existing = await prisma.category.findFirst({
-      where: {
-        slug,
-        ...(currentId ? { NOT: { id: currentId } } : {})
-      },
-      select: { id: true }
-    });
-    if (!existing) return slug;
-    slug = `${baseSlug}-${counter}`;
-    counter++;
-  }
+  const conflicts = await prisma.category.findMany({
+    where: {
+      slug: { startsWith: baseSlug },
+      ...(currentId ? { NOT: { id: currentId } } : {}),
+    },
+    select: { slug: true },
+  });
+
+  return resolveUniqueSlug(
+    baseSlug,
+    conflicts.map((c: { slug: string }) => c.slug),
+  );
 }
 
 /**
- * Đảm bảo slug trang SEO là duy nhất trong Database
+ * Unique SEO page slug — single DB round-trip.
  */
-export async function getUniqueSeoPageSlug(nameOrSlug: string, currentId?: number): Promise<string> {
+export async function getUniqueSeoPageSlug(
+  nameOrSlug: string,
+  currentId?: number,
+): Promise<string> {
   let baseSlug = generateSlug(nameOrSlug);
   if (!baseSlug) baseSlug = `trang-seo-${Date.now()}`;
-  let slug = baseSlug;
-  let counter = 1;
 
-  while (true) {
-    const existing = await prisma.seoPage.findFirst({
-      where: {
-        slug,
-        ...(currentId ? { NOT: { id: currentId } } : {})
-      },
-      select: { id: true }
-    });
-    if (!existing) return slug;
-    slug = `${baseSlug}-${counter}`;
-    counter++;
-  }
+  const conflicts = await prisma.seoPage.findMany({
+    where: {
+      slug: { startsWith: baseSlug },
+      ...(currentId ? { NOT: { id: currentId } } : {}),
+    },
+    select: { slug: true },
+  });
+
+  return resolveUniqueSlug(
+    baseSlug,
+    conflicts.map((c: { slug: string }) => c.slug),
+  );
 }

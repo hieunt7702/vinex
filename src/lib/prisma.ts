@@ -1,59 +1,71 @@
 import { PrismaClient } from '@prisma/client';
-import net from 'net';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Prisma Client — optimised for Railway / production
+//
+// KEY CHANGE: Removed per-request TCP health check that was adding 50-250 ms
+// latency to every API call. We now trust Prisma's built-in connection pooling
+// and mark the DB offline only when real query errors occur.
+// ─────────────────────────────────────────────────────────────────────────────
 
 const globalForPrisma = globalThis as unknown as {
-  rawPrisma: PrismaClient | undefined;
-  dbAvailable: boolean | null;
-  lastDbCheck: number;
+  prismaClient: PrismaClient | undefined;
+  dbOnline: boolean;
+  dbOfflineUntil: number;
 };
 
-const rawPrisma =
-  globalForPrisma.rawPrisma ??
-  new PrismaClient({
+// Singleton Prisma client — never recreated between hot-reloads
+if (!globalForPrisma.prismaClient) {
+  globalForPrisma.prismaClient = new PrismaClient({
     log: process.env.NODE_ENV === 'development' ? ['warn', 'error'] : ['error'],
   });
-
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.rawPrisma = rawPrisma;
 }
 
-function getDbHostAndPort(): { host: string; port: number } | null {
-  const dbUrl = process.env.DATABASE_URL;
-  if (!dbUrl) return null;
-  try {
-    const url = new URL(dbUrl);
-    return {
-      host: url.hostname || 'localhost',
-      port: parseInt(url.port, 10) || 5432,
-    };
-  } catch {
-    return null;
+const rawPrisma = globalForPrisma.prismaClient!;
+
+// Circuit-breaker state — only blocks queries for 10 s after a real failure
+if (globalForPrisma.dbOnline === undefined) {
+  globalForPrisma.dbOnline = true;
+  globalForPrisma.dbOfflineUntil = 0;
+}
+
+const OFFLINE_COOLDOWN_MS = 10_000; // 10 s before retrying after a connection failure
+
+export function markDbOffline() {
+  globalForPrisma.dbOnline = false;
+  globalForPrisma.dbOfflineUntil = Date.now() + OFFLINE_COOLDOWN_MS;
+}
+
+export function markDbOnline() {
+  globalForPrisma.dbOnline = true;
+  globalForPrisma.dbOfflineUntil = 0;
+}
+
+export function isDbCircuitOpen(): boolean {
+  if (globalForPrisma.dbOnline) return false;
+  if (Date.now() > globalForPrisma.dbOfflineUntil) {
+    // Cooldown expired — allow a probe query through
+    globalForPrisma.dbOnline = true;
+    return false;
   }
+  return true; // Still within offline window — skip DB
 }
 
-const DB_CHECK_COOLDOWN_MS = 20000; // 20s cooldown between connection health checks
-
-function checkTcp(host: string, port: number, timeout = 250): Promise<boolean> {
-  return new Promise((resolve) => {
-    const socket = new net.Socket();
-    let resolved = false;
-    const finish = (result: boolean) => {
-      if (!resolved) {
-        resolved = true;
-        socket.destroy();
-        resolve(result);
-      }
-    };
-    socket.setTimeout(timeout);
-    socket.once('connect', () => finish(true));
-    socket.once('timeout', () => finish(false));
-    socket.once('error', () => finish(false));
-    try {
-      socket.connect(port, host);
-    } catch {
-      finish(false);
-    }
-  });
+/**
+ * Lightweight reachability helper — used ONLY at startup or health endpoints,
+ * NOT in the request hot path.
+ */
+export async function isDbReachable(): Promise<boolean> {
+  if (!process.env.DATABASE_URL) return false;
+  if (isDbCircuitOpen()) return false;
+  try {
+    await rawPrisma.$queryRaw`SELECT 1`;
+    markDbOnline();
+    return true;
+  } catch {
+    markDbOffline();
+    return false;
+  }
 }
 
 function isConnectionError(err: any): boolean {
@@ -66,67 +78,43 @@ function isConnectionError(err: any): boolean {
     code === 'ECONNREFUSED' ||
     code === 'ETIMEDOUT' ||
     msg.includes("Can't reach database server") ||
-    msg.includes('connection refused')
+    msg.includes('connection refused') ||
+    msg.includes('Connection terminated') ||
+    msg.includes('ENOTFOUND')
   );
-}
-
-export async function isDbReachable(): Promise<boolean> {
-  if (!process.env.DATABASE_URL) return false;
-
-  const now = Date.now();
-  if (
-    globalForPrisma.dbAvailable !== null &&
-    globalForPrisma.dbAvailable !== undefined &&
-    now - (globalForPrisma.lastDbCheck || 0) < DB_CHECK_COOLDOWN_MS
-  ) {
-    return globalForPrisma.dbAvailable;
-  }
-
-  const target = getDbHostAndPort();
-  if (!target) {
-    globalForPrisma.dbAvailable = false;
-    globalForPrisma.lastDbCheck = now;
-    return false;
-  }
-
-  const ok = await checkTcp(target.host, target.port, 250);
-  globalForPrisma.dbAvailable = ok;
-  globalForPrisma.lastDbCheck = now;
-  return ok;
-}
-
-export function markDbOffline() {
-  globalForPrisma.dbAvailable = false;
-  globalForPrisma.lastDbCheck = Date.now();
-}
-
-export function markDbOnline() {
-  globalForPrisma.dbAvailable = true;
-  globalForPrisma.lastDbCheck = Date.now();
 }
 
 /**
  * Smart Prisma Proxy:
- * Bypasses long engine connection timeouts (3-4 seconds) when Postgres is offline.
- * Reconnects automatically within milliseconds when Postgres becomes available.
+ * - NO TCP check on every request (old bottleneck removed)
+ * - Circuit breaker: if DB just errored, fast-fail for 10 s then retry
+ * - On connection errors: open circuit to prevent cascade failures
  */
 export const prisma = new Proxy(rawPrisma, {
   get(target: any, prop: string | symbol, receiver: any) {
     const originalValue = Reflect.get(target, prop, receiver);
 
-    // If accessing model delegates (e.g. prisma.article, prisma.lead, prisma.product)
-    if (typeof prop === 'string' && !prop.startsWith('_') && originalValue && typeof originalValue === 'object') {
+    // Model delegates (e.g. prisma.article, prisma.product)
+    if (
+      typeof prop === 'string' &&
+      !prop.startsWith('_') &&
+      originalValue &&
+      typeof originalValue === 'object'
+    ) {
       return new Proxy(originalValue, {
         get(modelTarget: any, modelProp: string | symbol, modelReceiver: any) {
           const modelMethod = Reflect.get(modelTarget, modelProp, modelReceiver);
           if (typeof modelMethod === 'function') {
             return async (...args: any[]) => {
-              const reachable = await isDbReachable();
-              if (!reachable) {
-                throw new Error(`Database server is offline or unreachable`);
+              // Fast-fail if circuit is open (DB recently failed)
+              if (isDbCircuitOpen()) {
+                throw new Error('Database is temporarily unavailable (circuit open)');
               }
               try {
-                return await modelMethod.apply(modelTarget, args);
+                const result = await modelMethod.apply(modelTarget, args);
+                // Successful query — ensure circuit is closed
+                if (!globalForPrisma.dbOnline) markDbOnline();
+                return result;
               } catch (err: any) {
                 if (isConnectionError(err)) {
                   markDbOffline();
@@ -136,20 +124,19 @@ export const prisma = new Proxy(rawPrisma, {
             };
           }
           return modelMethod;
-        }
+        },
       });
     }
 
-    // If accessing Prisma root methods (e.g. $connect, $queryRaw, $executeRaw)
+    // Root methods ($connect, $queryRaw, $executeRaw, etc.)
     if (typeof prop === 'string' && prop.startsWith('$')) {
       if (typeof originalValue === 'function') {
         return async (...args: any[]) => {
           if (prop === '$disconnect') {
             return await originalValue.apply(target, args);
           }
-          const reachable = await isDbReachable();
-          if (!reachable) {
-            throw new Error(`Database server is offline or unreachable for ${prop}`);
+          if (isDbCircuitOpen()) {
+            throw new Error(`Database is temporarily unavailable for ${prop}`);
           }
           try {
             return await originalValue.apply(target, args);
@@ -164,7 +151,7 @@ export const prisma = new Proxy(rawPrisma, {
     }
 
     return originalValue;
-  }
+  },
 }) as PrismaClient;
 
 export default prisma;
