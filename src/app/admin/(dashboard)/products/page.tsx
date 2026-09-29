@@ -728,10 +728,12 @@ export default function ProductsPage() {
                       <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800 min-w-[260px]">
                         <div className="flex items-center gap-3">
                           <div className="relative w-12 h-12 rounded-[4px] bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden shrink-0 flex items-center justify-center">
-                            {prod.images && prod.images.length > 0 ? (
+                            {prod.images && prod.images.length > 0 && prod.images[0] && prod.images[0] !== '/images/placeholder.jpg' ? (
                               <img src={prod.images[0]} alt={prod.name} className="w-full h-full object-cover" />
                             ) : (
-                              <Package className="w-5 h-5 text-gray-400" />
+                              <div className="w-full h-full bg-[#f0f4f3] dark:bg-[#1a2325] flex items-center justify-center text-[#074751] dark:text-teal-300">
+                                <Package className="w-5 h-5 opacity-70" />
+                              </div>
                             )}
                             {prod.images && prod.images.length > 1 && (
                               <span className="absolute bottom-0 right-0 bg-black/70 text-white text-[9px] px-1 py-0.5 rounded-tl-[3px] font-medium">

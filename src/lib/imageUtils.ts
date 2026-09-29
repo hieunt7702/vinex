@@ -6,9 +6,19 @@
  * - Array of images (takes the first valid image)
  * - JSON encoded strings of URLs
  */
+export function isValidProductImage(img: any): boolean {
+  if (!img) return false;
+  if (Array.isArray(img)) return img.some(i => isValidProductImage(i));
+  if (typeof img === 'string') {
+    const clean = img.trim();
+    return Boolean(clean && clean !== '/images/placeholder.jpg' && clean !== 'placeholder.jpg');
+  }
+  return false;
+}
+
 export function normalizeImageUrl(
   img: any, 
-  fallback: string = '/images/placeholder.jpg'
+  fallback: string = ''
 ): string {
   if (!img) return fallback;
 
@@ -16,7 +26,7 @@ export function normalizeImageUrl(
   if (Array.isArray(img)) {
     for (const item of img) {
       const normalized = normalizeImageUrl(item, '');
-      if (normalized) return normalized;
+      if (normalized && normalized !== '/images/placeholder.jpg') return normalized;
     }
     return fallback;
   }

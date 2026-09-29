@@ -22,6 +22,7 @@ import {
 import { GlassCard } from '@/components/ui/glass';
 import { getApiUrl } from '@/lib/apiConfig';
 import { normalizeImageUrl } from '@/lib/imageUtils';
+import { ProductImageFallback } from './ProductImageFallback';
 
 // Custom Botanical & Food Icons matching VINEX brand
 const CashewIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
@@ -107,7 +108,10 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
                 category: p.categories?.[0]?.name || p.category || (typeof p.categoryName === 'string' ? p.categoryName : 'Nông sản VINEX'),
                 status: 'Sẵn sàng cung ứng',
                 desc: p.shortDescription || p.desc || '',
-                img: normalizeImageUrl(p.images || p.img, '/images/placeholder.jpg'),
+                img: (() => {
+                  const raw = normalizeImageUrl(p.images || p.img, '');
+                  return (raw && raw !== '/images/placeholder.jpg') ? raw : '';
+                })(),
                 price: p.price,
                 promotionalPrice: p.promotionalPrice,
                 description: p.description,
@@ -468,15 +472,19 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
                   >
                     {/* Inner Framed Image */}
                     <div className="p-3.5 pb-0">
-                      <Link href={productHref} className="block relative aspect-[4/3] rounded-[16px] overflow-hidden bg-[#074751]/5 border border-white/60 group-hover:border-white transition-colors">
-                        <Image
-                          src={normalizeImageUrl(product.img, '/images/placeholder.jpg')}
-                          alt={product.name}
-                          fill
-                          unoptimized
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
+                      <Link href={productHref} className="block relative aspect-[4/3] rounded-[16px] overflow-hidden bg-[#f4f7f6] dark:bg-[#111c1e] border border-white/60 group-hover:border-white transition-colors">
+                        {product.img ? (
+                          <Image
+                            src={product.img}
+                            alt={product.name}
+                            fill
+                            unoptimized
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                        ) : (
+                          <ProductImageFallback name={product.name} category={product.category} />
+                        )}
                       </Link>
                     </div>
 

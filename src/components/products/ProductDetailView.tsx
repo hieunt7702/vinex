@@ -17,6 +17,7 @@ import {
 import { GlassCard } from '@/components/ui/glass';
 import type { PublicProduct } from '@/lib/dataService';
 import { normalizeImageUrl } from '@/lib/imageUtils';
+import { ProductImageFallback } from './ProductImageFallback';
 
 interface ProductDetailViewProps {
   product: PublicProduct;
@@ -26,18 +27,25 @@ interface ProductDetailViewProps {
 
 export function ProductDetailView({ product, relatedProducts, lang }: ProductDetailViewProps) {
   // Gallery images setup (dynamic from admin, fallback to multiple related angles)
-  const rawImages = product.images && product.images.length > 0 
+  const rawImages = (product.images && product.images.length > 0)
     ? product.images 
-    : [product.img];
-  const dynamicImages = rawImages.map(img => normalizeImageUrl(img, '/images/placeholder.jpg')).filter(Boolean);
+    : (product.img ? [product.img] : []);
+
+  const validImages = rawImages
+    .map(img => normalizeImageUrl(img, ''))
+    .filter(img => Boolean(img && img !== '/images/placeholder.jpg'));
+
+  const hasImages = validImages.length > 0;
+
+  const extraAttrImg = product.attributes?.find(a => a.name === 'Hình ảnh phụ')?.value;
+  const validExtraAttrImg = extraAttrImg ? normalizeImageUrl(extraAttrImg, '') : '';
+
   const galleryImages = Array.from(new Set([
-    ...dynamicImages,
-    ...(product.attributes?.find(a => a.name === 'Hình ảnh phụ')?.value ? [normalizeImageUrl(product.attributes.find(a => a.name === 'Hình ảnh phụ')!.value)] : []),
-    '/images/product/Orchard nuts 1.png',
-    '/images/product/Orchard nuts 2.png',
+    ...validImages,
+    ...(validExtraAttrImg && validExtraAttrImg !== '/images/placeholder.jpg' ? [validExtraAttrImg] : []),
   ].filter(Boolean))).slice(0, 4);
 
-  const [activeImage, setActiveImage] = useState<string>(dynamicImages[0] || product.img || galleryImages[0]);
+  const [activeImage, setActiveImage] = useState<string>(galleryImages[0] || '');
   const [activeTab, setActiveTab] = useState<'desc' | 'specs' | 'storage'>('desc');
   const [isZoomed, setIsZoomed] = useState<boolean>(false);
 
@@ -86,61 +94,69 @@ export function ProductDetailView({ product, relatedProducts, lang }: ProductDet
             
             {/* Main Stage Image */}
             <div className="rounded-[20px] backdrop-blur(24px) saturate(140%) bg-white/70 border border-white/80 shadow-[0_16px_40px_rgba(7,71,81,0.06),inset_0_1.5px_2px_rgba(255,255,255,0.75)] p-3.5 relative overflow-hidden group">
-              <div className="relative aspect-square w-full rounded-[16px] overflow-hidden bg-[#074751]/5 border border-white/60">
-                <Image
-                  src={normalizeImageUrl(activeImage, '/images/placeholder.jpg')}
-                  alt={product.name}
-                  fill
-                  priority
-                  unoptimized
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className={`object-cover transition-all duration-500 ${isZoomed ? 'scale-125 cursor-zoom-out' : 'group-hover:scale-105 cursor-zoom-in'}`}
-                  onClick={() => setIsZoomed(!isZoomed)}
-                />
+              <div className="relative aspect-square w-full rounded-[16px] overflow-hidden bg-[#f4f7f6] dark:bg-[#111c1e] border border-white/60">
+                {hasImages && activeImage ? (
+                  <>
+                    <Image
+                      src={activeImage}
+                      alt={product.name}
+                      fill
+                      priority
+                      unoptimized
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className={`object-cover transition-all duration-500 ${isZoomed ? 'scale-125 cursor-zoom-out' : 'group-hover:scale-105 cursor-zoom-in'}`}
+                      onClick={() => setIsZoomed(!isZoomed)}
+                    />
 
-                {/* Magnifier Action Button */}
-                <button
-                  type="button"
-                  onClick={() => setIsZoomed(!isZoomed)}
-                  className="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-white/85 hover:bg-white backdrop-blur-md border border-white/90 shadow-md flex items-center justify-center text-[#074751] hover:scale-110 transition-transform cursor-pointer"
-                  aria-label="Phóng to ảnh"
-                >
-                  <Search className="w-4 h-4" />
-                </button>
+                    {/* Magnifier Action Button */}
+                    <button
+                      type="button"
+                      onClick={() => setIsZoomed(!isZoomed)}
+                      className="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-white/85 hover:bg-white backdrop-blur-md border border-white/90 shadow-md flex items-center justify-center text-[#074751] hover:scale-110 transition-transform cursor-pointer"
+                      aria-label="Phóng to ảnh"
+                    >
+                      <Search className="w-4 h-4" />
+                    </button>
+                  </>
+                ) : (
+                  <ProductImageFallback name={product.name} category={product.category} size="lg" />
+                )}
               </div>
             </div>
 
-            {/* Thumbnail Row */}
-            <div className="flex items-center gap-3.5 overflow-x-auto pb-1">
-              {galleryImages.map((imgUrl, idx) => {
-                const isSelected = activeImage === imgUrl;
-                return (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => {
-                      setActiveImage(imgUrl);
-                      setIsZoomed(false);
-                    }}
-                    className={`relative w-20 sm:w-24 aspect-square rounded-[14px] overflow-hidden p-1.5 transition-all cursor-pointer ${
-                      isSelected
-                        ? "border-2 border-[#074751] shadow-md ring-2 ring-[#074751]/20 scale-102 bg-white"
-                        : "border border-white/80 bg-white/60 opacity-70 hover:opacity-100 hover:border-[#074751]/50"
-                    }`}
-                  >
-                    <div className="relative w-full h-full rounded-[10px] overflow-hidden">
-                      <Image
-                        src={normalizeImageUrl(imgUrl, '/images/placeholder.jpg')}
-                        alt={`${product.name} angle ${idx + 1}`}
-                        fill
-                        unoptimized
-                        className="object-cover"
-                      />
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+            {/* Thumbnail Row - Only if product has multiple images */}
+            {hasImages && galleryImages.length > 1 && (
+              <div className="flex items-center gap-3.5 overflow-x-auto pb-1">
+                {galleryImages.map((imgUrl, idx) => {
+                  const isSelected = activeImage === imgUrl;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        setActiveImage(imgUrl);
+                        setIsZoomed(false);
+                      }}
+                      className={`relative w-20 sm:w-24 aspect-square rounded-[14px] overflow-hidden p-1.5 transition-all cursor-pointer ${
+                        isSelected
+                          ? "border-2 border-[#074751] shadow-md ring-2 ring-[#074751]/20 scale-102 bg-white"
+                          : "border border-white/80 bg-white/60 opacity-70 hover:opacity-100 hover:border-[#074751]/50"
+                      }`}
+                    >
+                      <div className="relative w-full h-full rounded-[10px] overflow-hidden">
+                        <Image
+                          src={imgUrl}
+                          alt={`${product.name} angle ${idx + 1}`}
+                          fill
+                          unoptimized
+                          className="object-cover"
+                        />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
           </div>
 
@@ -357,15 +373,19 @@ export function ProductDetailView({ product, relatedProducts, lang }: ProductDet
                 >
                   {/* Framed Image */}
                   <div className="p-3.5 pb-0">
-                    <Link href={relHref} className="block relative aspect-[4/3] rounded-[16px] overflow-hidden bg-[#074751]/5 border border-white/60 group-hover:border-white transition-colors">
-                      <Image
-                        src={normalizeImageUrl(rel.img, '/images/placeholder.jpg')}
-                        alt={rel.name}
-                        fill
-                        unoptimized
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
+                    <Link href={relHref} className="block relative aspect-[4/3] rounded-[16px] overflow-hidden bg-[#f4f7f6] dark:bg-[#111c1e] border border-white/60 group-hover:border-white transition-colors">
+                      {rel.img && rel.img !== '/images/placeholder.jpg' ? (
+                        <Image
+                          src={rel.img}
+                          alt={rel.name}
+                          fill
+                          unoptimized
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      ) : (
+                        <ProductImageFallback name={rel.name} category={rel.category} />
+                      )}
                     </Link>
                   </div>
 

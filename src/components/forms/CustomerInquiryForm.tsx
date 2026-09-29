@@ -17,6 +17,7 @@ import { GlassSelect } from '@/components/ui/glass/GlassSelect';
 import { useGlobalSettings } from '@/hooks/useGlobalSettings';
 import type { PublicProduct } from '@/lib/types';
 import { normalizeImageUrl } from '@/lib/imageUtils';
+import { ProductImageFallback } from '@/components/products/ProductImageFallback';
 import {
   InquiryPurpose,
   PURPOSE_DEFINITIONS,
@@ -787,13 +788,17 @@ export function CustomerInquiryForm({
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                           {/* Product Thumbnail */}
                           <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-white dark:bg-gray-800 border border-teal-600/20 shrink-0 shadow-xs">
-                            <Image
-                              src={normalizeImageUrl(matchedProduct.img, '/images/placeholder.jpg')}
-                              alt={matchedProduct.name}
-                              fill
-                              unoptimized
-                              className="object-cover"
-                            />
+                            {matchedProduct.img && matchedProduct.img !== '/images/placeholder.jpg' ? (
+                              <Image
+                                src={normalizeImageUrl(matchedProduct.img, '')}
+                                alt={matchedProduct.name}
+                                fill
+                                unoptimized
+                                className="object-cover"
+                              />
+                            ) : (
+                              <ProductImageFallback name={matchedProduct.name} category={matchedProduct.category} size="sm" />
+                            )}
                           </div>
 
                           {/* Product Details */}
