@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Package, Coffee, Leaf, Sparkles, Cookie, Layers } from 'lucide-react';
+import { Package } from 'lucide-react';
 
 interface ProductImageFallbackProps {
   name?: string;
@@ -16,49 +16,26 @@ export function ProductImageFallback({
   size = 'fill',
   className = '',
 }: ProductImageFallbackProps) {
-  const catLower = (category || name || '').toLowerCase();
-
-  let IconComponent = Package;
-  let categoryLabel = category || 'Nông sản VINEX';
-
-  if (catLower.includes('trà') || catLower.includes('tea')) {
-    IconComponent = Leaf;
-  } else if (catLower.includes('cafe') || catLower.includes('cà phê') || catLower.includes('coffee')) {
-    IconComponent = Coffee;
-  } else if (catLower.includes('hạt') || catLower.includes('nut') || catLower.includes('điều') || catLower.includes('hạnh nhân')) {
-    IconComponent = Sparkles;
-  } else if (catLower.includes('bánh') || catLower.includes('kẹo') || catLower.includes('biscuit') || catLower.includes('snack') || catLower.includes('cacao')) {
-    IconComponent = Cookie;
-  } else if (catLower.includes('sấy') || catLower.includes('mứt')) {
-    IconComponent = Layers;
-  }
+  const categoryLabel = category || 'Sản phẩm VINEX';
 
   if (size === 'sm') {
     return (
-      <div className={`w-full h-full min-h-[40px] bg-[#f0f4f3] dark:bg-[#1a2325] border border-[#074751]/10 flex items-center justify-center text-[#074751] dark:text-teal-300 rounded-[4px] select-none ${className}`}>
-        <IconComponent className="w-5 h-5 opacity-70" />
+      <div className={`w-full h-full min-h-[40px] bg-[#f4f7f6] dark:bg-[#1a2325] border border-gray-200/60 dark:border-gray-800 flex items-center justify-center text-[#074751]/60 dark:text-teal-300/70 select-none ${className}`}>
+        <Package className="w-4 h-4 stroke-[1.2]" />
       </div>
     );
   }
 
   return (
-    <div className={`w-full h-full min-h-[180px] relative flex flex-col items-center justify-center bg-[#f4f7f6] dark:bg-[#111c1e] text-[#074751] dark:text-teal-200 select-none overflow-hidden transition-colors ${className}`}>
-      {/* Faint elegant brand watermark */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.04] dark:opacity-[0.06]">
-        <span className="text-[100px] sm:text-[140px] font-bold font-serif tracking-widest text-[#074751]">VINEX</span>
-      </div>
-
-      {/* Center Icon badge */}
-      <div className="relative z-10 flex flex-col items-center justify-center p-4 text-center">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white dark:bg-[#1a292c] shadow-[0_8px_24px_rgba(7,71,81,0.06),inset_0_1px_1.5px_rgba(255,255,255,0.9)] border border-[#074751]/10 dark:border-teal-700/20 flex items-center justify-center text-[#074751] dark:text-teal-300 transition-transform duration-300 group-hover:scale-105">
-          <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 stroke-[1.6]" />
+    <div className={`w-full h-full min-h-[160px] relative flex flex-col items-center justify-center bg-[#f5f7f6] dark:bg-[#111c1e] text-[#074751] select-none transition-colors ${className}`}>
+      {/* Center Product Icon Box - Flat, No Shadow, Light & Refined Stroke */}
+      <div className="flex flex-col items-center justify-center p-3 text-center">
+        <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-xl bg-white dark:bg-[#182528] border border-gray-200/70 dark:border-teal-900/30 flex items-center justify-center text-[#074751]/75 dark:text-teal-300/80">
+          <Package className="w-6 h-6 stroke-[1.2]" />
         </div>
 
-        <span className="mt-3 text-[11px] font-semibold tracking-wider uppercase text-[#074751]/60 dark:text-teal-200/60">
+        <span className="mt-2.5 text-[11px] font-medium tracking-wide text-[#074751]/60 dark:text-teal-200/60 line-clamp-1">
           {categoryLabel}
-        </span>
-        <span className="text-[10px] text-gray-400 dark:text-gray-500 font-light mt-0.5">
-          Sản phẩm chính hãng VINEX
         </span>
       </div>
     </div>
