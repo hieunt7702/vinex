@@ -27,24 +27,33 @@ interface ProductDetailViewProps {
 
 export function ProductDetailView({ product, relatedProducts, lang }: ProductDetailViewProps) {
   // Gallery images setup (dynamic from admin, fallback to multiple related angles)
-  const rawImages = (product.images && product.images.length > 0)
+  const isRealImage = (img: any): boolean => {
+    if (!img || typeof img !== 'string') return false;
+    const clean = img.trim().toLowerCase();
+    return Boolean(
+      clean && 
+      clean !== '/images/placeholder.jpg' && 
+      !clean.includes('placeholder')
+    );
+  };
+
+  const rawImages = (Array.isArray(product.images) && product.images.length > 0)
     ? product.images 
     : (product.img ? [product.img] : []);
 
   const validImages = rawImages
     .map(img => normalizeImageUrl(img, ''))
-    .filter(img => Boolean(img && img !== '/images/placeholder.jpg'));
-
-  const hasImages = validImages.length > 0;
+    .filter(isRealImage);
 
   const extraAttrImg = product.attributes?.find(a => a.name === 'Hình ảnh phụ')?.value;
   const validExtraAttrImg = extraAttrImg ? normalizeImageUrl(extraAttrImg, '') : '';
 
   const galleryImages = Array.from(new Set([
     ...validImages,
-    ...(validExtraAttrImg && validExtraAttrImg !== '/images/placeholder.jpg' ? [validExtraAttrImg] : []),
-  ].filter(Boolean))).slice(0, 4);
+    ...(validExtraAttrImg && isRealImage(validExtraAttrImg) ? [validExtraAttrImg] : []),
+  ])).filter(isRealImage).slice(0, 4);
 
+  const hasImages = galleryImages.length > 0;
   const [activeImage, setActiveImage] = useState<string>(galleryImages[0] || '');
   const [activeTab, setActiveTab] = useState<'desc' | 'specs' | 'storage'>('desc');
   const [isZoomed, setIsZoomed] = useState<boolean>(false);

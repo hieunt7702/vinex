@@ -38,11 +38,11 @@ function getLocalDbData(): any {
 function formatRawProduct(p: any): PublicProduct {
   const rawImages = Array.isArray(p.images) && p.images.length > 0
     ? p.images
-    : (p.img ? [p.img] : ['/images/product/Cashew1.png']);
+    : (p.img ? [p.img] : []);
   const images = rawImages
-    .map((img: any) => normalizeImageUrl(img, '/images/product/Cashew1.png'))
-    .filter(Boolean);
-  const firstImg = images[0] || '/images/product/Cashew1.png';
+    .map((img: any) => normalizeImageUrl(img, ''))
+    .filter((img: string) => Boolean(img && img !== '/images/placeholder.jpg' && !img.includes('placeholder')));
+  const firstImg = images[0] || '';
 
   const categoryName =
     p.categories?.[0]?.name ||
@@ -60,8 +60,8 @@ function formatRawProduct(p: any): PublicProduct {
         : p.status || 'Sẵn sàng cung ứng',
     desc: p.shortDescription || p.desc || '',
     img: firstImg,
-    images: images.length > 0 ? images : [firstImg],
-    price: typeof p.price === 'number' ? p.price : 98000,
+    images: images,
+    price: typeof p.price === 'number' ? p.price : 0,
     promotionalPrice: p.promotionalPrice,
     description: p.description || '',
     attributes: Array.isArray(p.attributes) ? p.attributes : [],
