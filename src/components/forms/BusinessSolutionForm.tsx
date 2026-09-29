@@ -53,7 +53,7 @@ export function BusinessSolutionForm() {
         status: 'NEW'
       };
 
-      const res = await fetch(getApiUrl('/leads'), {
+      const res = await fetch('/api/v1/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

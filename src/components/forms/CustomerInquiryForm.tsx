@@ -141,7 +141,7 @@ export function CustomerInquiryForm({
     async function fetchRealProducts() {
       try {
         setIsLoadingProducts(true);
-        const res = await fetch(getApiUrl('/products'), { cache: 'no-store' });
+        const res = await fetch('/api/v1/products', { cache: 'default' });
         if (res.ok) {
           const data = await res.json();
           const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
@@ -249,7 +249,7 @@ export function CustomerInquiryForm({
         const formData = new FormData();
         formData.append('file', file);
 
-        const res = await fetch(getApiUrl('/upload'), {
+        const res = await fetch('/api/v1/upload', {
           method: 'POST',
           body: formData
         });
@@ -480,7 +480,7 @@ export function CustomerInquiryForm({
         priority: purposeObj?.defaultPriority || 'NORMAL'
       };
 
-      const res = await fetch(getApiUrl('/leads'), {
+      const res = await fetch('/api/v1/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

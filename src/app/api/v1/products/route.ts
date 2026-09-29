@@ -4,6 +4,10 @@ import prisma from '@/lib/prisma';
 import { getUniqueProductSlug } from '@/lib/serverSlugHelper';
 import { getUserFromRequest } from '@/lib/auditHelper';
 import { handleCorsPreflight } from '@/lib/cors';
+import {
+  getCached, setCached, invalidateCache,
+  CACHE_KEYS, CACHE_TTL,
+} from '@/lib/serverCache';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -72,18 +76,26 @@ export async function GET(request: Request) {
           return NextResponse.json({ message: 'Sản phẩm không tồn tại' }, { status: 404 });
         }
 
-        // List all — only load columns needed by admin; skip heavy text columns
+        // List all — check in-process cache first
+        const cachedList = getCached<any[]>(CACHE_KEYS.PRODUCTS_PUBLIC);
+        if (cachedList) {
+          return NextResponse.json(cachedList, {
+            headers: { 'Cache-Control': 'public, max-age=20, stale-while-revalidate=40', 'X-Cache': 'HIT' },
+          });
+        }
+
         const dbProds = await prisma.product.findMany({
           include: CATEGORY_SELECT,
           orderBy: { id: 'desc' },
         });
-        return NextResponse.json(
-          dbProds.map((p: any) => ({
-            ...p,
-            categoryIds: p.categories.map((c: any) => c.id),
-          })),
-          { headers: NO_CACHE },
-        );
+        const mappedProds = dbProds.map((p: any) => ({
+          ...p,
+          categoryIds: p.categories.map((c: any) => c.id),
+        }));
+        setCached(CACHE_KEYS.PRODUCTS_PUBLIC, mappedProds, CACHE_TTL.PRODUCTS);
+        return NextResponse.json(mappedProds, {
+          headers: { 'Cache-Control': 'public, max-age=20, stale-while-revalidate=40', 'X-Cache': 'MISS' },
+        });
       } catch {
         // fall through to store
       }
@@ -213,6 +225,8 @@ export async function POST(request: Request) {
 
     store.products.unshift(finalProduct);
     savePersistedData();
+    // Invalidate product cache on write
+    invalidateCache(CACHE_KEYS.PRODUCTS_PUBLIC);
 
     if (store.stats) {
       store.stats.totalProducts++;

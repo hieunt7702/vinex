@@ -29,7 +29,7 @@ export const LatestArticles: React.FC = () => {
   React.useEffect(() => {
     async function fetchLatest() {
       try {
-        const res = await fetch(getApiUrl('/articles'), { cache: 'no-store' });
+        const res = await fetch('/api/v1/articles', { cache: 'default' });
         if (!res.ok) return;
         const data = await res.json();
         const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);

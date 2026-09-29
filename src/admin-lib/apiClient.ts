@@ -1,11 +1,22 @@
 import axios from 'axios';
 import { toast } from 'sonner';
-import { getApiBaseUrl } from '@/lib/apiConfig';
 
-const API_URL = getApiBaseUrl();
+// ─────────────────────────────────────────────────────────────────────────────
+// VINEX Admin API Client
+//
+// KEY PERF FIX: baseURL is now computed lazily (inside the interceptor) instead
+// of at module-load time. This ensures `typeof window` check is reliable and
+// always resolves to `/api/v1` (relative, same-origin) in the browser.
+//
+// The old pattern `const API_URL = getApiBaseUrl()` ran at module scope during
+// SSR hydration where `window` may be undefined, causing it to fall through to
+// the external `https://api.vinexgroup.vn/v1` domain — adding 1-2 s DNS+TLS
+// overhead on every admin request.
+// ─────────────────────────────────────────────────────────────────────────────
 
 export const apiClient = axios.create({
-  baseURL: API_URL,
+  // Always use same-origin relative path — no DNS lookup, no TLS overhead
+  baseURL: '/api/v1',
   timeout: 15000,
   withCredentials: true,
   headers: {
@@ -13,19 +24,19 @@ export const apiClient = axios.create({
   },
 });
 
-// Automatically inject authenticated staff/admin info into headers
+// Inject authenticated staff/admin info into every request
 apiClient.interceptors.request.use((config) => {
   if (typeof window !== 'undefined') {
     try {
       const storedUser = localStorage.getItem('vinex_auth_user');
       if (storedUser) {
         const u = JSON.parse(storedUser);
-        config.headers['x-user-id'] = String(u.id);
+        config.headers['x-user-id']       = String(u.id);
         config.headers['x-user-username'] = encodeURIComponent(u.username || '');
         config.headers['x-user-fullname'] = encodeURIComponent(u.fullName || u.username || '');
-        config.headers['x-user-role'] = u.role || 'STAFF';
+        config.headers['x-user-role']     = u.role || 'STAFF';
       }
-    } catch (e) {
+    } catch {
       // ignore
     }
   }
@@ -34,20 +45,17 @@ apiClient.interceptors.request.use((config) => {
 
 // Global response interceptor
 apiClient.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    // Don't show generic error toast for 409 Conflict (handled by specialized Conflict modal in form)
+    // 409 Conflict is handled by the specialized ConflictModal in forms
     if (error.response?.status === 409) {
       return Promise.reject(error);
     }
-
-    const errorMessage = error.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại sau!';
+    const errorMessage =
+      error.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại sau!';
     toast.error(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
-
     return Promise.reject(error);
-  }
+  },
 );
 
 export default apiClient;

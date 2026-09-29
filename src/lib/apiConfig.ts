@@ -1,43 +1,43 @@
 /**
  * VINEX API Configuration
  *
- * KEY PERF NOTE: On the server side (SSR/RSC), NEVER call back to your own
- * Next.js API routes via HTTP. Instead, use Prisma/dataService directly.
- * This file is kept for client-side fetch calls only.
+ * ⚠️  CRITICAL PERF RULE:
+ *   Client-side code MUST use `/api/v1` (same-origin relative path).
+ *   NEVER call `https://api.vinexgroup.vn/v1` from the browser — that adds
+ *   a full DNS lookup + TLS handshake (1-2 s) on every request.
+ *
+ *   Server-side RSC/API routes: use Prisma/dataService directly, not fetch().
  */
 
+/**
+ * Returns the API base URL appropriate for the current execution context.
+ *
+ * Client-side → always `/api/v1` (same-origin, zero extra latency)
+ * Server-side → internal URL or env override
+ */
 export const getApiBaseUrl = (): string => {
-  // ── Client side ──────────────────────────────────────────────────────────
+  // ── Client side (browser) ────────────────────────────────────────────────
   if (typeof window !== 'undefined') {
-    // If an explicit public URL is configured, use it
-    if (process.env.NEXT_PUBLIC_API_URL?.trim()) {
-      return process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, '');
-    }
-    // Local dev
-    if (
-      window.location.hostname === 'localhost' ||
-      window.location.hostname === '127.0.0.1'
-    ) {
-      return '/api/v1';
-    }
-    // Production: relative path (same origin, avoids extra DNS lookup)
+    // Always use relative path on the client — avoids DNS + TLS overhead of
+    // external domains like api.vinexgroup.vn (was adding 1-2 s per request)
     return '/api/v1';
   }
 
-  // ── Server side (SSR / API routes) ───────────────────────────────────────
-  // Prefer explicit env vars configured in Railway dashboard
+  // ── Server side (SSR / API routes / RSC) ─────────────────────────────────
+  // Prefer explicit server-only env var (set in Railway dashboard)
   if (process.env.API_URL?.trim()) {
     return process.env.API_URL.replace(/\/+$/, '');
   }
-  if (process.env.NEXT_PUBLIC_API_URL?.trim()) {
-    return process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, '');
-  }
-  // Railway injects RAILWAY_PUBLIC_DOMAIN for the service's public URL
+  // Railway injects this automatically for the service's public URL
   if (process.env.RAILWAY_PUBLIC_DOMAIN) {
     return `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/api/v1`;
   }
+  // Public env (available server-side too) — only used as last resort on server
+  if (process.env.NEXT_PUBLIC_API_URL?.trim()) {
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, '');
+  }
 
-  return 'https://api.vinexgroup.vn/v1';
+  return '/api/v1';
 };
 
 export const getApiUrl = (endpoint: string = ''): string => {

@@ -4,29 +4,42 @@ import prisma from '@/lib/prisma';
 import { sortArticlesNewestFirst } from '@/lib/imageUtils';
 import { getUniqueArticleSlug } from '@/lib/serverSlugHelper';
 import { getUserFromRequest } from '@/lib/auditHelper';
+import { handleCorsPreflight } from '@/lib/cors';
+import {
+  getCached, setCached, invalidateCache,
+  CACHE_KEYS, CACHE_TTL,
+} from '@/lib/serverCache';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-
-import { handleCorsPreflight } from '@/lib/cors';
 
 export async function OPTIONS(request: Request) {
   return handleCorsPreflight(request);
 }
 
 export async function GET() {
+  // Serve from in-process cache if still fresh
+  const cached = getCached<any[]>(CACHE_KEYS.ARTICLES_PUBLIC);
+  if (cached) {
+    return NextResponse.json(cached, {
+      headers: { 'Cache-Control': 'public, max-age=20, stale-while-revalidate=40', 'X-Cache': 'HIT' },
+    });
+  }
+
   if (process.env.DATABASE_URL) {
     try {
       const dbArticles = await prisma.article.findMany({
         orderBy: { id: 'desc' }
       });
       const sorted = sortArticlesNewestFirst(dbArticles);
+      setCached(CACHE_KEYS.ARTICLES_PUBLIC, sorted, CACHE_TTL.ARTICLES);
       return NextResponse.json(sorted, {
         headers: {
-          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          'Cache-Control': 'public, max-age=20, stale-while-revalidate=40',
+          'X-Cache': 'MISS',
         },
       });
-    } catch (e) {
+    } catch {
       // Fallback
     }
   }
@@ -34,7 +47,7 @@ export async function GET() {
   const sorted = sortArticlesNewestFirst(store.articles);
   return NextResponse.json(sorted, {
     headers: {
-      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      'Cache-Control': 'no-store',
     },
   });
 }
@@ -91,6 +104,8 @@ export async function POST(request: Request) {
 
     store.articles.unshift(finalArticle);
     savePersistedData();
+    // Invalidate article cache on write
+    invalidateCache(CACHE_KEYS.ARTICLES_PUBLIC);
 
     if (store.stats) {
       store.stats.totalArticles++;

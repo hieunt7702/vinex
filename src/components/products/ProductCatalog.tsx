@@ -90,8 +90,8 @@ export function ProductCatalog({ initialProducts }: { initialProducts: any[] }) 
     async function fetchLiveCatalog() {
       try {
         const [resProds, resCats] = await Promise.all([
-          fetch(getApiUrl('/products'), { cache: 'no-store' }),
-          fetch(getApiUrl('/categories'), { cache: 'no-store' })
+          fetch('/api/v1/products', { cache: 'default' }),
+          fetch('/api/v1/categories', { cache: 'default' })
         ]);
 
         if (resProds.ok && isSubscribed) {

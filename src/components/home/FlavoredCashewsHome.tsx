@@ -31,7 +31,7 @@ export const FlavoredCashewsHome: React.FC = () => {
   React.useEffect(() => {
     async function fetchCashews() {
       try {
-        const res = await fetch(getApiUrl('/products'), { cache: 'no-store' });
+        const res = await fetch('/api/v1/products', { cache: 'default' });
         if (!res.ok) return;
         const data = await res.json();
         const list = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);

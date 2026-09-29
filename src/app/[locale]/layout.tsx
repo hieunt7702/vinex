@@ -7,8 +7,13 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { Montserrat, Marcellus, Dancing_Script } from 'next/font/google';
 import { getPublicSettings } from '@/lib/dataService';
+import { warmPrismaConnection } from '@/lib/prismaWarmup';
+
+// Pre-warm Prisma connection pool on first server render (eliminates cold-start latency)
+warmPrismaConnection();
 
 export const dynamic = 'force-dynamic';
+
 
 const montserrat = Montserrat({
   subsets: ['latin', 'vietnamese'],

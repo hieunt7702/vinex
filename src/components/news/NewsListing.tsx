@@ -49,8 +49,8 @@ export function NewsListing({ initialArticles, locale }: NewsListingProps) {
     async function fetchLiveNews() {
       try {
         const [resArts, resCats] = await Promise.all([
-          fetch(getApiUrl('/articles'), { cache: 'no-store' }),
-          fetch(getApiUrl('/categories'), { cache: 'no-store' })
+          fetch('/api/v1/articles', { cache: 'default' }),
+          fetch('/api/v1/categories', { cache: 'default' })
         ]);
 
         if (resArts.ok && isSubscribed) {
