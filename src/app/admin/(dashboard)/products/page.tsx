@@ -341,8 +341,12 @@ export default function ProductsPage() {
             price: prod.price || 0,
             promotionalPrice: prod.promotionalPrice || 0,
             images: Array.isArray(prod.images) ? prod.images : [],
-            categoryIds: prod.categories?.map((c: any) => c.id) || [],
-            attributes: Array.isArray(prod.attributes) ? prod.attributes : [],
+            attributes: Array.isArray(prod.attributes)
+              ? prod.attributes.map((a: any) => ({
+                  name: a.name || '',
+                  value: a.value !== undefined ? String(a.value) : (Array.isArray(a.values) ? String(a.values[0] || '') : ''),
+                }))
+              : [],
             seoTitle: prod.seoTitle || '',
             metaDescription: prod.metaDescription || '',
             version: prod.version || 1,
@@ -804,12 +808,20 @@ export default function ProductsPage() {
 
                       <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
                         <div className="flex flex-col gap-0.5">
-                          <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
-                            {formatNumberVN(prod.promotionalPrice > 0 ? prod.promotionalPrice : prod.price)} đ
-                          </span>
-                          {prod.promotionalPrice > 0 && prod.price > 0 && (
-                            <span className="text-xs text-gray-400 line-through">
-                              {formatNumberVN(prod.price)} đ
+                          {prod.price && Number(prod.price) > 0 ? (
+                            <>
+                              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                                {formatNumberVN(prod.promotionalPrice > 0 ? prod.promotionalPrice : prod.price)} đ
+                              </span>
+                              {prod.promotionalPrice > 0 && prod.price > 0 && (
+                                <span className="text-xs text-gray-400 line-through">
+                                  {formatNumberVN(prod.price)} đ
+                                </span>
+                              )}
+                            </>
+                          ) : (
+                            <span className="text-xs font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded border border-amber-200/60 dark:border-amber-800/40 w-fit">
+                              Liên hệ báo giá
                             </span>
                           )}
                         </div>
@@ -854,7 +866,12 @@ export default function ProductsPage() {
                                     promotionalPrice: prod.promotionalPrice || 0,
                                     images: Array.isArray(prod.images) ? prod.images : [],
                                     categoryIds: prod.categories?.map((c: any) => c.id) || [],
-                                    attributes: Array.isArray(prod.attributes) ? prod.attributes : [],
+                                    attributes: Array.isArray(prod.attributes)
+                                      ? prod.attributes.map((a: any) => ({
+                                          name: a.name || '',
+                                          value: a.value !== undefined ? String(a.value) : (Array.isArray(a.values) ? String(a.values[0] || '') : ''),
+                                        }))
+                                      : [],
                                     seoTitle: prod.seoTitle || '',
                                     metaDescription: prod.metaDescription || '',
                                     version: prod.version || 1,

@@ -50,10 +50,11 @@ export function ProductDetailView({ product, relatedProducts, lang }: ProductDet
     { name: 'Hạn sử dụng', value: '12 tháng kể từ ngày sản xuất' },
   ];
 
-  const displayPrice = product.price ? product.price : 98000;
+  const hasPrice = Boolean(product.price && Number(product.price) > 0);
+  const displayPrice = hasPrice ? Number(product.price) : 0;
   const originalPrice = product.promotionalPrice && product.promotionalPrice < displayPrice 
     ? displayPrice 
-    : Math.round(displayPrice * 1.15);
+    : (hasPrice ? Math.round(displayPrice * 1.15) : 0);
   const finalPrice = product.promotionalPrice && product.promotionalPrice > 0 
     ? product.promotionalPrice 
     : displayPrice;
@@ -166,17 +167,27 @@ export function ProductDetailView({ product, relatedProducts, lang }: ProductDet
             {/* Price Block */}
             <div className="mb-6">
               <div className="flex items-baseline gap-3">
-                <span className="text-[28px] sm:text-[34px] font-bold text-[#074751]">
-                  {finalPrice.toLocaleString('vi-VN')} đ
-                </span>
-                {originalPrice > finalPrice && (
-                  <span className="text-[16px] text-gray-400 line-through font-normal">
-                    {originalPrice.toLocaleString('vi-VN')} đ
+                {hasPrice ? (
+                  <>
+                    <span className="text-[28px] sm:text-[34px] font-bold text-[#074751]">
+                      {finalPrice.toLocaleString('vi-VN')} đ
+                    </span>
+                    {originalPrice > finalPrice && (
+                      <span className="text-[16px] text-gray-400 line-through font-normal">
+                        {originalPrice.toLocaleString('vi-VN')} đ
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span className="text-[24px] sm:text-[28px] font-bold text-amber-700 dark:text-amber-400">
+                    {lang === 'en' ? 'Contact for quotation' : 'Liên hệ báo giá'}
                   </span>
                 )}
               </div>
               <span className="text-[12px] text-gray-400 mt-1 block">
-                {lang === 'en' ? 'Reference price • Contact for official B2B quotation' : 'Giá tham khảo • Liên hệ để xác nhận báo giá'}
+                {hasPrice 
+                  ? (lang === 'en' ? 'Reference price • Contact for official B2B quotation' : 'Giá tham khảo • Liên hệ để xác nhận báo giá')
+                  : (lang === 'en' ? 'Price updating • Contact our sales team for quotation' : 'Giá đang cập nhật • Liên hệ để nhận báo giá chi tiết')}
               </span>
             </div>
 
