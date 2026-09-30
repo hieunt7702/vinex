@@ -1,6 +1,7 @@
 "use client";
+
 import { useState, useEffect } from 'react';
-import { Save, Loader2, ShieldAlert, Trash2, Settings, Code, Globe, Search, CheckCircle2 } from 'lucide-react';
+import { Save, Loader2, ShieldAlert, Trash2, Code, Globe, Search } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
 import React from 'react';
 import { Button } from '@/admin-components/ui/button';
@@ -11,10 +12,10 @@ import {
   DialogTitle,
 } from '@/admin-components/ui/dialog';
 import { toast } from 'sonner';
+import { AdminHeaderPortal } from '@/admin-components/layout/AdminHeaderPortal';
 
 export default function SettingsPage() {
   const [isSaving, setIsSaving] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   const [activeTab, setActiveTab] = useState('general');
 
   // Reset Data state
@@ -22,7 +23,6 @@ export default function SettingsPage() {
   const [confirmText, setConfirmText] = useState('');
   const [isSubmittingReset, setIsSubmittingReset] = useState(false);
   const [resetError, setResetError] = useState('');
-  const [resetSuccess, setResetSuccess] = useState('');
   const canSubmitReset = confirmText.trim().toUpperCase() === 'CONFIRM';
 
   const [formData, setFormData] = useState<any>({
@@ -44,7 +44,7 @@ export default function SettingsPage() {
 
   const fetchSettings = async () => {
     try {
-      const res = await apiClient.get('/settings');
+      const res = await apiClient.get('/settings', { params: { _t: Date.now() } });
       const list = Array.isArray(res.data)
         ? res.data
         : (Array.isArray(res?.data?.data) ? res.data.data : (res.data ? [res.data] : []));
@@ -71,7 +71,6 @@ export default function SettingsPage() {
 
   const onSubmit = async () => {
     setIsSaving(true);
-    setSuccessMessage('');
 
     // Validation
     const newErrors: Record<string, string> = {};
@@ -89,23 +88,31 @@ export default function SettingsPage() {
     try {
       const payload = {
         key: 'GLOBAL_SETTINGS',
-        value: JSON.stringify(formData)
+        value: JSON.stringify(formData),
       };
 
-      if (settingId) {
-        await apiClient.patch(`/settings/${settingId}`, payload);
-      } else {
-        const res = await apiClient.post('/settings', payload);
+      // 1. Always POST to /settings — performs upsert directly in PostgreSQL
+      const res = await apiClient.post('/settings', payload);
+      if (res?.data?.id) {
         setSettingId(res.data.id);
       }
-      setSuccessMessage('Lưu cấu hình hệ thống thành công!');
+
+      // 2. Also call PATCH if settingId is present to ensure both endpoints remain synchronized
+      if (settingId) {
+        await apiClient.patch(`/settings/${settingId}`, payload).catch(() => {});
+      }
+
       toast.success('Lưu cấu hình hệ thống thành công! Dữ liệu đã đồng bộ sang trang chính.');
+
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new Event('vinex_settings_updated'));
+        try {
+          localStorage.setItem('vinex_settings_updated_at', Date.now().toString());
+        } catch (_) {}
       }
-      setTimeout(() => setSuccessMessage(''), 3000);
-    } catch (error) {
-      console.error('Failed to save settings', error);
+    } catch (error: any) {
+      console.error('Failed to save settings:', error);
+      toast.error('Lỗi khi lưu cài đặt: ' + (error?.response?.data?.message || error.message || ''));
     } finally {
       setIsSaving(false);
     }
@@ -115,10 +122,9 @@ export default function SettingsPage() {
     if (!canSubmitReset || isSubmittingReset) return;
     setIsSubmittingReset(true);
     setResetError('');
-    setResetSuccess('');
     try {
       await new Promise(r => setTimeout(r, 1000));
-      setResetSuccess('Đã xóa toàn bộ cache và reset dữ liệu thành công.');
+      toast.success('Đã xóa toàn bộ cache và reset dữ liệu thành công.');
       setConfirmText('');
       setIsResetOpen(false);
     } catch (err: any) {
@@ -137,36 +143,21 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500 w-full">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-medium tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
-            <Settings className="w-5 h-5 text-[#5865f2]" />
-            Cài đặt Hệ thống
-          </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Cấu hình Global SEO, liên hệ và các đoạn mã nhúng theo dõi (Tracking).</p>
-        </div>
-        <button
-          onClick={onSubmit}
-          disabled={isSaving}
-          className="bg-[#5865f2] hover:bg-[#4752c4] text-white px-5 py-2.5 rounded-[4px] text-sm font-medium transition-colors flex items-center gap-2 border-0 disabled:opacity-70 h-auto shadow-none cursor-pointer"
-        >
-          {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          {isSaving ? 'Đang lưu...' : 'Lưu cài đặt'}
-        </button>
-      </div>
-
-      {successMessage && (
-        <div className="bg-emerald-50 text-emerald-600 p-4 rounded-[4px] text-sm font-medium border border-emerald-200 flex items-center shadow-none animate-in fade-in slide-in-from-top-2">
-          <CheckCircle2 className="w-5 h-5 mr-3" />
-          {successMessage}
-        </div>
-      )}
-
-      {resetSuccess && (
-        <div className="bg-emerald-50 text-emerald-600 p-4 rounded-[4px] text-sm font-medium border border-emerald-200 shadow-none animate-in fade-in slide-in-from-top-2">
-          {resetSuccess}
-        </div>
-      )}
+      {/* Top Header Portal Injection matching Products / Categories pattern */}
+      <AdminHeaderPortal
+        title="Cài Đặt Hệ Thống"
+        description="Cấu hình Global SEO, liên hệ và các đoạn mã nhúng theo dõi (Tracking)"
+        actions={
+          <button
+            onClick={onSubmit}
+            disabled={isSaving}
+            className="flex items-center gap-2 px-4 py-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors border-0 disabled:opacity-70 cursor-pointer shadow-sm shrink-0"
+          >
+            {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            <span>{isSaving ? 'Đang lưu...' : 'Lưu cài đặt'}</span>
+          </button>
+        }
+      />
 
       <div className="flex flex-col md:flex-row gap-6">
         {/* Sidebar Tabs */}

@@ -9,46 +9,63 @@ export type { GlobalSettings };
 // ─── Module-level cache — shared across all hook instances ───────────────────
 let cachedSettings: GlobalSettings | null = null;
 let pendingFetch: Promise<GlobalSettings | null> | null = null;
-const CACHE_MAX_AGE_MS = 5 * 60_000; // 5 min (settings rarely change)
+const CACHE_MAX_AGE_MS = 15_000; // 15 s freshness
 let lastFetchedAt = 0;
 // ─────────────────────────────────────────────────────────────────────────────
 
 async function fetchSettingsFromApi(): Promise<GlobalSettings | null> {
-  // Relative path — same origin, no DNS/TLS overhead
-  const res = await fetch('/api/v1/settings', {
-    // Use browser cache with 60s freshness
-    cache: 'default',
-    next: { revalidate: 60 },
-  });
-  if (!res.ok) return null;
-  const data = await res.json();
-  const list = Array.isArray(data)
-    ? data
-    : Array.isArray(data?.data)
-    ? data.data
-    : data
-    ? [data]
-    : [];
-  const globalItem = list.find((s: any) => s && s.key === 'GLOBAL_SETTINGS');
-  if (globalItem?.value) {
-    const parsed =
-      typeof globalItem.value === 'string'
-        ? JSON.parse(globalItem.value)
-        : globalItem.value;
-    return { ...defaultGlobalSettings, ...parsed };
+  try {
+    const res = await fetch(`/api/v1/settings?_t=${Date.now()}`, {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+      },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const list = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.data)
+      ? data.data
+      : data
+      ? [data]
+      : [];
+    const globalItem = list.find((s: any) => s && s.key === 'GLOBAL_SETTINGS');
+    if (globalItem?.value) {
+      const parsed =
+        typeof globalItem.value === 'string'
+          ? JSON.parse(globalItem.value)
+          : globalItem.value;
+      return { ...defaultGlobalSettings, ...parsed };
+    }
+  } catch (e) {
+    console.warn('[useGlobalSettings] Fetch failed:', e);
   }
   return null;
 }
 
-export function useGlobalSettings() {
+export function useGlobalSettings(initialSettings?: GlobalSettings) {
+  if (initialSettings && !cachedSettings) {
+    cachedSettings = initialSettings;
+  }
+
   const [settings, setSettings] = useState<GlobalSettings>(
-    cachedSettings ?? defaultGlobalSettings,
+    initialSettings ?? cachedSettings ?? defaultGlobalSettings,
   );
   const [isLoading, setIsLoading] = useState(false);
   const mountedRef = useRef(true);
 
+  // Sync if initialSettings changes (e.g. navigation across SSR pages)
+  useEffect(() => {
+    if (initialSettings) {
+      setSettings((prev) => ({ ...prev, ...initialSettings }));
+      cachedSettings = { ...(cachedSettings || defaultGlobalSettings), ...initialSettings };
+    }
+  }, [initialSettings]);
+
   const fetchSettings = useCallback(async (force = false) => {
-    // Skip if cache is fresh
+    // Skip if cache is fresh and not forced
     if (!force && Date.now() - lastFetchedAt < CACHE_MAX_AGE_MS && cachedSettings) {
       return;
     }
@@ -80,10 +97,19 @@ export function useGlobalSettings() {
     fetchSettings();
 
     const handleUpdate = () => fetchSettings(true);
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'vinex_settings_updated_at') {
+        fetchSettings(true);
+      }
+    };
+
     window.addEventListener('vinex_settings_updated', handleUpdate);
+    window.addEventListener('storage', handleStorage);
+
     return () => {
       mountedRef.current = false;
       window.removeEventListener('vinex_settings_updated', handleUpdate);
+      window.removeEventListener('storage', handleStorage);
     };
   }, [fetchSettings]);
 

@@ -7,12 +7,16 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, ArrowRight, Globe, Phone } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useDict } from '@/hooks/useDict';
-import { useGlobalSettings } from '@/hooks/useGlobalSettings';
+import { useGlobalSettings, type GlobalSettings } from '@/hooks/useGlobalSettings';
 import { useProductCategories } from '@/hooks/useProductCategories';
 
 import { GlassButton, Glass, GlassCard } from '@/components/ui/glass';
 
-export const Header = () => {
+interface HeaderProps {
+  initialSettings?: GlobalSettings;
+}
+
+export const Header = ({ initialSettings }: HeaderProps = {}) => {
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -21,7 +25,7 @@ export const Header = () => {
   const router = useRouter();
   const lang = pathname.startsWith('/en') ? 'en' : 'vi';
   const t = useDict();
-  const { settings } = useGlobalSettings();
+  const { settings } = useGlobalSettings(initialSettings);
   const { categories: productCategories } = useProductCategories();
 
   useEffect(() => {

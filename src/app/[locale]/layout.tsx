@@ -101,11 +101,11 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={`min-h-screen flex flex-col bg-[#FAF8F2] text-[#24313A] font-sans antialiased relative overflow-x-hidden`}
       >
-        <Header />
+        <Header initialSettings={settings} />
         <main className="flex-1 flex flex-col">
           {children}
         </main>
-        <Footer />
+        <Footer initialSettings={settings} />
         <ScrollToTop />
       </body>
     </html>
