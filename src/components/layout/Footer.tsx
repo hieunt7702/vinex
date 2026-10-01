@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Phone, Mail, MapPin, ShieldCheck, ChevronRight } from 'lucide-react';
+import { Phone, Mail, MapPin, ChevronRight } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { useDict } from '@/hooks/useDict';
 import { useGlobalSettings, type GlobalSettings } from '@/hooks/useGlobalSettings';
@@ -30,10 +30,9 @@ export const Footer = ({ initialSettings }: FooterProps = {}) => {
 
   return (
     <footer 
-      className="relative z-20 text-white pt-16 pb-8 bg-[#074751] bg-cover bg-center bg-no-repeat overflow-hidden"
-      style={{ backgroundImage: "url('/bg_footer.png')" }}
+      className="relative z-20 text-white pt-36 pb-32 md:pt-16 md:pb-8 bg-[#074751] bg-cover bg-top md:bg-center bg-no-repeat overflow-hidden bg-[url('/bg_footer_mb.png')] md:bg-[url('/bg_footer.png')] min-h-[calc(100vw*2.05)] md:min-h-0 flex flex-col justify-between"
     >
-      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 w-full flex-1 flex flex-col justify-between">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8 mb-12">
 
           {/* Brand Info (col 1-3) */}
@@ -51,7 +50,7 @@ export const Footer = ({ initialSettings }: FooterProps = {}) => {
                   href={social.href} 
                   target={social.href !== '#' ? "_blank" : undefined}
                   rel={social.href !== '#' ? "noopener noreferrer" : undefined}
-                  className="w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-vinex-gold transition-colors" 
+                  className="w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-vinex-gold transition-colors shrink-0" 
                   aria-label={social.name}
                 >
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d={social.d} /></svg>
